@@ -24,8 +24,11 @@
     NSInteger _currentAnswerCounts;// 当前回答数
    
     BOOL _currentQuestionFinished;
+    BOOL _startAnswer;
     
     AudioPlayer *audioPlayer;
+    
+    
 }
 
 
@@ -102,7 +105,7 @@
     NSString *audiourl = [dict objectForKey:@"audiourl"];
     NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
     NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
-    _currentQuestionFinished = NO;
+//    _currentQuestionFinished = NO;
     [self playAudioWithPath:audioPath];
     
 }
@@ -110,15 +113,36 @@
 - (void)playAudioWithPath:(NSString *)audioPath
 {
     [audioPlayer playerPlayWithFilePath:audioPath];
-    [audioPlayer beginePlay];
+//    [audioPlayer beginePlay];
+}
+
+- (void)playAnswerAudio
+{
+    _currentAnswerListArray = [_questioListArray objectAtIndex:_currentQuestionCounts];
+    NSDictionary *dict = [_currentAnswerListArray objectAtIndex:_currentAnswerCounts];
+    NSString *answerText = [dict objectForKey:@"answer"];
+    
+    _answerTextLabel.text = answerText;
+    
+    NSString *audiourl = [dict objectForKey:@"audiourl"];
+    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
+    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
+    [self playAudioWithPath:audioPath];
 }
 
 - (void)playerCallBack
 {
     NSLog(@"playerCallBack");
-    if (_currentAnswerCounts<_sumAnswerCounts)
+    if (_startAnswer==NO)
     {
         // 播放回答音频
+        _startAnswer = YES;
+        [self playAnswerAudio];
+    }
+    else
+    {
+        _startAnswer = NO;
+        
     }
 }
 

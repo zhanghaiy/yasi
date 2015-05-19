@@ -53,6 +53,7 @@ static AudioPlayer *audioPlayer;
     _player.delegate = self;
     _player.volume = 1;
     [_player prepareToPlay];
+     [_player play];
 }
 
 #pragma mark - 播放
