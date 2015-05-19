@@ -1,0 +1,1132 @@
+{
+  "classtypeinfo" : {
+    "bgurl" : "349207.png",
+    "classtype" : "Travel",
+    "id" : "E43CD6309D7E4DF2987E062EC5D9CD3B",
+    "level" : "1",
+    "partlist" : [
+      {
+        "classid" : "E43CD6309D7E4DF2987E062EC5D9CD3B",
+        "id" : 1,
+        "levellist" : [
+          {
+            "id" : "D26FFAF03F9949D4BBB1F9FDE8C1AED3",
+            "level" : 1,
+            "partid" : 1,
+            "questionlist" : [
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "Yeah, I think students should  <lable>go outside </lable> their own country and  <lable>experience other cultures </lable>, if they can  <lable>afford to do so </lable> of course.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3242.mp3",
+                    "chinese" : "是的,我认为学生应该出国体验其他文化经验,当然如果他们能负担得起这样做。",
+                    "id" : "69FD6D5A7BA04BDABD2E4E01A39C592F",
+                    "keyword" : "go outside||experience other cultures||afford to do so",
+                    "questionid" : "6FE409C756724DCD99C450CBCB19E39F",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : "Traveling is one of the most  <lable>precious learning experiences </lable> one can  <lable>acquire </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3243.mp3",
+                    "chinese" : "旅行是可以获得的最宝贵的学习经验。",
+                    "id" : "DA35429C1B544D399539568730E14784",
+                    "keyword" : "precious learning experiences||acquire",
+                    "questionid" : "6FE409C756724DCD99C450CBCB19E39F",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : "It makes one more  <lable>open-minded </lable> and more  <lable>tolerant towards </lable> others,  <combination> <simple>irrespective of </simple> race, creed  <simple>or </simple> </combination> skin colour.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3244.mp3",
+                    "chinese" : "它使人一个更加开放和宽容的对待他人,不分种族,信仰或肤色。",
+                    "id" : "3EDBD7EDAF4F4219B114BF64B55FEDDB",
+                    "keyword" : "open-minded||tolerant towards||irrespective of…or",
+                    "questionid" : "6FE409C756724DCD99C450CBCB19E39F",
+                    "sn" : 3
+                  },
+                  {
+                    "answer" : "It's  <lable>the best way </lable> to learn the history and traditions of other cultures.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3245.mp3",
+                    "chinese" : "这是学习其他文化的历史和传统的最好方式。",
+                    "id" : "7735DED434674848B7A5898C11ABAF1F",
+                    "keyword" : "the best way",
+                    "questionid" : "6FE409C756724DCD99C450CBCB19E39F",
+                    "sn" : 4
+                  },
+                  {
+                    "answer" : "These are  <lable>particularly useful and helpful </lable> to students, who are  <lable>at the age of </lable> knowledge absorption.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3246.mp3",
+                    "chinese" : "在知识吸收的年龄这会特别有用的和帮助学生。",
+                    "id" : "C91A9346BADE435D9703A0E0B0CF2647",
+                    "keyword" : "particularly useful and helpful||at the age of",
+                    "questionid" : "6FE409C756724DCD99C450CBCB19E39F",
+                    "sn" : 5
+                  }
+                ],
+                "audiourl" : "Question_3241.mp3",
+                "chinese" : "学生应该出国旅游开阔视野吗？",
+                "id" : "6FE409C756724DCD99C450CBCB19E39F",
+                "levelid" : "D26FFAF03F9949D4BBB1F9FDE8C1AED3",
+                "question" : "Should students travel abroad to broaden their horizons?",
+                "questiontype" : "",
+                "sn" : 1
+              }
+            ]
+          },
+          {
+            "id" : "8352B57CDAF14454AF5BEEBBB509DB45",
+            "level" : 2,
+            "partid" : 1,
+            "questionlist" : [
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "Yeah, I think students should  <lable>go outside </lable> their own country and  <lable>experience other cultures </lable>, if they can  <lable>afford to do so </lable> of course.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3242.mp3",
+                    "chinese" : "是的,我认为学生应该出国体验其他文化经验,当然如果他们能负担得起这样做。",
+                    "id" : "A11C71FBFD874C9990FAC7BD7B50C658",
+                    "keyword" : "go outside||experience other cultures||afford to do so",
+                    "questionid" : "EF5CDB855328451AA1B156D732F803B8",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : "Traveling is one of the most  <lable>precious learning experiences </lable> one can  <lable>acquire </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3243.mp3",
+                    "chinese" : "旅行是可以获得的最宝贵的学习经验。",
+                    "id" : "C3A1B02C3FC6438EB64DCE19649B677E",
+                    "keyword" : "precious learning experiences||acquire",
+                    "questionid" : "EF5CDB855328451AA1B156D732F803B8",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : "It makes one more  <lable>open-minded </lable> and more  <lable>tolerant towards </lable> others,  <combination> <simple>irrespective of </simple> race, creed  <simple>or </simple> </combination> skin colour.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3244.mp3",
+                    "chinese" : "它使人一个更加开放和宽容的对待他人,不分种族,信仰或肤色。",
+                    "id" : "9392521E4C1E4AAAAB8668FD9CA78DDE",
+                    "keyword" : "open-minded||tolerant towards||irrespective of…or",
+                    "questionid" : "EF5CDB855328451AA1B156D732F803B8",
+                    "sn" : 3
+                  },
+                  {
+                    "answer" : "It's  <lable>the best way </lable> to learn the history and traditions of other cultures.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3245.mp3",
+                    "chinese" : "这是学习其他文化的历史和传统的最好方式。",
+                    "id" : "A3CAC31A7D304D149545A2698D4DD572",
+                    "keyword" : "the best way",
+                    "questionid" : "EF5CDB855328451AA1B156D732F803B8",
+                    "sn" : 4
+                  },
+                  {
+                    "answer" : "These are  <lable>particularly useful and helpful </lable> to students, who are  <lable>at the age of </lable> knowledge absorption.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3246.mp3",
+                    "chinese" : "在知识吸收的年龄这会特别有用的和帮助学生。",
+                    "id" : "110ECA0E8CFC44B99C93185A3F821638",
+                    "keyword" : "particularly useful and helpful||at the age of",
+                    "questionid" : "EF5CDB855328451AA1B156D732F803B8",
+                    "sn" : 5
+                  }
+                ],
+                "audiourl" : "Question_3241.mp3",
+                "chinese" : "学生应该出国旅游开阔视野吗？",
+                "id" : "EF5CDB855328451AA1B156D732F803B8",
+                "levelid" : "8352B57CDAF14454AF5BEEBBB509DB45",
+                "question" : "Should students travel abroad to broaden their horizons?",
+                "questiontype" : "",
+                "sn" : 1
+              }
+            ]
+          },
+          {
+            "id" : "6C2DA4A6A2F043C495217F2914A9B8A2",
+            "level" : 3,
+            "partid" : 1,
+            "questionlist" : [
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "Yeah, I think students should  <lable>go outside </lable> their own country and  <lable>experience other cultures </lable>, if they can  <lable>afford to do so </lable> of course.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3242.mp3",
+                    "chinese" : "是的,我认为学生应该出国体验其他文化经验,当然如果他们能负担得起这样做。",
+                    "id" : "A4EBC0385C534784B00464BD4FE6AD69",
+                    "keyword" : "go outside||experience other cultures||afford to do so",
+                    "questionid" : "2B0D8CAC4FA6401F94479161042BE8B1",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : "Traveling is one of the most  <lable>precious learning experiences </lable> one can  <lable>acquire </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3243.mp3",
+                    "chinese" : "旅行是可以获得的最宝贵的学习经验。",
+                    "id" : "D6D77F6007DA4C4881697DFD33B8D053",
+                    "keyword" : "precious learning experiences||acquire",
+                    "questionid" : "2B0D8CAC4FA6401F94479161042BE8B1",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : "It makes one more  <lable>open-minded </lable> and more  <lable>tolerant towards </lable> others,  <combination> <simple>irrespective of </simple> race, creed  <simple>or </simple> </combination> skin colour.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3244.mp3",
+                    "chinese" : "它使人一个更加开放和宽容的对待他人,不分种族,信仰或肤色。",
+                    "id" : "B9318326A05D4CD7B3D913BD443B8189",
+                    "keyword" : "open-minded||tolerant towards||irrespective of…or",
+                    "questionid" : "2B0D8CAC4FA6401F94479161042BE8B1",
+                    "sn" : 3
+                  },
+                  {
+                    "answer" : "It's  <lable>the best way </lable> to learn the history and traditions of other cultures.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3245.mp3",
+                    "chinese" : "这是学习其他文化的历史和传统的最好方式。",
+                    "id" : "6D77A28F58EF4456ABC613C5864BAE3C",
+                    "keyword" : "the best way",
+                    "questionid" : "2B0D8CAC4FA6401F94479161042BE8B1",
+                    "sn" : 4
+                  },
+                  {
+                    "answer" : "These are  <lable>particularly useful and helpful </lable> to students, who are  <lable>at the age of </lable> knowledge absorption.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3246.mp3",
+                    "chinese" : "在知识吸收的年龄这会特别有用的和帮助学生。",
+                    "id" : "6EBFF7A858464F74BD8F5E30AE78FBD8",
+                    "keyword" : "particularly useful and helpful||at the age of",
+                    "questionid" : "2B0D8CAC4FA6401F94479161042BE8B1",
+                    "sn" : 5
+                  }
+                ],
+                "audiourl" : "Question_3241.mp3",
+                "chinese" : "学生应该出国旅游开阔视野吗？",
+                "id" : "2B0D8CAC4FA6401F94479161042BE8B1",
+                "levelid" : "6C2DA4A6A2F043C495217F2914A9B8A2",
+                "question" : "Should students travel abroad to broaden their horizons?",
+                "questiontype" : "",
+                "sn" : 1
+              }
+            ]
+          }
+        ],
+        "partid" : 1
+      },
+      {
+        "classid" : "E43CD6309D7E4DF2987E062EC5D9CD3B",
+        "id" : 2,
+        "levellist" : [
+          {
+            "id" : "3742D4821A364B789471B6A3A184A28D",
+            "level" : 1,
+            "partid" : 2,
+            "questionlist" : [
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "I'd  <lable>like to </lable> talk about  <lable>my journey to </lable> the west four years ago.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3225.mp3",
+                    "chinese" : "我想谈谈我的四年前西方的旅行。",
+                    "id" : "308E52A5AD5B4FD1AC8C3A90FDF336E6",
+                    "keyword" : "like to||my journey to",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : "I went to Xinjiang  <lable>during </lable> the summer break  <lable>right after </lable> I graduated from high school.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3226.mp3",
+                    "chinese" : "在我高中毕业后我去新疆过暑假。",
+                    "id" : "0D3B1F24F5B740A0A6D9769D7AF82A3B",
+                    "keyword" : "during||right after",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : "By then I thought that I had studied for 12 years, it was  <lable>time for me </lable> to travel  <lable>on my foot </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3227.mp3",
+                    "chinese" : "我以为我已经学了12年,应该是我亲自旅行时候了。",
+                    "id" : "32808FF421BC4DE9B8079212ECE6E549",
+                    "keyword" : "time for me||on my foot",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 3
+                  },
+                  {
+                    "answer" : "I also wanted to  <lable>broaden my mind </lable> and  <lable>enjoy the natural scenery </lable> in Xinjiang.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3228.mp3",
+                    "chinese" : "我还想扩大我的思维和享受新疆的自然风光。",
+                    "id" : "B425721D888043D1BFFA8484D949E47A",
+                    "keyword" : "broaden my mind||enjoy the natural scenery",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 4
+                  },
+                  {
+                    "answer" : "I went there with  <lable>some of </lable> my high school best friends, who  <lable>shared the same understanding </lable> of travel.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3229.mp3",
+                    "chinese" : "我和我的一些高中最好的朋友去那里旅行,他们拥有相同的理解。",
+                    "id" : "745545BBC00A456A91831428F68E5FE6",
+                    "keyword" : "some of||shared the same understanding",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 5
+                  },
+                  {
+                    "answer" : "We didn't join the  <lable>pack tour </lable>, for we didn't want to have a  <lable>set journey </lable>, following a guide.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3230.mp3",
+                    "chinese" : "我们没有参加旅行团,我们不想有一个只跟着导游的旅程。",
+                    "id" : "C5F029F3A58749D3805B65D7814C72AB",
+                    "keyword" : "pack tour||set journey",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 6
+                  },
+                  {
+                    "answer" : " <lable>Instead </lable>, we wanted to try  <lable>the less traveled route </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3231.mp3",
+                    "chinese" : "相反,我们想尽量尝试少人走的路线。",
+                    "id" : "F1696A213F3A483BB51FC4496962537F",
+                    "keyword" : "Instead||the less traveled route",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 7
+                  },
+                  {
+                    "answer" : "Our  <lable>first stop </lable> was Tianshan and Heaven's Lake.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3232.mp3",
+                    "chinese" : "我们的第一站是天山和天堂湖。",
+                    "id" : "25E2BCCE29BF4A3595B037DE440A20AD",
+                    "keyword" : "first stop",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 8
+                  },
+                  {
+                    "answer" : "<lable>Situated in </lable> the Heavenly  <lable>Mountain Range </lable>, 115 km  <lable>northeast of </lable> Urumqi, Heaven's Lake is  <lable>arguably </lable> one of the nicest spots in all of China.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3233.mp3",
+                    "chinese" : "位于天山山脉,乌鲁木齐东北115公里处,天堂湖堪称全中国最好的景点。",
+                    "id" : "06D5D62DF7D4429A8094A32D8A610008",
+                    "keyword" : "Situated in||Mountain Range||northeast of||arguably",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 9
+                  },
+                  {
+                    "answer" : "The huge clear lake, the pine trees  <lable>covering the hillside </lable>, everything was  <lable>different from </lable> that of the east.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3234.mp3",
+                    "chinese" : "巨大的清澈的湖水,覆盖的山坡上松树,一切都是不同的东西。",
+                    "id" : "CBAB93D7700F4B3981E324ADA36C6426",
+                    "keyword" : "covering the hillside||different from",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 10
+                  },
+                  {
+                    "answer" : "I had seen the scenery  <lable>in photos </lable>, but I felt I was  <lable>in the photo myself </lable> this time.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3235.mp3",
+                    "chinese" : "我所看到的风景照片,但是我觉得我这个时候在照片里。",
+                    "id" : "BDD966932C98489DA7E82DC62C323CDA",
+                    "keyword" : "in photos||in the photo myself",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 11
+                  },
+                  {
+                    "answer" : "My  <lable>next stop </lable> is the great  <lable>Muslim mosque </lable> in the south of Xinjiang Uygur  <lable>Autonomous Regine </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3236.mp3",
+                    "chinese" : "我的下一站是新疆维吾尔自治制度南大清真寺。",
+                    "id" : "592E5A173C274A5CAA16B34DBB62CA30",
+                    "keyword" : "next stop||Muslim mosque||Autonomous Regine",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 12
+                  },
+                  {
+                    "answer" : "I had  <combination> <simple>never seen </simple> a mosque  <simple>before </simple> </combination> so it really  <combination> <simple>impressed </simple> me  <simple>with </simple> </combination> its  <lable>distinctive style </lable> and  <lable>exotic flavour </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3237.mp3",
+                    "chinese" : "我从未见过一个清真寺,所以其独特的风格和异国情调的味道真的给了我深刻的印象。",
+                    "id" : "5F7A7C3C5D084BDB9E14C6FA3889D515",
+                    "keyword" : "never seen…before||impressed…with||distinctive style||exotic flavour",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 13
+                  },
+                  {
+                    "answer" : "I also learned some  <lable>customs and traditions </lable> of the local  <lable>disciples </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3238.mp3",
+                    "chinese" : "我也学会了当地的一些习俗和并认识了传统的门徒。",
+                    "id" : "B91D4E16878549E1A7F88975460806BC",
+                    "keyword" : "customs and traditions||disciples.",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 14
+                  },
+                  {
+                    "answer" : "I went on to the Kanasi Lake and the Mountain of flames  <lable>and so on </lable>, which all  <combination> <simple>impressed </simple> me  <simple>greatly </simple> </combination>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3239.mp3",
+                    "chinese" : "我去喀纳斯湖和火焰山等,这些都给我留下了深刻的印象。",
+                    "id" : "4F78220DFBB24C0FAD2075CF882FA479",
+                    "keyword" : "and so on||impressed…greatly",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 15
+                  },
+                  {
+                    "answer" : " <lable>In a word </lable>, I saw something  <lable>unique and beautiful </lable> during this  <lable>10-day long journey </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3240.mp3",
+                    "chinese" : "总之,这10天的旅程中我看到一些独特和美丽东西。",
+                    "id" : "8105795E9BA24E9F9A6313969B030BBE",
+                    "keyword" : "In a word||unique and beautiful||10-day long journey",
+                    "questionid" : "AC247A9DEEC74440ABF4B5502170E506",
+                    "sn" : 16
+                  }
+                ],
+                "audiourl" : "Question_3224.mp3",
+                "chinese" : "描述一个你参加的漫长的旅途。",
+                "id" : "AC247A9DEEC74440ABF4B5502170E506",
+                "levelid" : "3742D4821A364B789471B6A3A184A28D",
+                "question" : "Describe a long journey you took.\n",
+                "questiontype" : "",
+                "sn" : 1
+              }
+            ]
+          },
+          {
+            "id" : "FB4AFEDEF8AA4AE3A1202B926EE92F9E",
+            "level" : 2,
+            "partid" : 2,
+            "questionlist" : [
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "I'd  <lable>like to </lable> talk about  <lable>my journey to </lable> the west four years ago.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3225.mp3",
+                    "chinese" : "我想谈谈我的四年前西方的旅行。",
+                    "id" : "BF793186767E43F2A75BF75556A4D69C",
+                    "keyword" : "like to||my journey to",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : "I went to Xinjiang  <lable>during </lable> the summer break  <lable>right after </lable> I graduated from high school.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3226.mp3",
+                    "chinese" : "在我高中毕业后我去新疆过暑假。",
+                    "id" : "8015F7209096445F9E52BA90C64BD871",
+                    "keyword" : "during||right after",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : "By then I thought that I had studied for 12 years, it was  <lable>time for me </lable> to travel  <lable>on my foot </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3227.mp3",
+                    "chinese" : "我以为我已经学了12年,应该是我亲自旅行时候了。",
+                    "id" : "C58D6EAAA75E40BBAA24F3531B4D35F2",
+                    "keyword" : "time for me||on my foot",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 3
+                  },
+                  {
+                    "answer" : "I also wanted to  <lable>broaden my mind </lable> and  <lable>enjoy the natural scenery </lable> in Xinjiang.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3228.mp3",
+                    "chinese" : "我还想扩大我的思维和享受新疆的自然风光。",
+                    "id" : "EBB92C864C5D4E95BC3A3ADF13F5F3BD",
+                    "keyword" : "broaden my mind||enjoy the natural scenery",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 4
+                  },
+                  {
+                    "answer" : "I went there with  <lable>some of </lable> my high school best friends, who  <lable>shared the same understanding </lable> of travel.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3229.mp3",
+                    "chinese" : "我和我的一些高中最好的朋友去那里旅行,他们拥有相同的理解。",
+                    "id" : "2DD30EA97EC74E729A3F000067592FF3",
+                    "keyword" : "some of||shared the same understanding",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 5
+                  },
+                  {
+                    "answer" : "We didn't join the  <lable>pack tour </lable>, for we didn't want to have a  <lable>set journey </lable>, following a guide.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3230.mp3",
+                    "chinese" : "我们没有参加旅行团,我们不想有一个只跟着导游的旅程。",
+                    "id" : "9EBC245F6A864895A1E8EF5906B47B25",
+                    "keyword" : "pack tour||set journey",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 6
+                  },
+                  {
+                    "answer" : " <lable>Instead </lable>, we wanted to try  <lable>the less traveled route </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3231.mp3",
+                    "chinese" : "相反,我们想尽量尝试少人走的路线。",
+                    "id" : "98E4C861D8FB4FDD89A048538FB68431",
+                    "keyword" : "Instead||the less traveled route",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 7
+                  },
+                  {
+                    "answer" : "Our  <lable>first stop </lable> was Tianshan and Heaven's Lake.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3232.mp3",
+                    "chinese" : "我们的第一站是天山和天堂湖。",
+                    "id" : "AB880C3295604F998B9C4A22D66F177C",
+                    "keyword" : "first stop",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 8
+                  },
+                  {
+                    "answer" : "<lable>Situated in </lable> the Heavenly  <lable>Mountain Range </lable>, 115 km  <lable>northeast of </lable> Urumqi, Heaven's Lake is  <lable>arguably </lable> one of the nicest spots in all of China.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3233.mp3",
+                    "chinese" : "位于天山山脉,乌鲁木齐东北115公里处,天堂湖堪称全中国最好的景点。",
+                    "id" : "6C7D9EE355204106B522FE5A60EC5D12",
+                    "keyword" : "Situated in||Mountain Range||northeast of||arguably",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 9
+                  },
+                  {
+                    "answer" : "The huge clear lake, the pine trees  <lable>covering the hillside </lable>, everything was  <lable>different from </lable> that of the east.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3234.mp3",
+                    "chinese" : "巨大的清澈的湖水,覆盖的山坡上松树,一切都是不同的东西。",
+                    "id" : "D2F0E71908384EF7940F1E62928E9698",
+                    "keyword" : "covering the hillside||different from",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 10
+                  },
+                  {
+                    "answer" : "I had seen the scenery  <lable>in photos </lable>, but I felt I was  <lable>in the photo myself </lable> this time.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3235.mp3",
+                    "chinese" : "我所看到的风景照片,但是我觉得我这个时候在照片里。",
+                    "id" : "5A2DA5106FC2433D84AC101CC54DE55E",
+                    "keyword" : "in photos||in the photo myself",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 11
+                  },
+                  {
+                    "answer" : "My  <lable>next stop </lable> is the great  <lable>Muslim mosque </lable> in the south of Xinjiang Uygur  <lable>Autonomous Regine </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3236.mp3",
+                    "chinese" : "我的下一站是新疆维吾尔自治制度南大清真寺。",
+                    "id" : "901B206D4022479F927A1C108A4E5C49",
+                    "keyword" : "next stop||Muslim mosque||Autonomous Regine",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 12
+                  },
+                  {
+                    "answer" : "I had  <combination> <simple>never seen </simple> a mosque  <simple>before </simple> </combination> so it really  <combination> <simple>impressed </simple> me  <simple>with </simple> </combination> its  <lable>distinctive style </lable> and  <lable>exotic flavour </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3237.mp3",
+                    "chinese" : "我从未见过一个清真寺,所以其独特的风格和异国情调的味道真的给了我深刻的印象。",
+                    "id" : "6AB9C81EEDDD45B6BDB23819AE8B746B",
+                    "keyword" : "never seen…before||impressed…with||distinctive style||exotic flavour",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 13
+                  },
+                  {
+                    "answer" : "I also learned some  <lable>customs and traditions </lable> of the local  <lable>disciples </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3238.mp3",
+                    "chinese" : "我也学会了当地的一些习俗和并认识了传统的门徒。",
+                    "id" : "93BCB94D29874B7D9E8157A2ECD05D33",
+                    "keyword" : "customs and traditions||disciples",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 14
+                  },
+                  {
+                    "answer" : "I went on to the Kanasi Lake and the Mountain of flames  <lable>and so on </lable>, which all  <combination> <simple>impressed </simple> me  <simple>greatly </simple> </combination>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3239.mp3",
+                    "chinese" : "我去喀纳斯湖和火焰山等,这些都给我留下了深刻的印象。",
+                    "id" : "BD0F037941B34D00B954CAFAA9BD096B",
+                    "keyword" : "and so on||impressed…greatly",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 15
+                  },
+                  {
+                    "answer" : " <lable>In a word </lable>, I saw something  <lable>unique and beautiful </lable> during this  <lable>10-day long journey </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3240.mp3",
+                    "chinese" : "总之,这10天的旅程中我看到一些独特和美丽东西。",
+                    "id" : "EF1A614976614B0FA3D471555DE9BD7B",
+                    "keyword" : "In a word||unique and beautiful||10-day long journey",
+                    "questionid" : "9B685F651FA34A49823CE75AE1852BA9",
+                    "sn" : 16
+                  }
+                ],
+                "audiourl" : "Question_3224.mp3",
+                "chinese" : "描述一个你参加的漫长的旅途。",
+                "id" : "9B685F651FA34A49823CE75AE1852BA9",
+                "levelid" : "FB4AFEDEF8AA4AE3A1202B926EE92F9E",
+                "question" : "Describe a long journey you took.\n",
+                "questiontype" : "",
+                "sn" : 1
+              }
+            ]
+          },
+          {
+            "id" : "BDC195AE25284805A87D47BE225499B4",
+            "level" : 3,
+            "partid" : 2,
+            "questionlist" : [
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "I'd  <lable>like to </lable> talk about  <lable>my journey to </lable> the west four years ago.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3225.mp3",
+                    "chinese" : "我想谈谈我的四年前西方的旅行。",
+                    "id" : "0072EB728897442598372B373F5FD8F0",
+                    "keyword" : "like to||my journey to",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : "I went to Xinjiang  <lable>during </lable> the summer break  <lable>right after </lable> I graduated from high school.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3226.mp3",
+                    "chinese" : "在我高中毕业后我去新疆过暑假。",
+                    "id" : "2F1264400BEB4791A649A1D2D06214E6",
+                    "keyword" : "during||right after",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : "By then I thought that I had studied for 12 years, it was  <lable>time for me </lable> to travel  <lable>on my foot </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3227.mp3",
+                    "chinese" : "我以为我已经学了12年,应该是我亲自旅行时候了。",
+                    "id" : "90EA23CD0FE5490EB942034D53EA6786",
+                    "keyword" : "time for me||on my foot",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 3
+                  },
+                  {
+                    "answer" : "I also wanted to  <lable>broaden my mind </lable> and  <lable>enjoy the natural scenery </lable> in Xinjiang.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3228.mp3",
+                    "chinese" : "我还想扩大我的思维和享受新疆的自然风光。",
+                    "id" : "9EFA6E74B81D4492AC7DC1DA3912B514",
+                    "keyword" : "broaden my mind||enjoy the natural scenery",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 4
+                  },
+                  {
+                    "answer" : "I went there with  <lable>some of </lable> my high school best friends, who  <lable>shared the same understanding </lable> of travel.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3229.mp3",
+                    "chinese" : "我和我的一些高中最好的朋友去那里旅行,他们拥有相同的理解。",
+                    "id" : "2954B5327684426ABEF692CC2FED9BCA",
+                    "keyword" : "some of||shared the same understanding",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 5
+                  },
+                  {
+                    "answer" : "We didn't join the  <lable>pack tour </lable>, for we didn't want to have a  <lable>set journey </lable>, following a guide.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3230.mp3",
+                    "chinese" : "我们没有参加旅行团,我们不想有一个只跟着导游的旅程。",
+                    "id" : "F5AC487B803C4D208BDF22FDAC5F910A",
+                    "keyword" : "pack tour||set journey",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 6
+                  },
+                  {
+                    "answer" : " <lable>Instead </lable>, we wanted to try  <lable>the less traveled route </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3231.mp3",
+                    "chinese" : "相反,我们想尽量尝试少人走的路线。",
+                    "id" : "F104D6E96C9E4751A69EAA9921056146",
+                    "keyword" : "Instead||the less traveled route",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 7
+                  },
+                  {
+                    "answer" : "Our  <lable>first stop </lable> was Tianshan and Heaven's Lake.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3232.mp3",
+                    "chinese" : "我们的第一站是天山和天堂湖。",
+                    "id" : "CF143D06E8534241B43035C2FCD925BC",
+                    "keyword" : "first stop",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 8
+                  },
+                  {
+                    "answer" : "<lable>Situated in </lable> the Heavenly  <lable>Mountain Range </lable>, 115 km  <lable>northeast of </lable> Urumqi, Heaven's Lake is  <lable>arguably </lable> one of the nicest spots in all of China.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3233.mp3",
+                    "chinese" : "位于天山山脉,乌鲁木齐东北115公里处,天堂湖堪称全中国最好的景点。",
+                    "id" : "D297541A30D64C8493B75393E34C1420",
+                    "keyword" : "Situated in||Mountain Range||northeast of||arguably",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 9
+                  },
+                  {
+                    "answer" : "The huge clear lake, the pine trees  <lable>covering the hillside </lable>, everything was  <lable>different from </lable> that of the east.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3234.mp3",
+                    "chinese" : "巨大的清澈的湖水,覆盖的山坡上松树,一切都是不同的东西。",
+                    "id" : "90967AA2562743B08D1D29F5C1FCCEF1",
+                    "keyword" : "covering the hillside||different from",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 10
+                  },
+                  {
+                    "answer" : "I had seen the scenery  <lable>in photos </lable>, but I felt I was  <lable>in the photo myself </lable> this time.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3235.mp3",
+                    "chinese" : "我所看到的风景照片,但是我觉得我这个时候在照片里。",
+                    "id" : "4D03101C6DC84A508D1EA75B2141B840",
+                    "keyword" : "in photos||in the photo myself",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 11
+                  },
+                  {
+                    "answer" : "My  <lable>next stop </lable> is the great  <lable>Muslim mosque </lable> in the south of Xinjiang Uygur  <lable>Autonomous Regine </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3236.mp3",
+                    "chinese" : "我的下一站是新疆维吾尔自治制度南大清真寺。",
+                    "id" : "9A3260B7C59B4ADD93BDC1D01AA4A1EA",
+                    "keyword" : "next stop||Muslim mosque||Autonomous Regine",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 12
+                  },
+                  {
+                    "answer" : "I had  <combination> <simple>never seen </simple> a mosque  <simple>before </simple> </combination> so it really  <combination> <simple>impressed </simple> me  <simple>with </simple> </combination> its  <lable>distinctive style </lable> and  <lable>exotic flavour </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3237.mp3",
+                    "chinese" : "我从未见过一个清真寺,所以其独特的风格和异国情调的味道真的给了我深刻的印象。",
+                    "id" : "AD98771C262C4F63961764DE7832EFB0",
+                    "keyword" : "never seen…before||impressed…with||distinctive style||exotic flavour",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 13
+                  },
+                  {
+                    "answer" : "I also learned some  <lable>customs and traditions </lable> of the local  <lable>disciples </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3238.mp3",
+                    "chinese" : "我也学会了当地的一些习俗和并认识了传统的门徒。",
+                    "id" : "20F56055AD5247DABEB246F82EB1AE24",
+                    "keyword" : "customs and traditions||disciples",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 14
+                  },
+                  {
+                    "answer" : "I went on to the Kanasi Lake and the Mountain of flames  <lable>and so on </lable>, which all  <combination> <simple>impressed </simple> me  <simple>greatly </simple> </combination>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3239.mp3",
+                    "chinese" : "我去喀纳斯湖和火焰山等,这些都给我留下了深刻的印象。",
+                    "id" : "788C0A7115194013B362DF2CE9CDDFE3",
+                    "keyword" : "and so on||impressed…greatly",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 15
+                  },
+                  {
+                    "answer" : " <lable>In a word </lable>, I saw something  <lable>unique and beautiful </lable> during this  <lable>10-day long journey </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3240.mp3",
+                    "chinese" : "总之,这10天的旅程中我看到一些独特和美丽东西。",
+                    "id" : "8D1271862909430EB105ED9997967030",
+                    "keyword" : "In a word||unique and beautiful||10-day long journey",
+                    "questionid" : "93B6971659AA4F2089A5D50D72DCE324",
+                    "sn" : 16
+                  }
+                ],
+                "audiourl" : "Question_3224.mp3",
+                "chinese" : "描述一个你参加的漫长的旅途。",
+                "id" : "93B6971659AA4F2089A5D50D72DCE324",
+                "levelid" : "BDC195AE25284805A87D47BE225499B4",
+                "question" : "Describe a long journey you took.\n",
+                "questiontype" : "",
+                "sn" : 1
+              }
+            ]
+          }
+        ],
+        "partid" : 2
+      },
+      {
+        "classid" : "E43CD6309D7E4DF2987E062EC5D9CD3B",
+        "id" : 3,
+        "levellist" : [
+          {
+            "id" : "DF6BC8A686674D5FB9F9442831961586",
+            "level" : 1,
+            "partid" : 3,
+            "questionlist" : [
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "It  <combination> <simple>has </simple> often <simple>been said </simple> </combination> that travel  <lable>broadens the mind </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3248.mp3",
+                    "chinese" : "经常有人说,旅行可以开阔眼界。",
+                    "id" : "950647B9BB5B4C108B54A335C0854686",
+                    "keyword" : "has…been said||broadens the mind",
+                    "questionid" : "80D9FA48D38C479F86F86051F4898054",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : "Unfortunately, for many people,  <lable>the exact opposite </lable> is true they  <lable>take with </lable> all their  <lable>inbuilt prejudices, bigotry and perceptions </lable> and  <lable>as a result </lable> they  <lable>condemn that </lable> which they are  <lable>unused to </lable> and which they do not understand.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3249.mp3",
+                    "chinese" : "不幸的是,对很多人来说,事实完全相反因为当他们面对他们从未使用的和他们所不知道的事情,他们坚持他们所有的固有的偏见和看法,因此他们的谴责新的内容。",
+                    "id" : "436B4A9D09BD4EDEB055917BE59ABDE8",
+                    "keyword" : "the exact opposite||take with||inbuilt prejudices, bigotry and perceptions||as a result||condemn that||unused to",
+                    "questionid" : "80D9FA48D38C479F86F86051F4898054",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : "This is  <lable>particularly true </lable> of those who  <combination> <simple>take </simple> two weeks  <simple>holiday </simple> </combination> somewhere and then think they  <lable>know all about </lable> their destination  <lable>as a result of </lable> this,  <lable>even though </lable> their personal experiences might be totally  <lable>at odds with </lable> the experiences with the local inhabitant.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3250.mp3",
+                    "chinese" : "这是特别真实的对于那些花两周的假期去别的地方的人,他们所知道的所有的事情就是他们的想象,即使他们完全有与当地居民的经验的机会。",
+                    "id" : "B5801A7596534DE9AF144901401E8E85",
+                    "keyword" : "particularly true||take…holiday||know all about||as a result of||even though||at odds with",
+                    "questionid" : "80D9FA48D38C479F86F86051F4898054",
+                    "sn" : 3
+                  }
+                ],
+                "audiourl" : "Question_3247.mp3",
+                "chinese" : "你认为旅行可以开阔一个人的心灵吗？",
+                "id" : "80D9FA48D38C479F86F86051F4898054",
+                "levelid" : "DF6BC8A686674D5FB9F9442831961586",
+                "question" : "Do you think traveling can broaden one's mind?",
+                "questiontype" : "",
+                "sn" : 1
+              },
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "I think  <lable>one of the reasons </lable> is that we need to look for resources from other planets, since  <lable>the natural resources </lable> on earth is being  <lable>used up </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3252.mp3",
+                    "chinese" : "我想其中一个原因是,我们需要寻找其他星球的资源,由于地球上的自然资源正在枯竭。",
+                    "id" : "E770BE0C84DF4DF884810EC15867925B",
+                    "keyword" : "one of the reasons||the natural resources||used up",
+                    "questionid" : "2CA8DD4F032A4BB1A14B8ECFA83CC4F8",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : " <lable>Related to </lable> over population, we are  <lable>burning through </lable> the earth's natural resources  <lable>pretty quickly </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3253.mp3",
+                    "chinese" : "和人口过多相关,我们正在通过地球的自然资源很快。",
+                    "id" : "D5D56523636F4BE99366598AC46C9B1D",
+                    "keyword" : "Related to||burning through||pretty quickly",
+                    "questionid" : "2CA8DD4F032A4BB1A14B8ECFA83CC4F8",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : " <lable>Out in </lable> space there is  <lable>virtually </lable> unlimited resources.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3254.mp3",
+                    "chinese" : "在太空中有几乎无限的资源。",
+                    "id" : "DF1045F895F6452AA1CB0AF0F90F3DA0",
+                    "keyword" : "Out in||virtually",
+                    "questionid" : "2CA8DD4F032A4BB1A14B8ECFA83CC4F8",
+                    "sn" : 3
+                  },
+                  {
+                    "answer" : "It is all  <lable>just a matter of </lable> collecting it and bringing it back, which  <lable>granted will not be </lable> an easy task.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3255.mp3",
+                    "chinese" : "所有的需要做的只是收集并将它带回来,这当然不是一件容易的事。",
+                    "id" : "C3040040CE7D446AB869ECAEEDE3D9AB",
+                    "keyword" : "just a matter of||granted will not be",
+                    "questionid" : "2CA8DD4F032A4BB1A14B8ECFA83CC4F8",
+                    "sn" : 4
+                  }
+                ],
+                "audiourl" : "Question_3251.mp3",
+                "chinese" : "太空旅行的重要性是什么？",
+                "id" : "2CA8DD4F032A4BB1A14B8ECFA83CC4F8",
+                "levelid" : "DF6BC8A686674D5FB9F9442831961586",
+                "question" : "What is the importance of traveling into space?",
+                "questiontype" : "",
+                "sn" : 2
+              },
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "Well,  <lable>despite all the prospects of </lable> space travel, it still has many disadvantages, such as  <combination> <simple>the possible loss </simple> of life, the  <simple>possibility of </simple> </combination> infection from alien viruses and bacteria, high costs which could be used to  <lable>help the needy </lable> or  <lable>sponsor other experiment </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3257.mp3",
+                    "chinese" : "嗯,尽管太空旅行的有很大的前景,它仍有许多缺点,如可能失去生命,从外太空带来病毒和细菌感染的可能性,成本高,而高成本可用于帮助穷人或赞助其他实验中。",
+                    "id" : "C182E777C97A43A0A425C1ADD699AFE8",
+                    "keyword" : "despite all the prospects of||the possible loss…possibility of||help the needy||sponsor other experiment",
+                    "questionid" : "9ADAE818528148FC9F4FB4A062825D17",
+                    "sn" : 1
+                  }
+                ],
+                "audiourl" : "Question_3256.mp3",
+                "chinese" : "太空旅行的可能的缺点是什么？",
+                "id" : "9ADAE818528148FC9F4FB4A062825D17",
+                "levelid" : "DF6BC8A686674D5FB9F9442831961586",
+                "question" : "What are the possible disadvantages of space travel?",
+                "questiontype" : "",
+                "sn" : 3
+              }
+            ]
+          },
+          {
+            "id" : "6CC8E754208542E39BD70F85FDE978FD",
+            "level" : 2,
+            "partid" : 3,
+            "questionlist" : [
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "It  <combination> <simple>has </simple> often <simple>been said </simple> </combination> that travel  <lable>broadens the mind </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3248.mp3",
+                    "chinese" : "经常有人说,旅行可以开阔眼界。",
+                    "id" : "9DF342C477584221898B36D7B9350701",
+                    "keyword" : "has…been said||broadens the mind",
+                    "questionid" : "CE0973A130B74673A27CFF283CD7FAAA",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : "Unfortunately, for many people,  <lable>the exact opposite </lable> is true they  <lable>take with </lable> all their  <lable>inbuilt prejudices, bigotry and perceptions </lable> and  <lable>as a result </lable> they  <lable>condemn that </lable> which they are  <lable>unused to </lable> and which they do not understand.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3249.mp3",
+                    "chinese" : "不幸的是,对很多人来说,事实完全相反因为当他们面对他们从未使用的和他们所不知道的事情,他们坚持他们所有的固有的偏见和看法,因此他们的谴责新的内容。",
+                    "id" : "3ADA558DD8BE4CA7A742B4C4D9E2C105",
+                    "keyword" : "the exact opposite||take with||inbuilt prejudices, bigotry and perceptions||as a result||condemn that||unused to",
+                    "questionid" : "CE0973A130B74673A27CFF283CD7FAAA",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : "This is  <lable>particularly true </lable> of those who  <combination> <simple>take </simple> two weeks  <simple>holiday </simple> </combination> somewhere and then think they  <lable>know all about </lable> their destination  <lable>as a result of </lable> this,  <lable>even though </lable> their personal experiences might be totally  <lable>at odds with </lable> the experiences with the local inhabitant.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3250.mp3",
+                    "chinese" : "这是特别真实的对于那些花两周的假期去别的地方的人,他们所知道的所有的事情就是他们的想象,即使他们完全有与当地居民的经验的机会。",
+                    "id" : "31E50454175144F29C3B878E47FF8170",
+                    "keyword" : "particularly true||take…holiday||know all about||as a result of||even though||at odds with",
+                    "questionid" : "CE0973A130B74673A27CFF283CD7FAAA",
+                    "sn" : 3
+                  }
+                ],
+                "audiourl" : "Question_3247.mp3",
+                "chinese" : "你认为旅行可以开阔一个人的心灵吗？",
+                "id" : "CE0973A130B74673A27CFF283CD7FAAA",
+                "levelid" : "6CC8E754208542E39BD70F85FDE978FD",
+                "question" : "Do you think traveling can broaden one's mind?",
+                "questiontype" : "",
+                "sn" : 1
+              },
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "I think  <lable>one of the reasons </lable> is that we need to look for resources from other planets, since  <lable>the natural resources </lable> on earth is being  <lable>used up </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3252.mp3",
+                    "chinese" : "我想其中一个原因是,我们需要寻找其他星球的资源,由于地球上的自然资源正在枯竭。",
+                    "id" : "C846E819D34240C7A5D3CF87FA8779FE",
+                    "keyword" : "one of the reasons||the natural resources||used up",
+                    "questionid" : "BFEC0A6A9E754D9FA624F5D0984994EF",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : " <lable>Related to </lable> over population, we are  <lable>burning through </lable> the earth's natural resources  <lable>pretty quickly </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3253.mp3",
+                    "chinese" : "和人口过多相关,我们正在通过地球的自然资源很快。",
+                    "id" : "5BA1E9CAC51E473483F57D10239E4EE3",
+                    "keyword" : "Related to||burning through||pretty quickly",
+                    "questionid" : "BFEC0A6A9E754D9FA624F5D0984994EF",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : " <lable>Out in </lable> space there is  <lable>virtually </lable> unlimited resources.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3254.mp3",
+                    "chinese" : "在太空中有几乎无限的资源。",
+                    "id" : "0077CE3471154FB191C9C99A53A59EAE",
+                    "keyword" : "Out in||virtually",
+                    "questionid" : "BFEC0A6A9E754D9FA624F5D0984994EF",
+                    "sn" : 3
+                  },
+                  {
+                    "answer" : "It is all  <lable>just a matter of </lable> collecting it and bringing it back, which  <lable>granted will not be </lable> an easy task.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3255.mp3",
+                    "chinese" : "所有的需要做的只是收集并将它带回来,这当然不是一件容易的事。",
+                    "id" : "A7165A5BE8ED4F08943EA25A2276A897",
+                    "keyword" : "just a matter of||granted will not be",
+                    "questionid" : "BFEC0A6A9E754D9FA624F5D0984994EF",
+                    "sn" : 4
+                  }
+                ],
+                "audiourl" : "Question_3251.mp3",
+                "chinese" : "太空旅行的重要性是什么？",
+                "id" : "BFEC0A6A9E754D9FA624F5D0984994EF",
+                "levelid" : "6CC8E754208542E39BD70F85FDE978FD",
+                "question" : "What is the importance of traveling into space?",
+                "questiontype" : "",
+                "sn" : 2
+              },
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "Well,  <lable>despite all the prospects of </lable> space travel, it still has many disadvantages, such as  <combination> <simple>the possible loss </simple> of life, the  <simple>possibility of </simple> </combination> infection from alien viruses and bacteria, high costs which could be used to  <lable>help the needy </lable> or  <lable>sponsor other experiment </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3257.mp3",
+                    "chinese" : "嗯,尽管太空旅行的有很大的前景,它仍有许多缺点,如可能失去生命,从外太空带来病毒和细菌感染的可能性,成本高,而高成本可用于帮助穷人或赞助其他实验中。",
+                    "id" : "22547D4F783D4F2C8596567525667DB9",
+                    "keyword" : "despite all the prospects of||the possible loss…possibility of||help the needy||sponsor other experiment",
+                    "questionid" : "73CA903968F34C89919033027115D195",
+                    "sn" : 1
+                  }
+                ],
+                "audiourl" : "Question_3256.mp3",
+                "chinese" : "太空旅行的可能的缺点是什么？",
+                "id" : "73CA903968F34C89919033027115D195",
+                "levelid" : "6CC8E754208542E39BD70F85FDE978FD",
+                "question" : "What are the possible disadvantages of space travel?",
+                "questiontype" : "",
+                "sn" : 3
+              }
+            ]
+          },
+          {
+            "id" : "F428DA8598084A36813F46BFAFD97666",
+            "level" : 3,
+            "partid" : 3,
+            "questionlist" : [
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "It  <combination> <simple>has </simple> often <simple>been said </simple> </combination> that travel  <lable>broadens the mind </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3248.mp3",
+                    "chinese" : "经常有人说,旅行可以开阔眼界。",
+                    "id" : "ACABFB20727441B2AADE7289FBA2EC6F",
+                    "keyword" : "has…been said||broadens the mind",
+                    "questionid" : "C313F275CB3F4162A4AEB236A49EE2C2",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : "Unfortunately, for many people,  <lable>the exact opposite </lable> is true they  <lable>take with </lable> all their  <lable>inbuilt prejudices, bigotry and perceptions </lable> and  <lable>as a result </lable> they  <lable>condemn that </lable> which they are  <lable>unused to </lable> and which they do not understand.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3249.mp3",
+                    "chinese" : "不幸的是,对很多人来说,事实完全相反因为当他们面对他们从未使用的和他们所不知道的事情,他们坚持他们所有的固有的偏见和看法,因此他们的谴责新的内容。",
+                    "id" : "4FC9BA1AE0524AF9A5BE5A848B733E20",
+                    "keyword" : "the exact opposite||take with||inbuilt prejudices, bigotry and perceptions||as a result||condemn that||unused to",
+                    "questionid" : "C313F275CB3F4162A4AEB236A49EE2C2",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : "This is  <lable>particularly true </lable> of those who  <combination> <simple>take </simple> two weeks  <simple>holiday </simple> </combination> somewhere and then think they  <lable>know all about </lable> their destination  <lable>as a result of </lable> this,  <lable>even though </lable> their personal experiences might be totally  <lable>at odds with </lable> the experiences with the local inhabitant.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3250.mp3",
+                    "chinese" : "这是特别真实的对于那些花两周的假期去别的地方的人,他们所知道的所有的事情就是他们的想象,即使他们完全有与当地居民的经验的机会。",
+                    "id" : "4A455C9766A34730B57B290D1932DD8A",
+                    "keyword" : "particularly true||take…holiday||know all about||as a result of||even though||at odds with",
+                    "questionid" : "C313F275CB3F4162A4AEB236A49EE2C2",
+                    "sn" : 3
+                  }
+                ],
+                "audiourl" : "Question_3247.mp3",
+                "chinese" : "你认为旅行可以开阔一个人的心灵吗？",
+                "id" : "C313F275CB3F4162A4AEB236A49EE2C2",
+                "levelid" : "F428DA8598084A36813F46BFAFD97666",
+                "question" : "Do you think traveling can broaden one's mind?",
+                "questiontype" : "",
+                "sn" : 1
+              },
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "I think  <lable>one of the reasons </lable> is that we need to look for resources from other planets, since  <lable>the natural resources </lable> on earth is being  <lable>used up </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3252.mp3",
+                    "chinese" : "我想其中一个原因是,我们需要寻找其他星球的资源,由于地球上的自然资源正在枯竭。",
+                    "id" : "BDD3535867264CA3A397816853E53E6D",
+                    "keyword" : "one of the reasons||the natural resources||used up",
+                    "questionid" : "8C7918D2DFE54612895F43F020CF6591",
+                    "sn" : 1
+                  },
+                  {
+                    "answer" : " <lable>Related to </lable> over population, we are  <lable>burning through </lable> the earth's natural resources  <lable>pretty quickly </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3253.mp3",
+                    "chinese" : "和人口过多相关,我们正在通过地球的自然资源很快。",
+                    "id" : "FD3BF90B7C1D4E0EB07B4E24C7DBC8DC",
+                    "keyword" : "Related to||burning through||pretty quickly",
+                    "questionid" : "8C7918D2DFE54612895F43F020CF6591",
+                    "sn" : 2
+                  },
+                  {
+                    "answer" : " <lable>Out in </lable> space there is  <lable>virtually </lable> unlimited resources.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3254.mp3",
+                    "chinese" : "在太空中有几乎无限的资源。",
+                    "id" : "A1199B4DF9994B618A2FE2C75D69D9F1",
+                    "keyword" : "Out in||virtually",
+                    "questionid" : "8C7918D2DFE54612895F43F020CF6591",
+                    "sn" : 3
+                  },
+                  {
+                    "answer" : "It is all  <lable>just a matter of </lable> collecting it and bringing it back, which  <lable>granted will not be </lable> an easy task.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3255.mp3",
+                    "chinese" : "所有的需要做的只是收集并将它带回来,这当然不是一件容易的事。",
+                    "id" : "619B31C5BBD04813A1D001832024905E",
+                    "keyword" : "just a matter of||granted will not be",
+                    "questionid" : "8C7918D2DFE54612895F43F020CF6591",
+                    "sn" : 4
+                  }
+                ],
+                "audiourl" : "Question_3251.mp3",
+                "chinese" : "太空旅行的重要性是什么？",
+                "id" : "8C7918D2DFE54612895F43F020CF6591",
+                "levelid" : "F428DA8598084A36813F46BFAFD97666",
+                "question" : "What is the importance of traveling into space?",
+                "questiontype" : "",
+                "sn" : 2
+              },
+              {
+                "answerlist" : [
+                  {
+                    "answer" : "Well,  <lable>despite all the prospects of </lable> space travel, it still has many disadvantages, such as  <combination> <simple>the possible loss </simple> of life, the  <simple>possibility of </simple> </combination> infection from alien viruses and bacteria, high costs which could be used to  <lable>help the needy </lable> or  <lable>sponsor other experiment </lable>.",
+                    "answertype" : "",
+                    "audiourl" : "Question_3257.mp3",
+                    "chinese" : "嗯,尽管太空旅行的有很大的前景,它仍有许多缺点,如可能失去生命,从外太空带来病毒和细菌感染的可能性,成本高,而高成本可用于帮助穷人或赞助其他实验中。",
+                    "id" : "298DFE9AA64049CCA25F40B3425794BD",
+                    "keyword" : "despite all the prospects of||the possible loss…possibility of||help the needy||sponsor other experiment",
+                    "questionid" : "50A7C517113547F5A2E49B5B42466D0C",
+                    "sn" : 1
+                  }
+                ],
+                "audiourl" : "Question_3256.mp3",
+                "chinese" : "太空旅行的可能的缺点是什么？",
+                "id" : "50A7C517113547F5A2E49B5B42466D0C",
+                "levelid" : "F428DA8598084A36813F46BFAFD97666",
+                "question" : "What are the possible disadvantages of space travel?",
+                "questiontype" : "",
+                "sn" : 3
+              }
+            ]
+          }
+        ],
+        "partid" : 3
+      }
+    ],
+    "skintype" : "5"
+  },
+  "remark" : "成功",
+  "respCode" : 1000
+}
