@@ -56,7 +56,7 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" maximumZoomScale="3" translatesAutoresizingMaskIntoConstraints="NO" id="lDr-Yb-uTC">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lDr-Yb-uTC">
                     <rect key="frame" x="55" y="188" width="210" height="80"/>
                     <constraints>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="80" id="LIQ-YO-cZC"/>
@@ -64,6 +64,7 @@
                         <constraint firstAttribute="height" constant="80" id="gyl-An-Evg"/>
                         <constraint firstAttribute="width" priority="750" constant="210" id="kwU-ah-O6r"/>
                     </constraints>
+                    <inset key="scrollIndicatorInsets" minX="0.0" minY="0.0" maxX="630" maxY="80"/>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hts-LQ-12j">
                     <rect key="frame" x="105" y="401" width="110" height="40"/>

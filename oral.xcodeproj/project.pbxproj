@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FD596D8A1B09CC8200D6DE7B /* stop.png in Resources */ = {isa = PBXBuildFile; fileRef = FD596D891B09CC8200D6DE7B /* stop.png */; };
 		FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8B1B09E0D400D6DE7B /* Images.xcassets */; };
 		FD596DB21B09E42100D6DE7B /* 349207.png in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8E1B09E42100D6DE7B /* 349207.png */; };
 		FD596DB31B09E42100D6DE7B /* info.json in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8F1B09E42100D6DE7B /* info.json */; };
@@ -84,7 +83,6 @@
 /* Begin PBXFileReference section */
 		FD596D831B097E7000D6DE7B /* PchFile.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PchFile.pch; sourceTree = "<group>"; };
 		FD596D851B097F7C00D6DE7B /* HeadFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeadFile.h; sourceTree = "<group>"; };
-		FD596D891B09CC8200D6DE7B /* stop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stop.png; sourceTree = "<group>"; };
 		FD596D8B1B09E0D400D6DE7B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FD596D8E1B09E42100D6DE7B /* 349207.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 349207.png; sourceTree = "<group>"; };
 		FD596D8F1B09E42100D6DE7B /* info.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = info.json; sourceTree = "<group>"; };
@@ -389,7 +387,6 @@
 		FDD404501B049B4700DE2E84 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				FD596D891B09CC8200D6DE7B /* stop.png */,
 				FD62449E1B0584780037836E /* touxiang.png */,
 				FDD404571B049B8400DE2E84 /* topic_small.png */,
 				FDD404581B049B8400DE2E84 /* topic1_small.png */,
@@ -492,7 +489,6 @@
 				FDD4044D1B04972D00DE2E84 /* RightMainCell.xib in Resources */,
 				FD596DCA1B09E42100D6DE7B /* Question_3246.mp3 in Resources */,
 				FD596DCE1B09E42100D6DE7B /* Question_3250.mp3 in Resources */,
-				FD596D8A1B09CC8200D6DE7B /* stop.png in Resources */,
 				FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */,
 				FDD4044F1B04972D00DE2E84 /* TopicCell.xib in Resources */,
 				FD596DBF1B09E42100D6DE7B /* Question_3235.mp3 in Resources */,

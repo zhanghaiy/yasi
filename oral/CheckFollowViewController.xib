@@ -7,13 +7,16 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckFollowViewController">
             <connections>
+                <outlet property="addPracticeButton" destination="KBJ-pI-83K" id="jpJ-bs-OAA"/>
                 <outlet property="answerBottomView" destination="29y-HZ-hTn" id="hBL-wD-ywI"/>
                 <outlet property="answerButton" destination="icL-bV-wfE" id="zcC-ui-lWV"/>
                 <outlet property="answerTextLabel" destination="ITt-9b-c44" id="ij1-B8-PM4"/>
                 <outlet property="bottomView" destination="Qyk-9q-cFt" id="GEO-b7-x5x"/>
                 <outlet property="lineLabel" destination="gWF-5t-PD8" id="U9O-B9-02R"/>
+                <outlet property="nextButton" destination="lrh-uL-cp6" id="FN7-wy-I03"/>
                 <outlet property="questionCountsView" destination="N7j-VH-R1s" id="RdZ-LF-Ydg"/>
                 <outlet property="questionTextLabel" destination="okn-nJ-Jlr" id="lUa-um-nqV"/>
+                <outlet property="scoreButton" destination="UwA-bR-ucJ" id="f3j-z4-Tgc"/>
                 <outlet property="stuAnswerCountsLabel" destination="yHL-c9-2Nu" id="cMf-X7-PUx"/>
                 <outlet property="stuImageView" destination="fsk-5k-WS9" id="aV5-wn-XKw"/>
                 <outlet property="stuTitleLabel" destination="k8E-Cv-Jpa" id="BDV-yP-1Ie"/>
@@ -112,7 +115,7 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The answer is definitely dogs." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITt-9b-c44">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The answer is definitely dogs." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITt-9b-c44">
                             <rect key="frame" x="15" y="50" width="305" height="115"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -137,6 +140,17 @@
                                         <constraint firstAttribute="width" secondItem="fsk-5k-WS9" secondAttribute="height" multiplier="1:1" id="bnh-cb-jMb"/>
                                     </constraints>
                                 </imageView>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UwA-bR-ucJ">
+                                    <rect key="frame" x="117" y="10" width="100" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="RyU-v4-2Rg"/>
+                                        <constraint firstAttribute="width" constant="100" id="nqx-z6-8zE"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                    <state key="normal" title="96">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" red="0.23486852220000001" green="0.7966757015" blue="0.57971397410000003" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
@@ -147,9 +161,11 @@
                                 <constraint firstAttribute="centerY" secondItem="T9Z-LN-uoD" secondAttribute="centerY" id="ASl-sl-PEg"/>
                                 <constraint firstItem="fsk-5k-WS9" firstAttribute="top" secondItem="29y-HZ-hTn" secondAttribute="top" constant="10" id="CgE-45-ICt"/>
                                 <constraint firstItem="T9Z-LN-uoD" firstAttribute="leading" secondItem="29y-HZ-hTn" secondAttribute="leading" constant="10" id="GBB-TA-wHp"/>
+                                <constraint firstAttribute="centerX" secondItem="UwA-bR-ucJ" secondAttribute="centerX" id="IBw-87-xcp"/>
                                 <constraint firstAttribute="centerY" secondItem="fsk-5k-WS9" secondAttribute="centerY" id="XYb-gb-m1R"/>
                                 <constraint firstAttribute="bottom" secondItem="T9Z-LN-uoD" secondAttribute="bottom" constant="34" id="g4f-PB-Sse"/>
                                 <constraint firstAttribute="trailing" secondItem="fsk-5k-WS9" secondAttribute="trailing" constant="12" id="gTZ-xY-tTU"/>
+                                <constraint firstAttribute="centerY" secondItem="UwA-bR-ucJ" secondAttribute="centerY" id="iWI-wn-sLH"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -177,23 +193,58 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qyk-9q-cFt">
                     <rect key="frame" x="0.0" y="450" width="375" height="90"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icL-bV-wfE">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icL-bV-wfE">
                             <rect key="frame" x="147" y="5" width="80" height="80"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="icL-bV-wfE" secondAttribute="height" multiplier="1:1" id="ngH-FF-0Na"/>
                             </constraints>
-                            <state key="normal" backgroundImage="stop.png">
+                            <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="answerButtonClicked:" destination="-1" eventType="touchUpInside" id="upn-NV-BWc"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KBJ-pI-83K">
+                            <rect key="frame" x="69" y="15" width="120" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="120" id="HRf-yK-d8p"/>
+                                <constraint firstAttribute="height" constant="60" id="lbN-Ei-S62"/>
+                            </constraints>
+                            <state key="normal" title="加入练习簿" backgroundImage="exesize">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="addPractiseBook:" destination="-1" eventType="touchUpInside" id="3CG-cv-atH"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrh-uL-cp6">
+                            <rect key="frame" x="186" y="15" width="120" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="bWu-JM-lMB"/>
+                                <constraint firstAttribute="width" constant="120" id="cXU-D9-ep5"/>
+                            </constraints>
+                            <state key="normal" title="继续下一题" backgroundImage="nextQuestion">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="nextQuestion:" destination="-1" eventType="touchUpInside" id="lYb-A9-DN9"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.66990064540000005" blue="0.6258930345" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstAttribute="centerY" secondItem="lrh-uL-cp6" secondAttribute="centerY" id="3ol-UN-Mek"/>
                         <constraint firstItem="icL-bV-wfE" firstAttribute="top" secondItem="Qyk-9q-cFt" secondAttribute="top" constant="5" id="5Mr-Y5-j9e"/>
                         <constraint firstAttribute="width" secondItem="Qyk-9q-cFt" secondAttribute="height" multiplier="25:6" id="AyG-HV-fet"/>
+                        <constraint firstItem="KBJ-pI-83K" firstAttribute="height" secondItem="lrh-uL-cp6" secondAttribute="height" id="F5r-TA-Nco"/>
+                        <constraint firstAttribute="centerX" secondItem="lrh-uL-cp6" secondAttribute="centerX" constant="-58" id="PE8-nG-UTg"/>
+                        <constraint firstItem="KBJ-pI-83K" firstAttribute="width" secondItem="lrh-uL-cp6" secondAttribute="width" id="SAP-6I-lTl"/>
                         <constraint firstAttribute="bottom" secondItem="icL-bV-wfE" secondAttribute="bottom" constant="5" id="ZqN-cM-olN"/>
                         <constraint firstAttribute="centerY" secondItem="icL-bV-wfE" secondAttribute="centerY" id="aMn-aU-FMt"/>
                         <constraint firstAttribute="centerX" secondItem="icL-bV-wfE" secondAttribute="centerX" id="kIE-dn-JRq"/>
+                        <constraint firstAttribute="centerY" secondItem="KBJ-pI-83K" secondAttribute="centerY" id="l3P-wd-T9m"/>
+                        <constraint firstAttribute="centerX" secondItem="KBJ-pI-83K" secondAttribute="centerX" constant="58" id="uh6-t0-yp0"/>
                     </constraints>
                 </view>
             </subviews>
@@ -219,7 +270,8 @@
         </view>
     </objects>
     <resources>
-        <image name="stop.png" width="134" height="134"/>
+        <image name="exesize" width="126" height="60"/>
+        <image name="nextQuestion" width="126" height="60"/>
         <image name="touxiang.png" width="70" height="70"/>
     </resources>
 </document>
