@@ -31,8 +31,8 @@
 //#define kScreentWidth [UIScreen mainScreen].bounds.size.width
 //#define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kmainCellHeight ((kScreenHeight-kNavBarHeight)/3)
-
-
+#define kRightCellHeight ((kScreenHeight-kNavBarHeight-kmainCellHeight*2/3)/7)
+#define kRightTableY (kScreenHeight-(kRightCellHeight*7)-kNavBarHeight)/2
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -58,7 +58,7 @@
     _topicTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_topicTableView];
     
-    _rightTableView = [[UITableView alloc]initWithFrame:CGRectMake(self.view.frame.size.width, 44+50, 60, self.view.frame.size.height-144) style:UITableViewStylePlain];
+    _rightTableView = [[UITableView alloc]initWithFrame:CGRectMake(kScreentWidth, 45+kRightTableY, kRightCellHeight, kRightCellHeight*7) style:UITableViewStylePlain];
     _rightTableView.delegate = self;
     _rightTableView.dataSource = self;
     _rightTableView.tag = kRightTableVIewTag;
@@ -92,7 +92,7 @@
     }
     else if (tableView.tag == kRightTableVIewTag)
     {
-        return 60;
+        return kRightCellHeight;
     }
     return 0;
 }
@@ -155,7 +155,7 @@
     NSInteger count = btn.tag - kTopicButtonTag*10;
     if (count>_topicArray.count-3)
     {
-        _topicTableView.contentOffset = CGPointMake(0, (_topicArray.count-3)*160);
+        _topicTableView.contentOffset = CGPointMake(0, (_topicArray.count-3)*kmainCellHeight);
     }
     else if (count<3)
     {
@@ -163,14 +163,14 @@
     }
     else
     {
-        _topicTableView.contentOffset = CGPointMake(0, (count-1)*160);
+        _topicTableView.contentOffset = CGPointMake(0, (count-1)*kmainCellHeight);
     }
 }
 
 #pragma mark - 滑动列表时调用该方法
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"%f",scrollView.contentOffset.y / 160.0);
+    NSLog(@"%f",scrollView.contentOffset.y / kmainCellHeight);
     if (scrollView.tag == kTopicMainTableViewTag)
     {
         if (_selectFromRight)
@@ -181,7 +181,7 @@
         {
             [self.view bringSubviewToFront:_rightTableView];
             [self rightTableViewShow];
-            if (scrollView.contentOffset.y>=0&&scrollView.contentOffset.y<=(_topicArray.count-3)*160)
+            if (scrollView.contentOffset.y>=0&&scrollView.contentOffset.y<=(_topicArray.count-3)*kmainCellHeight)
             {
                 if (scrollView.contentOffset.y-_topicContentY>0)
                 {
@@ -202,13 +202,13 @@
 #pragma mark - 向下滑动
 - (void)down
 {
-    if (_topicTableView.contentOffset.y/160+7<_topicArray.count)
+    if (_topicTableView.contentOffset.y/kmainCellHeight+7<_topicArray.count)
     {
-        _rightTableView.contentOffset = CGPointMake(0, (_topicTableView.contentOffset.y/160)*60);
+        _rightTableView.contentOffset = CGPointMake(0, (_topicTableView.contentOffset.y/kmainCellHeight)*kRightCellHeight);
     }
     else
     {
-        _rightTableView.contentOffset = CGPointMake(0, (_topicArray.count-7)*60);
+        _rightTableView.contentOffset = CGPointMake(0, (_topicArray.count-7)*kRightCellHeight);
     }
 }
 
@@ -216,9 +216,9 @@
 - (void)up
 {
     // 若想右侧列表展示主列表后面的数据 将7--->10即可
-    if (_topicTableView.contentOffset.y/160-7>0)
+    if (_topicTableView.contentOffset.y/kmainCellHeight-7>0)
     {
-        _rightTableView.contentOffset = CGPointMake(0, (_topicTableView.contentOffset.y/160-7)*60);
+        _rightTableView.contentOffset = CGPointMake(0, (_topicTableView.contentOffset.y/kmainCellHeight-7)*kRightCellHeight);
     }
     else
     {
@@ -230,7 +230,7 @@
 - (void)rightTableViewShow
 {
     CGRect rect = _rightTableView.frame;
-    rect.origin.x = self.view.frame.size.width-60;
+    rect.origin.x = self.view.frame.size.width-kRightCellHeight;
     [UIView animateWithDuration:0.1 animations:^{
         _rightTableView.frame = rect;
     }];

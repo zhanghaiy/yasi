@@ -7,7 +7,9 @@
 //
 
 #import "TopicParentsViewController.h"
-
+ /*
+    闯关入口页
+  */
 @interface TPCCheckpointViewController : TopicParentsViewController
 @property (weak, nonatomic) IBOutlet UIButton *exerciseBookBtn;
 @property (weak, nonatomic) IBOutlet UILabel *exeLable;

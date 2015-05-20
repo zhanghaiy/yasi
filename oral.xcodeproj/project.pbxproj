@@ -49,6 +49,12 @@
 		FD6244A41B0585450037836E /* TPCCheckpointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A21B0585450037836E /* TPCCheckpointViewController.xib */; };
 		FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6244A61B0585820037836E /* CheckFollowViewController.m */; };
 		FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A71B0585820037836E /* CheckFollowViewController.xib */; };
+		FD8C40E61B0C6D8200948B6C /* CheckSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8C40E41B0C6D8200948B6C /* CheckSuccessViewController.m */; };
+		FD8C40E71B0C6D8200948B6C /* CheckSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8C40E51B0C6D8200948B6C /* CheckSuccessViewController.xib */; };
+		FD8C40EB1B0C6F3A00948B6C /* CheckBlankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8C40E91B0C6F3A00948B6C /* CheckBlankViewController.m */; };
+		FD8C40EC1B0C6F3A00948B6C /* CheckBlankViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8C40EA1B0C6F3A00948B6C /* CheckBlankViewController.xib */; };
+		FD8C40F01B0C6FAB00948B6C /* CheckAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8C40EE1B0C6FAB00948B6C /* CheckAskViewController.m */; };
+		FD8C40F11B0C6FAB00948B6C /* CheckAskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */; };
 		FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD92C5C71B0ACA8D00B7BE43 /* AudioPlayer.m */; };
 		FDD404141B0492F900DE2E84 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404131B0492F900DE2E84 /* main.m */; };
 		FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404161B0492F900DE2E84 /* AppDelegate.m */; };
@@ -127,6 +133,15 @@
 		FD6244A51B0585820037836E /* CheckFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckFollowViewController.h; sourceTree = "<group>"; };
 		FD6244A61B0585820037836E /* CheckFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckFollowViewController.m; sourceTree = "<group>"; };
 		FD6244A71B0585820037836E /* CheckFollowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckFollowViewController.xib; sourceTree = "<group>"; };
+		FD8C40E31B0C6D8200948B6C /* CheckSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckSuccessViewController.h; sourceTree = "<group>"; };
+		FD8C40E41B0C6D8200948B6C /* CheckSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckSuccessViewController.m; sourceTree = "<group>"; };
+		FD8C40E51B0C6D8200948B6C /* CheckSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckSuccessViewController.xib; sourceTree = "<group>"; };
+		FD8C40E81B0C6F3A00948B6C /* CheckBlankViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckBlankViewController.h; sourceTree = "<group>"; };
+		FD8C40E91B0C6F3A00948B6C /* CheckBlankViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckBlankViewController.m; sourceTree = "<group>"; };
+		FD8C40EA1B0C6F3A00948B6C /* CheckBlankViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckBlankViewController.xib; sourceTree = "<group>"; };
+		FD8C40ED1B0C6FAB00948B6C /* CheckAskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckAskViewController.h; sourceTree = "<group>"; };
+		FD8C40EE1B0C6FAB00948B6C /* CheckAskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckAskViewController.m; sourceTree = "<group>"; };
+		FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckAskViewController.xib; sourceTree = "<group>"; };
 		FD92C5C61B0ACA8D00B7BE43 /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
 		FD92C5C71B0ACA8D00B7BE43 /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
 		FDD4040E1B0492F900DE2E84 /* oral.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oral.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,9 +293,18 @@
 				FD6244A01B0585450037836E /* TPCCheckpointViewController.h */,
 				FD6244A11B0585450037836E /* TPCCheckpointViewController.m */,
 				FD6244A21B0585450037836E /* TPCCheckpointViewController.xib */,
+				FD8C40E31B0C6D8200948B6C /* CheckSuccessViewController.h */,
+				FD8C40E41B0C6D8200948B6C /* CheckSuccessViewController.m */,
+				FD8C40E51B0C6D8200948B6C /* CheckSuccessViewController.xib */,
 				FD6244A51B0585820037836E /* CheckFollowViewController.h */,
 				FD6244A61B0585820037836E /* CheckFollowViewController.m */,
 				FD6244A71B0585820037836E /* CheckFollowViewController.xib */,
+				FD8C40E81B0C6F3A00948B6C /* CheckBlankViewController.h */,
+				FD8C40E91B0C6F3A00948B6C /* CheckBlankViewController.m */,
+				FD8C40EA1B0C6F3A00948B6C /* CheckBlankViewController.xib */,
+				FD8C40ED1B0C6FAB00948B6C /* CheckAskViewController.h */,
+				FD8C40EE1B0C6FAB00948B6C /* CheckAskViewController.m */,
+				FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */,
 			);
 			name = "闯关";
 			sourceTree = "<group>";
@@ -488,6 +512,7 @@
 				FD596DCB1B09E42100D6DE7B /* Question_3247.mp3 in Resources */,
 				FDD4044D1B04972D00DE2E84 /* RightMainCell.xib in Resources */,
 				FD596DCA1B09E42100D6DE7B /* Question_3246.mp3 in Resources */,
+				FD8C40E71B0C6D8200948B6C /* CheckSuccessViewController.xib in Resources */,
 				FD596DCE1B09E42100D6DE7B /* Question_3250.mp3 in Resources */,
 				FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */,
 				FDD4044F1B04972D00DE2E84 /* TopicCell.xib in Resources */,
@@ -498,6 +523,7 @@
 				FD596DB21B09E42100D6DE7B /* 349207.png in Resources */,
 				FD596DBB1B09E42100D6DE7B /* Question_3231.mp3 in Resources */,
 				FDD404591B049B8400DE2E84 /* topic_small.png in Resources */,
+				FD8C40EC1B0C6F3A00948B6C /* CheckBlankViewController.xib in Resources */,
 				FD596DBE1B09E42100D6DE7B /* Question_3234.mp3 in Resources */,
 				FD596DCC1B09E42100D6DE7B /* Question_3248.mp3 in Resources */,
 				FD62449F1B0584780037836E /* touxiang.png in Resources */,
@@ -510,6 +536,7 @@
 				FD596DB61B09E42100D6DE7B /* Question_3226.mp3 in Resources */,
 				FDD404551B049B5B00DE2E84 /* topic1.png in Resources */,
 				FD596DC71B09E42100D6DE7B /* Question_3243.mp3 in Resources */,
+				FD8C40F11B0C6FAB00948B6C /* CheckAskViewController.xib in Resources */,
 				FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */,
 				FD596DC41B09E42100D6DE7B /* Question_3240.mp3 in Resources */,
 				FDD404561B049B5B00DE2E84 /* topic2.png in Resources */,
@@ -543,11 +570,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD8C40EB1B0C6F3A00948B6C /* CheckBlankViewController.m in Sources */,
 				FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */,
+				FD8C40E61B0C6D8200948B6C /* CheckSuccessViewController.m in Sources */,
 				FDD4044B1B04972D00DE2E84 /* CustomProgressView.m in Sources */,
 				FDD4041A1B0492F900DE2E84 /* ViewController.m in Sources */,
 				FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */,
 				FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */,
+				FD8C40F01B0C6FAB00948B6C /* CheckAskViewController.m in Sources */,
 				FDD404401B04952400DE2E84 /* TopicMainViewController.m in Sources */,
 				FDD4043B1B04943000DE2E84 /* TopicParentsViewController.m in Sources */,
 				FDD4044E1B04972D00DE2E84 /* TopicCell.m in Sources */,

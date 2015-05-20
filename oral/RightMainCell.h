@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/*
+    topic首页右侧 索引列表cell
+ */
 @interface RightMainCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *smallTopicButton;
 

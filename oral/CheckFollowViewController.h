@@ -7,7 +7,9 @@
 //
 
 #import "TopicParentsViewController.h"
-
+/*
+   point1 --> 跟读界面
+ */
 @interface CheckFollowViewController : TopicParentsViewController
 @property (weak, nonatomic) IBOutlet UIView *questionCountsView;
 @property (weak, nonatomic) IBOutlet UIView *teacherView;
@@ -33,8 +35,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 
 - (IBAction)answerButtonClicked:(id)sender;
+
 - (IBAction)addPractiseBook:(id)sender;
+- (IBAction)addPractiseBookTouchDown:(id)sender;
+
 - (IBAction)nextQuestion:(id)sender;
+- (IBAction)nextQuestionTouchDown:(id)sender;
 
 
 

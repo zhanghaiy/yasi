@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "CustomProgressView.h"
 
+/*
+  topic首页列表 cell
+ */
 @interface TopicCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *topicButton;
 @property (retain, nonatomic) IBOutlet CustomProgressView *topicProgressV;

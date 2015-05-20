@@ -89,7 +89,7 @@ static AudioPlayer *audioPlayer;
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
     NSLog(@"播放完成");
-    if ([_target respondsToSelector:_action])
+    if (_target&&[_target respondsToSelector:_action])
     {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"

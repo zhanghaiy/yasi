@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+/*
+   自定义进度条 ： 两个View构成  一个为底 一个根据进度变换
+ */
 @interface CustomProgressView : UIView
 
-@property (nonatomic,strong) UIView * progressView;
+@property (nonatomic,strong) UIView * progressView;// 上面的 显示进度View
 
 @property (nonatomic,assign) float progress;
 @property (nonatomic,assign) UIColor *color;
