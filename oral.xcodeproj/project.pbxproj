@@ -223,17 +223,6 @@
 			name = cell;
 			sourceTree = "<group>";
 		};
-		FD596D881B0987D100D6DE7B /* VCS */ = {
-			isa = PBXGroup;
-			children = (
-				FDD404381B04943000DE2E84 /* TopicParentsViewController.h */,
-				FDD404391B04943000DE2E84 /* TopicParentsViewController.m */,
-				FDD4043D1B04952400DE2E84 /* TopicMainViewController.h */,
-				FDD4043E1B04952400DE2E84 /* TopicMainViewController.m */,
-			);
-			name = VCS;
-			sourceTree = "<group>";
-		};
 		FD596D8D1B09E42100D6DE7B /* temp 3 */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,18 +282,10 @@
 				FD6244A01B0585450037836E /* TPCCheckpointViewController.h */,
 				FD6244A11B0585450037836E /* TPCCheckpointViewController.m */,
 				FD6244A21B0585450037836E /* TPCCheckpointViewController.xib */,
-				FD8C40E31B0C6D8200948B6C /* CheckSuccessViewController.h */,
-				FD8C40E41B0C6D8200948B6C /* CheckSuccessViewController.m */,
-				FD8C40E51B0C6D8200948B6C /* CheckSuccessViewController.xib */,
-				FD6244A51B0585820037836E /* CheckFollowViewController.h */,
-				FD6244A61B0585820037836E /* CheckFollowViewController.m */,
-				FD6244A71B0585820037836E /* CheckFollowViewController.xib */,
-				FD8C40E81B0C6F3A00948B6C /* CheckBlankViewController.h */,
-				FD8C40E91B0C6F3A00948B6C /* CheckBlankViewController.m */,
-				FD8C40EA1B0C6F3A00948B6C /* CheckBlankViewController.xib */,
-				FD8C40ED1B0C6FAB00948B6C /* CheckAskViewController.h */,
-				FD8C40EE1B0C6FAB00948B6C /* CheckAskViewController.m */,
-				FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */,
+				FDA25E0D1B0D9E1300F35545 /* 跟读 */,
+				FDA25E0E1B0D9E2200F35545 /* 填空 */,
+				FDA25E0F1B0D9E2900F35545 /* 问答 */,
+				FDA25E101B0D9E2E00F35545 /* 过渡 */,
 			);
 			name = "闯关";
 			sourceTree = "<group>";
@@ -314,7 +295,10 @@
 			children = (
 				FD596D871B0987B500D6DE7B /* cell */,
 				FD596D861B09879B00D6DE7B /* 进度条 */,
-				FD596D881B0987D100D6DE7B /* VCS */,
+				FDD404381B04943000DE2E84 /* TopicParentsViewController.h */,
+				FDD404391B04943000DE2E84 /* TopicParentsViewController.m */,
+				FDD4043D1B04952400DE2E84 /* TopicMainViewController.h */,
+				FDD4043E1B04952400DE2E84 /* TopicMainViewController.m */,
 			);
 			name = "topic主页";
 			sourceTree = "<group>";
@@ -333,6 +317,46 @@
 				FD92C5C71B0ACA8D00B7BE43 /* AudioPlayer.m */,
 			);
 			name = "播放器";
+			sourceTree = "<group>";
+		};
+		FDA25E0D1B0D9E1300F35545 /* 跟读 */ = {
+			isa = PBXGroup;
+			children = (
+				FD6244A51B0585820037836E /* CheckFollowViewController.h */,
+				FD6244A61B0585820037836E /* CheckFollowViewController.m */,
+				FD6244A71B0585820037836E /* CheckFollowViewController.xib */,
+			);
+			name = "跟读";
+			sourceTree = "<group>";
+		};
+		FDA25E0E1B0D9E2200F35545 /* 填空 */ = {
+			isa = PBXGroup;
+			children = (
+				FD8C40E81B0C6F3A00948B6C /* CheckBlankViewController.h */,
+				FD8C40E91B0C6F3A00948B6C /* CheckBlankViewController.m */,
+				FD8C40EA1B0C6F3A00948B6C /* CheckBlankViewController.xib */,
+			);
+			name = "填空";
+			sourceTree = "<group>";
+		};
+		FDA25E0F1B0D9E2900F35545 /* 问答 */ = {
+			isa = PBXGroup;
+			children = (
+				FD8C40ED1B0C6FAB00948B6C /* CheckAskViewController.h */,
+				FD8C40EE1B0C6FAB00948B6C /* CheckAskViewController.m */,
+				FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */,
+			);
+			name = "问答";
+			sourceTree = "<group>";
+		};
+		FDA25E101B0D9E2E00F35545 /* 过渡 */ = {
+			isa = PBXGroup;
+			children = (
+				FD8C40E31B0C6D8200948B6C /* CheckSuccessViewController.h */,
+				FD8C40E41B0C6D8200948B6C /* CheckSuccessViewController.m */,
+				FD8C40E51B0C6D8200948B6C /* CheckSuccessViewController.xib */,
+			);
+			name = "过渡";
 			sourceTree = "<group>";
 		};
 		FDD404051B0492F900DE2E84 = {

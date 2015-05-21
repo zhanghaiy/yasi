@@ -7,6 +7,8 @@
 //
 
 #import "CheckSuccessViewController.h"
+#import "TPCCheckpointViewController.h"
+
 
 @interface CheckSuccessViewController ()
 
@@ -37,11 +39,19 @@
 - (IBAction)back:(id)sender
 {
     //
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    for (UIViewController *viewControllers in self.navigationController.viewControllers)
+    {
+        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
+        {
+            [self.navigationController popToViewController:viewControllers animated:YES];
+            break;
+        }
+    }
 }
 
 - (IBAction)continue:(id)sender
 {
-    // 
+    // 待完成
+    NSLog(@"待完成");
 }
 @end

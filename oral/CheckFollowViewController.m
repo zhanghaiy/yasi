@@ -363,7 +363,6 @@
 {
     _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
     _answerTextLabel.text = [self filterHTML:[[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"]];
-    //    _answerTextLabel.text = [self makeUpBlankStringWithDict:dict];
 }
 
 #pragma mark -- 去掉html标签
@@ -385,22 +384,6 @@
     return html;
 }
 
-#pragma mark -- 组成填空的字符串（part2用到）暂时放着
-- (NSString *)makeUpBlankStringWithDict:(NSDictionary *)dict
-{
-    NSMutableString *blankStr = [NSMutableString stringWithString:[self filterHTML:[dict objectForKey:@"answer"]]];
-    NSString *keyWord = [self filterHTML:[dict objectForKey:@"keyword"]];
-    NSArray *keyArray = [keyWord componentsSeparatedByString:@"||"];
-    for (int i = 0; i < keyArray.count; i ++)
-    {
-        NSRange keyRange = [blankStr rangeOfString:[keyArray objectAtIndex:i]];
-        if (keyRange.location != NSNotFound)
-        {
-            [blankStr replaceCharactersInRange:keyRange withString:@"______"];
-        }
-    }
-    return blankStr;
-}
 
 #pragma mark - 模拟思必驰反馈
 #pragma mark -- 开启思必驰

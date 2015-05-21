@@ -7,7 +7,8 @@
 //
 
 #import "TPCCheckpointViewController.h"
-#import "CheckFollowViewController.h"  // 跟读 part 关卡一
+#import "CheckFollowViewController.h"  // 跟读 part--->point1 关卡1
+#import "CheckBlankViewController.h"   // 填空 part--->point2 关卡2
 
 
 @interface TPCCheckpointViewController ()<UIScrollViewDelegate>
@@ -18,8 +19,6 @@
 
 #define kLeftMarkButtonTag 1234
 #define kPartButtonTag 222
-
-
 
 
 - (void)viewDidLoad
@@ -44,13 +43,15 @@
     _scoreLable.textColor = [UIColor colorWithRed:87/255.0 green:224/255.0 blue:192/255.0 alpha:1];
     
     // part1-3 滚动视图 _partScrollView
+    NSInteger partHeight = _partBackView.frame.size.height-50;
+    NSInteger partWidth = partHeight*12/5;
     CGRect rect = _partScrollView.frame;
-    rect.origin.x = 55;
-    rect.size.width = kScreentWidth-55*2;
+    rect.size.width = partWidth;
+    rect.size.height = partHeight;
     _partScrollView.frame = rect;
     _partScrollView.contentSize = CGSizeMake(_partScrollView.bounds.size.width*3, _partScrollView.bounds.size.height);
     _partScrollView.delegate = self;
-    NSArray *partTitleArray = @[@"Part One",@"Part Two",@"Part Three"];
+    NSArray *partTitleArray = @[@"Part - One",@"Part - Two",@"Part - Three"];
     
     for (int i = 0; i < 3; i ++)
     {
@@ -114,8 +115,29 @@
 #pragma mark - 开始闯关
 - (void)startPart:(UIButton *)btn
 {
-    CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
-    [self.navigationController pushViewController:followVC animated:YES];
+    switch (btn.tag-kPartButtonTag)
+    {
+        case 0:
+        {
+            CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
+            [self.navigationController pushViewController:followVC animated:YES];
+        }
+            break;
+        case 1:
+        {
+            CheckBlankViewController *blankVC = [[CheckBlankViewController alloc]initWithNibName:@"CheckBlankViewController" bundle:nil];
+            [self.navigationController pushViewController:blankVC animated:YES];
+        }
+            break;
+        case 2:
+        {
+            
+        }
+            break;
+        default:
+            break;
+    }
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
