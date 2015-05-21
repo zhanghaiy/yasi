@@ -8,7 +8,7 @@
 
 #import "CheckAskViewController.h"
 #import "AudioPlayer.h"
-
+#import "RecordManager.h"
 
 @interface CheckAskViewController ()
 {
@@ -20,15 +20,23 @@
     NSInteger _currentQuestionCounts;
    
     AudioPlayer *audioPlayer;
+    RecordManager *_recordManager;
     
     NSInteger _answerTime;//跟读时间
     NSTimer *_reduceTimer;
+    
+    CGRect _stuHeadImgViewRect;// 放大后学生头像的frame
+    CGRect _stuHeadImgViewRect_small;// 缩小的学生头像的frame
+    
+    CGRect _questionNomalRect;
+    CGRect _questionSmallRect;
 }
 @end
 
 @implementation CheckAskViewController
 #define kTopQueCountButtonTag 333
-
+#define kCommitLeftButtonTag 444
+#define kCommitRightButtonTag 555
 
 #pragma mark - 模拟数据
 - (void)moNiDataFromLocal
@@ -80,6 +88,11 @@
     self.titleLab.textColor = [UIColor whiteColor];
     [self moNiDataFromLocal];
     [self uiConfig];
+    
+    _recordManager = [[RecordManager alloc]init];
+    _recordManager.target = self;
+    _recordManager.action = @selector(recordFinished:);
+    _recordManager.filePath = [NSHomeDirectory() stringByAppendingString:@"/Documents"];
 }
 
 - (void)uiConfig
@@ -126,32 +139,72 @@
     _teaHeadImgView.layer.borderColor = [UIColor colorWithRed:35/255.0 green:222/255.0 blue:191/255.0 alpha:1].CGColor;
     _teaHeadImgView.layer.borderWidth = 1;
     
+    NSInteger queBackHH = _teaHeadImgView.frame.size.width;
+    NSInteger queBackX = 30 + queBackHH;
+    NSInteger queBackWW = kScreentWidth - queBackX - 20;
+    _teaQuestioBackV.frame = CGRectMake(queBackX, 10, queBackWW, queBackHH);
+    
     
     // 问题背景----layer
-    _teaQuestionLabel.layer.masksToBounds = YES;
-    _teaQuestionLabel.layer.cornerRadius = _teaQuestionLabel.frame.size.height/1334*kScreenHeight;
-    // 问题文本 多行显示
-    _teaQuestionLabel.text = @"";//起始为空
-    _teaQuestionLabel.textColor = [UIColor colorWithRed:62/255.0 green:66/255.0 blue:67/255.0 alpha:1];
-    _teaQuestionLabel.textAlignment = NSTextAlignmentCenter;
-    _teaQuestionLabel.numberOfLines = 0;
-    _teaQuestionLabel.backgroundColor = [UIColor whiteColor];
     
-    _stuHeadImgV.alpha = 0.3;
-    _teaHeadImgView.alpha = 0.3;
-    _followAnswerButton.hidden = YES;
+    _teaQuestionBtn.titleLabel.numberOfLines = 0;
+    _teaQuestionBtn.titleLabel.textColor = [UIColor colorWithRed:62/255.0 green:66/255.0 blue:67/255.0 alpha:1];
+    _teaQuestionBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [_teaQuestionBtn setTitle:@"" forState:UIControlStateNormal];
+//    _teaQuestionBtn.titleLabel.font = [UIFont systemFontOfSize:0];
+    
+    
+    _teaQuestioBackV.layer.masksToBounds = YES;
+    _teaQuestioBackV.backgroundColor = [UIColor whiteColor];
+    _teaQuestioBackV.layer.cornerRadius = _teaQuestioBackV.frame.size.height/1334*kScreenHeight;
+    
+//    _teaQuestionLabel.layer.masksToBounds = YES;
+//    _teaQuestionLabel.layer.cornerRadius = _teaQuestionLabel.frame.size.height/1334*kScreenHeight;
+//    // 问题文本 多行显示
+//    _teaQuestionLabel.text = @"";//起始为空
+//    _teaQuestionLabel.textColor = [UIColor colorWithRed:62/255.0 green:66/255.0 blue:67/255.0 alpha:1];
+//    _teaQuestionLabel.textAlignment = NSTextAlignmentCenter;
+//    _teaQuestionLabel.numberOfLines = 0;
+//    _teaQuestionLabel.backgroundColor = [UIColor whiteColor];
+    
+    
     
     [_followAnswerButton setBackgroundImage:[UIImage imageNamed:@"answerButton-sele"] forState:UIControlStateNormal];
     [_followAnswerButton setBackgroundImage:[UIImage imageNamed:@"answerButton-sele"] forState:UIControlStateSelected];
     
+    _CommitLeftButton.tag = kCommitLeftButtonTag;
+    _commitRightButton.tag = kCommitRightButtonTag;
+    
+    _stuHeadImgViewRect = _stuHeadImgV.frame;
+    _stuHeadImgViewRect_small = _stuHeadImgViewRect;
+    _stuHeadImgViewRect_small.origin.x += 10;
+    _stuHeadImgViewRect_small.origin.y += 10;
+    _stuHeadImgViewRect_small.size.width -= 20;
+    _stuHeadImgViewRect_small.size.height -=20;
+    
+    _questionNomalRect = _teaQuestioBackV.bounds;
+    _questionNomalRect.size.height -= 10;
+    _questionNomalRect.size.width -= 10;
+    _questionNomalRect.origin.x = 5;
+    _questionNomalRect.origin.y = 5;
+    
+    _questionSmallRect = _questionNomalRect;
+    _questionSmallRect.size.width = 0;
+    
+    _teaQuestionBtn.frame = _questionSmallRect;
+    
+    _stuHeadImgV.frame = _stuHeadImgViewRect_small;
+    _stuHeadImgV.alpha = 0.3;
+    _teaHeadImgView.alpha = 0.3;
+    _followAnswerButton.hidden = YES;
 }
 
 #pragma mark - 切换问题变换文本
 - (void)showCurrentQuestionText
 {
-    _teaQuestionLabel.text = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"question"];
-    //     //服务端提供的文本带有html标签 要去掉
-    //    NSString *questionStr = [self filterHTML:[dict objectForKey:@"question"]];
+    _teaQuestionBtn.titleLabel.font = [UIFont systemFontOfSize:KOneFontSize];
+    [_teaQuestionBtn setTitle:[[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"question"] forState:UIControlStateNormal];
+    _teaQuestionBtn.frame = _questionNomalRect;
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -164,11 +217,28 @@
 - (void)startQuestion
 {
     [self stopTimer];
-    
-    _teaHeadImgView.alpha = 1;
-    [self showCurrentQuestionText];
-    [self playQuestion];
+    [self prepareQuestion];
 }
+
+#pragma mark - 准备提问
+- (void)prepareQuestion
+{
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(textAnimate) userInfo:nil repeats:NO];
+}
+
+- (void)textAnimate
+{
+    [self stopTimer];
+    
+    [UIView animateWithDuration:1 animations:^{
+        [self showCurrentQuestionText];
+        _teaHeadImgView.alpha = 1;
+        _stuHeadImgV.alpha = 0.3;
+    }];
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playQuestion) userInfo:nil repeats:NO];
+
+}
+
 
 
 #pragma mark -- 播放问题音频
@@ -185,6 +255,16 @@
 {
      // 播放完成 开始录音 保存本地
     
+//    [UIView animateWithDuration:1 animations:^{
+//        
+//    }];
+    
+    [self prepareAnswer];
+}
+
+#pragma mark - 准备回答
+- (void)prepareAnswer
+{
     _stuHeadImgV.alpha = 1;
     _teaHeadImgView.alpha = 0.3;
     
@@ -192,6 +272,7 @@
     [self followAnswer:_followAnswerButton];
 }
 
+#pragma mark - 停止定时器
 - (void)stopTimer
 {
     [_reduceTimer invalidate];
@@ -221,14 +302,62 @@
         btn.selected = NO;
        // 结束回答
         btn.hidden = YES;
+        [_recordManager stopRecord];
     }
     else
     {
         btn.selected = YES;
-        // 开始回答
+        // 开始录音
+//        [self startRecord];
+        [_recordManager prepareRecorderWithFileName:@"answer1"];
+    }
+}
+
+#pragma mark - 开始录音
+- (void)startRecord
+{
+    // 后续完善（根据数据）
+   [_recordManager prepareRecorderWithFileName:@"answer1"];
+}
+
+#pragma mark - 录音结束回调
+- (void)recordFinished:(RecordManager *)manager
+{
+    [self nextQuestion];
+}
+
+#pragma mark - 进行下一题
+- (void)nextQuestion
+{
+//    _currentQuestionCounts++;
+    if (_currentQuestionCounts<_sumQuestionCounts)
+    {
+        // 继续
+        _teaQuestionBtn.titleLabel.font = [UIFont systemFontOfSize:0];
+        [_teaQuestionBtn setTitle:@"" forState:UIControlStateNormal];
+        _teaQuestionBtn.frame = _questionSmallRect;
+        
+        [self prepareQuestion];
+    }
+    else
+    {
+       // 提交给老师
+        _CommitLeftButton.hidden = NO;
+        _commitRightButton.hidden = NO;
     }
 }
 
 
-
+- (IBAction)commitButtonClicked:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    if (btn.tag == kCommitLeftButtonTag)
+    {
+        // 稍后提交
+    }
+    else if (btn.tag == kCommitRightButtonTag)
+    {
+        // 现在提交
+    }
+}
 @end

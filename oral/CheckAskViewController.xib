@@ -7,10 +7,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckAskViewController">
             <connections>
+                <outlet property="CommitLeftButton" destination="yrv-kw-s1C" id="yTM-04-Rh0"/>
+                <outlet property="commitRightButton" destination="rnN-7g-An6" id="qOe-Z8-h1Z"/>
                 <outlet property="followAnswerButton" destination="1Sd-Ci-TnN" id="yqk-6f-Lnb"/>
                 <outlet property="stuHeadImgV" destination="OK0-tR-PlT" id="Fab-hW-eGk"/>
                 <outlet property="teaHeadImgView" destination="IAp-9e-g6O" id="DlF-ek-wc7"/>
-                <outlet property="teaQuestionLabel" destination="Hkz-X0-eyL" id="6is-Xq-bnQ"/>
+                <outlet property="teaQuestioBackV" destination="sTt-I9-eqx" id="Zqr-WZ-svA"/>
+                <outlet property="teaQuestionBtn" destination="vrH-Qw-Fz0" id="f1R-ks-Uxr"/>
                 <outlet property="teacherView" destination="07e-3a-2C7" id="Gx6-KW-oiq"/>
                 <outlet property="topView" destination="36z-Ug-lGI" id="S28-RU-NbY"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -32,28 +35,35 @@
                     <rect key="frame" x="0.0" y="90" width="375" height="100"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IAp-9e-g6O">
-                            <rect key="frame" x="20" y="15" width="70" height="70"/>
+                            <rect key="frame" x="20" y="10" width="80" height="80"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="IAp-9e-g6O" secondAttribute="height" multiplier="1:1" id="39O-vz-ecz"/>
+                                <constraint firstAttribute="width" secondItem="IAp-9e-g6O" secondAttribute="height" multiplier="1:1" id="LyE-vW-YLy"/>
                             </constraints>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hkz-X0-eyL">
-                            <rect key="frame" x="100" y="15" width="255" height="70"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sTt-I9-eqx">
+                            <rect key="frame" x="105" y="10" width="255" height="80"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vrH-Qw-Fz0">
+                                    <rect key="frame" x="5" y="5" width="245" height="70"/>
+                                    <state key="normal" title="what is your what what wahwwewe wer ">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </view>
                     </subviews>
                     <color key="backgroundColor" red="0.23486852220000001" green="0.7966757015" blue="0.57971397410000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstItem="IAp-9e-g6O" firstAttribute="top" secondItem="07e-3a-2C7" secondAttribute="top" constant="15" id="Dps-no-mrK"/>
-                        <constraint firstAttribute="bottom" secondItem="Hkz-X0-eyL" secondAttribute="bottom" constant="15" id="FjE-Gb-ePK"/>
-                        <constraint firstItem="Hkz-X0-eyL" firstAttribute="leading" secondItem="IAp-9e-g6O" secondAttribute="trailing" constant="10" id="MiZ-zf-Yd6"/>
+                        <constraint firstAttribute="trailing" secondItem="sTt-I9-eqx" secondAttribute="trailing" constant="15" id="6u9-wI-YYr"/>
+                        <constraint firstItem="sTt-I9-eqx" firstAttribute="top" secondItem="07e-3a-2C7" secondAttribute="top" constant="10" id="7CO-WN-QpC"/>
+                        <constraint firstAttribute="bottom" secondItem="sTt-I9-eqx" secondAttribute="bottom" constant="10" id="7bi-z6-Xvu"/>
+                        <constraint firstAttribute="bottom" secondItem="IAp-9e-g6O" secondAttribute="bottom" constant="10" id="9Tm-6k-s0w"/>
+                        <constraint firstItem="IAp-9e-g6O" firstAttribute="leading" secondItem="07e-3a-2C7" secondAttribute="leading" constant="20" id="CWf-QU-fZk"/>
                         <constraint firstAttribute="width" secondItem="07e-3a-2C7" secondAttribute="height" multiplier="15:4" id="RNE-ex-1Yf"/>
-                        <constraint firstAttribute="trailing" secondItem="Hkz-X0-eyL" secondAttribute="trailing" constant="20" id="Spw-Jh-sCh"/>
-                        <constraint firstItem="Hkz-X0-eyL" firstAttribute="top" secondItem="07e-3a-2C7" secondAttribute="top" constant="15" id="b1Q-hZ-Ttj"/>
-                        <constraint firstItem="IAp-9e-g6O" firstAttribute="leading" secondItem="07e-3a-2C7" secondAttribute="leading" constant="20" id="kPs-8u-o8C"/>
-                        <constraint firstAttribute="bottom" secondItem="IAp-9e-g6O" secondAttribute="bottom" constant="15" id="ofe-rT-aqE"/>
+                        <constraint firstItem="sTt-I9-eqx" firstAttribute="leading" secondItem="IAp-9e-g6O" secondAttribute="trailing" constant="5" id="lHM-SH-c6n"/>
+                        <constraint firstItem="IAp-9e-g6O" firstAttribute="top" secondItem="07e-3a-2C7" secondAttribute="top" constant="10" id="nPm-k8-5Pd"/>
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touxiang.png" translatesAutoresizingMaskIntoConstraints="NO" id="OK0-tR-PlT">
@@ -76,6 +86,21 @@
                         <action selector="followAnswer:" destination="-1" eventType="touchUpInside" id="hZR-Dg-6aO"/>
                     </connections>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yrv-kw-s1C">
+                    <rect key="frame" x="67" y="532" width="120" height="60"/>
+                    <state key="normal" title="稍后提交老师" backgroundImage="exesize">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="commitButtonClicked:" destination="-1" eventType="touchUpInside" id="3km-CK-QvH"/>
+                    </connections>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rnN-7g-An6">
+                    <rect key="frame" x="188" y="532" width="120" height="60"/>
+                    <state key="normal" title="提交给老师" backgroundImage="nextQuestion">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -96,6 +121,8 @@
     </objects>
     <resources>
         <image name="answerButton-sele" width="67" height="67"/>
+        <image name="exesize" width="126" height="60"/>
+        <image name="nextQuestion" width="126" height="60"/>
         <image name="touxiang.png" width="70" height="70"/>
     </resources>
 </document>

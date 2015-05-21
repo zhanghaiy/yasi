@@ -20,10 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;
 @property (weak, nonatomic) IBOutlet UIButton *startPointButton;
 
-- (IBAction)buttonClicked:(id)sender;
-
-
-
+@property (nonatomic,assign) NSInteger pointCounts;
 
 
 @end

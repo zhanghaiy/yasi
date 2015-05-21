@@ -8,6 +8,8 @@
 
 #import "CheckSuccessViewController.h"
 #import "TPCCheckpointViewController.h"
+#import "CheckKeyWordViewController.h"
+#import "CheckAskViewController.h"
 
 
 @interface CheckSuccessViewController ()
@@ -46,6 +48,20 @@
             [self.navigationController popToViewController:viewControllers animated:YES];
             break;
         }
+    }
+}
+- (IBAction)continueNextPoint:(id)sender
+{
+    if (_pointCount<=2)
+    {
+        CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
+        keyVC.pointCounts = _pointCount;
+        [self.navigationController pushViewController:keyVC animated:YES];
+    }
+    else
+    {
+        CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
+        [self.navigationController pushViewController:askVC animated:YES];
     }
 }
 @end

@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckSuccessViewController">
             <connections>
                 <outlet property="backButton" destination="ydP-Sh-zW1" id="Qrw-09-7ZC"/>
+                <outlet property="continueButton" destination="x5R-kd-kVa" id="Ml4-lR-wWu"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -16,6 +17,16 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="闯关成功（失败）页面" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fS-tY-9L7">
+                    <rect key="frame" x="20" y="100" width="335" height="80"/>
+                    <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="2fS-tY-9L7" secondAttribute="height" multiplier="67:16" id="aKz-Yz-2Am"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ydP-Sh-zW1">
                     <rect key="frame" x="50" y="250" width="275" height="40"/>
                     <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -30,25 +41,30 @@
                         <action selector="backToLastPage:" destination="-1" eventType="touchUpInside" id="tJX-VS-4WG"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="闯关成功（失败）页面" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fS-tY-9L7">
-                    <rect key="frame" x="20" y="100" width="335" height="80"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x5R-kd-kVa">
+                    <rect key="frame" x="50" y="328" width="275" height="40"/>
                     <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="2fS-tY-9L7" secondAttribute="height" multiplier="67:16" id="aKz-Yz-2Am"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                    <state key="normal" title="继续">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="continueNextPoint:" destination="-1" eventType="touchUpInside" id="SZg-kP-lxW"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="x5R-kd-kVa" firstAttribute="top" secondItem="ydP-Sh-zW1" secondAttribute="bottom" constant="38" id="MlL-eJ-IdP"/>
+                <constraint firstAttribute="centerX" secondItem="ydP-Sh-zW1" secondAttribute="centerX" id="T3s-37-u4E"/>
                 <constraint firstItem="2fS-tY-9L7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="bPA-Zh-wY9"/>
                 <constraint firstItem="ydP-Sh-zW1" firstAttribute="top" secondItem="2fS-tY-9L7" secondAttribute="bottom" constant="70" id="jx6-nv-gFr"/>
                 <constraint firstItem="ydP-Sh-zW1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="50" id="oBu-yQ-K5J"/>
                 <constraint firstAttribute="trailing" secondItem="ydP-Sh-zW1" secondAttribute="trailing" constant="50" id="pn6-pK-gKm"/>
+                <constraint firstAttribute="centerX" secondItem="x5R-kd-kVa" secondAttribute="centerX" id="shw-PK-gab"/>
                 <constraint firstAttribute="trailing" secondItem="2fS-tY-9L7" secondAttribute="trailing" constant="20" id="tb8-MF-tOZ"/>
+                <constraint firstItem="x5R-kd-kVa" firstAttribute="height" secondItem="ydP-Sh-zW1" secondAttribute="height" id="wA6-Bi-zzr"/>
                 <constraint firstItem="2fS-tY-9L7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="yFm-tC-lTI"/>
+                <constraint firstItem="x5R-kd-kVa" firstAttribute="width" secondItem="ydP-Sh-zW1" secondAttribute="width" id="zRh-jJ-wjL"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="-7.5" y="-43.5"/>

@@ -7,6 +7,10 @@
 //
 
 #import "CheckKeyWordViewController.h"
+#import "CheckFollowViewController.h"
+#import "CheckBlankViewController.h"
+
+
 
 @interface CheckKeyWordViewController ()<UIScrollViewDelegate>
 {
@@ -134,7 +138,7 @@
         case kJumpButtonTag:
         {
             //
-            
+            [self enterNext];
         }
             break;
         case kPreButtonTag:
@@ -155,7 +159,7 @@
             break;
         case kStartPointButtonTag:
         {
-            
+            [self enterNext];
         }
             break;
         default:
@@ -163,6 +167,20 @@
     }
     
     [self changeKeyWord];
+}
+
+- (void)enterNext
+{
+    if (_pointCounts == 1)
+    {
+        CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
+        [self.navigationController pushViewController:followVC animated:YES];
+    }
+    else if (_pointCounts == 2)
+    {
+        CheckBlankViewController *blankVC = [[CheckBlankViewController alloc]initWithNibName:@"CheckBlankViewController" bundle:nil];
+        [self.navigationController pushViewController:blankVC animated:YES];
+    }
 }
 
 - (void)changeKeyWord

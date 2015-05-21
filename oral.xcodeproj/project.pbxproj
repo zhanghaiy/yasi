@@ -58,6 +58,7 @@
 		FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD92C5C71B0ACA8D00B7BE43 /* AudioPlayer.m */; };
 		FDA25E161B0DC31900F35545 /* CheckKeyWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA25E141B0DC31900F35545 /* CheckKeyWordViewController.m */; };
 		FDA25E171B0DC31900F35545 /* CheckKeyWordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA25E151B0DC31900F35545 /* CheckKeyWordViewController.xib */; };
+		FDA25E1B1B0DD98D00F35545 /* RecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA25E1A1B0DD98D00F35545 /* RecordManager.m */; };
 		FDD404141B0492F900DE2E84 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404131B0492F900DE2E84 /* main.m */; };
 		FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404161B0492F900DE2E84 /* AppDelegate.m */; };
 		FDD4041A1B0492F900DE2E84 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404191B0492F900DE2E84 /* ViewController.m */; };
@@ -149,6 +150,8 @@
 		FDA25E131B0DC31900F35545 /* CheckKeyWordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckKeyWordViewController.h; sourceTree = "<group>"; };
 		FDA25E141B0DC31900F35545 /* CheckKeyWordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckKeyWordViewController.m; sourceTree = "<group>"; };
 		FDA25E151B0DC31900F35545 /* CheckKeyWordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckKeyWordViewController.xib; sourceTree = "<group>"; };
+		FDA25E191B0DD98D00F35545 /* RecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordManager.h; sourceTree = "<group>"; };
+		FDA25E1A1B0DD98D00F35545 /* RecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordManager.m; sourceTree = "<group>"; };
 		FDD4040E1B0492F900DE2E84 /* oral.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oral.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDD404121B0492F900DE2E84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FDD404131B0492F900DE2E84 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -369,6 +372,7 @@
 		FDA25E111B0D9EFF00F35545 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FDA25E181B0DD97F00F35545 /* 录音 */,
 				FD92C5C51B0ACA6A00B7BE43 /* 播放器 */,
 			);
 			name = Models;
@@ -381,6 +385,15 @@
 				FDD404391B04943000DE2E84 /* TopicParentsViewController.m */,
 			);
 			name = "父类控制器";
+			sourceTree = "<group>";
+		};
+		FDA25E181B0DD97F00F35545 /* 录音 */ = {
+			isa = PBXGroup;
+			children = (
+				FDA25E191B0DD98D00F35545 /* RecordManager.h */,
+				FDA25E1A1B0DD98D00F35545 /* RecordManager.m */,
+			);
+			name = "录音";
 			sourceTree = "<group>";
 		};
 		FDD404051B0492F900DE2E84 = {
@@ -615,6 +628,7 @@
 				FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */,
 				FD8C40E61B0C6D8200948B6C /* CheckSuccessViewController.m in Sources */,
 				FDD4044B1B04972D00DE2E84 /* CustomProgressView.m in Sources */,
+				FDA25E1B1B0DD98D00F35545 /* RecordManager.m in Sources */,
 				FDD4041A1B0492F900DE2E84 /* ViewController.m in Sources */,
 				FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */,
 				FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */,

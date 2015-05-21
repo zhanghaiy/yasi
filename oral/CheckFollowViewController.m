@@ -609,6 +609,7 @@
     {
         //关卡结束 跳转过渡页
         CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
+        successVC.pointCount = 2;
         [self.navigationController pushViewController:successVC animated:YES];
     }
 }

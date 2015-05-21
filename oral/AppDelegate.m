@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "TopicMainViewController.h"
 #import "CheckKeyWordViewController.h"
-
+#import "CheckAskViewController.h"
 
 @interface AppDelegate ()
 
@@ -28,9 +28,14 @@
 //    UINavigationController *topicNvc = [[UINavigationController alloc]initWithRootViewController:rootVC];
 //    topicNvc.navigationBarHidden = YES;
 //    self.window.rootViewController = topicNvc;
-    CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
-    self.window.rootViewController = keyVC;
     
+    
+//    CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
+//    self.window.rootViewController = keyVC;
+    
+    CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
+    self.window.rootViewController = askVC;
+
     [self.window makeKeyAndVisible];
     
     return YES;

@@ -321,6 +321,10 @@
 #pragma mark -- 播放问题音频
 - (void)playQuestion
 {
+    if (_reduceTimer)
+    {
+        [self stopReduceTimer];
+    }
     // 获取音频路径
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
     NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
@@ -571,6 +575,7 @@
     {
         //关卡结束 跳转过渡页
         CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
+        successVC.pointCount = 3;
         [self.navigationController pushViewController:successVC animated:YES];
     }
 }

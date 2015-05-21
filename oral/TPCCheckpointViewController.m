@@ -11,6 +11,8 @@
 #import "CheckBlankViewController.h"   // 填空 part--->point2 关卡2
 #import "CheckAskViewController.h"     // 问答 part--->point3 关卡3
 
+#import "CheckKeyWordViewController.h"
+
 @interface TPCCheckpointViewController ()<UIScrollViewDelegate>
 
 @end
@@ -121,15 +123,23 @@
         case 0:
         {
             // 跟读
-            CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
-            [self.navigationController pushViewController:followVC animated:YES];
+            CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
+            keyVC.pointCounts = 1;
+            [self.navigationController pushViewController:keyVC animated:YES];
+
+//            CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
+//            [self.navigationController pushViewController:followVC animated:YES];
         }
             break;
         case 1:
         {
             // 填空
-            CheckBlankViewController *blankVC = [[CheckBlankViewController alloc]initWithNibName:@"CheckBlankViewController" bundle:nil];
-            [self.navigationController pushViewController:blankVC animated:YES];
+            CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
+            keyVC.pointCounts = 2;
+            [self.navigationController pushViewController:keyVC animated:YES];
+
+//            CheckBlankViewController *blankVC = [[CheckBlankViewController alloc]initWithNibName:@"CheckBlankViewController" bundle:nil];
+//            [self.navigationController pushViewController:blankVC animated:YES];
         }
             break;
         case 2:
