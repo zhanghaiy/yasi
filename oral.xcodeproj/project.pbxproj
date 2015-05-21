@@ -293,12 +293,12 @@
 		FD6244AC1B0586140037836E /* topic主页 */ = {
 			isa = PBXGroup;
 			children = (
-				FD596D871B0987B500D6DE7B /* cell */,
-				FD596D861B09879B00D6DE7B /* 进度条 */,
 				FDD404381B04943000DE2E84 /* TopicParentsViewController.h */,
 				FDD404391B04943000DE2E84 /* TopicParentsViewController.m */,
 				FDD4043D1B04952400DE2E84 /* TopicMainViewController.h */,
 				FDD4043E1B04952400DE2E84 /* TopicMainViewController.m */,
+				FD596D871B0987B500D6DE7B /* cell */,
+				FD596D861B09879B00D6DE7B /* 进度条 */,
 			);
 			name = "topic主页";
 			sourceTree = "<group>";
@@ -359,6 +359,14 @@
 			name = "过渡";
 			sourceTree = "<group>";
 		};
+		FDA25E111B0D9EFF00F35545 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FD92C5C51B0ACA6A00B7BE43 /* 播放器 */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		FDD404051B0492F900DE2E84 = {
 			isa = PBXGroup;
 			children = (
@@ -382,11 +390,10 @@
 		FDD404101B0492F900DE2E84 /* oral */ = {
 			isa = PBXGroup;
 			children = (
-				FD92C5C51B0ACA6A00B7BE43 /* 播放器 */,
 				FD596D8D1B09E42100D6DE7B /* temp 3 */,
+				FDA25E111B0D9EFF00F35545 /* Models */,
 				FD6244AA1B0585A10037836E /* ViewControllers */,
 				FDD404501B049B4700DE2E84 /* images */,
-				FDD404421B04971D00DE2E84 /* views */,
 				FDD404151B0492F900DE2E84 /* AppDelegate.h */,
 				FDD404161B0492F900DE2E84 /* AppDelegate.m */,
 				FDD404181B0492F900DE2E84 /* ViewController.h */,
@@ -423,13 +430,6 @@
 				FDD4042C1B0492F900DE2E84 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		FDD404421B04971D00DE2E84 /* views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = views;
 			sourceTree = "<group>";
 		};
 		FDD404501B049B4700DE2E84 /* images */ = {
