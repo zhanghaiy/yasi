@@ -30,10 +30,11 @@
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"My Travel"];
     // 界面元素
-    [self xib];
+    [self uiConfig];
 }
 
-- (void)xib
+#pragma mark - UI调整
+- (void)uiConfig
 {
     // 练习本  成绩单
     [_exerciseBookBtn setBackgroundImage:[UIImage imageNamed:@"exeBook"] forState:UIControlStateNormal];
@@ -119,19 +120,21 @@
     {
         case 0:
         {
+            // 跟读
             CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
             [self.navigationController pushViewController:followVC animated:YES];
         }
             break;
         case 1:
         {
+            // 填空
             CheckBlankViewController *blankVC = [[CheckBlankViewController alloc]initWithNibName:@"CheckBlankViewController" bundle:nil];
             [self.navigationController pushViewController:blankVC animated:YES];
         }
             break;
         case 2:
         {
-            
+            // 问答
         }
             break;
         default:

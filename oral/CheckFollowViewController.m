@@ -40,7 +40,7 @@
 #define kTopQueCountButtonTag 5555
 
 #pragma mark - UI布局
-#pragma mark - - 创建提示标签
+#pragma mark -- 创建提示标签
 // 用于提示用户操作成功
 - (void)createTipLabel
 {
@@ -59,7 +59,7 @@
 }
 
 
-#pragma mark - - UI控件的调整
+#pragma mark -- UI控件的调整
 - (void)uiConfig
 {
     // 创建提示标签
@@ -95,6 +95,7 @@
     _teacherHeadImgView.layer.borderColor = [UIColor colorWithRed:142/255.0 green:232/255.0 blue:208/255.0 alpha:1].CGColor;
     _teacherHeadImgView.layer.borderWidth = 2;
     [_teacherHeadImgView setImage:[UIImage imageNamed:@"touxiang"]];
+    
     // 问题背景----layer
     _teacherQueationBackView.layer.masksToBounds = YES;
     _teacherQueationBackView.layer.cornerRadius = _teacherQueationBackView.frame.size.height/1334*kScreenHeight;

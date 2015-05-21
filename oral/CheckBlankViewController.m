@@ -411,6 +411,7 @@
     _followAnswerButton.hidden = YES;
     _addBookButton.hidden = NO;
     _continueButton.hidden = NO;
+    _stuHeadImgView.alpha = 0.3;
     [_continueButton setTitleColor:[UIColor colorWithWhite:112/255.0 alpha:1] forState:UIControlStateNormal];
     [_addBookButton setTitleColor:[UIColor colorWithWhite:112/255.0 alpha:1] forState:UIControlStateNormal];
 }

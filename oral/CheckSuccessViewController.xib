@@ -14,17 +14,20 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="闯关过渡页 待完善" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zga-PL-mTn">
-                    <rect key="frame" x="20" y="45" width="560" height="415"/>
+                    <rect key="frame" x="20" y="121" width="335" height="190"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="zga-PL-mTn" secondAttribute="height" multiplier="67:38" id="NmS-6B-MVM"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kun-vt-WoK">
-                    <rect key="frame" x="20" y="530" width="250" height="40"/>
+                    <rect key="frame" x="118" y="404" width="138" height="41"/>
                     <color key="backgroundColor" red="0.23486852220000001" green="0.7966757015" blue="0.57971397410000003" alpha="1" colorSpace="calibratedRGB"/>
                     <state key="normal" title="返回">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -33,9 +36,12 @@
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="Oaq-4x-2sV"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Omu-Oh-grl">
-                    <rect key="frame" x="330" y="530" width="250" height="40"/>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Omu-Oh-grl">
+                    <rect key="frame" x="119" y="485" width="137" height="41"/>
                     <color key="backgroundColor" red="0.23486852220000001" green="0.7966757015" blue="0.57971397410000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="41" id="92w-ze-QLC"/>
+                    </constraints>
                     <state key="normal" title="继续">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -46,21 +52,27 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Omu-Oh-grl" firstAttribute="height" secondItem="Kun-vt-WoK" secondAttribute="height" id="0N7-e5-Cj5"/>
-                <constraint firstItem="zga-PL-mTn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="11c-bw-pLb"/>
-                <constraint firstAttribute="bottom" secondItem="Kun-vt-WoK" secondAttribute="bottom" constant="30" id="33J-3Z-5qC"/>
-                <constraint firstAttribute="trailing" secondItem="zga-PL-mTn" secondAttribute="trailing" constant="20" id="4oX-4Q-4n9"/>
-                <constraint firstAttribute="trailing" secondItem="Omu-Oh-grl" secondAttribute="trailing" constant="20" id="99B-bc-Mzm"/>
-                <constraint firstAttribute="bottom" secondItem="Omu-Oh-grl" secondAttribute="bottom" constant="30" id="9OH-oE-q7Z"/>
-                <constraint firstItem="Omu-Oh-grl" firstAttribute="width" secondItem="Kun-vt-WoK" secondAttribute="width" id="Hsf-wL-eaD"/>
-                <constraint firstItem="Kun-vt-WoK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="KPn-q5-DQE"/>
-                <constraint firstItem="zga-PL-mTn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="45" id="Pqc-Qi-U0g"/>
-                <constraint firstItem="Omu-Oh-grl" firstAttribute="width" secondItem="Kun-vt-WoK" secondAttribute="height" multiplier="25:4" id="T8x-sm-qXf"/>
-                <constraint firstItem="Omu-Oh-grl" firstAttribute="leading" secondItem="Kun-vt-WoK" secondAttribute="trailing" constant="60" id="Wce-ss-FNO"/>
-                <constraint firstAttribute="bottom" secondItem="zga-PL-mTn" secondAttribute="bottom" constant="140" id="eeB-XW-OPG"/>
-                <constraint firstAttribute="centerX" secondItem="zga-PL-mTn" secondAttribute="centerX" id="rx1-HK-OR7"/>
+                <constraint firstItem="Kun-vt-WoK" firstAttribute="top" secondItem="zga-PL-mTn" secondAttribute="bottom" constant="93" id="DDG-jh-Vmp"/>
+                <constraint firstItem="Omu-Oh-grl" firstAttribute="top" secondItem="Kun-vt-WoK" secondAttribute="bottom" constant="91" id="F2Y-0Y-Y8T"/>
+                <constraint firstAttribute="trailing" secondItem="Omu-Oh-grl" secondAttribute="trailing" constant="119" id="HIo-e5-SXu"/>
+                <constraint firstItem="Omu-Oh-grl" firstAttribute="top" secondItem="Kun-vt-WoK" secondAttribute="bottom" constant="40" id="Stp-tF-hyP"/>
+                <constraint firstAttribute="bottom" secondItem="Omu-Oh-grl" secondAttribute="bottom" constant="141" id="W8L-vh-Kj5"/>
+                <constraint firstItem="Kun-vt-WoK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="118" id="bm0-q6-X0d"/>
+                <constraint firstItem="Omu-Oh-grl" firstAttribute="top" secondItem="Kun-vt-WoK" secondAttribute="bottom" constant="40" id="fR1-Cv-arr"/>
+                <constraint firstItem="zga-PL-mTn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="g8Q-CA-tAQ"/>
+                <constraint firstItem="Omu-Oh-grl" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="119" id="mNB-5H-aEb"/>
+                <constraint firstItem="zga-PL-mTn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="121" id="vb1-kK-9t4"/>
+                <constraint firstAttribute="trailing" secondItem="Kun-vt-WoK" secondAttribute="trailing" constant="119" id="xbJ-jC-fHZ"/>
+                <constraint firstAttribute="trailing" secondItem="zga-PL-mTn" secondAttribute="trailing" constant="20" id="z0F-AC-EvW"/>
             </constraints>
-            <point key="canvasLocation" x="105" y="-6"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="F2Y-0Y-Y8T"/>
+                    <exclude reference="fR1-Cv-arr"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="104.5" y="-6.5"/>
         </view>
     </objects>
 </document>
