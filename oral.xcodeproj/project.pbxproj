@@ -56,6 +56,8 @@
 		FD8C40F01B0C6FAB00948B6C /* CheckAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8C40EE1B0C6FAB00948B6C /* CheckAskViewController.m */; };
 		FD8C40F11B0C6FAB00948B6C /* CheckAskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */; };
 		FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD92C5C71B0ACA8D00B7BE43 /* AudioPlayer.m */; };
+		FDA25E161B0DC31900F35545 /* CheckKeyWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA25E141B0DC31900F35545 /* CheckKeyWordViewController.m */; };
+		FDA25E171B0DC31900F35545 /* CheckKeyWordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA25E151B0DC31900F35545 /* CheckKeyWordViewController.xib */; };
 		FDD404141B0492F900DE2E84 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404131B0492F900DE2E84 /* main.m */; };
 		FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404161B0492F900DE2E84 /* AppDelegate.m */; };
 		FDD4041A1B0492F900DE2E84 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404191B0492F900DE2E84 /* ViewController.m */; };
@@ -144,6 +146,9 @@
 		FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckAskViewController.xib; sourceTree = "<group>"; };
 		FD92C5C61B0ACA8D00B7BE43 /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
 		FD92C5C71B0ACA8D00B7BE43 /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
+		FDA25E131B0DC31900F35545 /* CheckKeyWordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckKeyWordViewController.h; sourceTree = "<group>"; };
+		FDA25E141B0DC31900F35545 /* CheckKeyWordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckKeyWordViewController.m; sourceTree = "<group>"; };
+		FDA25E151B0DC31900F35545 /* CheckKeyWordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckKeyWordViewController.xib; sourceTree = "<group>"; };
 		FDD4040E1B0492F900DE2E84 /* oral.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oral.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDD404121B0492F900DE2E84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FDD404131B0492F900DE2E84 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -269,6 +274,7 @@
 		FD6244AA1B0585A10037836E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				FDA25E121B0DA41F00F35545 /* 父类控制器 */,
 				FD6244AC1B0586140037836E /* topic主页 */,
 				FD6244AB1B0585F50037836E /* 闯关 */,
 				FD6244AD1B0586450037836E /* 个人中心 */,
@@ -293,8 +299,6 @@
 		FD6244AC1B0586140037836E /* topic主页 */ = {
 			isa = PBXGroup;
 			children = (
-				FDD404381B04943000DE2E84 /* TopicParentsViewController.h */,
-				FDD404391B04943000DE2E84 /* TopicParentsViewController.m */,
 				FDD4043D1B04952400DE2E84 /* TopicMainViewController.h */,
 				FDD4043E1B04952400DE2E84 /* TopicMainViewController.m */,
 				FD596D871B0987B500D6DE7B /* cell */,
@@ -355,6 +359,9 @@
 				FD8C40E31B0C6D8200948B6C /* CheckSuccessViewController.h */,
 				FD8C40E41B0C6D8200948B6C /* CheckSuccessViewController.m */,
 				FD8C40E51B0C6D8200948B6C /* CheckSuccessViewController.xib */,
+				FDA25E131B0DC31900F35545 /* CheckKeyWordViewController.h */,
+				FDA25E141B0DC31900F35545 /* CheckKeyWordViewController.m */,
+				FDA25E151B0DC31900F35545 /* CheckKeyWordViewController.xib */,
 			);
 			name = "过渡";
 			sourceTree = "<group>";
@@ -365,6 +372,15 @@
 				FD92C5C51B0ACA6A00B7BE43 /* 播放器 */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		FDA25E121B0DA41F00F35545 /* 父类控制器 */ = {
+			isa = PBXGroup;
+			children = (
+				FDD404381B04943000DE2E84 /* TopicParentsViewController.h */,
+				FDD404391B04943000DE2E84 /* TopicParentsViewController.m */,
+			);
+			name = "父类控制器";
 			sourceTree = "<group>";
 		};
 		FDD404051B0492F900DE2E84 = {
@@ -539,6 +555,7 @@
 				FD8C40E71B0C6D8200948B6C /* CheckSuccessViewController.xib in Resources */,
 				FD596DCE1B09E42100D6DE7B /* Question_3250.mp3 in Resources */,
 				FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */,
+				FDA25E171B0DC31900F35545 /* CheckKeyWordViewController.xib in Resources */,
 				FDD4044F1B04972D00DE2E84 /* TopicCell.xib in Resources */,
 				FD596DBF1B09E42100D6DE7B /* Question_3235.mp3 in Resources */,
 				FD596DD21B09E42100D6DE7B /* Question_3254.mp3 in Resources */,
@@ -602,6 +619,7 @@
 				FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */,
 				FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */,
 				FD8C40F01B0C6FAB00948B6C /* CheckAskViewController.m in Sources */,
+				FDA25E161B0DC31900F35545 /* CheckKeyWordViewController.m in Sources */,
 				FDD404401B04952400DE2E84 /* TopicMainViewController.m in Sources */,
 				FDD4043B1B04943000DE2E84 /* TopicParentsViewController.m in Sources */,
 				FDD4044E1B04972D00DE2E84 /* TopicCell.m in Sources */,

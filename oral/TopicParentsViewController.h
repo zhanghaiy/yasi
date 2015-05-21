@@ -13,6 +13,7 @@
 @interface TopicParentsViewController : UIViewController
 
 @property (nonatomic,strong) UIView *navTopView;// 模拟导航栏背景
+@property (nonatomic,strong) UILabel *lineLab;
 @property (nonatomic,strong) UILabel *titleLab; //  标题控件 
 // 返回按钮
 - (void)addBackButtonWithImageName:(NSString *)imageName;

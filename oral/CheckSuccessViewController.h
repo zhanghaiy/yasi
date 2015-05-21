@@ -11,9 +11,9 @@
     闯关成功 or 失败 过渡页
  */
 @interface CheckSuccessViewController : TopicParentsViewController
+
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
-@property (weak, nonatomic) IBOutlet UIButton *continueButton;
-- (IBAction)back:(id)sender;
-- (IBAction)continue:(id)sender;
+- (IBAction)backToLastPage:(id)sender;
+
 
 @end

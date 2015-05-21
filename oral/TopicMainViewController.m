@@ -66,7 +66,6 @@
     _rightTableView.showsHorizontalScrollIndicator = NO;
     _rightTableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_rightTableView];
-    
 }
 
 #pragma mark - 数量

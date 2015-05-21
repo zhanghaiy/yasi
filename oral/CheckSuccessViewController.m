@@ -36,9 +36,9 @@
 }
 */
 
-- (IBAction)back:(id)sender
+
+- (IBAction)backToLastPage:(id)sender
 {
-    //
     for (UIViewController *viewControllers in self.navigationController.viewControllers)
     {
         if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
@@ -47,11 +47,5 @@
             break;
         }
     }
-}
-
-- (IBAction)continue:(id)sender
-{
-    // 待完成
-    NSLog(@"待完成");
 }
 @end

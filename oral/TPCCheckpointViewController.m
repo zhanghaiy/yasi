@@ -9,7 +9,7 @@
 #import "TPCCheckpointViewController.h"
 #import "CheckFollowViewController.h"  // 跟读 part--->point1 关卡1
 #import "CheckBlankViewController.h"   // 填空 part--->point2 关卡2
-
+#import "CheckAskViewController.h"     // 问答 part--->point3 关卡3
 
 @interface TPCCheckpointViewController ()<UIScrollViewDelegate>
 
@@ -135,6 +135,8 @@
         case 2:
         {
             // 问答
+            CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
+            [self.navigationController pushViewController:askVC animated:YES];
         }
             break;
         default:

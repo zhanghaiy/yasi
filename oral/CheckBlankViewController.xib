@@ -124,7 +124,7 @@
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="BJf-DM-qIy" secondAttribute="height" multiplier="20:11" id="lZz-wz-2Uq"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="46"/>
                                     <state key="normal" title="96">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>

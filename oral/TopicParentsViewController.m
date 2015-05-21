@@ -23,9 +23,9 @@
     _navTopView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_navTopView];
     
-    UILabel *lineLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 44, kScreentWidth, 1)];
-    lineLab.backgroundColor = [UIColor colorWithRed:231/255.0 green:238/255.0 blue:239/255.0 alpha:1];
-    [self.view addSubview:lineLab];
+    _lineLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 44, kScreentWidth, 1)];
+    _lineLab.backgroundColor = [UIColor colorWithRed:231/255.0 green:238/255.0 blue:239/255.0 alpha:1];
+    [self.view addSubview:_lineLab];
 }
 
 // 返回按钮
