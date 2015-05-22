@@ -9,6 +9,7 @@
 #import "CheckAskViewController.h"
 #import "AudioPlayer.h"
 #import "RecordManager.h"
+#import "CircleProgressView.h"
 
 @interface CheckAskViewController ()
 {
@@ -28,8 +29,12 @@
     CGRect _stuHeadImgViewRect;// 放大后学生头像的frame
     CGRect _stuHeadImgViewRect_small;// 缩小的学生头像的frame
     
-    CGRect _questionNomalRect;
-    CGRect _questionSmallRect;
+    CircleProgressView *_progressView;
+    
+    NSInteger _markTimeChangeCounts;
+    
+//    CGRect _questionNomalRect;
+//    CGRect _questionSmallRect;
 }
 @end
 
@@ -78,6 +83,8 @@
     // Do any additional setup after loading the view from its nib.
     
     _answerTime = 15;
+    _markTimeChangeCounts = 0;
+    
     audioPlayer = [AudioPlayer getAudioManager];
     audioPlayer.target = self;
     audioPlayer.action = @selector(playerCallBack);
@@ -100,6 +107,8 @@
     self.view.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
     _topView.backgroundColor = [UIColor clearColor];
     _teacherView.backgroundColor = [UIColor clearColor];
+    _stuView.backgroundColor = [UIColor clearColor];
+    _bottomView.backgroundColor = [UIColor clearColor];
     
     // 背景颜色 去掉
     // 计算出按钮高度  不同尺寸屏幕 高度不同
@@ -113,7 +122,7 @@
         [btn setBackgroundImage:[UIImage imageNamed:@"questionCount-white"] forState:UIControlStateNormal];
         // 选中
         [btn setBackgroundImage:[UIImage imageNamed:@"questionCount-blue"] forState:UIControlStateSelected];
-        [btn setTitleColor:[UIColor colorWithRed:35/255.0 green:222/255.0 blue:191/255.0 alpha:1] forState:UIControlStateNormal];
+        [btn setTitleColor:_backColor forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         btn.titleLabel.font = [UIFont systemFontOfSize:KThidFontSize];
         btn.tag = kTopQueCountButtonTag+i;
@@ -126,62 +135,35 @@
     
 
     
-    // 获取到老师View的frame
+    // 获取到老师背景View的frame
     CGRect rect = _teacherView.frame;
     float ratio = rect.size.width/rect.size.height;
     rect.size.width = kScreentWidth;
     rect.size.height = kScreentWidth/ratio;
     _teacherView.frame = rect;
     
+    // 老师头像 圆形 有光圈
     _teaHeadImgView.image = [UIImage imageNamed:@"touxiang.png"];
     _teaHeadImgView.layer.masksToBounds = YES;
-    _teaHeadImgView.layer.cornerRadius = (rect.size.height-30)/2;
-    _teaHeadImgView.layer.borderColor = [UIColor colorWithRed:35/255.0 green:222/255.0 blue:191/255.0 alpha:1].CGColor;
-    _teaHeadImgView.layer.borderWidth = 1;
+    _teaHeadImgView.layer.cornerRadius = (rect.size.height-20)/2;
+    _teaHeadImgView.layer.borderColor = _backColor.CGColor;
+    _teaHeadImgView.layer.borderWidth = 3;
     
+    // 确定问题背景frame
     NSInteger queBackHH = _teaHeadImgView.frame.size.width;
     NSInteger queBackX = 30 + queBackHH;
     NSInteger queBackWW = kScreentWidth - queBackX - 20;
     _teaQuestioBackV.frame = CGRectMake(queBackX, 10, queBackWW, queBackHH);
-    
-    
-    // 问题背景----layer
-    
-    _teaQuestionBtn.titleLabel.numberOfLines = 0;
-    _teaQuestionBtn.titleLabel.textColor = [UIColor colorWithRed:62/255.0 green:66/255.0 blue:67/255.0 alpha:1];
-    _teaQuestionBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [_teaQuestionBtn setTitle:@"" forState:UIControlStateNormal];
-//    _teaQuestionBtn.titleLabel.font = [UIFont systemFontOfSize:0];
-    
-    
     _teaQuestioBackV.layer.masksToBounds = YES;
     _teaQuestioBackV.backgroundColor = [UIColor whiteColor];
     _teaQuestioBackV.layer.cornerRadius = _teaQuestioBackV.frame.size.height/1334*kScreenHeight;
     
-//    _teaQuestionLabel.layer.masksToBounds = YES;
-//    _teaQuestionLabel.layer.cornerRadius = _teaQuestionLabel.frame.size.height/1334*kScreenHeight;
-//    // 问题文本 多行显示
-//    _teaQuestionLabel.text = @"";//起始为空
-//    _teaQuestionLabel.textColor = [UIColor colorWithRed:62/255.0 green:66/255.0 blue:67/255.0 alpha:1];
-//    _teaQuestionLabel.textAlignment = NSTextAlignmentCenter;
-//    _teaQuestionLabel.numberOfLines = 0;
-//    _teaQuestionLabel.backgroundColor = [UIColor whiteColor];
-    
-    
-    
-    [_followAnswerButton setBackgroundImage:[UIImage imageNamed:@"answerButton-sele"] forState:UIControlStateNormal];
-    [_followAnswerButton setBackgroundImage:[UIImage imageNamed:@"answerButton-sele"] forState:UIControlStateSelected];
-    
-    _CommitLeftButton.tag = kCommitLeftButtonTag;
-    _commitRightButton.tag = kCommitRightButtonTag;
-    
-    _stuHeadImgViewRect = _stuHeadImgV.frame;
-    _stuHeadImgViewRect_small = _stuHeadImgViewRect;
-    _stuHeadImgViewRect_small.origin.x += 10;
-    _stuHeadImgViewRect_small.origin.y += 10;
-    _stuHeadImgViewRect_small.size.width -= 20;
-    _stuHeadImgViewRect_small.size.height -=20;
-    
+    // 问题文本 其实为空
+    _teaQuestionLabel.numberOfLines = 0;
+    _teaQuestionLabel.textColor = _textColor;
+    _teaQuestionLabel.textAlignment = NSTextAlignmentCenter;
+    _teaQuestionLabel.text = @"";
+    /*
     _questionNomalRect = _teaQuestioBackV.bounds;
     _questionNomalRect.size.height -= 10;
     _questionNomalRect.size.width -= 10;
@@ -191,52 +173,151 @@
     _questionSmallRect = _questionNomalRect;
     _questionSmallRect.size.width = 0;
     
-    _teaQuestionBtn.frame = _questionSmallRect;
+    _teaQuestionLabel.frame = _questionSmallRect;
+    */
     
-    _stuHeadImgV.frame = _stuHeadImgViewRect_small;
+    float middleHeight = kScreenHeight-90-_teacherView.frame.size.height-(_bottomView.frame.size.height/_bottomView.frame.size.width*kScreentWidth);
+    CGRect stuBackRect = _stuView.bounds;
+    stuBackRect.size.height = middleHeight;
+    stuBackRect.size.width = kScreentWidth;
+    _stuView.frame = stuBackRect;
+    
+    // 确定学生头像frame  缩小frame 放大frame
+    // 缩小的的头像
+    _stuHeadImgV.center = _stuView.center;
+    _stuHeadImgViewRect_small = _stuHeadImgV.frame;
+    _stuHeadImgViewRect_small.origin.x = (kScreentWidth-_stuHeadImgV.frame.size.width)/2;
+    _stuHeadImgViewRect_small.origin.y = (_stuView.frame.size.height-_stuHeadImgV.frame.size.width)/2;
+    // 放大后的头像
+    _stuHeadImgViewRect = _stuHeadImgViewRect_small;
+    _stuHeadImgViewRect.origin.x -= 15;
+    _stuHeadImgViewRect.origin.y -= 15;
+    _stuHeadImgViewRect.size.width += 30;
+    _stuHeadImgViewRect.size.height += 30;
+    
+    /*
+         创建时间进度条： 圆形时间进度条 围绕在学生头像外圈
+                       随着时间的增加而增加 当走完一圈 时间用尽 回答结束
+     */
+    
+    [self createTimeProgress];
+    
+    // 提交按钮
+    _CommitLeftButton.tag = kCommitLeftButtonTag;
+    _commitRightButton.tag = kCommitRightButtonTag;
+    
+    [_followAnswerButton setBackgroundImage:[UIImage imageNamed:@"answerButton-sele"] forState:UIControlStateNormal];
+    [_followAnswerButton setBackgroundImage:[UIImage imageNamed:@"answerButton-sele"] forState:UIControlStateSelected];
+    
+    /*
+     初始状态:
+                1> 问题文本不显示
+                2> 老师、学生头像：暗 学生头像：小
+                3> 跟读按钮：隐藏
+     */
+    
     _stuHeadImgV.alpha = 0.3;
     _teaHeadImgView.alpha = 0.3;
     _followAnswerButton.hidden = YES;
+    [self narrowStuHeadImage];
+}
+
+#pragma mark - 创建时间进度条
+- (void)createTimeProgress
+{
+    CGRect timeRect = _stuHeadImgViewRect;
+    timeRect.origin.x -= 20;
+    timeRect.origin.y -= 20;
+    timeRect.size.width += 40;
+    timeRect.size.height += 40;
+    _progressView = [[CircleProgressView alloc]initWithFrame:timeRect];
+    _progressView.backgroundColor = [UIColor clearColor];
+    [_progressView settingProgress:0.0 andColor:_timeProgressColor andWidth:3 andCircleLocationWidth:3];
+    [_stuView addSubview:_progressView];
+    
+    _progressView.hidden = YES;
+    _progressView.center = _stuView.center;
+}
+
+#pragma mark - 时间进度变化
+- (void)progressTimeReduce
+{
+    _markTimeChangeCounts ++;
+    float tip = 1.0/_answerTime/10.0*_markTimeChangeCounts;
+    [_progressView settingProgress:tip andColor:_timeProgressColor andWidth:3 andCircleLocationWidth:3];
+    if (tip >= 1)
+    {
+        [self followAnswer:_followAnswerButton];
+    }
+}
+
+#pragma mark - 放大学生的头像
+- (void)enlargementStuHeadImage
+{
+    _stuHeadImgV.frame = _stuHeadImgViewRect;
+    _stuHeadImgV.layer.cornerRadius = _stuHeadImgViewRect.size.width/2;
+}
+
+#pragma mark - 缩小学生的头像
+- (void)narrowStuHeadImage
+{
+    _progressView.hidden = YES;
+    [_progressView settingProgress:0 andColor:_timeProgressColor andWidth:3 andCircleLocationWidth:3];
+    _stuHeadImgV.frame = _stuHeadImgViewRect_small;
+    _stuHeadImgV.layer.cornerRadius = _stuHeadImgViewRect_small.size.width/2;
 }
 
 #pragma mark - 切换问题变换文本
 - (void)showCurrentQuestionText
 {
-    _teaQuestionBtn.titleLabel.font = [UIFont systemFontOfSize:KOneFontSize];
-    [_teaQuestionBtn setTitle:[[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"question"] forState:UIControlStateNormal];
-    _teaQuestionBtn.frame = _questionNomalRect;
+    _teaQuestionLabel.font = [UIFont systemFontOfSize:KOneFontSize];
+    _teaQuestionLabel.text = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"question"];
+//    _teaQuestionLabel.frame = _questionNomalRect;
 }
 
+#pragma mark - 视图已经出现
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(startQuestion) userInfo:nil repeats:NO];
-}
-
-- (void)startQuestion
-{
-    [self stopTimer];
-    [self prepareQuestion];
+    /*
+         停顿3秒 给学生准备时间 然后开始：
+                                    1）问题文本出现 (要有动画效果)
+                                    2）老实头像变亮
+                                    3）播放问题音频
+     */
+    // 停顿3秒 开始point3流程
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareQuestion) userInfo:nil repeats:NO];
 }
 
 #pragma mark - 准备提问
 - (void)prepareQuestion
 {
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(textAnimate) userInfo:nil repeats:NO];
-}
-
-- (void)textAnimate
-{
+    // 停掉定时器
     [self stopTimer];
     
+    // 1) 文字出现动画
+    [self questionAnimation];
+    // 2）头像--> 亮
     [UIView animateWithDuration:1 animations:^{
-        [self showCurrentQuestionText];
         _teaHeadImgView.alpha = 1;
         _stuHeadImgV.alpha = 0.3;
     }];
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playQuestion) userInfo:nil repeats:NO];
+    // 3）播放音频
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(playQuestion) userInfo:nil repeats:NO];
+}
 
+#pragma mark - 文字动画
+- (void)questionAnimation
+{
+    [UIView beginAnimations:@"animationID" context:nil];
+    [UIView setAnimationDuration:1.0f];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationRepeatAutoreverses:NO];
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:_teaQuestionLabel cache:YES];
+    [self showCurrentQuestionText];
+    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
+    [UIView commitAnimations];
 }
 
 
@@ -251,23 +332,27 @@
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
 
+#pragma MARK -- 播放完成 回调
 - (void)playerCallBack
 {
      // 播放完成 开始录音 保存本地
-    
-//    [UIView animateWithDuration:1 animations:^{
-//        
-//    }];
-    
     [self prepareAnswer];
 }
 
 #pragma mark - 准备回答
 - (void)prepareAnswer
 {
-    _stuHeadImgV.alpha = 1;
-    _teaHeadImgView.alpha = 0.3;
-    
+    [UIView animateWithDuration:2 animations:^{
+        [self enlargementStuHeadImage];
+        _stuHeadImgV.alpha = 1;
+        _teaHeadImgView.alpha = 0.3;
+    }];
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(showFollowButton) userInfo:nil repeats:NO];
+}
+
+- (void)showFollowButton
+{
+    [self stopTimer];
     _followAnswerButton.hidden = NO;
     [self followAnswer:_followAnswerButton];
 }
@@ -303,6 +388,7 @@
        // 结束回答
         btn.hidden = YES;
         [_recordManager stopRecord];
+        [self stopTimer];
     }
     else
     {
@@ -310,7 +396,15 @@
         // 开始录音
 //        [self startRecord];
         [_recordManager prepareRecorderWithFileName:@"answer1"];
+        [self showTimeProgress];
+        
     }
+}
+
+- (void)showTimeProgress
+{
+    _progressView.hidden = NO;
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(progressTimeReduce) userInfo:nil repeats:YES];
 }
 
 #pragma mark - 开始录音
@@ -329,15 +423,16 @@
 #pragma mark - 进行下一题
 - (void)nextQuestion
 {
-//    _currentQuestionCounts++;
+    _currentQuestionCounts++;
+    _markTimeChangeCounts = 0;
     if (_currentQuestionCounts<_sumQuestionCounts)
     {
         // 继续
-        _teaQuestionBtn.titleLabel.font = [UIFont systemFontOfSize:0];
-        [_teaQuestionBtn setTitle:@"" forState:UIControlStateNormal];
-        _teaQuestionBtn.frame = _questionSmallRect;
-        
-        [self prepareQuestion];
+        [UIView animateWithDuration:2 animations:^{
+            [self narrowStuHeadImage];
+            _stuHeadImgV.alpha = 0.3;
+        }];
+        _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareQuestion) userInfo:nil repeats:NO];
     }
     else
     {
@@ -347,7 +442,7 @@
     }
 }
 
-
+#pragma mark - 提交按钮
 - (IBAction)commitButtonClicked:(id)sender
 {
     UIButton *btn = (UIButton *)sender;

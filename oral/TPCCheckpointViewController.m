@@ -54,20 +54,24 @@
     _partScrollView.frame = rect;
     _partScrollView.contentSize = CGSizeMake(_partScrollView.bounds.size.width*3, _partScrollView.bounds.size.height);
     _partScrollView.delegate = self;
-    NSArray *partTitleArray = @[@"Part - One",@"Part - Two",@"Part - Three"];
-    
+    NSArray *partTitleArray = @[@"Part-one",@"Part-two",@"Part-three"];
+    // part 按钮
     for (int i = 0; i < 3; i ++)
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         rect.origin.x = i*rect.size.width;
         rect.origin.y = 0;
         [btn setFrame:rect];
-        btn.backgroundColor = [UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1];
+        btn.backgroundColor = _pointColor;
         btn.tag = kPartButtonTag+i;
         btn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         btn.layer.cornerRadius = btn.frame.size.height/2;
         [btn setTitle:[partTitleArray objectAtIndex:i] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(startPart:) forControlEvents:UIControlEventTouchUpInside];
+        btn.titleLabel.font = [UIFont systemFontOfSize:30];
+        // @"HiraKakuProN-W3"
+        btn.titleLabel.font = [UIFont fontWithName:@"MarkerFelt-thin" size:30];
+
         [_partScrollView addSubview:btn];
     }
     
@@ -75,7 +79,7 @@
     _startTestBtn.layer.masksToBounds= YES;
     _startTestBtn.layer.cornerRadius = _startTestBtn.frame.size.height/2;
     _startTestBtn.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
-    [_startTestBtn setTitleColor:[UIColor colorWithRed:90/255.0 green:225/255.0 blue:191/255.0 alpha:1] forState:UIControlStateNormal];
+    [_startTestBtn setTitleColor:_pointColor forState:UIControlStateNormal];
     
     
     // 页码按钮
@@ -94,7 +98,7 @@
 {
     btn.layer.cornerRadius = _leftMarkBtn.frame.size.width/2;
     btn.layer.masksToBounds = YES;
-    btn.layer.borderColor = [UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1].CGColor;
+    btn.layer.borderColor = _pointColor.CGColor;
     btn.layer.borderWidth = 1;
 }
 
@@ -106,7 +110,7 @@
         UIButton *newBtn = (UIButton *)[self.view viewWithTag:kLeftMarkButtonTag+i];
         if (newBtn.tag == btnTag)
         {
-            newBtn.backgroundColor = [UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1];
+            newBtn.backgroundColor = _pointColor;
         }
         else
         {
@@ -145,8 +149,13 @@
         case 2:
         {
             // 问答
-            CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
-            [self.navigationController pushViewController:askVC animated:YES];
+            
+            CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
+            keyVC.pointCounts = 3;
+            [self.navigationController pushViewController:keyVC animated:YES];
+            
+//            CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
+//            [self.navigationController pushViewController:askVC animated:YES];
         }
             break;
         default:
@@ -181,4 +190,10 @@
 {
     
 }
+
+- (void)backToPrePage
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 @end

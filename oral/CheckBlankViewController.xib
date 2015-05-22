@@ -21,6 +21,7 @@
                 <outlet property="stuTimeProgressLabel" destination="02o-nv-jb7" id="fS2-ob-Dmv"/>
                 <outlet property="studentView" destination="D0B-Fn-VxN" id="oTI-DL-Oc1"/>
                 <outlet property="teaHeadImgView" destination="ghs-m7-QiM" id="jmq-RH-sfL"/>
+                <outlet property="teaQuestionBackImgV" destination="wOD-Hg-gnC" id="8Uq-uE-xdj"/>
                 <outlet property="teaQuestionLabel" destination="nAb-LL-yJq" id="xyD-sA-nLF"/>
                 <outlet property="teacherView" destination="VWP-1t-kg1" id="SAO-1d-7Hd"/>
                 <outlet property="topQuestionCountView" destination="Tbo-Qt-CMD" id="vOR-wv-a1e"/>
@@ -48,6 +49,9 @@
                                 <constraint firstAttribute="width" secondItem="ghs-m7-QiM" secondAttribute="height" multiplier="1:1" id="J8F-e7-oz3"/>
                             </constraints>
                         </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wOD-Hg-gnC">
+                            <rect key="frame" x="120" y="10" width="240" height="70"/>
+                        </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="what is your name?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nAb-LL-yJq">
                             <rect key="frame" x="120" y="10" width="240" height="70"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -60,10 +64,14 @@
                         <constraint firstAttribute="bottom" secondItem="nAb-LL-yJq" secondAttribute="bottom" constant="10" id="28i-bu-YdX"/>
                         <constraint firstAttribute="width" secondItem="VWP-1t-kg1" secondAttribute="height" multiplier="25:6" id="879-Ag-evr"/>
                         <constraint firstItem="nAb-LL-yJq" firstAttribute="top" secondItem="VWP-1t-kg1" secondAttribute="top" constant="10" id="8qL-Mx-R8F"/>
+                        <constraint firstItem="nAb-LL-yJq" firstAttribute="width" secondItem="wOD-Hg-gnC" secondAttribute="width" id="CSq-8M-oMK"/>
                         <constraint firstItem="ghs-m7-QiM" firstAttribute="leading" secondItem="VWP-1t-kg1" secondAttribute="leading" constant="20" id="Cxg-2T-IDf"/>
                         <constraint firstItem="nAb-LL-yJq" firstAttribute="leading" secondItem="ghs-m7-QiM" secondAttribute="trailing" constant="20" id="DpV-yx-3JV"/>
                         <constraint firstItem="ghs-m7-QiM" firstAttribute="top" secondItem="VWP-1t-kg1" secondAttribute="top" constant="5" id="Mod-5M-7eh"/>
+                        <constraint firstItem="nAb-LL-yJq" firstAttribute="centerY" secondItem="wOD-Hg-gnC" secondAttribute="centerY" id="Tux-Jw-Zxf"/>
+                        <constraint firstItem="nAb-LL-yJq" firstAttribute="height" secondItem="wOD-Hg-gnC" secondAttribute="height" id="bFR-12-x1I"/>
                         <constraint firstAttribute="trailing" secondItem="nAb-LL-yJq" secondAttribute="trailing" constant="15" id="kE1-T0-Cy7"/>
+                        <constraint firstItem="nAb-LL-yJq" firstAttribute="centerX" secondItem="wOD-Hg-gnC" secondAttribute="centerX" id="vZj-O8-Gn4"/>
                         <constraint firstAttribute="bottom" secondItem="ghs-m7-QiM" secondAttribute="bottom" constant="5" id="wCt-Gd-if8"/>
                     </constraints>
                 </view>

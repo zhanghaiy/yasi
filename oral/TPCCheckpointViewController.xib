@@ -90,7 +90,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Hts-LQ-12j" secondAttribute="height" multiplier="2:1" id="etj-el-kPl"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
                             <state key="normal" title="直接模考">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>

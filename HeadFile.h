@@ -17,4 +17,10 @@
 #define KThidFontSize 13
 #define KFourFontSize 12
 
+#define kTitleFontSize 16
+#define kFontSize1 14
+#define kFontSize2 12
+#define kFontSize3 10
+#define kFontSize4 8
+
 #endif

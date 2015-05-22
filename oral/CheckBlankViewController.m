@@ -37,6 +37,10 @@
 
 @implementation CheckBlankViewController
 #define kTopQueCountButtonTag 555
+#define kFollowLabelTag 333
+#define kAnswerTextLabelTag 334
+#define kQuestionTextLabelTag 335
+
 
 - (void)viewDidLoad
 {
@@ -51,7 +55,7 @@
     
     [self addBackButtonWithImageName:@"back-white"];
     [self addTitleLabelWithTitleWithTitle:@"Part1-2"];
-    self.navTopView.backgroundColor = [UIColor colorWithRed:144/255.0 green:231/255.0 blue:208/255.0 alpha:1];
+    self.navTopView.backgroundColor = _backColor;
     self.titleLab.textColor = [UIColor whiteColor];
     
     self.view.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
@@ -70,11 +74,11 @@
     tipLab.text = @"成功加入练习簿";
     tipLab.backgroundColor = [UIColor whiteColor];
     tipLab.textAlignment = NSTextAlignmentCenter;
-    tipLab.textColor = [UIColor colorWithRed:144/255.0 green:231/255.0 blue:208/255.0 alpha:1];
+    tipLab.textColor = _backColor;
     tipLab.font = [UIFont systemFontOfSize:KFourFontSize];
     tipLab.layer.masksToBounds = YES;
     tipLab.layer.cornerRadius = 3;
-    tipLab.layer.borderColor = [UIColor colorWithRed:144/255.0 green:231/255.0 blue:208/255.0 alpha:1].CGColor;
+    tipLab.layer.borderColor = _backColor.CGColor;
     tipLab.layer.borderWidth = 1;
     [self.view addSubview:tipLab];
 }
@@ -96,7 +100,7 @@
         [btn setBackgroundImage:[UIImage imageNamed:@"questionCount-white"] forState:UIControlStateNormal];
         // 选中
         [btn setBackgroundImage:[UIImage imageNamed:@"questionCount-blue"] forState:UIControlStateSelected];
-        [btn setTitleColor:[UIColor colorWithRed:144/255.0 green:231/255.0 blue:208/255.0 alpha:1] forState:UIControlStateNormal];
+        [btn setTitleColor:_backColor forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         btn.titleLabel.font = [UIFont systemFontOfSize:KThidFontSize];
         btn.tag = kTopQueCountButtonTag+i;
@@ -110,11 +114,10 @@
     
     // 老师部分控件
     _teacherView.backgroundColor = [UIColor clearColor];
-    
     // 老师头像 --- 设置圆角半径 layer
     _teaHeadImgView.layer.masksToBounds = YES;
     _teaHeadImgView.layer.cornerRadius = _teaHeadImgView.bounds.size.height/1334*kScreenHeight;
-    _teaHeadImgView.layer.borderColor = [UIColor colorWithRed:142/255.0 green:232/255.0 blue:208/255.0 alpha:1].CGColor;
+    _teaHeadImgView.layer.borderColor = _backColor.CGColor;
     _teaHeadImgView.layer.borderWidth = 2;
     [_teaHeadImgView setImage:[UIImage imageNamed:@"touxiang"]];
     
@@ -123,25 +126,30 @@
     _teaQuestionLabel.layer.cornerRadius = _teaQuestionLabel.frame.size.height/1334*kScreenHeight;
     // 问题文本 多行显示
     _teaQuestionLabel.text = @"";//起始为空
-    _teaQuestionLabel.textColor = [UIColor colorWithRed:62/255.0 green:66/255.0 blue:67/255.0 alpha:1];
+    _teaQuestionLabel.textColor = _textColor;
     _teaQuestionLabel.textAlignment = NSTextAlignmentCenter;
     _teaQuestionLabel.numberOfLines = 0;
-    _teaQuestionLabel.backgroundColor = [UIColor whiteColor];
+    _teaQuestionLabel.backgroundColor = [UIColor clearColor];
+    
+    _teaQuestionBackImgV.layer.masksToBounds = YES;
+    _teaQuestionBackImgV.layer.cornerRadius = _teaQuestionLabel.frame.size.height/1334*kScreenHeight;
+    _teaQuestionBackImgV.backgroundColor = [UIColor whiteColor];
+
     
     // 学生部分控件
-    UIColor *stuColor = [UIColor colorWithRed:144/255.0 green:231/255.0 blue:208/255.0 alpha:1];
+//    UIColor *stuColor = _backColor;
     _studentView.backgroundColor = [UIColor whiteColor];
-    _stuFollowLabel.textColor = stuColor;//跟读颜色
+    _stuFollowLabel.textColor = _backColor;//跟读颜色
     _stuFollowLabel.text = @"";//起始为空
     [self changeAnswerProgress];//当前回答数：1
-    _stuCountLabel.textColor = stuColor;
+    _stuCountLabel.textColor = _backColor;
     
     _stuAnswerLabel.text = @"";//起始为空
-    _stuAnswerLabel.textColor = [UIColor colorWithWhite:125/255.0 alpha:1];
+    _stuAnswerLabel.textColor = _textColor;
     _stuBottomView.backgroundColor = [UIColor clearColor];
     _stuLineLabel.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
     // 时间进度条
-    _stuTimeProgressLabel.backgroundColor = stuColor;
+    _stuTimeProgressLabel.backgroundColor = _backColor;
     // 标记时间进度条原始frame
     CGRect rect = _stuTimeProgressLabel.frame;
     rect.size.width = rect.size.width/375*kScreentWidth;
@@ -151,11 +159,11 @@
     _stuHeadImgView.layer.masksToBounds = YES;
     _stuHeadImgView.layer.cornerRadius = _stuHeadImgView.frame.size.height/667*kScreenHeight/2;
     _stuHeadImgView.layer.borderWidth = 2;
-    _stuHeadImgView.layer.borderColor = [UIColor colorWithRed:142/255.0 green:232/255.0 blue:208/255.0 alpha:1].CGColor;
+    _stuHeadImgView.layer.borderColor = _backColor.CGColor;
     
     // 分数按钮
     _stuScoreButton.layer.cornerRadius = _stuScoreButton.frame.size.height/2;
-    [_stuScoreButton setBackgroundColor:[UIColor colorWithRed:43/255.02 green:217/255.0 blue:149/255.0 alpha:1]];
+    [_stuScoreButton setBackgroundColor:_backColor];
     // 底部View
     _followView.backgroundColor = [UIColor clearColor];
     //隐藏跟读按钮
@@ -164,21 +172,25 @@
     [_followAnswerButton setBackgroundImage:[UIImage imageNamed:@"answerButton-sele"] forState:UIControlStateSelected];
     
     // 下一题
-    [_continueButton setTitleColor:[UIColor colorWithWhite:112/255.0 alpha:1] forState:UIControlStateNormal];
+    [_continueButton setTitleColor:_textColor forState:UIControlStateNormal];
     [_continueButton setAdjustsImageWhenHighlighted:YES];
-    [_continueButton setTitleColor:[UIColor colorWithRed:131/255.0 green:230/255.0 blue:204/255.0 alpha:1] forState:UIControlStateHighlighted];
+    [_continueButton setTitleColor:_backColor forState:UIControlStateHighlighted];
     [_continueButton setBackgroundImage:[UIImage imageNamed:@"nextQuestion"] forState:UIControlStateHighlighted];
     // 加入练习簿
-    [_addBookButton setTitleColor:[UIColor colorWithWhite:112/255.0 alpha:1] forState:UIControlStateNormal];
+    [_addBookButton setTitleColor:_textColor forState:UIControlStateNormal];
     [_addBookButton setAdjustsImageWhenHighlighted:YES];
     [_addBookButton setBackgroundImage:[UIImage imageNamed:@"exesize"] forState:UIControlStateHighlighted];
-    [_addBookButton setTitleColor:[UIColor colorWithRed:131/255.0 green:230/255.0 blue:204/255.0 alpha:1] forState:UIControlStateHighlighted];
+    [_addBookButton setTitleColor:_backColor forState:UIControlStateHighlighted];
     
     // 起始状态：老师头像暗 学生头像 暗 文本不显示
     _teaHeadImgView.alpha = 0.3;
     _stuHeadImgView.alpha = 0.3;
     _teaQuestionLabel.text = @"";
     _stuAnswerLabel.text = @"";
+    
+    _stuFollowLabel.tag = kFollowLabelTag;
+    _teaQuestionLabel.tag = kQuestionTextLabelTag;
+    _stuAnswerLabel.tag = kAnswerTextLabelTag;
 }
 
 #pragma mark - 模拟数据
@@ -252,9 +264,11 @@
 #pragma mark - - 播放问题准备
 - (void)prepareQuestion
 {
-    _teaQuestionLabel.font = [UIFont systemFontOfSize:0];
+//    _teaQuestionLabel.font = [UIFont systemFontOfSize:0];
     [self showCurrentQuestionText];
-    [UIView animateWithDuration:0.5 animations:^{
+    [self textAnimationInView:_teaQuestionLabel];
+    
+    [UIView animateWithDuration:2 animations:^{
         _teaQuestionLabel.font = [UIFont systemFontOfSize:KThidFontSize];
         _teaHeadImgView.alpha = 1;
         _stuHeadImgView.alpha = 0.3;
@@ -274,6 +288,7 @@
 - (void)prepareFollow
 {
     [self showCurrentAnswerText];
+    [self textAnimationInView:_stuAnswerLabel];
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(followTextShow) userInfo:nil repeats:NO];
     //    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(stuImageBrite) userInfo:nil repeats:NO];
     //    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(willFollowRecord) userInfo:nil repeats:NO];
@@ -283,8 +298,11 @@
 - (void)followTextShow
 {
     [self stopReduceTimer];
+    _stuFollowLabel.text = @"请填空";
+    [self textAnimationInView:_stuFollowLabel];
+    
     [UIView animateWithDuration:1 animations:^{
-        _stuFollowLabel.text = @"请跟读";
+        _stuFollowLabel.text = @"请填空";
     }];
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(stuImageBrite) userInfo:nil repeats:NO];
 }
@@ -306,6 +324,27 @@
     _reduceTimer = nil;
     _followAnswerButton.hidden = NO;// 展示跟读按钮
     [self followAnswerButtonClicked:_followAnswerButton];
+}
+
+#pragma mark - - 文字动画
+- (void)textAnimationInView:(UILabel *)lable
+{
+    [UIView beginAnimations:@"animationID" context:nil];
+    [UIView setAnimationDuration:1.0f];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationRepeatAutoreverses:NO];
+    if (lable.tag == kFollowLabelTag)
+    {
+        [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:lable cache:YES];
+    }
+    else
+    {
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:lable cache:YES];
+    }
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:lable cache:YES];
+    [self showCurrentQuestionText];
+    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
+    [UIView commitAnimations];
 }
 
 
@@ -416,8 +455,8 @@
     _addBookButton.hidden = NO;
     _continueButton.hidden = NO;
     _stuHeadImgView.alpha = 0.3;
-    [_continueButton setTitleColor:[UIColor colorWithWhite:112/255.0 alpha:1] forState:UIControlStateNormal];
-    [_addBookButton setTitleColor:[UIColor colorWithWhite:112/255.0 alpha:1] forState:UIControlStateNormal];
+    [_continueButton setTitleColor:_textColor forState:UIControlStateNormal];
+    [_addBookButton setTitleColor:_textColor forState:UIControlStateNormal];
 }
 
 #pragma mark - 定时器
@@ -454,7 +493,7 @@
 - (IBAction)addBookClicked:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    [btn setTitleColor:[UIColor colorWithRed:131/255.0 green:230/255.0 blue:204/255.0 alpha:1]forState:UIControlStateNormal];
+    [btn setTitleColor:_backColor forState:UIControlStateNormal];
     [btn setBackgroundImage:[UIImage imageNamed:@"exesize"] forState:UIControlStateNormal];
     
     // 加入练习
@@ -464,7 +503,7 @@
 - (IBAction)continueButtonClicked:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    [btn setTitleColor:[UIColor colorWithRed:131/255.0 green:230/255.0 blue:204/255.0 alpha:1]forState:UIControlStateNormal];
+    [btn setTitleColor:_backColor forState:UIControlStateNormal];
     [btn setBackgroundImage:[UIImage imageNamed:@"nextQuestion"] forState:UIControlStateNormal];
     
     // 下一题

@@ -9,48 +9,51 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="TopicCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="205"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ao7-NM-wZH" customClass="CustomProgressView">
-                        <rect key="frame" x="116" y="122" width="88" height="8"/>
-                        <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="8" id="suv-An-Ts3"/>
-                        </constraints>
-                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My favourite sport" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rnW-4O-rgE">
-                        <rect key="frame" x="60" y="145" width="200" height="20"/>
+                        <rect key="frame" x="80" y="152" width="215" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="t1L-GO-W7k"/>
+                            <constraint firstAttribute="height" constant="20" id="Oj6-oK-GeU"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bjv-yZ-fdc">
-                        <rect key="frame" x="116" y="24" width="88" height="88"/>
+                        <rect key="frame" x="145" y="32" width="85" height="85"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="Bjv-yZ-fdc" secondAttribute="height" multiplier="1:1" id="p6M-46-IGg"/>
+                            <constraint firstAttribute="width" secondItem="Bjv-yZ-fdc" secondAttribute="height" multiplier="1:1" id="I2R-r2-QIr"/>
                         </constraints>
                         <state key="normal" backgroundImage="topic.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ao7-NM-wZH" customClass="CustomProgressView">
+                        <rect key="frame" x="145" y="129" width="85" height="8"/>
+                        <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="I38-SL-sKS"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="rnW-4O-rgE" secondAttribute="trailing" constant="60" id="Bcl-ve-dV9"/>
-                    <constraint firstItem="rnW-4O-rgE" firstAttribute="top" secondItem="ao7-NM-wZH" secondAttribute="bottom" constant="15" id="EAO-aW-50g"/>
-                    <constraint firstItem="ao7-NM-wZH" firstAttribute="top" secondItem="Bjv-yZ-fdc" secondAttribute="bottom" constant="10" id="Ey3-4f-j5J"/>
-                    <constraint firstItem="Bjv-yZ-fdc" firstAttribute="centerX" secondItem="rnW-4O-rgE" secondAttribute="centerX" id="M7L-1i-D3m"/>
-                    <constraint firstItem="Bjv-yZ-fdc" firstAttribute="centerX" secondItem="ao7-NM-wZH" secondAttribute="centerX" id="RvD-ha-0nG"/>
-                    <constraint firstItem="rnW-4O-rgE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="60" id="lbE-0O-GcC"/>
-                    <constraint firstAttribute="bottom" secondItem="rnW-4O-rgE" secondAttribute="bottom" constant="14" id="nid-Pm-mzr"/>
-                    <constraint firstItem="Bjv-yZ-fdc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="24" id="ppZ-cb-SbS"/>
-                    <constraint firstItem="Bjv-yZ-fdc" firstAttribute="width" secondItem="ao7-NM-wZH" secondAttribute="width" id="tyZ-ju-GWA"/>
+                    <constraint firstAttribute="trailing" secondItem="ao7-NM-wZH" secondAttribute="trailing" priority="750" constant="145" id="0GP-RP-lbu"/>
+                    <constraint firstAttribute="centerX" secondItem="ao7-NM-wZH" secondAttribute="centerX" id="1G4-BI-qtu"/>
+                    <constraint firstAttribute="trailing" secondItem="rnW-4O-rgE" secondAttribute="trailing" constant="80" id="7yH-hp-kdt"/>
+                    <constraint firstAttribute="centerX" secondItem="rnW-4O-rgE" secondAttribute="centerX" id="8Gy-yi-DNY"/>
+                    <constraint firstAttribute="centerX" secondItem="Bjv-yZ-fdc" secondAttribute="centerX" id="EL8-Bt-dcV"/>
+                    <constraint firstItem="rnW-4O-rgE" firstAttribute="top" secondItem="ao7-NM-wZH" secondAttribute="bottom" constant="15" id="H6g-RH-77P"/>
+                    <constraint firstItem="ao7-NM-wZH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" priority="750" constant="145" id="M6N-GV-mWJ"/>
+                    <constraint firstAttribute="bottom" secondItem="rnW-4O-rgE" secondAttribute="bottom" constant="32" id="TV8-bV-FBZ"/>
+                    <constraint firstItem="rnW-4O-rgE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="80" id="VAN-FD-R2a"/>
+                    <constraint firstItem="Bjv-yZ-fdc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="32" id="gN1-aB-f4w"/>
+                    <constraint firstItem="ao7-NM-wZH" firstAttribute="top" secondItem="Bjv-yZ-fdc" secondAttribute="bottom" constant="12" id="hnB-3D-fW6"/>
+                    <constraint firstItem="Bjv-yZ-fdc" firstAttribute="width" secondItem="ao7-NM-wZH" secondAttribute="width" id="qu4-uy-NYg"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -58,7 +61,7 @@
                 <outlet property="topicProgressV" destination="ao7-NM-wZH" id="xCp-Ze-Fhf"/>
                 <outlet property="topicTitle" destination="rnW-4O-rgE" id="fvw-y6-GV4"/>
             </connections>
-            <point key="canvasLocation" x="163" y="109"/>
+            <point key="canvasLocation" x="191.5" y="122.5"/>
         </tableViewCell>
     </objects>
     <resources>

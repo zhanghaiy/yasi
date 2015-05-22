@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckKeyWordViewController">
@@ -19,8 +20,13 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tas-67-HO9">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tas-67-HO9">
                     <rect key="frame" x="305" y="25" width="45" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="9DL-np-e6Z"/>
+                        <constraint firstAttribute="width" constant="45" id="mRk-XU-4a6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <state key="normal" title="跳过">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -28,12 +34,20 @@
                         <action selector="buttonClicked:" destination="-1" eventType="touchUpInside" id="I9J-jW-aBH"/>
                     </connections>
                 </button>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="heB-Iy-Lfq">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="heB-Iy-Lfq">
                     <rect key="frame" x="0.0" y="151" width="375" height="260"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="heB-Iy-Lfq" secondAttribute="height" multiplier="75:52" id="lxa-Tp-HAi"/>
+                    </constraints>
                 </scrollView>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O74-J3-ReM">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O74-J3-ReM">
                     <rect key="frame" x="122" y="547" width="130" height="55"/>
                     <color key="backgroundColor" red="0.23486852220000001" green="0.7966757015" blue="0.57971397410000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="55" id="F5w-pn-HHF"/>
+                        <constraint firstAttribute="width" constant="130" id="sfE-d7-wCN"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="开始闯关">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -42,8 +56,12 @@
                         <action selector="buttonClicked:" destination="-1" eventType="touchUpInside" id="GGx-P5-gHg"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nue-ZX-QHZ">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nue-ZX-QHZ">
                     <rect key="frame" x="122" y="414" width="33" height="33"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="33" id="4dE-NQ-3yn"/>
+                        <constraint firstAttribute="height" constant="33" id="900-Pn-0oE"/>
+                    </constraints>
                     <state key="normal" backgroundImage="preTip">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -51,8 +69,12 @@
                         <action selector="buttonClicked:" destination="-1" eventType="touchUpInside" id="puV-7o-f7R"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5Y-Vr-kDN">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5Y-Vr-kDN">
                     <rect key="frame" x="215" y="414" width="33" height="33"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="33" id="cnn-Aj-NVO"/>
+                        <constraint firstAttribute="height" constant="33" id="wIO-P9-dFX"/>
+                    </constraints>
                     <state key="normal" backgroundImage="nextTip">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -62,6 +84,24 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="O74-J3-ReM" secondAttribute="bottom" constant="30" id="5aS-fP-gjh"/>
+                <constraint firstAttribute="trailing" secondItem="heB-Iy-Lfq" secondAttribute="trailing" id="6uV-vt-4A8"/>
+                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="O74-J3-ReM" secondAttribute="bottom" constant="65" id="75o-ac-qcT"/>
+                <constraint firstAttribute="centerY" secondItem="T5Y-Vr-kDN" secondAttribute="centerY" constant="-97" id="9yq-3b-SKK"/>
+                <constraint firstItem="heB-Iy-Lfq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="D3H-CG-azV"/>
+                <constraint firstItem="O74-J3-ReM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="T5Y-Vr-kDN" secondAttribute="bottom" constant="30" id="EoO-1E-0Yf"/>
+                <constraint firstItem="O74-J3-ReM" firstAttribute="top" relation="lessThanOrEqual" secondItem="T5Y-Vr-kDN" secondAttribute="bottom" priority="750" constant="100" id="F30-iU-xIv"/>
+                <constraint firstAttribute="centerY" secondItem="Nue-ZX-QHZ" secondAttribute="centerY" constant="-97" id="I4T-Ht-yeL"/>
+                <constraint firstAttribute="trailing" secondItem="tas-67-HO9" secondAttribute="trailing" constant="25" id="TAz-DV-tmF"/>
+                <constraint firstAttribute="centerX" secondItem="T5Y-Vr-kDN" secondAttribute="centerX" constant="-44" id="TXs-fA-fef"/>
+                <constraint firstItem="tas-67-HO9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="25" id="a9f-ML-Shx"/>
+                <constraint firstItem="O74-J3-ReM" firstAttribute="top" secondItem="Nue-ZX-QHZ" secondAttribute="bottom" priority="750" constant="100" id="aFf-lP-mo3"/>
+                <constraint firstItem="T5Y-Vr-kDN" firstAttribute="top" secondItem="heB-Iy-Lfq" secondAttribute="bottom" constant="3" id="cb4-jI-tja"/>
+                <constraint firstAttribute="centerX" secondItem="O74-J3-ReM" secondAttribute="centerX" id="fnR-ir-K3O"/>
+                <constraint firstItem="T5Y-Vr-kDN" firstAttribute="centerY" secondItem="Nue-ZX-QHZ" secondAttribute="centerY" id="nar-cD-IhU"/>
+                <constraint firstAttribute="centerX" secondItem="Nue-ZX-QHZ" secondAttribute="centerX" constant="49" id="tii-6j-DNQ"/>
+            </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="395.5" y="362.5"/>
         </view>

@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIView *teacherView;
 @property (weak, nonatomic) IBOutlet UIImageView *teaHeadImgView;
 
+@property (weak, nonatomic) IBOutlet UIImageView *teaQuestionBackImgV;
 @property (weak, nonatomic) IBOutlet UILabel *teaQuestionLabel;
 
 

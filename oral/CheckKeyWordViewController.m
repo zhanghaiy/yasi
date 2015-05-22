@@ -9,7 +9,7 @@
 #import "CheckKeyWordViewController.h"
 #import "CheckFollowViewController.h"
 #import "CheckBlankViewController.h"
-
+#import "CheckAskViewController.h"
 
 
 @interface CheckKeyWordViewController ()<UIScrollViewDelegate>
@@ -48,12 +48,13 @@
     _currentPage = 0;
     [self changButtonBack];
     
+    _jumpButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize3];
     _jumpButton.layer.masksToBounds = YES;
     _jumpButton.layer.cornerRadius = _jumpButton.frame.size.height/2;
     _jumpButton.layer.borderWidth = 1;
-    _jumpButton.layer.borderColor = [UIColor colorWithRed:71/255.0 green:223/255.0 blue:187/255.0 alpha:1].CGColor;
+    _jumpButton.layer.borderColor = _pointColor.CGColor;
     _jumpButton.backgroundColor = [UIColor whiteColor];
-    [_jumpButton setTitleColor:[UIColor colorWithRed:71/255.0 green:223/255.0 blue:187/255.0 alpha:1] forState:UIControlStateNormal];
+    [_jumpButton setTitleColor:_pointColor forState:UIControlStateNormal];
 
 
     CGRect rect = _keyScrollView.bounds;
@@ -62,30 +63,42 @@
     _keyScrollView.delegate = self;
     
     UILabel *tipLabel = [[UILabel alloc]initWithFrame:rect];
-    tipLabel.font = [UIFont systemFontOfSize:20];
+    tipLabel.font = [UIFont systemFontOfSize:kTitleFontSize];
     tipLabel.text = @"欢迎来到\n关键词学习阶段";
     tipLabel.textAlignment = NSTextAlignmentCenter;
     tipLabel.numberOfLines = 2;
-    tipLabel.textColor = [UIColor colorWithRed:71/255.0 green:223/255.0 blue:187/255.0 alpha:1];
+    tipLabel.textColor = _pointColor;
     [_keyScrollView addSubview:tipLabel];
+    
+    UILabel *tipLabel_down = [[UILabel alloc]initWithFrame:rect];
+    tipLabel_down.font = [UIFont systemFontOfSize:kTitleFontSize];
+    tipLabel_down.text = @"欢迎来到\n关键词学习阶段";
+    tipLabel_down.textAlignment = NSTextAlignmentCenter;
+    tipLabel_down.numberOfLines = 2;
+    tipLabel_down.textColor = _pointColor;
+    [_keyScrollView addSubview:tipLabel_down];
+    
     
     for (int i = 0; i < keyWordArray.count; i ++)
     {
         CGRect newRect = rect;
         newRect.origin.x = (i+1)*rect.size.width;
         UILabel *keyLabel = [[UILabel alloc]initWithFrame:newRect];
-        keyLabel.font = [UIFont systemFontOfSize:30];
+//        keyLabel.font = [UIFont systemFontOfSize:30];
+        // @"MarkerFelt-thin"
+        keyLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:kTitleFontSize];
         keyLabel.text = [keyWordArray objectAtIndex:i];
         keyLabel.textAlignment = NSTextAlignmentCenter;
-        keyLabel.textColor = [UIColor colorWithRed:71/255.0 green:223/255.0 blue:187/255.0 alpha:1];
+        keyLabel.textColor = _pointColor;
         [_keyScrollView addSubview:keyLabel];
     }
     
     _startPointButton.layer.masksToBounds = YES;
     _startPointButton.layer.cornerRadius = _startPointButton.frame.size.height/2;
-    _startPointButton.backgroundColor = [UIColor colorWithRed:71/255.0 green:223/255.0 blue:187/255.0 alpha:1];
+    _startPointButton.backgroundColor = _pointColor;
     _startPointButton.titleLabel.textColor = [UIColor whiteColor];
-    _startPointButton.titleLabel.font = [UIFont systemFontOfSize:KOneFontSize];
+//    _startPointButton.titleLabel.font = [UIFont systemFontOfSize:20];
+    _startPointButton.titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:kFontSize1];
     _startPointButton.hidden = YES;
 }
 
@@ -180,6 +193,11 @@
     {
         CheckBlankViewController *blankVC = [[CheckBlankViewController alloc]initWithNibName:@"CheckBlankViewController" bundle:nil];
         [self.navigationController pushViewController:blankVC animated:YES];
+    }
+    else if (_pointCounts == 3)
+    {
+        CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
+        [self.navigationController pushViewController:askVC animated:YES];
     }
 }
 

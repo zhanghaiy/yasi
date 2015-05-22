@@ -44,6 +44,7 @@
 		FD596DD31B09E42100D6DE7B /* Question_3255.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DAF1B09E42100D6DE7B /* Question_3255.mp3 */; };
 		FD596DD41B09E42100D6DE7B /* Question_3256.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DB01B09E42100D6DE7B /* Question_3256.mp3 */; };
 		FD596DD51B09E42100D6DE7B /* Question_3257.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DB11B09E42100D6DE7B /* Question_3257.mp3 */; };
+		FD5A05841B0ED899002F0756 /* CircleProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5A05831B0ED899002F0756 /* CircleProgressView.m */; };
 		FD62449F1B0584780037836E /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = FD62449E1B0584780037836E /* touxiang.png */; };
 		FD6244A31B0585450037836E /* TPCCheckpointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6244A11B0585450037836E /* TPCCheckpointViewController.m */; };
 		FD6244A41B0585450037836E /* TPCCheckpointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A21B0585450037836E /* TPCCheckpointViewController.xib */; };
@@ -129,6 +130,8 @@
 		FD596DAF1B09E42100D6DE7B /* Question_3255.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3255.mp3; sourceTree = "<group>"; };
 		FD596DB01B09E42100D6DE7B /* Question_3256.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3256.mp3; sourceTree = "<group>"; };
 		FD596DB11B09E42100D6DE7B /* Question_3257.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3257.mp3; sourceTree = "<group>"; };
+		FD5A05821B0ED899002F0756 /* CircleProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleProgressView.h; sourceTree = "<group>"; };
+		FD5A05831B0ED899002F0756 /* CircleProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleProgressView.m; sourceTree = "<group>"; };
 		FD62449E1B0584780037836E /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang.png; sourceTree = "<group>"; };
 		FD6244A01B0585450037836E /* TPCCheckpointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCCheckpointViewController.h; sourceTree = "<group>"; };
 		FD6244A11B0585450037836E /* TPCCheckpointViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCCheckpointViewController.m; sourceTree = "<group>"; };
@@ -274,6 +277,15 @@
 			path = "temp 3";
 			sourceTree = "<group>";
 		};
+		FD5A05811B0ED877002F0756 /* 圆形进度条 */ = {
+			isa = PBXGroup;
+			children = (
+				FD5A05821B0ED899002F0756 /* CircleProgressView.h */,
+				FD5A05831B0ED899002F0756 /* CircleProgressView.m */,
+			);
+			name = "圆形进度条";
+			sourceTree = "<group>";
+		};
 		FD6244AA1B0585A10037836E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -372,6 +384,7 @@
 		FDA25E111B0D9EFF00F35545 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FD5A05811B0ED877002F0756 /* 圆形进度条 */,
 				FDA25E181B0DD97F00F35545 /* 录音 */,
 				FD92C5C51B0ACA6A00B7BE43 /* 播放器 */,
 			);
@@ -639,6 +652,7 @@
 				FDD4044E1B04972D00DE2E84 /* TopicCell.m in Sources */,
 				FDD4044C1B04972D00DE2E84 /* RightMainCell.m in Sources */,
 				FD6244A31B0585450037836E /* TPCCheckpointViewController.m in Sources */,
+				FD5A05841B0ED899002F0756 /* CircleProgressView.m in Sources */,
 				FDD404141B0492F900DE2E84 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,6 +10,8 @@
 #import "TopicMainViewController.h"
 #import "CheckKeyWordViewController.h"
 #import "CheckAskViewController.h"
+#import "CheckSuccessViewController.h"
+
 
 @interface AppDelegate ()
 
@@ -24,17 +26,20 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-//    TopicMainViewController *rootVC = [[TopicMainViewController alloc]init];
-//    UINavigationController *topicNvc = [[UINavigationController alloc]initWithRootViewController:rootVC];
-//    topicNvc.navigationBarHidden = YES;
-//    self.window.rootViewController = topicNvc;
+    TopicMainViewController *rootVC = [[TopicMainViewController alloc]init];
+    UINavigationController *topicNvc = [[UINavigationController alloc]initWithRootViewController:rootVC];
+    topicNvc.navigationBarHidden = YES;
+    self.window.rootViewController = topicNvc;
     
-    
+//    CheckSuccessViewController *sucVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
+//    sucVC.pointCount = 1;
+//    self.window.rootViewController  = sucVC;
+//    
 //    CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
 //    self.window.rootViewController = keyVC;
     
-    CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
-    self.window.rootViewController = askVC;
+//    CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
+//    self.window.rootViewController = askVC;
 
     [self.window makeKeyAndVisible];
     

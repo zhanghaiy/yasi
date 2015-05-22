@@ -14,12 +14,17 @@
 @property (weak, nonatomic) IBOutlet UIView *topView;
 @property (weak, nonatomic) IBOutlet UIView *teacherView;
 @property (weak, nonatomic) IBOutlet UIImageView *teaHeadImgView;
-//@property (weak, nonatomic) IBOutlet UILabel *teaQuestionLabel;
-@property (weak, nonatomic) IBOutlet UIButton *teaQuestionBtn;
+@property (weak, nonatomic) IBOutlet UILabel *teaQuestionLabel;
+//@property (weak, nonatomic) IBOutlet UIButton *teaQuestionBtn;
 @property (weak, nonatomic) IBOutlet UIView *teaQuestioBackV;
 
+@property (weak, nonatomic) IBOutlet UIView *stuView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *stuHeadImgV;
+
+
+
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIButton *followAnswerButton;
 
 - (IBAction)followAnswer:(id)sender;
