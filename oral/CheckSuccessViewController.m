@@ -10,6 +10,7 @@
 #import "TPCCheckpointViewController.h"
 #import "CheckKeyWordViewController.h"
 #import "CheckAskViewController.h"
+#import "SuccessCell.h"
 
 
 @interface CheckSuccessViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -66,13 +67,14 @@
     
     _midTableView.delegate = self;
     _midTableView.dataSource = self;
+    _midTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50;
+    return 70;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -83,13 +85,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *celId = @"cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:celId];
+    SuccessCell *cell = [tableView dequeueReusableCellWithIdentifier:celId];
     if ( cell == nil)
     {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:celId];
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"SuccessCell" owner:self options:0] lastObject];
     }
     
-    cell.textLabel.text = @"i like English";
+    cell.desLabel.text = @"Good grades~Continue to work hard，Continue to work hard，Continue to work hard";
     return cell;
 }
 
@@ -126,16 +128,5 @@
     CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
     keyVC.pointCounts = _pointCount;
     [self.navigationController pushViewController:keyVC animated:YES];
-//    if (_pointCount<=2)
-//    {
-//        CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
-//        keyVC.pointCounts = _pointCount;
-//        [self.navigationController pushViewController:keyVC animated:YES];
-//    }
-//    else
-//    {
-//        CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
-//        [self.navigationController pushViewController:askVC animated:YES];
-//    }
 }
 @end

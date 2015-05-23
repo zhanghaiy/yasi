@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD5461331B1045B800409778 /* SuccessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5461311B1045B800409778 /* SuccessCell.m */; };
+		FD5461341B1045B800409778 /* SuccessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5461321B1045B800409778 /* SuccessCell.xib */; };
+		FD5461391B10576B00409778 /* CheckTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5461371B10576B00409778 /* CheckTestViewController.m */; };
+		FD54613A1B10576B00409778 /* CheckTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5461381B10576B00409778 /* CheckTestViewController.xib */; };
+		FD54613E1B10580A00409778 /* MyTeacherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD54613C1B10580A00409778 /* MyTeacherViewController.m */; };
+		FD54613F1B10580A00409778 /* MyTeacherViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD54613D1B10580A00409778 /* MyTeacherViewController.xib */; };
+		FD5461431B105D6300409778 /* FooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5461421B105D6300409778 /* FooterView.m */; };
+		FD5461451B105D7700409778 /* FooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5461441B105D7700409778 /* FooterView.xib */; };
+		FD5461491B105FF400409778 /* MyTeacherCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5461471B105FF400409778 /* MyTeacherCell.m */; };
+		FD54614A1B105FF400409778 /* MyTeacherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5461481B105FF400409778 /* MyTeacherCell.xib */; };
 		FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8B1B09E0D400D6DE7B /* Images.xcassets */; };
 		FD596DB21B09E42100D6DE7B /* 349207.png in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8E1B09E42100D6DE7B /* 349207.png */; };
 		FD596DB31B09E42100D6DE7B /* info.json in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8F1B09E42100D6DE7B /* info.json */; };
@@ -91,6 +101,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD5461301B1045B800409778 /* SuccessCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuccessCell.h; sourceTree = "<group>"; };
+		FD5461311B1045B800409778 /* SuccessCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuccessCell.m; sourceTree = "<group>"; };
+		FD5461321B1045B800409778 /* SuccessCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuccessCell.xib; sourceTree = "<group>"; };
+		FD5461361B10576B00409778 /* CheckTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckTestViewController.h; sourceTree = "<group>"; };
+		FD5461371B10576B00409778 /* CheckTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckTestViewController.m; sourceTree = "<group>"; };
+		FD5461381B10576B00409778 /* CheckTestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckTestViewController.xib; sourceTree = "<group>"; };
+		FD54613B1B10580A00409778 /* MyTeacherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTeacherViewController.h; sourceTree = "<group>"; };
+		FD54613C1B10580A00409778 /* MyTeacherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTeacherViewController.m; sourceTree = "<group>"; };
+		FD54613D1B10580A00409778 /* MyTeacherViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyTeacherViewController.xib; sourceTree = "<group>"; };
+		FD5461411B105D6300409778 /* FooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FooterView.h; sourceTree = "<group>"; };
+		FD5461421B105D6300409778 /* FooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FooterView.m; sourceTree = "<group>"; };
+		FD5461441B105D7700409778 /* FooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FooterView.xib; sourceTree = "<group>"; };
+		FD5461461B105FF400409778 /* MyTeacherCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTeacherCell.h; sourceTree = "<group>"; };
+		FD5461471B105FF400409778 /* MyTeacherCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTeacherCell.m; sourceTree = "<group>"; };
+		FD5461481B105FF400409778 /* MyTeacherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyTeacherCell.xib; sourceTree = "<group>"; };
 		FD596D831B097E7000D6DE7B /* PchFile.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PchFile.pch; sourceTree = "<group>"; };
 		FD596D851B097F7C00D6DE7B /* HeadFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeadFile.h; sourceTree = "<group>"; };
 		FD596D8B1B09E0D400D6DE7B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -204,6 +229,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FD5461351B1056D000409778 /* 模考 */ = {
+			isa = PBXGroup;
+			children = (
+				FD5461361B10576B00409778 /* CheckTestViewController.h */,
+				FD5461371B10576B00409778 /* CheckTestViewController.m */,
+				FD5461381B10576B00409778 /* CheckTestViewController.xib */,
+			);
+			name = "模考";
+			sourceTree = "<group>";
+		};
+		FD5461401B10580F00409778 /* 我的老师 */ = {
+			isa = PBXGroup;
+			children = (
+				FD54613B1B10580A00409778 /* MyTeacherViewController.h */,
+				FD54613C1B10580A00409778 /* MyTeacherViewController.m */,
+				FD54613D1B10580A00409778 /* MyTeacherViewController.xib */,
+				FD5461411B105D6300409778 /* FooterView.h */,
+				FD5461421B105D6300409778 /* FooterView.m */,
+				FD5461441B105D7700409778 /* FooterView.xib */,
+				FD5461461B105FF400409778 /* MyTeacherCell.h */,
+				FD5461471B105FF400409778 /* MyTeacherCell.m */,
+				FD5461481B105FF400409778 /* MyTeacherCell.xib */,
+			);
+			name = "我的老师";
+			sourceTree = "<group>";
+		};
 		FD596D841B097F5400D6DE7B /* HeadFile */ = {
 			isa = PBXGroup;
 			children = (
@@ -292,6 +343,7 @@
 				FDA25E121B0DA41F00F35545 /* 父类控制器 */,
 				FD6244AC1B0586140037836E /* topic主页 */,
 				FD6244AB1B0585F50037836E /* 闯关 */,
+				FD5461351B1056D000409778 /* 模考 */,
 				FD6244AD1B0586450037836E /* 个人中心 */,
 			);
 			name = ViewControllers;
@@ -307,6 +359,7 @@
 				FDA25E0E1B0D9E2200F35545 /* 填空 */,
 				FDA25E0F1B0D9E2900F35545 /* 问答 */,
 				FDA25E101B0D9E2E00F35545 /* 过渡 */,
+				FD5461401B10580F00409778 /* 我的老师 */,
 			);
 			name = "闯关";
 			sourceTree = "<group>";
@@ -377,6 +430,9 @@
 				FDA25E131B0DC31900F35545 /* CheckKeyWordViewController.h */,
 				FDA25E141B0DC31900F35545 /* CheckKeyWordViewController.m */,
 				FDA25E151B0DC31900F35545 /* CheckKeyWordViewController.xib */,
+				FD5461301B1045B800409778 /* SuccessCell.h */,
+				FD5461311B1045B800409778 /* SuccessCell.m */,
+				FD5461321B1045B800409778 /* SuccessCell.xib */,
 			);
 			name = "过渡";
 			sourceTree = "<group>";
@@ -567,6 +623,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD54614A1B105FF400409778 /* MyTeacherCell.xib in Resources */,
 				FDD4041D1B0492F900DE2E84 /* Main.storyboard in Resources */,
 				FD596DD51B09E42100D6DE7B /* Question_3257.mp3 in Resources */,
 				FD596DC11B09E42100D6DE7B /* Question_3237.mp3 in Resources */,
@@ -586,6 +643,7 @@
 				FD596DBF1B09E42100D6DE7B /* Question_3235.mp3 in Resources */,
 				FD596DD21B09E42100D6DE7B /* Question_3254.mp3 in Resources */,
 				FD596DC61B09E42100D6DE7B /* Question_3242.mp3 in Resources */,
+				FD5461451B105D7700409778 /* FooterView.xib in Resources */,
 				FD596DD01B09E42100D6DE7B /* Question_3252.mp3 in Resources */,
 				FD596DB21B09E42100D6DE7B /* 349207.png in Resources */,
 				FD596DBB1B09E42100D6DE7B /* Question_3231.mp3 in Resources */,
@@ -606,16 +664,19 @@
 				FD8C40F11B0C6FAB00948B6C /* CheckAskViewController.xib in Resources */,
 				FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */,
 				FD596DC41B09E42100D6DE7B /* Question_3240.mp3 in Resources */,
+				FD54613A1B10576B00409778 /* CheckTestViewController.xib in Resources */,
 				FDD404561B049B5B00DE2E84 /* topic2.png in Resources */,
 				FD596DC31B09E42100D6DE7B /* Question_3239.mp3 in Resources */,
 				FD596DBA1B09E42100D6DE7B /* Question_3230.mp3 in Resources */,
 				FD596DD31B09E42100D6DE7B /* Question_3255.mp3 in Resources */,
 				FDD404541B049B5B00DE2E84 /* topic.png in Resources */,
+				FD54613F1B10580A00409778 /* MyTeacherViewController.xib in Resources */,
 				FD596DD11B09E42100D6DE7B /* Question_3253.mp3 in Resources */,
 				FD596DB91B09E42100D6DE7B /* Question_3229.mp3 in Resources */,
 				FD596DC51B09E42100D6DE7B /* Question_3241.mp3 in Resources */,
 				FD596DB31B09E42100D6DE7B /* info.json in Resources */,
 				FD596DB71B09E42100D6DE7B /* Question_3227.mp3 in Resources */,
+				FD5461341B1045B800409778 /* SuccessCell.xib in Resources */,
 				FD6244A41B0585450037836E /* TPCCheckpointViewController.xib in Resources */,
 				FD596DC81B09E42100D6DE7B /* Question_3244.mp3 in Resources */,
 				FD596DB51B09E42100D6DE7B /* Question_3225.mp3 in Resources */,
@@ -638,11 +699,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD8C40EB1B0C6F3A00948B6C /* CheckBlankViewController.m in Sources */,
+				FD54613E1B10580A00409778 /* MyTeacherViewController.m in Sources */,
 				FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */,
 				FD8C40E61B0C6D8200948B6C /* CheckSuccessViewController.m in Sources */,
 				FDD4044B1B04972D00DE2E84 /* CustomProgressView.m in Sources */,
 				FDA25E1B1B0DD98D00F35545 /* RecordManager.m in Sources */,
 				FDD4041A1B0492F900DE2E84 /* ViewController.m in Sources */,
+				FD5461391B10576B00409778 /* CheckTestViewController.m in Sources */,
 				FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */,
 				FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */,
 				FD8C40F01B0C6FAB00948B6C /* CheckAskViewController.m in Sources */,
@@ -650,6 +713,9 @@
 				FDD404401B04952400DE2E84 /* TopicMainViewController.m in Sources */,
 				FDD4043B1B04943000DE2E84 /* TopicParentsViewController.m in Sources */,
 				FDD4044E1B04972D00DE2E84 /* TopicCell.m in Sources */,
+				FD5461431B105D6300409778 /* FooterView.m in Sources */,
+				FD5461491B105FF400409778 /* MyTeacherCell.m in Sources */,
+				FD5461331B1045B800409778 /* SuccessCell.m in Sources */,
 				FDD4044C1B04972D00DE2E84 /* RightMainCell.m in Sources */,
 				FD6244A31B0585450037836E /* TPCCheckpointViewController.m in Sources */,
 				FD5A05841B0ED899002F0756 /* CircleProgressView.m in Sources */,

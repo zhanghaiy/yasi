@@ -41,13 +41,13 @@
                     </constraints>
                 </scrollView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O74-J3-ReM">
-                    <rect key="frame" x="122" y="547" width="130" height="55"/>
+                    <rect key="frame" x="132" y="547" width="110" height="50"/>
                     <color key="backgroundColor" red="0.23486852220000001" green="0.7966757015" blue="0.57971397410000003" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="55" id="F5w-pn-HHF"/>
-                        <constraint firstAttribute="width" constant="130" id="sfE-d7-wCN"/>
+                        <constraint firstAttribute="height" constant="50" id="F5w-pn-HHF"/>
+                        <constraint firstAttribute="width" constant="110" id="sfE-d7-wCN"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="开始闯关">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -87,7 +87,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="O74-J3-ReM" secondAttribute="bottom" constant="30" id="5aS-fP-gjh"/>
                 <constraint firstAttribute="trailing" secondItem="heB-Iy-Lfq" secondAttribute="trailing" id="6uV-vt-4A8"/>
-                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="O74-J3-ReM" secondAttribute="bottom" constant="65" id="75o-ac-qcT"/>
+                <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="O74-J3-ReM" secondAttribute="bottom" constant="70" id="75o-ac-qcT"/>
                 <constraint firstAttribute="centerY" secondItem="T5Y-Vr-kDN" secondAttribute="centerY" constant="-97" id="9yq-3b-SKK"/>
                 <constraint firstItem="heB-Iy-Lfq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="D3H-CG-azV"/>
                 <constraint firstItem="O74-J3-ReM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="T5Y-Vr-kDN" secondAttribute="bottom" constant="30" id="EoO-1E-0Yf"/>
@@ -103,7 +103,7 @@
                 <constraint firstAttribute="centerX" secondItem="Nue-ZX-QHZ" secondAttribute="centerX" constant="49" id="tii-6j-DNQ"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="395.5" y="362.5"/>
+            <point key="canvasLocation" x="-102.5" y="-77.5"/>
         </view>
     </objects>
     <resources>

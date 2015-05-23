@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="SuccessCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="70"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="It has often been said that travel bordens the mind" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWM-Vm-Dtt">
+                        <rect key="frame" x="20" y="10" width="285" height="50"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SqG-jf-lSx">
+                        <rect key="frame" x="315" y="15" width="40" height="40"/>
+                        <color key="backgroundColor" red="0.033761818040000002" green="0.86167378080000001" blue="0.050852253799999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="0Vn-XK-6ZL"/>
+                            <constraint firstAttribute="height" constant="40" id="kzM-lS-6sB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="58">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="auq-lJ-tTm">
+                        <rect key="frame" x="20" y="68" width="335" height="1"/>
+                        <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="SqG-jf-lSx" firstAttribute="leading" secondItem="bWM-Vm-Dtt" secondAttribute="trailing" constant="10" id="6tx-SD-NQ4"/>
+                    <constraint firstItem="bWM-Vm-Dtt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="E9X-dB-9sQ"/>
+                    <constraint firstAttribute="centerY" secondItem="SqG-jf-lSx" secondAttribute="centerY" id="h8m-Bw-aCx"/>
+                    <constraint firstAttribute="bottom" secondItem="bWM-Vm-Dtt" secondAttribute="bottom" constant="9" id="m30-Uw-iNq"/>
+                    <constraint firstItem="bWM-Vm-Dtt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="nkv-Ng-pc8"/>
+                    <constraint firstAttribute="trailing" secondItem="SqG-jf-lSx" secondAttribute="trailing" constant="20" id="vdE-87-IEG"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="desLabel" destination="bWM-Vm-Dtt" id="eVv-xs-sjI"/>
+                <outlet property="lineLabel" destination="auq-lJ-tTm" id="Ivu-GG-QHx"/>
+                <outlet property="scoreButton" destination="SqG-jf-lSx" id="Ji4-HB-LDn"/>
+            </connections>
+            <point key="canvasLocation" x="356.5" y="137"/>
+        </tableViewCell>
+    </objects>
+</document>

@@ -10,6 +10,8 @@
 #import "AudioPlayer.h"
 #import "RecordManager.h"
 #import "CircleProgressView.h"
+#import "MyTeacherViewController.h"
+
 
 @interface CheckAskViewController ()
 {
@@ -453,6 +455,23 @@
     else if (btn.tag == kCommitRightButtonTag)
     {
         // 现在提交
+        
+        MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
+        [self.navigationController pushViewController:myTeacherVC animated:YES];
     }
 }
+
+
+#pragma mark - 界面将要消失
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    NSLog(@"viewWillDisappear");
+    audioPlayer.target = nil;
+    if (_reduceTimer != nil)
+    {
+        [self stopTimer];
+    }
+}
+
 @end

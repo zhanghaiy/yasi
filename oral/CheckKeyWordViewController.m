@@ -11,7 +11,6 @@
 #import "CheckBlankViewController.h"
 #import "CheckAskViewController.h"
 
-
 @interface CheckKeyWordViewController ()<UIScrollViewDelegate>
 {
     NSInteger _currentPage;
