@@ -22,6 +22,7 @@
 #define kTeaTableViewCellHeight 76
 #define kFooterViewHeight 60
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -53,6 +54,10 @@
     
 }
 
+- (void)backToPrePage
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

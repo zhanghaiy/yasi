@@ -48,21 +48,22 @@
 
 - (void)backToPrePage
 {
-    for (UIViewController *viewControllers in self.navigationController.viewControllers)
-    {
-        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
-        {
-            [self.navigationController popToViewController:viewControllers animated:YES];
-            break;
-        }
-    }
+    [self.navigationController popViewControllerAnimated:YES];
+//    for (UIViewController *viewControllers in self.navigationController.viewControllers)
+//    {
+//        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
+//        {
+//            [self.navigationController popToViewController:viewControllers animated:YES];
+//            break;
+//        }
+//    }
 }
 
 // titleLabel
 - (void)addTitleLabelWithTitleWithTitle:(NSString *)title
 {
     _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(60, 2, kScreentWidth-60*2, 40)];
-    _titleLab.textColor = [UIColor colorWithWhite:119/255.0 alpha:1];
+    _titleLab.textColor = _textColor;
     _titleLab.font = [UIFont systemFontOfSize:KOneFontSize];
     _titleLab.textAlignment = NSTextAlignmentCenter;
     _titleLab.text = title;

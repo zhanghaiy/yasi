@@ -17,6 +17,12 @@
 		FD5461451B105D7700409778 /* FooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5461441B105D7700409778 /* FooterView.xib */; };
 		FD5461491B105FF400409778 /* MyTeacherCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5461471B105FF400409778 /* MyTeacherCell.m */; };
 		FD54614A1B105FF400409778 /* MyTeacherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5461481B105FF400409778 /* MyTeacherCell.xib */; };
+		FD5461541B10676700409778 /* TPCPersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5461521B10676700409778 /* TPCPersonCenterViewController.m */; };
+		FD5461551B10676700409778 /* TPCPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5461531B10676700409778 /* TPCPersonCenterViewController.xib */; };
+		FD5461591B10748600409778 /* PersonClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5461571B10748600409778 /* PersonClassViewController.m */; };
+		FD54615A1B10748600409778 /* PersonClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5461581B10748600409778 /* PersonClassViewController.xib */; };
+		FD54615F1B10761C00409778 /* ClassCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD54615D1B10761C00409778 /* ClassCell.m */; };
+		FD5461601B10761C00409778 /* ClassCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD54615E1B10761C00409778 /* ClassCell.xib */; };
 		FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8B1B09E0D400D6DE7B /* Images.xcassets */; };
 		FD596DB21B09E42100D6DE7B /* 349207.png in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8E1B09E42100D6DE7B /* 349207.png */; };
 		FD596DB31B09E42100D6DE7B /* info.json in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8F1B09E42100D6DE7B /* info.json */; };
@@ -116,6 +122,15 @@
 		FD5461461B105FF400409778 /* MyTeacherCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTeacherCell.h; sourceTree = "<group>"; };
 		FD5461471B105FF400409778 /* MyTeacherCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTeacherCell.m; sourceTree = "<group>"; };
 		FD5461481B105FF400409778 /* MyTeacherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyTeacherCell.xib; sourceTree = "<group>"; };
+		FD5461511B10676700409778 /* TPCPersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCPersonCenterViewController.h; sourceTree = "<group>"; };
+		FD5461521B10676700409778 /* TPCPersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCPersonCenterViewController.m; sourceTree = "<group>"; };
+		FD5461531B10676700409778 /* TPCPersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPCPersonCenterViewController.xib; sourceTree = "<group>"; };
+		FD5461561B10748600409778 /* PersonClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonClassViewController.h; sourceTree = "<group>"; };
+		FD5461571B10748600409778 /* PersonClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonClassViewController.m; sourceTree = "<group>"; };
+		FD5461581B10748600409778 /* PersonClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonClassViewController.xib; sourceTree = "<group>"; };
+		FD54615C1B10761C00409778 /* ClassCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassCell.h; sourceTree = "<group>"; };
+		FD54615D1B10761C00409778 /* ClassCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassCell.m; sourceTree = "<group>"; };
+		FD54615E1B10761C00409778 /* ClassCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClassCell.xib; sourceTree = "<group>"; };
 		FD596D831B097E7000D6DE7B /* PchFile.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PchFile.pch; sourceTree = "<group>"; };
 		FD596D851B097F7C00D6DE7B /* HeadFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeadFile.h; sourceTree = "<group>"; };
 		FD596D8B1B09E0D400D6DE7B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -255,6 +270,30 @@
 			name = "我的老师";
 			sourceTree = "<group>";
 		};
+		FD5461501B1066E000409778 /* 闯关 */ = {
+			isa = PBXGroup;
+			children = (
+				FDA25E0D1B0D9E1300F35545 /* 跟读 */,
+				FDA25E0E1B0D9E2200F35545 /* 填空 */,
+				FDA25E0F1B0D9E2900F35545 /* 问答 */,
+				FDA25E101B0D9E2E00F35545 /* 过渡 */,
+			);
+			name = "闯关";
+			sourceTree = "<group>";
+		};
+		FD54615B1B10749100409778 /* 班级 */ = {
+			isa = PBXGroup;
+			children = (
+				FD5461561B10748600409778 /* PersonClassViewController.h */,
+				FD5461571B10748600409778 /* PersonClassViewController.m */,
+				FD5461581B10748600409778 /* PersonClassViewController.xib */,
+				FD54615C1B10761C00409778 /* ClassCell.h */,
+				FD54615D1B10761C00409778 /* ClassCell.m */,
+				FD54615E1B10761C00409778 /* ClassCell.xib */,
+			);
+			name = "班级";
+			sourceTree = "<group>";
+		};
 		FD596D841B097F5400D6DE7B /* HeadFile */ = {
 			isa = PBXGroup;
 			children = (
@@ -342,26 +381,21 @@
 			children = (
 				FDA25E121B0DA41F00F35545 /* 父类控制器 */,
 				FD6244AC1B0586140037836E /* topic主页 */,
-				FD6244AB1B0585F50037836E /* 闯关 */,
-				FD5461351B1056D000409778 /* 模考 */,
-				FD6244AD1B0586450037836E /* 个人中心 */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
-		FD6244AB1B0585F50037836E /* 闯关 */ = {
+		FD6244AB1B0585F50037836E /* topic详情页 */ = {
 			isa = PBXGroup;
 			children = (
 				FD6244A01B0585450037836E /* TPCCheckpointViewController.h */,
 				FD6244A11B0585450037836E /* TPCCheckpointViewController.m */,
 				FD6244A21B0585450037836E /* TPCCheckpointViewController.xib */,
-				FDA25E0D1B0D9E1300F35545 /* 跟读 */,
-				FDA25E0E1B0D9E2200F35545 /* 填空 */,
-				FDA25E0F1B0D9E2900F35545 /* 问答 */,
-				FDA25E101B0D9E2E00F35545 /* 过渡 */,
+				FD5461501B1066E000409778 /* 闯关 */,
+				FD5461351B1056D000409778 /* 模考 */,
 				FD5461401B10580F00409778 /* 我的老师 */,
 			);
-			name = "闯关";
+			name = "topic详情页";
 			sourceTree = "<group>";
 		};
 		FD6244AC1B0586140037836E /* topic主页 */ = {
@@ -369,6 +403,8 @@
 			children = (
 				FDD4043D1B04952400DE2E84 /* TopicMainViewController.h */,
 				FDD4043E1B04952400DE2E84 /* TopicMainViewController.m */,
+				FD6244AB1B0585F50037836E /* topic详情页 */,
+				FD6244AD1B0586450037836E /* 个人中心 */,
 				FD596D871B0987B500D6DE7B /* cell */,
 				FD596D861B09879B00D6DE7B /* 进度条 */,
 			);
@@ -378,6 +414,10 @@
 		FD6244AD1B0586450037836E /* 个人中心 */ = {
 			isa = PBXGroup;
 			children = (
+				FD5461511B10676700409778 /* TPCPersonCenterViewController.h */,
+				FD5461521B10676700409778 /* TPCPersonCenterViewController.m */,
+				FD5461531B10676700409778 /* TPCPersonCenterViewController.xib */,
+				FD54615B1B10749100409778 /* 班级 */,
 			);
 			name = "个人中心";
 			sourceTree = "<group>";
@@ -646,12 +686,14 @@
 				FD5461451B105D7700409778 /* FooterView.xib in Resources */,
 				FD596DD01B09E42100D6DE7B /* Question_3252.mp3 in Resources */,
 				FD596DB21B09E42100D6DE7B /* 349207.png in Resources */,
+				FD5461551B10676700409778 /* TPCPersonCenterViewController.xib in Resources */,
 				FD596DBB1B09E42100D6DE7B /* Question_3231.mp3 in Resources */,
 				FDD404591B049B8400DE2E84 /* topic_small.png in Resources */,
 				FD8C40EC1B0C6F3A00948B6C /* CheckBlankViewController.xib in Resources */,
 				FD596DBE1B09E42100D6DE7B /* Question_3234.mp3 in Resources */,
 				FD596DCC1B09E42100D6DE7B /* Question_3248.mp3 in Resources */,
 				FD62449F1B0584780037836E /* touxiang.png in Resources */,
+				FD54615A1B10748600409778 /* PersonClassViewController.xib in Resources */,
 				FD596DB41B09E42100D6DE7B /* Question_3224.mp3 in Resources */,
 				FD596DB81B09E42100D6DE7B /* Question_3228.mp3 in Resources */,
 				FD596DBD1B09E42100D6DE7B /* Question_3233.mp3 in Resources */,
@@ -665,6 +707,7 @@
 				FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */,
 				FD596DC41B09E42100D6DE7B /* Question_3240.mp3 in Resources */,
 				FD54613A1B10576B00409778 /* CheckTestViewController.xib in Resources */,
+				FD5461601B10761C00409778 /* ClassCell.xib in Resources */,
 				FDD404561B049B5B00DE2E84 /* topic2.png in Resources */,
 				FD596DC31B09E42100D6DE7B /* Question_3239.mp3 in Resources */,
 				FD596DBA1B09E42100D6DE7B /* Question_3230.mp3 in Resources */,
@@ -698,6 +741,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD54615F1B10761C00409778 /* ClassCell.m in Sources */,
 				FD8C40EB1B0C6F3A00948B6C /* CheckBlankViewController.m in Sources */,
 				FD54613E1B10580A00409778 /* MyTeacherViewController.m in Sources */,
 				FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */,
@@ -716,7 +760,9 @@
 				FD5461431B105D6300409778 /* FooterView.m in Sources */,
 				FD5461491B105FF400409778 /* MyTeacherCell.m in Sources */,
 				FD5461331B1045B800409778 /* SuccessCell.m in Sources */,
+				FD5461591B10748600409778 /* PersonClassViewController.m in Sources */,
 				FDD4044C1B04972D00DE2E84 /* RightMainCell.m in Sources */,
+				FD5461541B10676700409778 /* TPCPersonCenterViewController.m in Sources */,
 				FD6244A31B0585450037836E /* TPCCheckpointViewController.m in Sources */,
 				FD5A05841B0ED899002F0756 /* CircleProgressView.m in Sources */,
 				FDD404141B0492F900DE2E84 /* main.m in Sources */,

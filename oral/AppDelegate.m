@@ -8,10 +8,12 @@
 
 #import "AppDelegate.h"
 #import "TopicMainViewController.h"
+// 测试用
 #import "CheckKeyWordViewController.h"
 #import "CheckAskViewController.h"
 #import "CheckSuccessViewController.h"
 #import "MyTeacherViewController.h"
+#import "TPCPersonCenterViewController.h"
 
 @interface AppDelegate ()
 
@@ -26,10 +28,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-//    TopicMainViewController *rootVC = [[TopicMainViewController alloc]init];
-//         UINavigationController *topicNvc = [[UINavigationController alloc]initWithRootViewController:rootVC];
-//    topicNvc.navigationBarHidden = YES;
-//        self.window.rootViewController = topicNvc;
+    TopicMainViewController *rootVC = [[TopicMainViewController alloc]init];
+         UINavigationController *topicNvc = [[UINavigationController alloc]initWithRootViewController:rootVC];
+    topicNvc.navigationBarHidden = YES;
+        self.window.rootViewController = topicNvc;
     
 //    CheckSuccessViewController *sucVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
 //    sucVC.pointCount = 1;
@@ -41,9 +43,15 @@
 //    CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
 //    self.window.rootViewController = askVC;
     
-    MyTeacherViewController *myTeaVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
-    self.window.rootViewController = myTeaVC;
+//    MyTeacherViewController *myTeaVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
+//    self.window.rootViewController = myTeaVC;
 
+//    TPCPersonCenterViewController *personVC = [[TPCPersonCenterViewController alloc]initWithNibName:@"TPCPersonCenterViewController" bundle:nil];
+//    UINavigationController *personNVC = [[UINavigationController alloc]initWithRootViewController:personVC];
+//    personNVC.navigationBarHidden = YES;
+//    self.window.rootViewController = personNVC;
+
+    
     [self.window makeKeyAndVisible];
     
     return YES;

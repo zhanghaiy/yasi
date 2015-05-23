@@ -9,6 +9,8 @@
 #import "CheckFollowViewController.h"
 #import "AudioPlayer.h"
 #import "CheckSuccessViewController.h"
+#import "TPCCheckpointViewController.h"
+
 
 @interface CheckFollowViewController ()
 {
@@ -672,6 +674,18 @@
     if (_reduceTimer != nil)
     {
         [self stopReduceTimer];
+    }
+}
+
+- (void)backToPrePage
+{
+    for (UIViewController *viewControllers in self.navigationController.viewControllers)
+    {
+        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
+        {
+            [self.navigationController popToViewController:viewControllers animated:YES];
+            break;
+        }
     }
 }
 

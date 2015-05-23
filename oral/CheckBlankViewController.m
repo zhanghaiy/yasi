@@ -9,7 +9,7 @@
 #import "CheckBlankViewController.h"
 #import "AudioPlayer.h"
 #import "CheckSuccessViewController.h"
-
+#import "TPCCheckpointViewController.h"
 
 @interface CheckBlankViewController ()
 {
@@ -41,6 +41,17 @@
 #define kAnswerTextLabelTag 334
 #define kQuestionTextLabelTag 335
 
+- (void)backToPrePage
+{
+    for (UIViewController *viewControllers in self.navigationController.viewControllers)
+    {
+        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
+        {
+            [self.navigationController popToViewController:viewControllers animated:YES];
+            break;
+        }
+    }
+}
 
 - (void)viewDidLoad
 {

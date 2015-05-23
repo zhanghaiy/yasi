@@ -11,7 +11,7 @@
 #import "RecordManager.h"
 #import "CircleProgressView.h"
 #import "MyTeacherViewController.h"
-
+#import "TPCCheckpointViewController.h"
 
 @interface CheckAskViewController ()
 {
@@ -44,6 +44,19 @@
 #define kTopQueCountButtonTag 333
 #define kCommitLeftButtonTag 444
 #define kCommitRightButtonTag 555
+
+- (void)backToPrePage
+{
+    for (UIViewController *viewControllers in self.navigationController.viewControllers)
+    {
+        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
+        {
+            [self.navigationController popToViewController:viewControllers animated:YES];
+            break;
+        }
+    }
+}
+
 
 #pragma mark - 模拟数据
 - (void)moNiDataFromLocal

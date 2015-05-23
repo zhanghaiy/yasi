@@ -11,7 +11,7 @@
 #import "TopicCell.h"
 #import "RightMainCell.h"
 #import "TPCCheckpointViewController.h"
-
+#import "TPCPersonCenterViewController.h"
 
 @interface TopicMainViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -270,7 +270,8 @@
 #pragma mark - 跳转到个人中心
 - (void)toPersonCenter
 {
-    
+    TPCPersonCenterViewController *personVC = [[TPCPersonCenterViewController alloc]initWithNibName:@"TPCPersonCenterViewController" bundle:nil];
+    [self.navigationController pushViewController:personVC animated:YES];
 }
 
 
