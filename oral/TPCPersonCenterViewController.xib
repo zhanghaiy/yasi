@@ -37,49 +37,74 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jMo-sx-cZW">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="珍惜一切就算没有拥有" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9D-Ca-ojn">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="珍惜一切就算没有拥有" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9D-Ca-ojn">
                             <rect key="frame" x="120" y="77" width="237" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="sWX-Tz-63H"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="珍惜一切就算没有拥有" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t93-FP-amo">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="珍惜一切就算没有拥有" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t93-FP-amo">
                             <rect key="frame" x="120" y="102" width="237" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="HJL-oy-oha"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uok-56-rXJ">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uok-56-rXJ">
                             <rect key="frame" x="30" y="40" width="70" height="70"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="70" id="QFK-LR-5lr"/>
+                                <constraint firstAttribute="width" constant="70" id="apf-Sj-dfT"/>
+                            </constraints>
                             <state key="normal" backgroundImage="touxiang.png">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ngk-Fe-AVN">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ngk-Fe-AVN">
                             <rect key="frame" x="289" y="24" width="20" height="20"/>
                             <color key="backgroundColor" red="0.045186234370000002" green="0.5845921825" blue="0.66990064540000005" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="9wF-zq-iyu"/>
+                                <constraint firstAttribute="width" constant="20" id="sRI-HN-dTi"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                             <state key="normal" title="女">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtc-E7-Cy0">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gtc-E7-Cy0">
                             <rect key="frame" x="317" y="24" width="40" height="20"/>
                             <color key="backgroundColor" red="0.045186234370000002" green="0.5845921825" blue="0.66990064540000005" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="WLH-jm-F77"/>
+                                <constraint firstAttribute="height" constant="20" id="jMW-tU-JaO"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                             <state key="normal" title="射手座">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="珍惜一切就算没有拥有" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oRP-g4-fKV">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="珍惜一切就算没有拥有" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oRP-g4-fKV">
                             <rect key="frame" x="120" y="52" width="237" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="lzy-wd-aHr"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="雅思口语Lee" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obR-gy-qyt">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="雅思口语Lee" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obR-gy-qyt">
                             <rect key="frame" x="120" y="27" width="160" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="6lA-rn-Jnb"/>
+                                <constraint firstAttribute="width" constant="160" id="nIe-88-Ra6"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
@@ -87,7 +112,27 @@
                     </subviews>
                     <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="gtc-E7-Cy0" secondAttribute="trailing" constant="18" id="AnV-ch-Ed8"/>
+                        <constraint firstItem="t93-FP-amo" firstAttribute="width" secondItem="oRP-g4-fKV" secondAttribute="width" id="Aoz-N3-k5U"/>
+                        <constraint firstItem="Ngk-Fe-AVN" firstAttribute="leading" secondItem="obR-gy-qyt" secondAttribute="trailing" constant="9" id="Ayx-78-XRA"/>
+                        <constraint firstItem="t93-FP-amo" firstAttribute="top" secondItem="m9D-Ca-ojn" secondAttribute="bottom" constant="5" id="GAW-of-Ucd"/>
+                        <constraint firstItem="gtc-E7-Cy0" firstAttribute="leading" secondItem="Ngk-Fe-AVN" secondAttribute="trailing" constant="8" id="JsP-bM-TRU"/>
+                        <constraint firstAttribute="centerY" secondItem="Uok-56-rXJ" secondAttribute="centerY" id="Kq4-AH-uLw"/>
+                        <constraint firstItem="Uok-56-rXJ" firstAttribute="leading" secondItem="ULp-lh-jfy" secondAttribute="leading" constant="30" id="S7f-QY-qkU"/>
+                        <constraint firstItem="t93-FP-amo" firstAttribute="leading" secondItem="Uok-56-rXJ" secondAttribute="trailing" constant="20" id="Wll-qG-tSN"/>
+                        <constraint firstItem="m9D-Ca-ojn" firstAttribute="leading" secondItem="Uok-56-rXJ" secondAttribute="trailing" constant="20" id="XL6-hf-FmV"/>
+                        <constraint firstItem="m9D-Ca-ojn" firstAttribute="top" secondItem="oRP-g4-fKV" secondAttribute="bottom" constant="5" id="ZlJ-eZ-0OI"/>
+                        <constraint firstItem="Ngk-Fe-AVN" firstAttribute="top" secondItem="ULp-lh-jfy" secondAttribute="top" constant="24" id="ckV-OF-L7W"/>
+                        <constraint firstItem="oRP-g4-fKV" firstAttribute="top" secondItem="obR-gy-qyt" secondAttribute="bottom" constant="5" id="dtf-Hn-CKt"/>
+                        <constraint firstItem="oRP-g4-fKV" firstAttribute="leading" secondItem="Uok-56-rXJ" secondAttribute="trailing" constant="20" id="jZB-qA-ufq"/>
+                        <constraint firstItem="gtc-E7-Cy0" firstAttribute="top" secondItem="ULp-lh-jfy" secondAttribute="top" constant="24" id="jdC-wj-X4W"/>
+                        <constraint firstAttribute="trailing" secondItem="oRP-g4-fKV" secondAttribute="trailing" constant="18" id="k2K-c1-SjV"/>
+                        <constraint firstItem="t93-FP-amo" firstAttribute="width" secondItem="m9D-Ca-ojn" secondAttribute="width" id="k8J-Wa-OUu"/>
+                        <constraint firstAttribute="trailing" secondItem="t93-FP-amo" secondAttribute="trailing" constant="18" id="pAr-3j-JFb"/>
+                        <constraint firstItem="obR-gy-qyt" firstAttribute="top" secondItem="ULp-lh-jfy" secondAttribute="top" constant="27" id="thw-Ga-UYl"/>
+                        <constraint firstItem="obR-gy-qyt" firstAttribute="leading" secondItem="Uok-56-rXJ" secondAttribute="trailing" constant="20" id="vlO-Ad-JV3"/>
                         <constraint firstAttribute="height" constant="150" id="yU3-9Q-imN"/>
+                        <constraint firstAttribute="trailing" secondItem="m9D-Ca-ojn" secondAttribute="trailing" constant="18" id="zwu-JS-Vrc"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uWo-k5-l4I">
