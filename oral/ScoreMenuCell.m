@@ -15,6 +15,7 @@
     // Initialization code
     
     _lineLabel.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
+    _scoreButton.layer.cornerRadius = _scoreButton.bounds.size.height/2;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

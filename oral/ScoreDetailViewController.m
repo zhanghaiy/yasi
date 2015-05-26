@@ -19,6 +19,7 @@
 
 @implementation ScoreDetailViewController
 
+#define kBackScrollViewTag 666
 #define kPointButtonWidth (kScreentWidth/3)
 #define kPointButtonTag 1111
 #define kTopViewHeight 44
@@ -62,9 +63,11 @@
     }
     
     _pointScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 89, kScreentWidth, kScreenHeight-89)];
+    _pointScrollV.tag = kBackScrollViewTag;
     _pointScrollV.contentSize = CGSizeMake(kScreentWidth*3, kScreenHeight-89);
     _pointScrollV.delegate = self;
     _pointScrollV.backgroundColor = _backgroundViewColor;
+    _pointScrollV.pagingEnabled = YES;
     [self.view addSubview:_pointScrollV];
     
     for (int i = 0; i < 3; i ++)
@@ -140,10 +143,18 @@
 
 - (void)pointButtonClicked:(UIButton *)btn
 {
+    [self changePointButtonSelected:btn.tag-kPointButtonTag];
+    [UIView animateWithDuration:0.5 animations:^{
+        _pointScrollV.contentOffset = CGPointMake(kScreentWidth*(btn.tag - kPointButtonTag), 0);
+    }];
+}
+
+- (void)changePointButtonSelected:(NSInteger)count
+{
     for (int i = 0; i < 3; i ++)
     {
         UIButton *newBtn = (UIButton *)[self.view viewWithTag:kPointButtonTag+i];
-        if (newBtn.tag == btn.tag)
+        if (newBtn.tag == count+kPointButtonTag)
         {
             newBtn.selected = YES;
         }
@@ -152,7 +163,12 @@
             newBtn.selected = NO;
         }
     }
-    _pointScrollV.contentOffset = CGPointMake(kScreentWidth*(btn.tag - kPointButtonTag), 0);
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSInteger count = scrollView.contentOffset.x/kScreentWidth;
+    [self changePointButtonSelected:count];
 }
 
 - (void)didReceiveMemoryWarning {
