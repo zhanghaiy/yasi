@@ -22,6 +22,9 @@
 @property (weak, nonatomic) IBOutlet UIView *partBackView;
 @property (strong, nonatomic) IBOutlet UIScrollView *partScrollView;
 - (IBAction)testButtonClicked:(id)sender;
+- (IBAction)practiseBook:(id)sender;
+- (IBAction)scoreMenu:(id)sender;
 
+@property (nonatomic,strong) NSDictionary *topicDict;
 
 @end

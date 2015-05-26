@@ -63,7 +63,8 @@
     audioPlayer = [AudioPlayer getAudioManager];
     audioPlayer.target = self;
     audioPlayer.action = @selector(playerCallBack);
-    
+    _currentPointCounts = 1;
+
     [self addBackButtonWithImageName:@"back-white"];
     [self addTitleLabelWithTitleWithTitle:@"Part1-2"];
     self.navTopView.backgroundColor = _backColor;
@@ -202,6 +203,9 @@
     _stuFollowLabel.tag = kFollowLabelTag;
     _teaQuestionLabel.tag = kQuestionTextLabelTag;
     _stuAnswerLabel.tag = kAnswerTextLabelTag;
+    
+    // 回答区域圆角
+    _studentView.layer.cornerRadius = 5;
 }
 
 #pragma mark - 模拟数据
@@ -220,13 +224,13 @@
      ----待完善-----
      
      */
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"info" ofType:@"json"];
-    NSData *jsonData = [NSData dataWithContentsOfFile:path];
+    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",self.topicName];
+    NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     // 整个topic资源信息
     _topicInfoDict = [dict objectForKey:@"classtypeinfo"];
     // 当前part资源信息
-    _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:_currentPartCounts];
+    _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:self.currentPartCounts];
     // 当前关卡信息
     _currentPointDict = [[_currentPartDict objectForKey:@"levellist"] objectAtIndex:_currentPointCounts];
     // 当前关卡所有问题
@@ -344,14 +348,6 @@
     [UIView setAnimationDuration:1.0f];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationRepeatAutoreverses:NO];
-    if (lable.tag == kFollowLabelTag)
-    {
-        [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:lable cache:YES];
-    }
-    else
-    {
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:lable cache:YES];
-    }
     [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:lable cache:YES];
     [self showCurrentQuestionText];
     [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
@@ -625,7 +621,7 @@
     {
         //关卡结束 跳转过渡页
         CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
-        successVC.pointCount = 3;
+        successVC.pointCount = self.currentPointCounts;
         [self.navigationController pushViewController:successVC animated:YES];
     }
 }

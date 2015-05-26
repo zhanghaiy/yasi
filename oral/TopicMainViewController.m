@@ -12,6 +12,8 @@
 #import "RightMainCell.h"
 #import "TPCCheckpointViewController.h"
 #import "TPCPersonCenterViewController.h"
+#import "NetManager.h"
+#import "UIButton+WebCache.h"
 
 @interface TopicMainViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -47,7 +49,7 @@
     [self.navTopView addSubview:personBtn];
     
     // 模拟数据源
-    _topicArray = @[@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic1.png",@"title":@"I like music",@"color":[UIColor colorWithRed:248/255.0 green:227/255.0 blue:68/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic1.png",@"title":@"I like music",@"color":[UIColor colorWithRed:248/255.0 green:227/255.0 blue:68/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic1.png",@"title":@"I like music",@"color":[UIColor colorWithRed:248/255.0 green:227/255.0 blue:68/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]}];
+//    _topicArray = @[@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic1.png",@"title":@"I like music",@"color":[UIColor colorWithRed:248/255.0 green:227/255.0 blue:68/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic1.png",@"title":@"I like music",@"color":[UIColor colorWithRed:248/255.0 green:227/255.0 blue:68/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic1.png",@"title":@"I like music",@"color":[UIColor colorWithRed:248/255.0 green:227/255.0 blue:68/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]}];
     
     _topicTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, kScreentWidth, kScreenHeight-kNavBarHeight) style:UITableViewStylePlain];
     _topicTableView.delegate = self;
@@ -66,20 +68,41 @@
     _rightTableView.showsHorizontalScrollIndicator = NO;
     _rightTableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_rightTableView];
+    
+    [self requestTopicInfo];
 }
+
+- (void)requestTopicInfo
+{
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.target = self;
+    netManager.action = @selector(requestFinished:);
+    [netManager netGetUrl:[NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTopicListUrl]];
+}
+
+- (void)requestFinished:(NetManager *)netManager
+{
+    if (netManager.success)
+    {
+        if (netManager.downLoadData)
+        {
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
+            _topicArray = [dict objectForKey:@"etctlist"];
+            [_topicTableView reloadData];
+            [_rightTableView reloadData];
+        }
+    }
+    else
+    {
+        // 失败
+    }
+}
+
 
 #pragma mark - 数量
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (tableView.tag == kTopicMainTableViewTag)
-    {
-        return _topicArray.count;
-    }
-    else if (tableView.tag == kRightTableVIewTag)
-    {
-        return _topicArray.count;
-    }
-    return 0;
+    return _topicArray.count;
 }
 
 #pragma mark - 高度
@@ -107,9 +130,20 @@
             cell = [[[NSBundle mainBundle]loadNibNamed:@"TopicCell" owner:self options:0] lastObject];
         }
         NSDictionary *dic = [_topicArray objectAtIndex:indexPath.row];
-        [cell.topicButton setBackgroundImage:[UIImage imageNamed:[dic objectForKey:@"imageName"]] forState:UIControlStateNormal];
-        cell.topicTitle.text = [NSString stringWithFormat:@"%@%ld",[dic objectForKey:@"title"],(long)indexPath.row];//[NSString stringWithFormat:@"My topic%d",indexPath.row];
-        cell.progressColor = [dic objectForKey:@"color"];
+        [cell.topicButton setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"bgimgurl"]]];
+        cell.topicTitle.text = [dic objectForKey:@"classtype"];
+        
+        NSArray *colorArr = [[dic objectForKey:@"classcolor"] componentsSeparatedByString:@","];
+        if (colorArr.count == 3)
+        {
+            NSInteger red = [[colorArr objectAtIndex:0] integerValue];
+            NSInteger orange = [[colorArr objectAtIndex:1] integerValue];
+            NSInteger blue = [[colorArr objectAtIndex:2] integerValue];
+            cell.progressColor = [UIColor colorWithRed:red/255.0 green:orange/255.0 blue:blue/255.0 alpha:1];
+            
+        }
+        // 暂时写死  此处是根据本地数据（自己存储的）来算出用户的进度
+        cell.topicProgressV.progress = 0.8;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.topicButton.tag = indexPath.row+kTopicButtonTag;
         [cell.topicButton addTarget:self action:@selector(startPass:) forControlEvents:UIControlEventTouchUpInside];
@@ -124,11 +158,10 @@
             cell = [[[NSBundle mainBundle]loadNibNamed:@"RightMainCell" owner:self options:0] lastObject];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        if (indexPath.row<_topicArray.count)
-        {
-            NSDictionary *dict = [_topicArray objectAtIndex:indexPath.row];
-            [cell.smallTopicButton setBackgroundImage:[UIImage imageNamed:[dict objectForKey:@"imageName"]] forState:UIControlStateNormal];
-        }
+        
+        NSDictionary *dict = [_topicArray objectAtIndex:indexPath.row];
+        [cell.smallTopicButton setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"bgimgurl"]]];
+
         cell.smallTopicButton.tag = indexPath.row+kTopicButtonTag*10;
         [cell.smallTopicButton addTarget:self action:@selector(jumpToCurrentTopic:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
@@ -139,9 +172,10 @@
 #pragma mark - 进入闯关界面
 - (void)startPass:(UIButton *)btn
 {
-    //
     NSLog(@"%ld",btn.tag);
+    NSDictionary *selectedTopicDict = [_topicArray objectAtIndex:btn.tag - kTopicButtonTag];
     TPCCheckpointViewController *checkVC = [[TPCCheckpointViewController alloc]initWithNibName:@"TPCCheckpointViewController" bundle:nil];
+    checkVC.topicDict = selectedTopicDict;
     [self.navigationController pushViewController:checkVC animated:YES];
 }
 
@@ -170,67 +204,76 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSLog(@"%f",scrollView.contentOffset.y / kmainCellHeight);
-    if (scrollView.tag == kTopicMainTableViewTag)
+    if (_selectFromRight == NO)
     {
-        if (_selectFromRight)
+        if (scrollView.tag == kTopicMainTableViewTag)
         {
-            _selectFromRight = NO;
-        }
-        else
-        {
-            [self.view bringSubviewToFront:_rightTableView];
             [self rightTableViewShow];
-            if (scrollView.contentOffset.y>=0&&scrollView.contentOffset.y<=(_topicArray.count-3)*kmainCellHeight)
+            
+            if (_topicArray.count>7)
             {
-                if (scrollView.contentOffset.y-_topicContentY>0)
+                if (_topicContentY<scrollView.contentOffset.y)
                 {
-                    // 向下
-                    [self down];
+                    // 上面的
+                    float cou = scrollView.contentOffset.y/kmainCellHeight;
+                    if (cou>7)
+                    {
+                        _rightTableView.contentOffset = CGPointMake(0, cou*kRightCellHeight);
+                    }
                 }
-                else if(_topicContentY-scrollView.contentOffset.y>0)
+                else
                 {
-                    [self up];
+                    // 下面的
+                    float cou = scrollView.contentOffset.y/kmainCellHeight;
+                    if (cou<_topicArray.count-7)
+                    {
+                        _rightTableView.contentOffset = CGPointMake(0, cou*kRightCellHeight);
+                        
+                    }
                 }
-                _topicContentY = scrollView.contentOffset.y;
             }
         }
-        
-    }
-}
-
-#pragma mark - 向下滑动
-- (void)down
-{
-    if (_topicTableView.contentOffset.y/kmainCellHeight+7<_topicArray.count)
-    {
-        _rightTableView.contentOffset = CGPointMake(0, (_topicTableView.contentOffset.y/kmainCellHeight)*kRightCellHeight);
+        _topicContentY = scrollView.contentOffset.y;
     }
     else
     {
-        _rightTableView.contentOffset = CGPointMake(0, (_topicArray.count-7)*kRightCellHeight);
+        _selectFromRight = NO;
     }
 }
 
-#pragma mark - 向上滑动
-- (void)up
-{
-    // 若想右侧列表展示主列表后面的数据 将7--->10即可
-    if (_topicTableView.contentOffset.y/kmainCellHeight-7>0)
-    {
-        _rightTableView.contentOffset = CGPointMake(0, (_topicTableView.contentOffset.y/kmainCellHeight-7)*kRightCellHeight);
-    }
-    else
-    {
-        _rightTableView.contentOffset = CGPointMake(0, 0);
-    }
-}
+//#pragma mark - 向下滑动
+//- (void)down
+//{
+//    if (_topicTableView.contentOffset.y/kmainCellHeight+7<_topicArray.count)
+//    {
+//        _rightTableView.contentOffset = CGPointMake(0, (_topicTableView.contentOffset.y/kmainCellHeight)*kRightCellHeight);
+//    }
+//    else
+//    {
+//        _rightTableView.contentOffset = CGPointMake(0, (_topicArray.count-7)*kRightCellHeight);
+//    }
+//}
+//
+//#pragma mark - 向上滑动
+//- (void)up
+//{
+//    // 若想右侧列表展示主列表后面的数据 将7--->10即可
+//    if (_topicTableView.contentOffset.y/kmainCellHeight-7>0)
+//    {
+//        _rightTableView.contentOffset = CGPointMake(0, (_topicTableView.contentOffset.y/kmainCellHeight-7)*kRightCellHeight);
+//    }
+//    else
+//    {
+//        _rightTableView.contentOffset = CGPointMake(0, 0);
+//    }
+//}
 
 #pragma mark - 左移
 - (void)rightTableViewShow
 {
     CGRect rect = _rightTableView.frame;
     rect.origin.x = self.view.frame.size.width-kRightCellHeight;
-    [UIView animateWithDuration:0.1 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         _rightTableView.frame = rect;
     }];
 }

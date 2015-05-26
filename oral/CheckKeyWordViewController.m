@@ -61,19 +61,29 @@
     _keyScrollView.pagingEnabled = YES;
     _keyScrollView.delegate = self;
     
-    UILabel *tipLabel = [[UILabel alloc]initWithFrame:rect];
-    tipLabel.font = [UIFont systemFontOfSize:kTitleFontSize];
-    tipLabel.text = @"欢迎来到\n关键词学习阶段";
-    tipLabel.textAlignment = NSTextAlignmentCenter;
-    tipLabel.numberOfLines = 2;
+    NSInteger x = (rect.size.width-150)/2+20;
+    NSInteger y = rect.size.height/2;
+    NSInteger w = 150;
+    NSInteger h = 40;
+    
+    UILabel *tipLabel = [[UILabel alloc]initWithFrame:CGRectMake(x, y-h, w, h)];
+//    tipLabel.font = [UIFont systemFontOfSize:22];
+    tipLabel.font = [UIFont fontWithName:@"MarkerFelt-thin" size:22];
+
+    tipLabel.text = @"欢迎来到";
+    tipLabel.textAlignment = NSTextAlignmentLeft;
+    tipLabel.numberOfLines = 1;
     tipLabel.textColor = _pointColor;
     [_keyScrollView addSubview:tipLabel];
     
-    UILabel *tipLabel_down = [[UILabel alloc]initWithFrame:rect];
-    tipLabel_down.font = [UIFont systemFontOfSize:kTitleFontSize];
-    tipLabel_down.text = @"欢迎来到\n关键词学习阶段";
-    tipLabel_down.textAlignment = NSTextAlignmentCenter;
-    tipLabel_down.numberOfLines = 2;
+    
+    UILabel *tipLabel_down = [[UILabel alloc]initWithFrame:CGRectMake(x, y, w, h)];
+//    tipLabel_down.font = [UIFont systemFontOfSize:20];
+    tipLabel_down.font = [UIFont fontWithName:@"MarkerFelt-thin" size:20];
+
+    tipLabel_down.text = @"关键词学习阶段";
+    tipLabel_down.textAlignment = NSTextAlignmentLeft;
+    tipLabel_down.numberOfLines = 0;
     tipLabel_down.textColor = _pointColor;
     [_keyScrollView addSubview:tipLabel_down];
     
@@ -84,8 +94,8 @@
         newRect.origin.x = (i+1)*rect.size.width;
         UILabel *keyLabel = [[UILabel alloc]initWithFrame:newRect];
 //        keyLabel.font = [UIFont systemFontOfSize:30];
-        // @"MarkerFelt-thin"
-        keyLabel.font = [UIFont fontWithName:@"STHeitiSC-Light" size:kTitleFontSize];
+        // @"MarkerFelt-thin" @"STHeitiSC-Light"
+        keyLabel.font = [UIFont fontWithName:@"MarkerFelt-thin" size:30];
         keyLabel.text = [keyWordArray objectAtIndex:i];
         keyLabel.textAlignment = NSTextAlignmentCenter;
         keyLabel.textColor = _pointColor;
@@ -97,7 +107,7 @@
     _startPointButton.backgroundColor = _pointColor;
     _startPointButton.titleLabel.textColor = [UIColor whiteColor];
 //    _startPointButton.titleLabel.font = [UIFont systemFontOfSize:20];
-    _startPointButton.titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:kFontSize1];
+    _startPointButton.titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:16];
     _startPointButton.hidden = YES;
 }
 
@@ -183,19 +193,23 @@
 
 - (void)enterNext
 {
-    if (_pointCounts == 1)
+    if (_pointCounts == 0)
     {
         CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
         [self.navigationController pushViewController:followVC animated:YES];
     }
-    else if (_pointCounts == 2)
+    else if (_pointCounts == 1)
     {
         CheckBlankViewController *blankVC = [[CheckBlankViewController alloc]initWithNibName:@"CheckBlankViewController" bundle:nil];
+        blankVC.topicName = self.topicName;
+        blankVC.currentPartCounts = self.currentPartCounts;
         [self.navigationController pushViewController:blankVC animated:YES];
     }
-    else if (_pointCounts == 3)
+    else if (_pointCounts == 2)
     {
         CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
+        askVC.topicName = self.topicName;
+        askVC.currentPartCounts = self.currentPartCounts;
         [self.navigationController pushViewController:askVC animated:YES];
     }
 }

@@ -16,10 +16,16 @@
     UIColor *_timeProgressColor;// 时间进度条颜色
     UIColor *_textColor;// 文字颜色
     UIColor *_pointColor;// 闯关页part按钮颜色
+    UIColor *_backgroundViewColor;
 }
 @property (nonatomic,strong) UIView *navTopView;// 模拟导航栏背景
 @property (nonatomic,strong) UILabel *lineLab;
 @property (nonatomic,strong) UILabel *titleLab; //  标题控件
+
+
+@property (nonatomic,copy) NSString *topicName;
+@property (nonatomic,assign) NSInteger currentPartCounts;// 当前part 共3部分 范围（0--2）
+
 
 // 返回按钮
 - (void)addBackButtonWithImageName:(NSString *)imageName;

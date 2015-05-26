@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ScoreMenuCell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N0w-uk-jsw">
+                        <rect key="frame" x="324" y="19" width="36" height="36"/>
+                        <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="36" id="GxB-g9-SaX"/>
+                            <constraint firstAttribute="height" constant="36" id="pmj-pw-Bj0"/>
+                        </constraints>
+                        <state key="normal" title="58">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTI-2N-dKP">
+                        <rect key="frame" x="10" y="10" width="300" height="55"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </webView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiX-Vb-GHZ">
+                        <rect key="frame" x="0.0" y="74" width="375" height="1"/>
+                        <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="centerY" secondItem="N0w-uk-jsw" secondAttribute="centerY" id="CVa-ce-7hT"/>
+                    <constraint firstItem="hTI-2N-dKP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="FKd-0g-Uo3"/>
+                    <constraint firstItem="N0w-uk-jsw" firstAttribute="leading" secondItem="hTI-2N-dKP" secondAttribute="trailing" constant="14" id="XfH-y7-amY"/>
+                    <constraint firstItem="hTI-2N-dKP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="heh-Pr-4yT"/>
+                    <constraint firstAttribute="trailing" secondItem="N0w-uk-jsw" secondAttribute="trailing" constant="15" id="iUt-sx-JRs"/>
+                    <constraint firstAttribute="bottom" secondItem="hTI-2N-dKP" secondAttribute="bottom" constant="9" id="rRP-ye-KK6"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="lineLabel" destination="fiX-Vb-GHZ" id="ZlH-xq-oFr"/>
+                <outlet property="scoreButton" destination="N0w-uk-jsw" id="UiV-4z-WOX"/>
+                <outlet property="textWebView" destination="hTI-2N-dKP" id="49Z-ND-r4e"/>
+            </connections>
+            <point key="canvasLocation" x="312.5" y="249.5"/>
+        </tableViewCell>
+    </objects>
+</document>

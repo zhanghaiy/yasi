@@ -126,7 +126,9 @@
 - (IBAction)continueNextPoint:(id)sender
 {
     CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
-    keyVC.pointCounts = _pointCount;
+    keyVC.pointCounts = _pointCount+1;
+    keyVC.topicName = self.topicName;
+    keyVC.currentPartCounts = self.currentPartCounts;
     [self.navigationController pushViewController:keyVC animated:YES];
 }
 @end

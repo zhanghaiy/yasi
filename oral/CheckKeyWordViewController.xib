@@ -47,7 +47,7 @@
                         <constraint firstAttribute="height" constant="50" id="F5w-pn-HHF"/>
                         <constraint firstAttribute="width" constant="110" id="sfE-d7-wCN"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <state key="normal" title="开始闯关">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -57,7 +57,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nue-ZX-QHZ">
-                    <rect key="frame" x="122" y="414" width="33" height="33"/>
+                    <rect key="frame" x="103" y="414" width="33" height="33"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="33" id="4dE-NQ-3yn"/>
                         <constraint firstAttribute="height" constant="33" id="900-Pn-0oE"/>
@@ -70,7 +70,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5Y-Vr-kDN">
-                    <rect key="frame" x="215" y="414" width="33" height="33"/>
+                    <rect key="frame" x="239" y="414" width="33" height="33"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="33" id="cnn-Aj-NVO"/>
                         <constraint firstAttribute="height" constant="33" id="wIO-P9-dFX"/>
@@ -94,13 +94,13 @@
                 <constraint firstItem="O74-J3-ReM" firstAttribute="top" relation="lessThanOrEqual" secondItem="T5Y-Vr-kDN" secondAttribute="bottom" priority="750" constant="100" id="F30-iU-xIv"/>
                 <constraint firstAttribute="centerY" secondItem="Nue-ZX-QHZ" secondAttribute="centerY" constant="-97" id="I4T-Ht-yeL"/>
                 <constraint firstAttribute="trailing" secondItem="tas-67-HO9" secondAttribute="trailing" constant="25" id="TAz-DV-tmF"/>
-                <constraint firstAttribute="centerX" secondItem="T5Y-Vr-kDN" secondAttribute="centerX" constant="-44" id="TXs-fA-fef"/>
+                <constraint firstAttribute="centerX" secondItem="T5Y-Vr-kDN" secondAttribute="centerX" constant="-68" id="TXs-fA-fef"/>
                 <constraint firstItem="tas-67-HO9" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="25" id="a9f-ML-Shx"/>
                 <constraint firstItem="O74-J3-ReM" firstAttribute="top" secondItem="Nue-ZX-QHZ" secondAttribute="bottom" priority="750" constant="100" id="aFf-lP-mo3"/>
                 <constraint firstItem="T5Y-Vr-kDN" firstAttribute="top" secondItem="heB-Iy-Lfq" secondAttribute="bottom" constant="3" id="cb4-jI-tja"/>
                 <constraint firstAttribute="centerX" secondItem="O74-J3-ReM" secondAttribute="centerX" id="fnR-ir-K3O"/>
                 <constraint firstItem="T5Y-Vr-kDN" firstAttribute="centerY" secondItem="Nue-ZX-QHZ" secondAttribute="centerY" id="nar-cD-IhU"/>
-                <constraint firstAttribute="centerX" secondItem="Nue-ZX-QHZ" secondAttribute="centerX" constant="49" id="tii-6j-DNQ"/>
+                <constraint firstAttribute="centerX" secondItem="Nue-ZX-QHZ" secondAttribute="centerX" constant="68" id="tii-6j-DNQ"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="-102.5" y="-77.5"/>

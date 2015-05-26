@@ -35,6 +35,8 @@
     
     NSInteger _markTimeChangeCounts;
     
+    BOOL _pointFinished;
+
 //    CGRect _questionNomalRect;
 //    CGRect _questionSmallRect;
 }
@@ -74,13 +76,13 @@
      ----待完善-----
      
      */
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"info" ofType:@"json"];
-    NSData *jsonData = [NSData dataWithContentsOfFile:path];
+    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",self.topicName];
+    NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     // 整个topic资源信息
     _topicInfoDict = [dict objectForKey:@"classtypeinfo"];
     // 当前part资源信息
-    _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:_currentPartCounts];
+    _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:self.currentPartCounts];
     // 当前关卡信息
     _currentPointDict = [[_currentPartDict objectForKey:@"levellist"] objectAtIndex:_currentPointCounts];
     // 当前关卡所有问题
@@ -99,6 +101,10 @@
     
     _answerTime = 15;
     _markTimeChangeCounts = 0;
+    _pointFinished = NO;
+
+    _currentPointCounts = 0;
+
     
     audioPlayer = [AudioPlayer getAudioManager];
     audioPlayer.target = self;
@@ -302,7 +308,10 @@
                                     3）播放问题音频
      */
     // 停顿3秒 开始point3流程
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareQuestion) userInfo:nil repeats:NO];
+    if (!_pointFinished)// 此处加条件判断：如果是从其他界面返回则不走流程
+    {
+        _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareQuestion) userInfo:nil repeats:NO];
+    }
 }
 
 #pragma mark - 准备提问
@@ -460,6 +469,7 @@
 #pragma mark - 提交按钮
 - (IBAction)commitButtonClicked:(id)sender
 {
+    _pointFinished = YES;
     UIButton *btn = (UIButton *)sender;
     if (btn.tag == kCommitLeftButtonTag)
     {

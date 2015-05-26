@@ -24,12 +24,12 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bjv-yZ-fdc">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bjv-yZ-fdc">
                         <rect key="frame" x="145" y="32" width="85" height="85"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="Bjv-yZ-fdc" secondAttribute="height" multiplier="1:1" id="I2R-r2-QIr"/>
                         </constraints>
-                        <state key="normal" backgroundImage="topic.png">
+                        <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
@@ -64,7 +64,4 @@
             <point key="canvasLocation" x="191.5" y="122.5"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="topic.png" width="176" height="176"/>
-    </resources>
 </document>

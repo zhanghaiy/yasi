@@ -95,6 +95,7 @@
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请跟读" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k8E-Cv-Jpa">
                             <rect key="frame" x="10" y="5" width="120" height="25"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="25" id="Pil-u6-Kg1"/>
                                 <constraint firstAttribute="width" constant="120" id="gq0-iW-Cib"/>

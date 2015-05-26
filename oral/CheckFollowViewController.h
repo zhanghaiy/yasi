@@ -44,7 +44,7 @@
 
 
 
-@property (nonatomic,assign) NSInteger currentPartCounts;// 当前part 共3部分 范围（0--2）
+//@property (nonatomic,assign) NSInteger currentPartCounts;// 当前part 共3部分 范围（0--2）
 @property (nonatomic,assign) NSInteger currentPointCounts;// 当前关卡 ==0 跟读：0 填空：1 问答：2
 
 

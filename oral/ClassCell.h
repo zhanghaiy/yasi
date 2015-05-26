@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ClassCell : UITableViewCell
+
 @property (weak, nonatomic) IBOutlet UIButton *classImageButton;
 @property (weak, nonatomic) IBOutlet UILabel *classNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *classCountLabel;

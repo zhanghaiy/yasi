@@ -13,13 +13,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qog-7A-S1j">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qog-7A-S1j">
                         <rect key="frame" x="15" y="15" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="ksz-L5-acV"/>
                             <constraint firstAttribute="width" constant="40" id="oP9-Wr-Nar"/>
                         </constraints>
-                        <state key="normal" backgroundImage="topic1_small.png">
+                        <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
@@ -35,7 +35,4 @@
             <point key="canvasLocation" x="198" y="139"/>
         </tableViewCell>
     </objects>
-    <resources>
-        <image name="topic1_small.png" width="77" height="77"/>
-    </resources>
 </document>

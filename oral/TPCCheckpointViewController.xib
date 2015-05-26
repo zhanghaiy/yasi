@@ -34,15 +34,9 @@
                                 <constraint firstAttribute="width" secondItem="nc1-pe-8im" secondAttribute="height" multiplier="16:17" id="8qH-MM-yBP"/>
                             </constraints>
                             <state key="normal" image="exeBook"/>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mR7-JN-rcF">
-                            <rect key="frame" x="233" y="64" width="48" height="51"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="mR7-JN-rcF" secondAttribute="height" multiplier="16:17" id="c2P-pI-Vyf"/>
-                            </constraints>
-                            <state key="normal" backgroundImage="scoreMenu">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
+                            <connections>
+                                <action selector="practiseBook:" destination="-1" eventType="touchUpInside" id="dTW-wg-MUp"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="成绩单" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXa-a1-hSX">
                             <rect key="frame" x="233" y="122" width="48" height="30"/>
@@ -62,6 +56,18 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mR7-JN-rcF">
+                            <rect key="frame" x="233" y="64" width="48" height="51"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="mR7-JN-rcF" secondAttribute="height" multiplier="16:17" id="c2P-pI-Vyf"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="scoreMenu">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="scoreMenu:" destination="-1" eventType="touchUpInside" id="3Pi-B5-A16"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -90,7 +96,7 @@
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Hts-LQ-12j" secondAttribute="height" multiplier="2:1" id="etj-el-kPl"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <state key="normal" title="直接模考">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>

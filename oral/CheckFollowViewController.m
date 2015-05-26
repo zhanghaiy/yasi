@@ -55,7 +55,7 @@
     tipLab.text = @"成功加入练习簿";
     tipLab.backgroundColor = [UIColor whiteColor];
     tipLab.textAlignment = NSTextAlignmentCenter;
-    tipLab.textColor = _textColor;
+    tipLab.textColor = _backColor;
     tipLab.font = [UIFont systemFontOfSize:KFourFontSize];
     tipLab.layer.masksToBounds = YES;
     tipLab.layer.cornerRadius = 3;
@@ -166,6 +166,11 @@
     _stuTitleLabel.tag = kFollowLabelTag;
     _questionTextLabel.tag = kQuestionTextLabelTag;
     _answerTextLabel.tag = kAnswerTextLabelTag;
+    
+    // 回答区域圆角
+    _studentView.layer.cornerRadius = 5;
+    
+    _stuTitleLabel.backgroundColor =[UIColor clearColor];
 }
 
 #pragma mark - 模拟数据
@@ -179,19 +184,17 @@
      当前part--> curretPartDict = [partListArray objectAtIndex:_currentPartCounts] -->字典
      当前part的所有关卡信息 -- > pointArray = [curretPart objectForKey:@"levellist"] --> 数组
      当前关卡信息 pointDict = [pointArray objectAtIndex:_currentPointCounts] --> 字典
-     pointDict
-     
-     ----待完善-----
-     
      */
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"info" ofType:@"json"];
-    NSData *jsonData = [NSData dataWithContentsOfFile:path];
+//    NSString *path = [[NSBundle mainBundle]pathForResource:@"info" ofType:@"json"];
+    
+    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",self.topicName];
+    NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     // 整个topic资源信息
     _topicInfoDict = [dict objectForKey:@"classtypeinfo"];
     // 当前part资源信息
-    _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:_currentPartCounts];
-    // 当前关卡信息
+    _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:self.currentPartCounts];
+    // 当前关卡信息 关卡一
     _currentPointDict = [[_currentPartDict objectForKey:@"levellist"] objectAtIndex:_currentPointCounts];
     // 当前关卡所有问题
     _questioListArray = [_currentPointDict objectForKey:@"questionlist"];
@@ -217,6 +220,8 @@
     audioPlayer = [AudioPlayer getAudioManager];
     audioPlayer.target = self;
     audioPlayer.action = @selector(playerCallBack);
+    
+    _currentPointCounts = 0;
     
     [self addBackButtonWithImageName:@"back-white"];
     [self addTitleLabelWithTitleWithTitle:@"Part1-1"];
@@ -246,14 +251,15 @@
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationRepeatAutoreverses:NO];
 //    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:lable cache:YES];
-    if (lable.tag == kFollowLabelTag)
-    {
-        [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:lable cache:YES];
-    }
-    else
-    {
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:lable cache:YES];
-    }
+//    if (lable.tag == kFollowLabelTag)
+//    {
+//        [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:lable cache:YES];
+//    }
+//    else
+//    {
+//        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:lable cache:YES];
+//    }
+    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:lable cache:YES];
     [self showCurrentQuestionText];
     [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
     [UIView commitAnimations];
@@ -630,7 +636,9 @@
     {
         //关卡结束 跳转过渡页
         CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
-        successVC.pointCount = 2;
+        successVC.pointCount = _currentPointCounts;
+        successVC.currentPartCounts = self.currentPartCounts;// 当前part
+        successVC.topicName = self.topicName;// 当前topic
         [self.navigationController pushViewController:successVC animated:YES];
     }
 }

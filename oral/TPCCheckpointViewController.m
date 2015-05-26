@@ -8,13 +8,19 @@
 
 #import "TPCCheckpointViewController.h"
 #import "CheckFollowViewController.h"  // 跟读 part--->point1 关卡1
-#import "CheckBlankViewController.h"   // 填空 part--->point2 关卡2
-#import "CheckAskViewController.h"     // 问答 part--->point3 关卡3
+//#import "CheckBlankViewController.h"   // 填空 part--->point2 关卡2
+//#import "CheckAskViewController.h"     // 问答 part--->point3 关卡3
 
-#import "CheckKeyWordViewController.h"
+#import "CheckScoreViewController.h"
+
+#import "NetManager.h"
+#import "ZipManager.h"
 
 @interface TPCCheckpointViewController ()<UIScrollViewDelegate>
-
+{
+    UIView *_loadingView;
+    NSInteger _markPart;
+}
 @end
 
 @implementation TPCCheckpointViewController
@@ -28,6 +34,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    [self createLoadingView];
+//    _loadingView.hidden = NO;
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"My Travel"];
@@ -44,6 +52,12 @@
 
     [_scoreButton setBackgroundImage:[UIImage imageNamed:@"scoreMenu"] forState:UIControlStateNormal];
     _scoreLable.textColor = [UIColor colorWithRed:87/255.0 green:224/255.0 blue:192/255.0 alpha:1];
+    
+    float partBackH = kScreentWidth*2/5;
+    CGRect partBackrect = _partBackView.frame;
+    partBackrect.size.height = partBackH;
+    partBackrect.size.width = kScreentWidth;
+    _partBackView.frame = partBackrect;
     
     // part1-3 滚动视图 _partScrollView
     NSInteger partHeight = _partBackView.frame.size.height-50;
@@ -119,54 +133,156 @@
     }
 }
 
-#pragma mark - 开始闯关
+
+#pragma mark - 将要闯关
 - (void)startPart:(UIButton *)btn
 {
-    switch (btn.tag-kPartButtonTag)
+    /*
+        闯关之前判断当前topic的资源包是否已经缓存  是：开始闯关 否：下载后开始闯关
+        zip包路径 topicResource/topicName
+     */
+    // 1 判断
+    NSString *topicResourcePath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/",[_topicDict objectForKey:@"classtype"]];
+    NSLog(@"%@",topicResourcePath);
+    _markPart = btn.tag - kPartButtonTag;
+    BOOL ret = [[NSFileManager defaultManager] fileExistsAtPath:topicResourcePath];
+    if (ret)
     {
-        case 0:
-        {
-            // 跟读
-            CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
-            keyVC.pointCounts = 1;
-            [self.navigationController pushViewController:keyVC animated:YES];
-
-//            CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
-//            [self.navigationController pushViewController:followVC animated:YES];
-        }
-            break;
-        case 1:
-        {
-            // 填空
-            CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
-            keyVC.pointCounts = 2;
-            [self.navigationController pushViewController:keyVC animated:YES];
-
-//            CheckBlankViewController *blankVC = [[CheckBlankViewController alloc]initWithNibName:@"CheckBlankViewController" bundle:nil];
-//            [self.navigationController pushViewController:blankVC animated:YES];
-        }
-            break;
-        case 2:
-        {
-            // 问答
-            
-            CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
-            keyVC.pointCounts = 3;
-            [self.navigationController pushViewController:keyVC animated:YES];
-            
-//            CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
-//            [self.navigationController pushViewController:askVC animated:YES];
-        }
-            break;
-        default:
-            break;
+        // 存在
+        // 开始闯关
+        [self beginPointWithPointCounts:btn.tag - kPartButtonTag];
     }
-    
+    else
+    {
+        // 不存在 缓存
+        _loadingView.hidden = NO;
+        [self requestTopicZipResource];
+    }
 }
 
+
+#pragma mark - 开始闯关
+- (void)beginPointWithPointCounts:(NSInteger)pointCounts
+{
+    _loadingView.hidden = YES;
+    CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
+    followVC.currentPartCounts = pointCounts;
+    followVC.topicName = [_topicDict objectForKey:@"classtype"];
+    [self.navigationController pushViewController:followVC animated:YES];
+}
+
+#pragma mark - UIScrollView Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self makePagesAloneWithButtonTag:(int)(scrollView.contentOffset.x/scrollView.frame.size.width)+kLeftMarkButtonTag];
+}
+
+
+
+#pragma mark - 网络请求
+- (void)requestTopicZipResource
+{
+    NSString *zipfileurl = [_topicDict objectForKey:@"zipfileurl"];
+    NSLog(@"%@",zipfileurl);
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.target = self;
+    netManager.action = @selector(requestFinished:);
+    [netManager netGetUrl:zipfileurl];
+}
+
+- (void)requestFinished:(NetManager *)netManager
+{
+    if (netManager.success)
+    {
+        //成功
+        if (netManager.downLoadData)
+        {
+            // zip保存本地
+            NSString *zipPath = [NSString stringWithFormat:@"%@/reqource.zip",[self getLocalSavePath]];
+            if ([self filePathExit:[self getLocalSavePath]]==NO)
+            {
+                [self createPath:[self getLocalSavePath]];
+            }
+            BOOL saveSuccess = [netManager.downLoadData writeToFile:zipPath atomically:YES];
+            if (saveSuccess)
+            {
+                // 保存成功 解压
+                NSString *toPath = [NSString stringWithFormat:@"%@/topicResource",[self getLocalSavePath]];
+                NSLog(@"~~~~~%@~~~~~~~",[self getLocalSavePath]);
+                [ZipManager unzipFileFromPath:zipPath ToPath:toPath];
+                // 跳转页面 进入闯关
+                [self beginPointWithPointCounts:_markPart];
+            }
+            else
+            {
+                // 保存失败
+            }
+        }
+        NSLog(@"");
+    }
+    else
+    {
+        NSLog(@"");
+    }
+}
+
+
+
+#pragma mark - 路径是否存在
+- (BOOL)filePathExit:(NSString *)path
+{
+    if ([[NSFileManager defaultManager]fileExistsAtPath:path isDirectory:nil])
+    {
+        return YES;
+    }
+    return NO;
+}
+
+#pragma mark - 创建路径
+- (BOOL)createPath:(NSString *)path
+{
+    BOOL ret = [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    return ret;
+}
+
+#pragma mark - 获取当前topic根目录
+- (NSString *)getLocalSavePath
+{
+    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@",[_topicDict objectForKey:@"classtype"]];
+    return path;
+}
+
+- (void)createLoadingView
+{
+    _loadingView = [[UIView alloc]initWithFrame:self.view.bounds];
+    _loadingView.hidden = YES;
+    _loadingView.backgroundColor = [UIColor colorWithWhite:100/255.0 alpha:0.2];
+    
+    UIView *actionView = [[UIView alloc]initWithFrame:CGRectMake((kScreentWidth-200)/2, kScreenHeight/2-100, 200, 80)];
+    actionView.layer.masksToBounds = YES;
+    actionView.layer.cornerRadius = 5;
+    actionView.layer.borderWidth = 1;
+    actionView.layer.borderColor = _pointColor.CGColor;
+    
+    actionView.backgroundColor = [UIColor whiteColor];
+
+    UIActivityIndicatorView *action = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((actionView.frame.size.width-50)/2, 5, 50, 50)];
+    action.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [actionView addSubview:action];
+    [action startAnimating];
+//    [activity stopAnimating]
+    
+    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake((actionView.frame.size.width-150)/2, 60, 150, 15)];
+    lab.text = @"正在加载资源文件...";
+    lab.textAlignment = NSTextAlignmentCenter;
+    lab.textColor = _pointColor;
+    lab.font = [UIFont systemFontOfSize:kFontSize4];
+    [actionView addSubview:lab];
+    
+    actionView.center = _loadingView.center;
+    
+    [_loadingView addSubview:actionView];
+    [self.view addSubview:_loadingView];
 }
 
 
@@ -188,7 +304,17 @@
 #pragma mark - 直接模考
 - (IBAction)testButtonClicked:(id)sender
 {
-    
+    //
+}
+
+- (IBAction)practiseBook:(id)sender {
+}
+
+- (IBAction)scoreMenu:(id)sender
+{
+    // 成绩单
+    CheckScoreViewController *scoreMenuVC = [[CheckScoreViewController alloc]initWithNibName:@"CheckScoreViewController" bundle:nil];
+    [self.navigationController pushViewController:scoreMenuVC animated:YES];
 }
 
 - (void)backToPrePage

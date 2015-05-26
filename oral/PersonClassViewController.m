@@ -8,7 +8,8 @@
 
 #import "PersonClassViewController.h"
 #import "ClassCell.h"
-
+#import "ClassIntroduceViewController.h"
+#import "ClassDetailViewController.h"
 
 @interface PersonClassViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -19,7 +20,7 @@
 
 @implementation PersonClassViewController
 #define kCellHeight 75
-
+#define kClassButtonTag 100
 
 - (void)viewDidLoad
 {
@@ -73,6 +74,9 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"ClassCell" owner:self options:0] lastObject];
     }
+    cell.classImageButton.tag = kClassButtonTag + indexPath.row;
+    [cell.classImageButton addTarget:self action:@selector(enterClassIntroducePage:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
@@ -80,8 +84,17 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 进入班级详情
+    ClassDetailViewController *classDetailVC = [[ClassDetailViewController alloc]initWithNibName:@"ClassDetailViewController" bundle:nil];
+    [self.navigationController pushViewController:classDetailVC animated:YES];
 }
 
+
+- (void)enterClassIntroducePage:(UIButton *)btn
+{
+    // 进入班级介绍
+    ClassIntroduceViewController *classIntroduceVC  = [[ClassIntroduceViewController alloc]initWithNibName:@"ClassIntroduceViewController" bundle:nil];
+    [self.navigationController pushViewController:classIntroduceVC animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
