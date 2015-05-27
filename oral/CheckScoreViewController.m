@@ -8,7 +8,7 @@
 
 #import "CheckScoreViewController.h"
 #import "ScoreDetailViewController.h"
-
+#import "ScoreMenuTestView.h"
 
 @interface CheckScoreViewController ()<UIScrollViewDelegate>
 {
@@ -21,6 +21,7 @@
 #define kPartButtonWidth 230
 #define kPartButtonHeight 100
 #define kPartButtonTag 333
+#define kTestViewTAg 555
 
 - (void)viewDidLoad
 {
@@ -32,6 +33,16 @@
     [self addTitleLabelWithTitleWithTitle:@"My Travel"];
     
     [self uiConfig];
+    
+
+    for (int i = 0; i < 3; i ++)
+    {
+        ScoreMenuTestView *testV = (ScoreMenuTestView *)[self.view viewWithTag:kTestViewTAg+i];
+        testV.timeBackLabel.backgroundColor  =[UIColor purpleColor];
+        testV.timeBackLabel.frame = CGRectMake(50, 18, 30, 20);
+        testV.timeLabel.backgroundColor = _pointColor;
+        testV.progress = 1;
+    }
     
 }
 
@@ -66,6 +77,17 @@
     [self.view addSubview:_backScrollV];
     // 模考
     
+    NSInteger testHeight = 100;
+    NSInteger sumTimeWid = kScreentWidth-155;// 时间控件长度
+    for (int i = 0; i < 3; i ++)
+    {
+        // 40 40
+        ScoreMenuTestView *testV = [[[NSBundle mainBundle]loadNibNamed:@"ScoreMenuTestView" owner:self options:0] lastObject];
+        testV.frame = CGRectMake(0, i*testHeight, kScreentWidth, testHeight);
+        testV.tag = i+kTestViewTAg;
+
+        [_backScrollV addSubview:testV];
+    }
     
     
     // 闯关

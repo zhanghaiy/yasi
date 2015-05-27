@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ScorePoint_3_Cell">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9oh-O1-2zj">
+                        <rect key="frame" x="10" y="0.0" width="355" height="60"/>
+                        <string key="text">Yeah, I think students should go outside their own country and experience other cultures, if they can afford to do so of course.</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z04-aH-ELh">
+                        <rect key="frame" x="15" y="64" width="45" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="45" id="dq9-2U-rpw"/>
+                            <constraint firstAttribute="width" constant="45" id="h5a-Oe-qSn"/>
+                        </constraints>
+                        <state key="normal" backgroundImage="33.jpg">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fho-p5-Hd3">
+                        <rect key="frame" x="65" y="84" width="5" height="5"/>
+                        <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="5" id="YiL-ZV-kQ6"/>
+                            <constraint firstAttribute="width" constant="5" id="bQA-8l-yQr"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q9s-WK-xfI">
+                        <rect key="frame" x="75" y="71" width="100" height="32"/>
+                        <color key="backgroundColor" red="0.0" green="0.66990064540000005" blue="0.6258930345" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="Tue-wq-AHV"/>
+                            <constraint firstAttribute="height" constant="32" id="d9N-tw-UFQ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <state key="normal" title="    45S&quot;">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="9oh-O1-2zj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Hm4-0i-nbf"/>
+                    <constraint firstItem="z04-aH-ELh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="J59-6q-Aud"/>
+                    <constraint firstAttribute="trailing" secondItem="9oh-O1-2zj" secondAttribute="trailing" constant="10" id="Lwq-yI-X5a"/>
+                    <constraint firstItem="z04-aH-ELh" firstAttribute="centerY" secondItem="q9s-WK-xfI" secondAttribute="centerY" id="Q6k-Yz-ezg"/>
+                    <constraint firstItem="fho-p5-Hd3" firstAttribute="leading" secondItem="z04-aH-ELh" secondAttribute="trailing" constant="5" id="Zdb-Ih-tnk"/>
+                    <constraint firstItem="9oh-O1-2zj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="giI-wL-3Db"/>
+                    <constraint firstItem="z04-aH-ELh" firstAttribute="centerY" secondItem="fho-p5-Hd3" secondAttribute="centerY" id="pE9-XK-IFK"/>
+                    <constraint firstItem="z04-aH-ELh" firstAttribute="top" secondItem="9oh-O1-2zj" secondAttribute="bottom" constant="4" id="qnZ-pQ-rBI"/>
+                    <constraint firstAttribute="bottom" secondItem="z04-aH-ELh" secondAttribute="bottom" constant="10" id="uGv-AA-WYi"/>
+                    <constraint firstItem="q9s-WK-xfI" firstAttribute="leading" secondItem="fho-p5-Hd3" secondAttribute="trailing" constant="5" id="wc7-Us-Qgc"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="audioButton" destination="q9s-WK-xfI" id="AVN-UL-T5F"/>
+                <outlet property="questionLabel" destination="9oh-O1-2zj" id="Acw-Of-gSe"/>
+                <outlet property="spotImgV" destination="fho-p5-Hd3" id="MDt-Sy-k6i"/>
+                <outlet property="studentHeadButton" destination="z04-aH-ELh" id="FcT-cN-swM"/>
+            </connections>
+            <point key="canvasLocation" x="275.5" y="201"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="33.jpg" width="400" height="400"/>
+    </resources>
+</document>
