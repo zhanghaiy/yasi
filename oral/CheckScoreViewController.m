@@ -110,7 +110,7 @@
         
         UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [playButton setFrame:CGRectMake(5, 5, 35, 35)];
-        [playButton setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        [playButton setBackgroundImage:[UIImage imageNamed:@"topic.png"] forState:UIControlStateNormal];
         [playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         playButton.tag = kPlayButtonTag +i;
         [testBAckView addSubview:playButton];

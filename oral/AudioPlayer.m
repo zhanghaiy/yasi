@@ -49,7 +49,6 @@ static AudioPlayer *audioPlayer;
 - (void)playerPlayWithFilePath:(NSString *)filePath
 {
     _player = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:filePath] error:nil];
-    
     _player.delegate = self;
     _player.volume = 1;
     [_player prepareToPlay];

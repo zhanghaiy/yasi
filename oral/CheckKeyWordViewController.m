@@ -202,6 +202,7 @@
     {
         CheckBlankViewController *blankVC = [[CheckBlankViewController alloc]initWithNibName:@"CheckBlankViewController" bundle:nil];
         blankVC.topicName = self.topicName;
+        NSLog(@"%@",self.topicName);
         blankVC.currentPartCounts = self.currentPartCounts;
         [self.navigationController pushViewController:blankVC animated:YES];
     }
@@ -210,6 +211,7 @@
         CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
         askVC.topicName = self.topicName;
         askVC.currentPartCounts = self.currentPartCounts;
+        NSLog(@"%@",self.topicName);
         [self.navigationController pushViewController:askVC animated:YES];
     }
 }

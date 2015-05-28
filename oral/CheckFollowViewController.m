@@ -223,7 +223,7 @@
     
     _currentPointCounts = 0;
     
-    [self addBackButtonWithImageName:@"back-white"];
+//    [self addBackButtonWithImageName:@"back-white"];
     [self addTitleLabelWithTitleWithTitle:@"Part1-1"];
     self.navTopView.backgroundColor = _backColor;
     self.titleLab.textColor = [UIColor whiteColor];
@@ -375,8 +375,10 @@
 {
     // 获取音频路径
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
-    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
-    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
+//    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
+//    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
+    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
+    NSLog(@"%@",audioPath);
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
 
@@ -386,8 +388,11 @@
 {
     //合成音频路径
     NSString *audiourl = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"audiourl"];
-    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
-    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
+//    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
+//    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
+    
+    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
+
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
 
@@ -561,7 +566,7 @@
     UILabel *tipLab = (UILabel *)[self.view viewWithTag:1111];
     tipLab.frame = CGRectMake((kScreentWidth-100)/2, kScreenHeight-40, 0, 0);
     // 下一题
-    [self jugePointIsFinished];
+    [self jugePointIsFinished_follow];
 }
 
 #pragma mark - 下一题
@@ -572,7 +577,7 @@
     [btn setBackgroundImage:[UIImage imageNamed:@"nextQuestion"] forState:UIControlStateNormal];
 
     // 下一题
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(jugePointIsFinished) userInfo:nil repeats:NO];
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(jugePointIsFinished_follow) userInfo:nil repeats:NO];
 //    [self jugePointIsFinished];
 }
 
@@ -584,30 +589,32 @@
 
 }
 
-#pragma mark -- 下一问题
-- (void)next
-{
-    _stuTitleLabel.text = @"";
-    if (_currentAnswerCounts<_sumAnswerCounts)
-    {
-        // 继续当前问题
-        [self changeAnswerProgress];
-        _startAnswer = YES;//标记 用于播放器回调方法
-        [self prepareAnswer];
-    }
-    else
-    {
-        // 下一题
-        [self questionCountChanged];//标记当前进行的问题数
-        _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
-        [self prepareQuestion];
-    }
-}
-
+//#pragma mark -- 下一问题
+//- (void)next
+//{
+//    _stuTitleLabel.text = @"";
+//    if (_currentAnswerCounts<_sumAnswerCounts)
+//    {
+//        // 继续当前问题
+//        [self changeAnswerProgress];
+//        _startAnswer = YES;//标记 用于播放器回调方法
+//        [self prepareAnswer];
+//    }
+//    else
+//    {
+//        // 下一题
+////        _currentQuestionCounts++;
+//        
+//        [self questionCountChanged1];//标记当前进行的问题数
+//        _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
+//        [self prepareQuestion];
+//    }
+//}
+//
 
 
 #pragma mark - 判断闯关是否结束
-- (void)jugePointIsFinished
+- (void)jugePointIsFinished_follow
 {
     [self stopReduceTimer];
     _answerTime = 15;
@@ -626,26 +633,36 @@
     {
         _currentAnswerCounts = 0;
         _currentQuestionCounts ++;
-    }
-    
-    if (_currentQuestionCounts<_sumQuestionCounts)
-    {
-        [self next];
+        if (_currentQuestionCounts<_sumQuestionCounts)
+        {
+            // 下一题
+            [self questionCountChanged1];//标记当前进行的问题数
+            _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
+            [self prepareQuestion];
+        }
+        else
+        {
+            //关卡结束 跳转过渡页
+            CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
+            successVC.pointCount = _currentPointCounts;
+            successVC.currentPartCounts = self.currentPartCounts;// 当前part
+            successVC.topicName = self.topicName;// 当前topic
+            [self.navigationController pushViewController:successVC animated:YES];
+        }
+        
     }
     else
     {
-        //关卡结束 跳转过渡页
-        CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
-        successVC.pointCount = _currentPointCounts;
-        successVC.currentPartCounts = self.currentPartCounts;// 当前part
-        successVC.topicName = self.topicName;// 当前topic
-        [self.navigationController pushViewController:successVC animated:YES];
+        // 继续当前问题
+        [self changeAnswerProgress];
+        _startAnswer = YES;//标记 用于播放器回调方法
+        [self prepareAnswer];
     }
 }
 
 
 #pragma mark -- 标记当前进行的问题数
-- (void)questionCountChanged
+- (void)questionCountChanged1
 {
     for (int i = 0; i < _sumQuestionCounts; i ++)
     {

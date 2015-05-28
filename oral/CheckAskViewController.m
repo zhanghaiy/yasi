@@ -110,7 +110,7 @@
     audioPlayer.target = self;
     audioPlayer.action = @selector(playerCallBack);
     
-    [self addBackButtonWithImageName:@"back-white"];
+//    [self addBackButtonWithImageName:@"back-white"];
     [self addTitleLabelWithTitleWithTitle:@"Part1-3"];
     self.navTopView.backgroundColor = [UIColor colorWithRed:144/255.0 green:231/255.0 blue:208/255.0 alpha:1];
     self.titleLab.textColor = [UIColor whiteColor];
@@ -146,6 +146,9 @@
         [btn setTitleColor:_backColor forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         btn.titleLabel.font = [UIFont systemFontOfSize:KThidFontSize];
+        
+        [btn addTarget:self action:@selector(questionCountChanged_ask) forControlEvents:UIControlEventTouchUpInside];
+        
         btn.tag = kTopQueCountButtonTag+i;
         if (i == 0)
         {
@@ -351,8 +354,10 @@
 {
     // 获取音频路径
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
-    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
-    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
+//    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
+//    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
+    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
+
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
 
@@ -456,6 +461,7 @@
             [self narrowStuHeadImage];
             _stuHeadImgV.alpha = 0.3;
         }];
+        [self questionCountChanged_ask];
         _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareQuestion) userInfo:nil repeats:NO];
     }
     else
@@ -463,6 +469,23 @@
        // 提交给老师
         _CommitLeftButton.hidden = NO;
         _commitRightButton.hidden = NO;
+    }
+}
+
+#pragma mark -- 标记当前进行的问题数
+- (void)questionCountChanged_ask
+{
+    for (int i = 0; i < _sumQuestionCounts; i ++)
+    {
+        UIButton *btn = (UIButton *)[self.view viewWithTag:kTopQueCountButtonTag+i];
+        if (i == _currentQuestionCounts)
+        {
+            btn.selected = YES;
+        }
+        else
+        {
+            btn.selected = NO;
+        }
     }
 }
 

@@ -14,9 +14,13 @@
 
 @implementation ClassDetailViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    // 返回按钮
+    [self addBackButtonWithImageName:@"back-Blue"];
+    [self addTitleLabelWithTitleWithTitle:@"雅思一班"];
 }
 
 - (void)didReceiveMemoryWarning {

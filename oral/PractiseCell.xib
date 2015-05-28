@@ -13,53 +13,107 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Part1 - 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AV2-NP-CvD">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Part1 - 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AV2-NP-CvD">
                         <rect key="frame" x="15" y="5" width="320" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="d4l-7z-wkq"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bFu-rh-QIz">
-                        <rect key="frame" x="15" y="25" width="295" height="75"/>
+                        <rect key="frame" x="15" y="45" width="295" height="35"/>
                         <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
                     </webView>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9A4-0O-MSx">
-                        <rect key="frame" x="325" y="30" width="35" height="35"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9A4-0O-MSx">
+                        <rect key="frame" x="325" y="45" width="35" height="35"/>
                         <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="GWM-Ml-Zld"/>
+                            <constraint firstAttribute="height" constant="35" id="YJ8-E4-dqz"/>
+                        </constraints>
                         <state key="normal" title="58">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zcv-t9-VcE">
-                        <rect key="frame" x="27" y="104" width="35" height="35"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zcv-t9-VcE">
+                        <rect key="frame" x="25" y="104" width="35" height="35"/>
                         <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <state key="normal" title="55">
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="7KC-jU-MzZ"/>
+                            <constraint firstAttribute="height" constant="35" id="C7g-AU-n2W"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <state key="normal" title="问题">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jcd-TP-BOi">
-                        <rect key="frame" x="87" y="104" width="35" height="35"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jcd-TP-BOi">
+                        <rect key="frame" x="85" y="104" width="35" height="35"/>
                         <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <state key="normal" title="55">
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="Gfd-rq-fik"/>
+                            <constraint firstAttribute="height" constant="35" id="nDJ-Pw-ODV"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <state key="normal" title="回答">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EI2-cr-SCm">
-                        <rect key="frame" x="147" y="104" width="35" height="35"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EI2-cr-SCm">
+                        <rect key="frame" x="145" y="104" width="35" height="35"/>
                         <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <state key="normal" title="55">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="hU6-JX-qpP"/>
+                            <constraint firstAttribute="width" constant="35" id="hwS-g3-sXa"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <state key="normal" title="跟读">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2gJ-C2-GxH">
-                        <rect key="frame" x="207" y="104" width="35" height="35"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2gJ-C2-GxH">
+                        <rect key="frame" x="205" y="104" width="35" height="35"/>
                         <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <state key="normal" title="55">
+                        <constraints>
+                            <constraint firstAttribute="height" constant="35" id="0nK-jW-fqf"/>
+                            <constraint firstAttribute="width" constant="35" id="YnQ-ov-O9o"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <state key="normal" title="删除">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="Zcv-t9-VcE" secondAttribute="bottom" constant="10" id="6R5-eF-wpv"/>
+                    <constraint firstAttribute="bottom" secondItem="Jcd-TP-BOi" secondAttribute="bottom" constant="10" id="6w3-1G-ynB"/>
+                    <constraint firstItem="Jcd-TP-BOi" firstAttribute="leading" secondItem="Zcv-t9-VcE" secondAttribute="trailing" constant="25" id="9Fd-L7-H4x"/>
+                    <constraint firstAttribute="bottom" secondItem="EI2-cr-SCm" secondAttribute="bottom" constant="10" id="BIZ-Mk-ish"/>
+                    <constraint firstItem="2gJ-C2-GxH" firstAttribute="leading" secondItem="EI2-cr-SCm" secondAttribute="trailing" constant="25" id="BbA-jA-hkW"/>
+                    <constraint firstAttribute="trailing" secondItem="9A4-0O-MSx" secondAttribute="trailing" constant="15" id="DYO-Yr-JiC"/>
+                    <constraint firstItem="EI2-cr-SCm" firstAttribute="leading" secondItem="Jcd-TP-BOi" secondAttribute="trailing" constant="25" id="En9-KH-yQ8"/>
+                    <constraint firstItem="AV2-NP-CvD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Wgd-jf-wdB"/>
+                    <constraint firstItem="Zcv-t9-VcE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="cNh-Qd-ypj"/>
+                    <constraint firstItem="Jcd-TP-BOi" firstAttribute="centerY" secondItem="Zcv-t9-VcE" secondAttribute="centerY" id="hJ0-hP-OqQ"/>
+                    <constraint firstItem="9A4-0O-MSx" firstAttribute="top" secondItem="AV2-NP-CvD" secondAttribute="bottom" constant="20" id="kbn-R3-efn"/>
+                    <constraint firstItem="Jcd-TP-BOi" firstAttribute="centerY" secondItem="EI2-cr-SCm" secondAttribute="centerY" id="lRW-CN-cff"/>
+                    <constraint firstAttribute="trailing" secondItem="AV2-NP-CvD" secondAttribute="trailing" constant="40" id="pxd-lF-Lco"/>
+                    <constraint firstItem="Jcd-TP-BOi" firstAttribute="centerY" secondItem="2gJ-C2-GxH" secondAttribute="centerY" id="r8x-23-OmO"/>
+                    <constraint firstAttribute="bottom" secondItem="2gJ-C2-GxH" secondAttribute="bottom" constant="10" id="u42-id-fzi"/>
+                    <constraint firstItem="AV2-NP-CvD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="wie-kr-idt"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="answerButton" destination="Jcd-TP-BOi" id="QmL-4v-cCv"/>
+                <outlet property="deleteButton" destination="2gJ-C2-GxH" id="9JO-9g-bh3"/>
+                <outlet property="followButton" destination="EI2-cr-SCm" id="74w-EK-5FM"/>
+                <outlet property="partLabel" destination="AV2-NP-CvD" id="lya-5M-G3F"/>
+                <outlet property="questionButton" destination="Zcv-t9-VcE" id="Gjk-BN-JGd"/>
+                <outlet property="scoreButton" destination="9A4-0O-MSx" id="rVi-d6-qcA"/>
+                <outlet property="textWebView" destination="bFu-rh-QIz" id="beY-Nn-RRP"/>
+            </connections>
             <point key="canvasLocation" x="403.5" y="313"/>
         </tableViewCell>
     </objects>

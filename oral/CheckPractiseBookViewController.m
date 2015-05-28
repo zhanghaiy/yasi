@@ -51,13 +51,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellId = @"cell";
+    static NSString *cellId = @"PractiseCell";
     PractiseCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (cell == nil)
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"PractiseCell" owner:self options:0] lastObject];
     }
-    
+    cell.scoreButton.layer.masksToBounds = YES;
+    cell.scoreButton.layer.cornerRadius = 10;
+    cell.partLabel.textColor = _pointColor;
     return cell;
 }
 

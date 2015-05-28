@@ -373,8 +373,10 @@
     }
     // 获取音频路径
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
-    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
-    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
+//    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
+//    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
+    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
+
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
 
@@ -611,18 +613,29 @@
     {
         _currentAnswerCounts = 0;
         _currentQuestionCounts ++;
-    }
-    
-    if (_currentQuestionCounts<_sumQuestionCounts)
-    {
-        [self next];
+        if (_currentQuestionCounts<_sumQuestionCounts)
+        {
+            // 下一题
+            [self questionCountChanged];//标记当前进行的问题数
+            _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
+            [self prepareQuestion];
+        }
+        else
+        {
+            //关卡结束 跳转过渡页
+            CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
+            successVC.pointCount = self.currentPointCounts;
+            successVC.topicName = self.topicName;
+            [self.navigationController pushViewController:successVC animated:YES];
+        }
+        
     }
     else
     {
-        //关卡结束 跳转过渡页
-        CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
-        successVC.pointCount = self.currentPointCounts;
-        [self.navigationController pushViewController:successVC animated:YES];
+        // 继续当前问题
+        [self changeAnswerProgress];
+        _startAnswer = YES;//标记 用于播放器回调方法
+        [self prepareFollow];
     }
 }
 
