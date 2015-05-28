@@ -83,6 +83,14 @@
 		FD8C40F01B0C6FAB00948B6C /* CheckAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8C40EE1B0C6FAB00948B6C /* CheckAskViewController.m */; };
 		FD8C40F11B0C6FAB00948B6C /* CheckAskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */; };
 		FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD92C5C71B0ACA8D00B7BE43 /* AudioPlayer.m */; };
+		FD97AFA51B16BB8A00C45A2C /* ScoreTestMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD97AFA31B16BB8A00C45A2C /* ScoreTestMenuViewController.m */; };
+		FD97AFA61B16BB8A00C45A2C /* ScoreTestMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD97AFA41B16BB8A00C45A2C /* ScoreTestMenuViewController.xib */; };
+		FD97AFAA1B16E11A00C45A2C /* TestReviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD97AFA81B16E11A00C45A2C /* TestReviewCell.m */; };
+		FD97AFAB1B16E11A00C45A2C /* TestReviewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD97AFA91B16E11A00C45A2C /* TestReviewCell.xib */; };
+		FD97AFAF1B16FD2400C45A2C /* CheckPractiseBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD97AFAD1B16FD2400C45A2C /* CheckPractiseBookViewController.m */; };
+		FD97AFB01B16FD2400C45A2C /* CheckPractiseBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD97AFAE1B16FD2400C45A2C /* CheckPractiseBookViewController.xib */; };
+		FD97AFB41B17020800C45A2C /* PractiseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD97AFB21B17020800C45A2C /* PractiseCell.m */; };
+		FD97AFB51B17020800C45A2C /* PractiseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD97AFB31B17020800C45A2C /* PractiseCell.xib */; };
 		FD9957DB1B12BC02005892DB /* ClassDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9957D91B12BC02005892DB /* ClassDetailViewController.m */; };
 		FD9957DC1B12BC02005892DB /* ClassDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD9957DA1B12BC02005892DB /* ClassDetailViewController.xib */; };
 		FD9957E01B12BC1E005892DB /* ClassIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9957DE1B12BC1E005892DB /* ClassIntroduceViewController.m */; };
@@ -253,6 +261,18 @@
 		FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckAskViewController.xib; sourceTree = "<group>"; };
 		FD92C5C61B0ACA8D00B7BE43 /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
 		FD92C5C71B0ACA8D00B7BE43 /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
+		FD97AFA21B16BB8A00C45A2C /* ScoreTestMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreTestMenuViewController.h; sourceTree = "<group>"; };
+		FD97AFA31B16BB8A00C45A2C /* ScoreTestMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreTestMenuViewController.m; sourceTree = "<group>"; };
+		FD97AFA41B16BB8A00C45A2C /* ScoreTestMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreTestMenuViewController.xib; sourceTree = "<group>"; };
+		FD97AFA71B16E11A00C45A2C /* TestReviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestReviewCell.h; sourceTree = "<group>"; };
+		FD97AFA81B16E11A00C45A2C /* TestReviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestReviewCell.m; sourceTree = "<group>"; };
+		FD97AFA91B16E11A00C45A2C /* TestReviewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestReviewCell.xib; sourceTree = "<group>"; };
+		FD97AFAC1B16FD2400C45A2C /* CheckPractiseBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckPractiseBookViewController.h; sourceTree = "<group>"; };
+		FD97AFAD1B16FD2400C45A2C /* CheckPractiseBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckPractiseBookViewController.m; sourceTree = "<group>"; };
+		FD97AFAE1B16FD2400C45A2C /* CheckPractiseBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckPractiseBookViewController.xib; sourceTree = "<group>"; };
+		FD97AFB11B17020800C45A2C /* PractiseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PractiseCell.h; sourceTree = "<group>"; };
+		FD97AFB21B17020800C45A2C /* PractiseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PractiseCell.m; sourceTree = "<group>"; };
+		FD97AFB31B17020800C45A2C /* PractiseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PractiseCell.xib; sourceTree = "<group>"; };
 		FD9957D81B12BC02005892DB /* ClassDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassDetailViewController.h; sourceTree = "<group>"; };
 		FD9957D91B12BC02005892DB /* ClassDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassDetailViewController.m; sourceTree = "<group>"; };
 		FD9957DA1B12BC02005892DB /* ClassDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClassDetailViewController.xib; sourceTree = "<group>"; };
@@ -583,6 +603,12 @@
 				FD8453A11B155D2B00B1E84B /* ScoreMenuTestView.h */,
 				FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */,
 				FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */,
+				FD97AFA21B16BB8A00C45A2C /* ScoreTestMenuViewController.h */,
+				FD97AFA31B16BB8A00C45A2C /* ScoreTestMenuViewController.m */,
+				FD97AFA41B16BB8A00C45A2C /* ScoreTestMenuViewController.xib */,
+				FD97AFA71B16E11A00C45A2C /* TestReviewCell.h */,
+				FD97AFA81B16E11A00C45A2C /* TestReviewCell.m */,
+				FD97AFA91B16E11A00C45A2C /* TestReviewCell.xib */,
 			);
 			name = "模考";
 			sourceTree = "<group>";
@@ -777,6 +803,12 @@
 		FDA0C25B1B14565700900F49 /* 练习簿 */ = {
 			isa = PBXGroup;
 			children = (
+				FD97AFAC1B16FD2400C45A2C /* CheckPractiseBookViewController.h */,
+				FD97AFAD1B16FD2400C45A2C /* CheckPractiseBookViewController.m */,
+				FD97AFAE1B16FD2400C45A2C /* CheckPractiseBookViewController.xib */,
+				FD97AFB11B17020800C45A2C /* PractiseCell.h */,
+				FD97AFB21B17020800C45A2C /* PractiseCell.m */,
+				FD97AFB31B17020800C45A2C /* PractiseCell.xib */,
 			);
 			name = "练习簿";
 			sourceTree = "<group>";
@@ -1024,6 +1056,7 @@
 				FDD4041D1B0492F900DE2E84 /* Main.storyboard in Resources */,
 				FD596DD51B09E42100D6DE7B /* Question_3257.mp3 in Resources */,
 				FD8453BE1B15A08D00B1E84B /* TableView_headView_commited.xib in Resources */,
+				FD97AFAB1B16E11A00C45A2C /* TestReviewCell.xib in Resources */,
 				FD596DC11B09E42100D6DE7B /* Question_3237.mp3 in Resources */,
 				FD596DBC1B09E42100D6DE7B /* Question_3232.mp3 in Resources */,
 				FD596DC01B09E42100D6DE7B /* Question_3236.mp3 in Resources */,
@@ -1056,6 +1089,7 @@
 				FD596DCC1B09E42100D6DE7B /* Question_3248.mp3 in Resources */,
 				FDA0C2651B1463C000900F49 /* ScoreDetailViewController.xib in Resources */,
 				FD62449F1B0584780037836E /* touxiang.png in Resources */,
+				FD97AFB01B16FD2400C45A2C /* CheckPractiseBookViewController.xib in Resources */,
 				FD54615A1B10748600409778 /* PersonClassViewController.xib in Resources */,
 				FD596DB41B09E42100D6DE7B /* Question_3224.mp3 in Resources */,
 				FD596DB81B09E42100D6DE7B /* Question_3228.mp3 in Resources */,
@@ -1079,9 +1113,11 @@
 				FD8453AC1B1593BE00B1E84B /* ScorePoint_3_Cell.xib in Resources */,
 				FDD404541B049B5B00DE2E84 /* topic.png in Resources */,
 				FD54613F1B10580A00409778 /* MyTeacherViewController.xib in Resources */,
+				FD97AFB51B17020800C45A2C /* PractiseCell.xib in Resources */,
 				FDA0C2511B1412AA00900F49 /* LICENSE in Resources */,
 				FD596DD11B09E42100D6DE7B /* Question_3253.mp3 in Resources */,
 				FD8453A51B155D3A00B1E84B /* ScoreMenuTestView.xib in Resources */,
+				FD97AFA61B16BB8A00C45A2C /* ScoreTestMenuViewController.xib in Resources */,
 				FD596DB91B09E42100D6DE7B /* Question_3229.mp3 in Resources */,
 				FD596DC51B09E42100D6DE7B /* Question_3241.mp3 in Resources */,
 				FD596DB31B09E42100D6DE7B /* info.json in Resources */,
@@ -1130,18 +1166,21 @@
 				FD9958E81B131794005892DB /* zip.c in Sources */,
 				FDD4041A1B0492F900DE2E84 /* ViewController.m in Sources */,
 				FD8453B21B15A01E00B1E84B /* TableView_headView.m in Sources */,
+				FD97AFA51B16BB8A00C45A2C /* ScoreTestMenuViewController.m in Sources */,
 				FD9958F31B1328CB005892DB /* NetManager.m in Sources */,
 				FD5461391B10576B00409778 /* CheckTestViewController.m in Sources */,
 				FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */,
 				FD9958E51B131794005892DB /* ioapi.c in Sources */,
 				FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */,
 				FD99590D1B1328FB005892DB /* AFURLConnectionOperation.m in Sources */,
+				FD97AFAA1B16E11A00C45A2C /* TestReviewCell.m in Sources */,
 				FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */,
 				FD8C40F01B0C6FAB00948B6C /* CheckAskViewController.m in Sources */,
 				FD9958E61B131794005892DB /* mztools.c in Sources */,
 				FDA25E161B0DC31900F35545 /* CheckKeyWordViewController.m in Sources */,
 				FDD404401B04952400DE2E84 /* TopicMainViewController.m in Sources */,
 				FD8453B71B15A04300B1E84B /* section_HeadView.m in Sources */,
+				FD97AFB41B17020800C45A2C /* PractiseCell.m in Sources */,
 				FDA0C2531B1412AA00900F49 /* SDImageCache.m in Sources */,
 				FD9958E91B131794005892DB /* ZipArchive.m in Sources */,
 				FDA0C25F1B14568900900F49 /* CheckScoreViewController.m in Sources */,
@@ -1161,6 +1200,7 @@
 				FD9959101B1328FB005892DB /* AFURLSessionManager.m in Sources */,
 				FDA0C2571B1412AA00900F49 /* SDWebImagePrefetcher.m in Sources */,
 				FDA0C2551B1412AA00900F49 /* SDWebImageDownloader.m in Sources */,
+				FD97AFAF1B16FD2400C45A2C /* CheckPractiseBookViewController.m in Sources */,
 				FD6244A31B0585450037836E /* TPCCheckpointViewController.m in Sources */,
 				FD5A05841B0ED899002F0756 /* CircleProgressView.m in Sources */,
 				FD99590C1B1328FB005892DB /* AFSecurityPolicy.m in Sources */,

@@ -11,6 +11,7 @@
 //#import "CheckBlankViewController.h"   // 填空 part--->point2 关卡2
 //#import "CheckAskViewController.h"     // 问答 part--->point3 关卡3
 
+#import "CheckPractiseBookViewController.h"
 #import "CheckScoreViewController.h"
 
 #import "NetManager.h"
@@ -307,7 +308,11 @@
     //
 }
 
-- (IBAction)practiseBook:(id)sender {
+- (IBAction)practiseBook:(id)sender
+{
+    // 练习本
+    CheckPractiseBookViewController *practiseVC = [[CheckPractiseBookViewController alloc]init];
+    [self.navigationController pushViewController:practiseVC animated:YES];
 }
 
 - (IBAction)scoreMenu:(id)sender

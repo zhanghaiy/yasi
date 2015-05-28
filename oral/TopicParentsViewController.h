@@ -17,6 +17,10 @@
     UIColor *_textColor;// 文字颜色
     UIColor *_pointColor;// 闯关页part按钮颜色
     UIColor *_backgroundViewColor;
+    
+    UIColor *_perfColor;// 80~100
+    UIColor *_goodColor;// 60~80
+    UIColor *_badColor;// 0~60
 }
 @property (nonatomic,strong) UIView *navTopView;// 模拟导航栏背景
 @property (nonatomic,strong) UILabel *lineLab;

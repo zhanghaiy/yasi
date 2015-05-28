@@ -9,6 +9,9 @@
 #import "CheckScoreViewController.h"
 #import "ScoreDetailViewController.h"
 #import "ScoreMenuTestView.h"
+#import "CustomProgressView.h"// 进度条
+#import "ScoreTestMenuViewController.h"
+
 
 @interface CheckScoreViewController ()<UIScrollViewDelegate>
 {
@@ -22,6 +25,14 @@
 #define kPartButtonHeight 100
 #define kPartButtonTag 333
 #define kTestViewTAg 555
+
+#define kPlayButtonTag 55
+#define kProgressViewTag 66
+
+#define kTestCommitButtonTag 77
+#define kTestCommitButtonHeight 37
+#define kTestCommitButtonWidth 100
+
 
 - (void)viewDidLoad
 {
@@ -43,7 +54,6 @@
         testV.timeLabel.backgroundColor = _pointColor;
         testV.progress = 1;
     }
-    
 }
 
 - (void)uiConfig
@@ -76,19 +86,55 @@
     _backScrollV.contentSize = CGSizeMake(kScreentWidth*2, kScreenHeight-100);
     [self.view addSubview:_backScrollV];
     // 模考
-    
-    NSInteger testHeight = 100;
-    NSInteger sumTimeWid = kScreentWidth-155;// 时间控件长度
+//    NSInteger testHeight = 100;
+//    NSInteger sumTimeWid = kScreentWidth-155;// 时间控件长度
     for (int i = 0; i < 3; i ++)
     {
+//        ScoreMenuTestView *testV = [[[NSBundle mainBundle]loadNibNamed:@"ScoreMenuTestView" owner:self options:0] lastObject];
+//        testV.frame = CGRectMake(0, i*testHeight, kScreentWidth, testHeight);
+//        testV.tag = i+kTestViewTAg;
+//        
+//        [_backScrollV addSubview:testV];
         // 40 40
-        ScoreMenuTestView *testV = [[[NSBundle mainBundle]loadNibNamed:@"ScoreMenuTestView" owner:self options:0] lastObject];
-        testV.frame = CGRectMake(0, i*testHeight, kScreentWidth, testHeight);
-        testV.tag = i+kTestViewTAg;
-
-        [_backScrollV addSubview:testV];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 20+i*100, kScreentWidth-80, 30)];
+        label.text = [NSString stringWithFormat:@"Part%d",i+1];
+        label.textColor = _pointColor;
+        label.font = [UIFont systemFontOfSize:kFontSize1];
+        [_backScrollV addSubview:label];
+        
+        UIView *testBAckView = [[UIView alloc]initWithFrame:CGRectMake(40, 60+i*100, kScreentWidth-80, 45)];
+        testBAckView.backgroundColor = _backgroundViewColor;
+        testBAckView.layer.masksToBounds = YES;
+        testBAckView.layer.cornerRadius = testBAckView.bounds.size.height/2;
+        [_backScrollV addSubview:testBAckView];
+        
+        UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [playButton setFrame:CGRectMake(5, 5, 35, 35)];
+        [playButton setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        [playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        playButton.tag = kPlayButtonTag +i;
+        [testBAckView addSubview:playButton];
+        
+        // 进度条
+        CustomProgressView *progressV = [[CustomProgressView alloc]initWithFrame:CGRectMake(50, 20, testBAckView.frame.size.width-70, 4)];
+        progressV.tag = kProgressViewTag+i;
+        progressV.backgroundColor = [UIColor whiteColor];
+        progressV.progress = 0.5;
+        progressV.progressView.backgroundColor = _pointColor;
+        [testBAckView addSubview:progressV];
     }
     
+    // 提交按钮
+    NSInteger yyy = kScreenHeight<500?(kScreenHeight-kTestCommitButtonHeight-10-100):380;
+    UIButton *commitTestButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [commitTestButton setFrame:CGRectMake((kScreentWidth-kTestCommitButtonWidth)/2, yyy, kTestCommitButtonWidth, kTestCommitButtonHeight)];
+    [commitTestButton setTitle:@"提交给老师" forState:UIControlStateNormal];
+    [commitTestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    commitTestButton.layer.cornerRadius = kTestCommitButtonHeight/2;
+    commitTestButton.backgroundColor = _pointColor;
+    commitTestButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    [commitTestButton addTarget:self action:@selector(commitTest:) forControlEvents:UIControlEventTouchUpInside];
+    [_backScrollV addSubview:commitTestButton];
     
     // 闯关
     NSArray *partButtonNameArray = @[@"Part-One",@"Part-Two",@"Part-Three"];
@@ -110,6 +156,22 @@
     
 }
 
+#pragma mark - 模考
+#pragma mark - - 提交模考
+- (void)commitTest:(UIButton *)commitButton
+{
+    // 1：未提交给老师 提交老师  2：已经提交 但是未反馈 3：老师已反馈
+    ScoreTestMenuViewController *testVC = [[ScoreTestMenuViewController alloc]init];
+    [self.navigationController pushViewController:testVC animated:YES];
+}
+#pragma mark - - 播放音频按钮点击事件
+- (void)playButtonClicked:(UIButton *)playButton
+{
+    // 调用播放器 进度条随着播放逐渐减少  ---- 待完善
+}
+
+#pragma mark - 闯关
+#pragma mark - - 闯关按钮被点击
 - (void)partButtonClicked:(UIButton *)btn
 {
      // part1 -- 3
@@ -118,12 +180,14 @@
     [self.navigationController pushViewController:scoreVC animated:YES];
 }
 
+#pragma mark - 切换按钮
 - (void)segment:(UISegmentedControl *)segment
 {
     //    选中的下标
     _backScrollV.contentOffset = CGPointMake(segment.selectedSegmentIndex*kScreentWidth, 0);
 }
 
+#pragma mark - UIScrollView Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSInteger page = scrollView.contentOffset.x/kScreentWidth;
