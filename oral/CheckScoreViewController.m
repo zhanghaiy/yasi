@@ -67,6 +67,12 @@
     _segment.frame = CGRectMake((kScreentWidth-110)/2, 55, 110, 35);
     // 分段控件的选中颜色
     _segment.tintColor = _pointColor;
+    for (UIView *view in _segment.subviews)
+    {
+        view.layer.masksToBounds = YES;
+        view.layer.cornerRadius = _segment.frame.size.height/2;
+    }
+    
     // 默认启动选择索引
     _segment.selectedSegmentIndex = 0;
     // 圆角半径
@@ -86,15 +92,8 @@
     _backScrollV.contentSize = CGSizeMake(kScreentWidth*2, kScreenHeight-100);
     [self.view addSubview:_backScrollV];
     // 模考
-//    NSInteger testHeight = 100;
-//    NSInteger sumTimeWid = kScreentWidth-155;// 时间控件长度
     for (int i = 0; i < 3; i ++)
     {
-//        ScoreMenuTestView *testV = [[[NSBundle mainBundle]loadNibNamed:@"ScoreMenuTestView" owner:self options:0] lastObject];
-//        testV.frame = CGRectMake(0, i*testHeight, kScreentWidth, testHeight);
-//        testV.tag = i+kTestViewTAg;
-//        
-//        [_backScrollV addSubview:testV];
         // 40 40
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 20+i*100, kScreentWidth-80, 30)];
         label.text = [NSString stringWithFormat:@"Part%d",i+1];

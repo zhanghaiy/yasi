@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *answerButton;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+@property (weak, nonatomic) IBOutlet UILabel *lineLabel;
 
 @end

@@ -57,8 +57,6 @@
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"PractiseCell" owner:self options:0] lastObject];
     }
-    cell.scoreButton.layer.masksToBounds = YES;
-    cell.scoreButton.layer.cornerRadius = 10;
     cell.partLabel.textColor = _pointColor;
     return cell;
 }
