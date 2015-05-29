@@ -66,6 +66,7 @@
 		FD6244A41B0585450037836E /* TPCCheckpointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A21B0585450037836E /* TPCCheckpointViewController.xib */; };
 		FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6244A61B0585820037836E /* CheckFollowViewController.m */; };
 		FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A71B0585820037836E /* CheckFollowViewController.xib */; };
+		FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */; };
 		FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */; };
 		FD8453A51B155D3A00B1E84B /* ScoreMenuTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */; };
 		FD8453AB1B1593BE00B1E84B /* ScorePoint_3_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453A91B1593BE00B1E84B /* ScorePoint_3_Cell.m */; };
@@ -235,6 +236,8 @@
 		FD6244A51B0585820037836E /* CheckFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckFollowViewController.h; sourceTree = "<group>"; };
 		FD6244A61B0585820037836E /* CheckFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckFollowViewController.m; sourceTree = "<group>"; };
 		FD6244A71B0585820037836E /* CheckFollowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckFollowViewController.xib; sourceTree = "<group>"; };
+		FD6B80D21B1843FF00F9562C /* NSString+CalculateStringSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CalculateStringSize.h"; sourceTree = "<group>"; };
+		FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CalculateStringSize.m"; sourceTree = "<group>"; };
 		FD8453A11B155D2B00B1E84B /* ScoreMenuTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreMenuTestView.h; sourceTree = "<group>"; };
 		FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreMenuTestView.m; sourceTree = "<group>"; };
 		FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreMenuTestView.xib; sourceTree = "<group>"; };
@@ -584,6 +587,15 @@
 			name = "个人中心";
 			sourceTree = "<group>";
 		};
+		FD6B80CE1B18434400F9562C /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				FD6B80D21B1843FF00F9562C /* NSString+CalculateStringSize.h */,
+				FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
 		FD8453A61B15933C00B1E84B /* 闯关成绩单 */ = {
 			isa = PBXGroup;
 			children = (
@@ -913,6 +925,7 @@
 		FDD404101B0492F900DE2E84 /* oral */ = {
 			isa = PBXGroup;
 			children = (
+				FD6B80CE1B18434400F9562C /* Category */,
 				FD9958F01B1328B7005892DB /* Net */,
 				FD596D8D1B09E42100D6DE7B /* temp 3 */,
 				FDA25E111B0D9EFF00F35545 /* Models */,
@@ -1180,6 +1193,7 @@
 				FDA25E161B0DC31900F35545 /* CheckKeyWordViewController.m in Sources */,
 				FDD404401B04952400DE2E84 /* TopicMainViewController.m in Sources */,
 				FD8453B71B15A04300B1E84B /* section_HeadView.m in Sources */,
+				FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */,
 				FD97AFB41B17020800C45A2C /* PractiseCell.m in Sources */,
 				FDA0C2531B1412AA00900F49 /* SDImageCache.m in Sources */,
 				FD9958E91B131794005892DB /* ZipArchive.m in Sources */,

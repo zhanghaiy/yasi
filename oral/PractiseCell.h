@@ -12,10 +12,20 @@
 @property (weak, nonatomic) IBOutlet UILabel *partLabel;
 @property (weak, nonatomic) IBOutlet UIWebView *textWebView;
 @property (weak, nonatomic) IBOutlet UIButton *scoreButton;
-@property (weak, nonatomic) IBOutlet UIButton *questionButton;
-@property (weak, nonatomic) IBOutlet UIButton *answerButton;
+@property (weak, nonatomic) IBOutlet UIButton *play_self_Button;
+@property (weak, nonatomic) IBOutlet UIButton *play_answer_Button;
 @property (weak, nonatomic) IBOutlet UIButton *followButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UILabel *lineLabel;
+- (IBAction)buttonClicked:(id)sender;
+
+
+@property (nonatomic,assign) id delegate;
+@property (nonatomic,assign) SEL action;
+@property (nonatomic,assign) NSInteger buttonIndex;// 标记被点击的按钮tag值
+@property (nonatomic,assign) NSInteger cellIndex;// cell索引
+@property (nonatomic,assign) NSDictionary *topicResource;// 资源 暂时写字典 用于传值的
+
+@property (nonatomic,assign) NSInteger recive_score;// 得分
 
 @end

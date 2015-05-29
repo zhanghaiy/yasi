@@ -25,10 +25,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UtZ-Wa-Eph">
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UtZ-Wa-Eph">
                     <rect key="frame" x="0.0" y="45" width="375" height="180"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nc1-pe-8im">
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nc1-pe-8im">
                             <rect key="frame" x="95" y="64" width="48" height="51"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="nc1-pe-8im" secondAttribute="height" multiplier="16:17" id="8qH-MM-yBP"/>
@@ -38,7 +38,7 @@
                                 <action selector="practiseBook:" destination="-1" eventType="touchUpInside" id="dTW-wg-MUp"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="成绩单" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXa-a1-hSX">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="成绩单" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXa-a1-hSX">
                             <rect key="frame" x="233" y="122" width="48" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="xXa-a1-hSX" secondAttribute="height" multiplier="8:5" id="Z32-Jb-Pzx"/>
@@ -47,7 +47,7 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="练习本" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ivr-dZ-Bt7">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="练习本" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ivr-dZ-Bt7">
                             <rect key="frame" x="95" y="122" width="48" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Ivr-dZ-Bt7" secondAttribute="height" multiplier="8:5" id="OQq-va-x9u"/>
@@ -56,7 +56,7 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mR7-JN-rcF">
+                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mR7-JN-rcF">
                             <rect key="frame" x="233" y="64" width="48" height="51"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="mR7-JN-rcF" secondAttribute="height" multiplier="16:17" id="c2P-pI-Vyf"/>
@@ -87,7 +87,7 @@
                         <constraint firstItem="nc1-pe-8im" firstAttribute="leading" secondItem="UtZ-Wa-Eph" secondAttribute="leading" constant="95" id="vRM-Xl-HHb"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RcL-aB-6Mh">
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RcL-aB-6Mh">
                     <rect key="frame" x="0.0" y="375" width="375" height="130"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hts-LQ-12j">
@@ -114,7 +114,7 @@
                         <constraint firstAttribute="bottom" secondItem="Hts-LQ-12j" secondAttribute="bottom" constant="35" id="jEa-qL-lLX"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OaL-Dq-iP4">
+                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OaL-Dq-iP4">
                     <rect key="frame" x="0.0" y="225" width="375" height="150"/>
                     <subviews>
                         <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lDr-Yb-uTC">

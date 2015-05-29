@@ -54,6 +54,9 @@
     [_scoreButton setBackgroundImage:[UIImage imageNamed:@"scoreMenu"] forState:UIControlStateNormal];
     _scoreLable.textColor = [UIColor colorWithRed:87/255.0 green:224/255.0 blue:192/255.0 alpha:1];
     
+    [_exerciseBookBtn setAdjustsImageWhenHighlighted:NO];
+    [_scoreButton setAdjustsImageWhenHighlighted:NO];
+    
     float partBackH = kScreentWidth*2/5;
     CGRect partBackrect = _partBackView.frame;
     partBackrect.size.height = partBackH;
@@ -66,17 +69,19 @@
     CGRect rect = _partScrollView.frame;
     rect.size.width = partWidth;
     rect.size.height = partHeight;
+    rect.origin.x = (_partBackView.frame.size.width-partWidth)/2;
     _partScrollView.frame = rect;
     _partScrollView.contentSize = CGSizeMake(_partScrollView.bounds.size.width*3, _partScrollView.bounds.size.height);
     _partScrollView.delegate = self;
+//    _partScrollView.pagingEnabled = YES;
+    
     NSArray *partTitleArray = @[@"Part-one",@"Part-two",@"Part-three"];
     // part 按钮
     for (int i = 0; i < 3; i ++)
     {
+        CGRect newRec = CGRectMake(5+i*_partScrollView.bounds.size.width, 5, _partScrollView.bounds.size.width-10, _partScrollView.bounds.size.height-10);
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        rect.origin.x = i*rect.size.width;
-        rect.origin.y = 0;
-        [btn setFrame:rect];
+        [btn setFrame:newRec];
         btn.backgroundColor = _pointColor;
         btn.tag = kPartButtonTag+i;
         btn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -175,8 +180,12 @@
 #pragma mark - UIScrollView Delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self makePagesAloneWithButtonTag:(int)(scrollView.contentOffset.x/scrollView.frame.size.width)+kLeftMarkButtonTag];
+    NSInteger mark = (scrollView.contentOffset.x+10)/(scrollView.contentSize.width/3);
+    NSLog(@"%ld",mark);
+     NSLog(@"++++++++%f++++++++++",scrollView.contentOffset.x);
+    [self makePagesAloneWithButtonTag:kLeftMarkButtonTag+mark];
 }
+
 
 
 
