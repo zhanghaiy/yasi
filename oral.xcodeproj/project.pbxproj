@@ -69,14 +69,8 @@
 		FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */; };
 		FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */; };
 		FD8453A51B155D3A00B1E84B /* ScoreMenuTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */; };
-		FD8453AB1B1593BE00B1E84B /* ScorePoint_3_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453A91B1593BE00B1E84B /* ScorePoint_3_Cell.m */; };
-		FD8453AC1B1593BE00B1E84B /* ScorePoint_3_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453AA1B1593BE00B1E84B /* ScorePoint_3_Cell.xib */; };
 		FD8453B21B15A01E00B1E84B /* TableView_headView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453B11B15A01E00B1E84B /* TableView_headView.m */; };
 		FD8453B41B15A02E00B1E84B /* TableView_headView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453B31B15A02E00B1E84B /* TableView_headView.xib */; };
-		FD8453B71B15A04300B1E84B /* section_HeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453B61B15A04300B1E84B /* section_HeadView.m */; };
-		FD8453B91B15A04D00B1E84B /* section_HeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453B81B15A04D00B1E84B /* section_HeadView.xib */; };
-		FD8453BC1B15A08000B1E84B /* TableView_headView_commited.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453BB1B15A08000B1E84B /* TableView_headView_commited.m */; };
-		FD8453BE1B15A08D00B1E84B /* TableView_headView_commited.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453BD1B15A08D00B1E84B /* TableView_headView_commited.xib */; };
 		FD8C40E61B0C6D8200948B6C /* CheckSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8C40E41B0C6D8200948B6C /* CheckSuccessViewController.m */; };
 		FD8C40E71B0C6D8200948B6C /* CheckSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8C40E51B0C6D8200948B6C /* CheckSuccessViewController.xib */; };
 		FD8C40EB1B0C6F3A00948B6C /* CheckBlankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8C40E91B0C6F3A00948B6C /* CheckBlankViewController.m */; };
@@ -133,6 +127,14 @@
 		FDA25E161B0DC31900F35545 /* CheckKeyWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA25E141B0DC31900F35545 /* CheckKeyWordViewController.m */; };
 		FDA25E171B0DC31900F35545 /* CheckKeyWordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA25E151B0DC31900F35545 /* CheckKeyWordViewController.xib */; };
 		FDA25E1B1B0DD98D00F35545 /* RecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA25E1A1B0DD98D00F35545 /* RecordManager.m */; };
+		FDBA32EB1B1C389200C02BF8 /* Score_Point3_Section_View.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBA32EA1B1C389200C02BF8 /* Score_Point3_Section_View.m */; };
+		FDBA32ED1B1C38A000C02BF8 /* Score_Point3_Section_View.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDBA32EC1B1C38A000C02BF8 /* Score_Point3_Section_View.xib */; };
+		FDBA32F11B1C38E600C02BF8 /* Score_Point3_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBA32EF1B1C38E600C02BF8 /* Score_Point3_Cell.m */; };
+		FDBA32F21B1C38E600C02BF8 /* Score_Point3_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDBA32F01B1C38E600C02BF8 /* Score_Point3_Cell.xib */; };
+		FDBA32F51B1C390800C02BF8 /* Score_Point3_Footer_View.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBA32F41B1C390800C02BF8 /* Score_Point3_Footer_View.m */; };
+		FDBA32F71B1C391200C02BF8 /* Score_Point3_Footer_View.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDBA32F61B1C391200C02BF8 /* Score_Point3_Footer_View.xib */; };
+		FDBA32FA1B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBA32F91B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.m */; };
+		FDBA32FC1B1C559200C02BF8 /* Score_Point3_TableHeaderView_commited.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDBA32FB1B1C559200C02BF8 /* Score_Point3_TableHeaderView_commited.xib */; };
 		FDD404141B0492F900DE2E84 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404131B0492F900DE2E84 /* main.m */; };
 		FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404161B0492F900DE2E84 /* AppDelegate.m */; };
 		FDD4041A1B0492F900DE2E84 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404191B0492F900DE2E84 /* ViewController.m */; };
@@ -241,18 +243,9 @@
 		FD8453A11B155D2B00B1E84B /* ScoreMenuTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreMenuTestView.h; sourceTree = "<group>"; };
 		FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreMenuTestView.m; sourceTree = "<group>"; };
 		FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreMenuTestView.xib; sourceTree = "<group>"; };
-		FD8453A81B1593BE00B1E84B /* ScorePoint_3_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScorePoint_3_Cell.h; sourceTree = "<group>"; };
-		FD8453A91B1593BE00B1E84B /* ScorePoint_3_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScorePoint_3_Cell.m; sourceTree = "<group>"; };
-		FD8453AA1B1593BE00B1E84B /* ScorePoint_3_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScorePoint_3_Cell.xib; sourceTree = "<group>"; };
 		FD8453B01B15A01E00B1E84B /* TableView_headView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableView_headView.h; sourceTree = "<group>"; };
 		FD8453B11B15A01E00B1E84B /* TableView_headView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableView_headView.m; sourceTree = "<group>"; };
 		FD8453B31B15A02E00B1E84B /* TableView_headView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableView_headView.xib; sourceTree = "<group>"; };
-		FD8453B51B15A04300B1E84B /* section_HeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = section_HeadView.h; sourceTree = "<group>"; };
-		FD8453B61B15A04300B1E84B /* section_HeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = section_HeadView.m; sourceTree = "<group>"; };
-		FD8453B81B15A04D00B1E84B /* section_HeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = section_HeadView.xib; sourceTree = "<group>"; };
-		FD8453BA1B15A08000B1E84B /* TableView_headView_commited.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableView_headView_commited.h; sourceTree = "<group>"; };
-		FD8453BB1B15A08000B1E84B /* TableView_headView_commited.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableView_headView_commited.m; sourceTree = "<group>"; };
-		FD8453BD1B15A08D00B1E84B /* TableView_headView_commited.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableView_headView_commited.xib; sourceTree = "<group>"; };
 		FD8C40E31B0C6D8200948B6C /* CheckSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckSuccessViewController.h; sourceTree = "<group>"; };
 		FD8C40E41B0C6D8200948B6C /* CheckSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckSuccessViewController.m; sourceTree = "<group>"; };
 		FD8C40E51B0C6D8200948B6C /* CheckSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckSuccessViewController.xib; sourceTree = "<group>"; };
@@ -355,6 +348,18 @@
 		FDA25E151B0DC31900F35545 /* CheckKeyWordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckKeyWordViewController.xib; sourceTree = "<group>"; };
 		FDA25E191B0DD98D00F35545 /* RecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordManager.h; sourceTree = "<group>"; };
 		FDA25E1A1B0DD98D00F35545 /* RecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordManager.m; sourceTree = "<group>"; };
+		FDBA32E91B1C389200C02BF8 /* Score_Point3_Section_View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score_Point3_Section_View.h; sourceTree = "<group>"; };
+		FDBA32EA1B1C389200C02BF8 /* Score_Point3_Section_View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Score_Point3_Section_View.m; sourceTree = "<group>"; };
+		FDBA32EC1B1C38A000C02BF8 /* Score_Point3_Section_View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Score_Point3_Section_View.xib; sourceTree = "<group>"; };
+		FDBA32EE1B1C38E600C02BF8 /* Score_Point3_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score_Point3_Cell.h; sourceTree = "<group>"; };
+		FDBA32EF1B1C38E600C02BF8 /* Score_Point3_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Score_Point3_Cell.m; sourceTree = "<group>"; };
+		FDBA32F01B1C38E600C02BF8 /* Score_Point3_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Score_Point3_Cell.xib; sourceTree = "<group>"; };
+		FDBA32F31B1C390800C02BF8 /* Score_Point3_Footer_View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score_Point3_Footer_View.h; sourceTree = "<group>"; };
+		FDBA32F41B1C390800C02BF8 /* Score_Point3_Footer_View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Score_Point3_Footer_View.m; sourceTree = "<group>"; };
+		FDBA32F61B1C391200C02BF8 /* Score_Point3_Footer_View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Score_Point3_Footer_View.xib; sourceTree = "<group>"; };
+		FDBA32F81B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score_Point3_TableHeaderView_commited.h; sourceTree = "<group>"; };
+		FDBA32F91B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Score_Point3_TableHeaderView_commited.m; sourceTree = "<group>"; };
+		FDBA32FB1B1C559200C02BF8 /* Score_Point3_TableHeaderView_commited.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Score_Point3_TableHeaderView_commited.xib; sourceTree = "<group>"; };
 		FDD4040E1B0492F900DE2E84 /* oral.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oral.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDD404121B0492F900DE2E84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FDD404131B0492F900DE2E84 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -599,11 +604,11 @@
 		FD8453A61B15933C00B1E84B /* 闯关成绩单 */ = {
 			isa = PBXGroup;
 			children = (
+				FDBA32E81B1C37DC00C02BF8 /* 关卡3相关View */,
 				FDA0C2611B1463C000900F49 /* ScoreDetailViewController.h */,
 				FDA0C2621B1463C000900F49 /* ScoreDetailViewController.m */,
 				FDA0C2631B1463C000900F49 /* ScoreDetailViewController.xib */,
 				FD8453AE1B159FBD00B1E84B /* point1.2_cell  */,
-				FD8453AD1B159FA800B1E84B /* point3_cell */,
 				FD8453AF1B159FDB00B1E84B /* point3_headView */,
 			);
 			name = "闯关成绩单";
@@ -625,16 +630,6 @@
 			name = "模考";
 			sourceTree = "<group>";
 		};
-		FD8453AD1B159FA800B1E84B /* point3_cell */ = {
-			isa = PBXGroup;
-			children = (
-				FD8453A81B1593BE00B1E84B /* ScorePoint_3_Cell.h */,
-				FD8453A91B1593BE00B1E84B /* ScorePoint_3_Cell.m */,
-				FD8453AA1B1593BE00B1E84B /* ScorePoint_3_Cell.xib */,
-			);
-			name = point3_cell;
-			sourceTree = "<group>";
-		};
 		FD8453AE1B159FBD00B1E84B /* point1.2_cell  */ = {
 			isa = PBXGroup;
 			children = (
@@ -648,15 +643,9 @@
 		FD8453AF1B159FDB00B1E84B /* point3_headView */ = {
 			isa = PBXGroup;
 			children = (
-				FD8453BA1B15A08000B1E84B /* TableView_headView_commited.h */,
-				FD8453BB1B15A08000B1E84B /* TableView_headView_commited.m */,
-				FD8453BD1B15A08D00B1E84B /* TableView_headView_commited.xib */,
 				FD8453B01B15A01E00B1E84B /* TableView_headView.h */,
 				FD8453B11B15A01E00B1E84B /* TableView_headView.m */,
 				FD8453B31B15A02E00B1E84B /* TableView_headView.xib */,
-				FD8453B51B15A04300B1E84B /* section_HeadView.h */,
-				FD8453B61B15A04300B1E84B /* section_HeadView.m */,
-				FD8453B81B15A04D00B1E84B /* section_HeadView.xib */,
 			);
 			name = point3_headView;
 			sourceTree = "<group>";
@@ -900,6 +889,25 @@
 			name = "录音";
 			sourceTree = "<group>";
 		};
+		FDBA32E81B1C37DC00C02BF8 /* 关卡3相关View */ = {
+			isa = PBXGroup;
+			children = (
+				FDBA32E91B1C389200C02BF8 /* Score_Point3_Section_View.h */,
+				FDBA32EA1B1C389200C02BF8 /* Score_Point3_Section_View.m */,
+				FDBA32EC1B1C38A000C02BF8 /* Score_Point3_Section_View.xib */,
+				FDBA32EE1B1C38E600C02BF8 /* Score_Point3_Cell.h */,
+				FDBA32EF1B1C38E600C02BF8 /* Score_Point3_Cell.m */,
+				FDBA32F01B1C38E600C02BF8 /* Score_Point3_Cell.xib */,
+				FDBA32F31B1C390800C02BF8 /* Score_Point3_Footer_View.h */,
+				FDBA32F41B1C390800C02BF8 /* Score_Point3_Footer_View.m */,
+				FDBA32F61B1C391200C02BF8 /* Score_Point3_Footer_View.xib */,
+				FDBA32F81B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.h */,
+				FDBA32F91B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.m */,
+				FDBA32FB1B1C559200C02BF8 /* Score_Point3_TableHeaderView_commited.xib */,
+			);
+			name = "关卡3相关View";
+			sourceTree = "<group>";
+		};
 		FDD404051B0492F900DE2E84 = {
 			isa = PBXGroup;
 			children = (
@@ -1067,8 +1075,8 @@
 				FDA0C2601B14568900900F49 /* CheckScoreViewController.xib in Resources */,
 				FD54614A1B105FF400409778 /* MyTeacherCell.xib in Resources */,
 				FDD4041D1B0492F900DE2E84 /* Main.storyboard in Resources */,
+				FDBA32F71B1C391200C02BF8 /* Score_Point3_Footer_View.xib in Resources */,
 				FD596DD51B09E42100D6DE7B /* Question_3257.mp3 in Resources */,
-				FD8453BE1B15A08D00B1E84B /* TableView_headView_commited.xib in Resources */,
 				FD97AFAB1B16E11A00C45A2C /* TestReviewCell.xib in Resources */,
 				FD596DC11B09E42100D6DE7B /* Question_3237.mp3 in Resources */,
 				FD596DBC1B09E42100D6DE7B /* Question_3232.mp3 in Resources */,
@@ -1087,11 +1095,11 @@
 				FDA25E171B0DC31900F35545 /* CheckKeyWordViewController.xib in Resources */,
 				FDD4044F1B04972D00DE2E84 /* TopicCell.xib in Resources */,
 				FD596DBF1B09E42100D6DE7B /* Question_3235.mp3 in Resources */,
-				FD8453B91B15A04D00B1E84B /* section_HeadView.xib in Resources */,
 				FD596DD21B09E42100D6DE7B /* Question_3254.mp3 in Resources */,
 				FD596DC61B09E42100D6DE7B /* Question_3242.mp3 in Resources */,
 				FD5461451B105D7700409778 /* FooterView.xib in Resources */,
 				FD596DD01B09E42100D6DE7B /* Question_3252.mp3 in Resources */,
+				FDBA32F21B1C38E600C02BF8 /* Score_Point3_Cell.xib in Resources */,
 				FD596DB21B09E42100D6DE7B /* 349207.png in Resources */,
 				FD5461551B10676700409778 /* TPCPersonCenterViewController.xib in Resources */,
 				FD596DBB1B09E42100D6DE7B /* Question_3231.mp3 in Resources */,
@@ -1100,6 +1108,7 @@
 				FD8C40EC1B0C6F3A00948B6C /* CheckBlankViewController.xib in Resources */,
 				FD596DBE1B09E42100D6DE7B /* Question_3234.mp3 in Resources */,
 				FD596DCC1B09E42100D6DE7B /* Question_3248.mp3 in Resources */,
+				FDBA32ED1B1C38A000C02BF8 /* Score_Point3_Section_View.xib in Resources */,
 				FDA0C2651B1463C000900F49 /* ScoreDetailViewController.xib in Resources */,
 				FD62449F1B0584780037836E /* touxiang.png in Resources */,
 				FD97AFB01B16FD2400C45A2C /* CheckPractiseBookViewController.xib in Resources */,
@@ -1107,6 +1116,7 @@
 				FD596DB41B09E42100D6DE7B /* Question_3224.mp3 in Resources */,
 				FD596DB81B09E42100D6DE7B /* Question_3228.mp3 in Resources */,
 				FD596DBD1B09E42100D6DE7B /* Question_3233.mp3 in Resources */,
+				FDBA32FC1B1C559200C02BF8 /* Score_Point3_TableHeaderView_commited.xib in Resources */,
 				FD596DCF1B09E42100D6DE7B /* Question_3251.mp3 in Resources */,
 				FD596DC91B09E42100D6DE7B /* Question_3245.mp3 in Resources */,
 				FD596DD41B09E42100D6DE7B /* Question_3256.mp3 in Resources */,
@@ -1123,7 +1133,6 @@
 				FD596DC31B09E42100D6DE7B /* Question_3239.mp3 in Resources */,
 				FD596DBA1B09E42100D6DE7B /* Question_3230.mp3 in Resources */,
 				FD596DD31B09E42100D6DE7B /* Question_3255.mp3 in Resources */,
-				FD8453AC1B1593BE00B1E84B /* ScorePoint_3_Cell.xib in Resources */,
 				FDD404541B049B5B00DE2E84 /* topic.png in Resources */,
 				FD54613F1B10580A00409778 /* MyTeacherViewController.xib in Resources */,
 				FD97AFB51B17020800C45A2C /* PractiseCell.xib in Resources */,
@@ -1157,10 +1166,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD8453BC1B15A08000B1E84B /* TableView_headView_commited.m in Sources */,
 				FD9959081B1328FB005892DB /* AFHTTPRequestOperation.m in Sources */,
 				FDA0C2581B1412AA00900F49 /* UIButton+WebCache.m in Sources */,
 				FD99590B1B1328FB005892DB /* AFNetworkReachabilityManager.m in Sources */,
+				FDBA32FA1B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.m in Sources */,
 				FD99590A1B1328FB005892DB /* AFHTTPSessionManager.m in Sources */,
 				FD54615F1B10761C00409778 /* ClassCell.m in Sources */,
 				FD9958E71B131794005892DB /* unzip.c in Sources */,
@@ -1172,6 +1181,7 @@
 				FD8C40E61B0C6D8200948B6C /* CheckSuccessViewController.m in Sources */,
 				FDA0C2641B1463C000900F49 /* ScoreDetailViewController.m in Sources */,
 				FDA0C2541B1412AA00900F49 /* SDWebImageDecoder.m in Sources */,
+				FDBA32F51B1C390800C02BF8 /* Score_Point3_Footer_View.m in Sources */,
 				FDD4044B1B04972D00DE2E84 /* CustomProgressView.m in Sources */,
 				FDA0C2591B1412AA00900F49 /* UIImageView+WebCache.m in Sources */,
 				FDA25E1B1B0DD98D00F35545 /* RecordManager.m in Sources */,
@@ -1192,13 +1202,12 @@
 				FD9958E61B131794005892DB /* mztools.c in Sources */,
 				FDA25E161B0DC31900F35545 /* CheckKeyWordViewController.m in Sources */,
 				FDD404401B04952400DE2E84 /* TopicMainViewController.m in Sources */,
-				FD8453B71B15A04300B1E84B /* section_HeadView.m in Sources */,
+				FDBA32F11B1C38E600C02BF8 /* Score_Point3_Cell.m in Sources */,
 				FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */,
 				FD97AFB41B17020800C45A2C /* PractiseCell.m in Sources */,
 				FDA0C2531B1412AA00900F49 /* SDImageCache.m in Sources */,
 				FD9958E91B131794005892DB /* ZipArchive.m in Sources */,
 				FDA0C25F1B14568900900F49 /* CheckScoreViewController.m in Sources */,
-				FD8453AB1B1593BE00B1E84B /* ScorePoint_3_Cell.m in Sources */,
 				FDD4043B1B04943000DE2E84 /* TopicParentsViewController.m in Sources */,
 				FDA0C2561B1412AA00900F49 /* SDWebImageManager.m in Sources */,
 				FDD4044E1B04972D00DE2E84 /* TopicCell.m in Sources */,
@@ -1210,6 +1219,7 @@
 				FD5461541B10676700409778 /* TPCPersonCenterViewController.m in Sources */,
 				FD99590E1B1328FB005892DB /* AFURLRequestSerialization.m in Sources */,
 				FD9957E01B12BC1E005892DB /* ClassIntroduceViewController.m in Sources */,
+				FDBA32EB1B1C389200C02BF8 /* Score_Point3_Section_View.m in Sources */,
 				FD9959091B1328FB005892DB /* AFHTTPRequestOperationManager.m in Sources */,
 				FD9959101B1328FB005892DB /* AFURLSessionManager.m in Sources */,
 				FDA0C2571B1412AA00900F49 /* SDWebImagePrefetcher.m in Sources */,

@@ -7,13 +7,19 @@
 //
 
 #import "ScoreDetailViewController.h"
-#import "ScoreMenuCell.h"
-#import "ScorePoint_3_Cell.h"
+#import "ScoreMenuCell.h" // point1 2 cell
+//#import "ScorePoint_3_Cell.h"
 
 #import "TableView_headView.h"
-#import "TableView_headView_commited.h"
-#import "section_HeadView.h"
+//#import "TableView_headView_commited.h"
+//#import "section_HeadView.h"
 #import "AudioPlayer.h"
+
+//#import "Score_Footer_View.h"
+#import "Score_Point3_Cell.h"
+#import "Score_Point3_Footer_View.h"
+#import "Score_Point3_Section_View.h"
+#import "Score_Point3_TableHeaderView_commited.h"
 
 @interface ScoreDetailViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -30,15 +36,14 @@
     NSInteger _cellHeight_point2;
     NSInteger _cellHeight_point1;
     
-    NSMutableArray *_sectionViewArray;
     NSArray *questionArray;
-    
-    TableView_headView *_point_3_tab_headView;
-    TableView_headView_commited *_point_3_tab_headView_commited;
-    section_HeadView *_point_3_section_headView;
-//    UIView *_point_3_section_headView_commited;
-    
+    NSMutableArray *_point3_section_array;
+    NSMutableArray *_point3_footer_array;
+
+    TableView_headView *_point3_tableHeaderView;// 未提交状态
+    Score_Point3_TableHeaderView_commited *_point3_TableHeaderView_commited;// 提交状态
     AudioPlayer *_audioPlayerManager;
+    
 }
 @end
 
@@ -53,6 +58,10 @@
 #define kPoint_3_sectionHeight 60
 #define kAudioButtonTag 7777
 
+#define kPoint3_Section_Tag 888
+#define kPoint3_Footer_Tag 999
+
+#define kPoint3_Section_BackBtn_Tag 500
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,35 +70,103 @@
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"My Travel"];
-    
-//    [self createPoint_3SectionHeadView];
-//    [self createPoint_3SectionHeadView_commited];
-    [self createPoint_3TabHeadView];
-    [self createPoint_3TabHeadView_commited];
+
+    [self createPoint_3TabHeadView];// 未提交头视图
     [self createPlayer];
     
     _commit = NO;
+    _openIndex = -1;
     questionArray =  @[@"Should students travel abroad to broaden their horizons?",@"Should students travel abroad to broaden their horizons?Should students travel abroad to broaden their horizons Should students travel abroad to broaden their horizons",@"Should students travel abroad to broaden their horizons?Should students travel abroad to broaden their horizons?Should students travel abroad to broaden their horizons?Should students travel abroad to broaden their horizons?Should students travel abroad to broaden their horizons?"];
     
-    _sectionViewArray = [[NSMutableArray alloc]init];
-    
+    _point3_section_array = [[NSMutableArray alloc]init];
+    _point3_footer_array = [[NSMutableArray alloc]init];
+
     for (int i = 0; i < questionArray.count; i ++)
     {
-        [_sectionViewArray addObject:[self createPoint_3SectionHeadViewWithString:[questionArray objectAtIndex:i] andTAg:i+kPoint_3_sectionViewTag]];
+        [_point3_section_array addObject:[self create_point3_section_view_Tag:i andInfoDict:nil]];
+        [_point3_footer_array addObject:[self create_point3_footer_view_Tag:i]];
     }
-    
+   
     [self uiConfig];
+    
+    _point3_TableHeaderView_commited = [[[NSBundle mainBundle]loadNibNamed:@"Score_Point3_TableHeaderView_commited" owner:self options:0] lastObject];
+    [_point3_TableHeaderView_commited.backBtn addTarget:self action:@selector(openTeacherReview:) forControlEvents:UIControlEventTouchUpInside];
+
+    
     UITableView *point_3_tableV = (UITableView *)[self.view viewWithTag:kTableViewTag+2];
     if (_commit)
     {
-        point_3_tableV.tableHeaderView = _point_3_tab_headView_commited;
+        point_3_tableV.tableHeaderView = _point3_TableHeaderView_commited;
     }
     else
     {
-        point_3_tableV.tableHeaderView = _point_3_tab_headView;
+        point_3_tableV.tableHeaderView = _point3_tableHeaderView;
     }
+    
 }
 
+
+- (void)openTeacherReview:(UIButton *)btn
+{
+    // 展开 老师总评价
+    UITableView *point_3_tableV = (UITableView *)[self.view viewWithTag:kTableViewTag+2];
+
+    if (_commit)
+    {
+        
+    }
+    
+}
+
+#pragma mark - 创建区头视图
+- (Score_Point3_Section_View *)create_point3_section_view_Tag:(NSInteger)viewTag andInfoDict:(NSDictionary *)dict
+{
+    // 计算文字大小
+    NSString *text = [questionArray objectAtIndex:viewTag];
+    CGRect rect = [self getRectWithText:text Width:(kScreentWidth-30) FontSize:12];
+    
+    Score_Point3_Section_View *sectionView = [[[NSBundle mainBundle]loadNibNamed:@"Score_Point3_Section_View" owner:self options:0] lastObject];
+    sectionView.tag = viewTag+kPoint3_Section_Tag;
+    sectionView.titleLAbel.text = text;
+    if (_commit)
+    {
+        sectionView.reviewImgV.hidden = NO;
+    }
+    else
+    {
+        sectionView.desLabel.hidden = NO;
+    }
+    if (rect.size.height>30)
+    {
+        [sectionView setFrame:CGRectMake(0, 0, kScreentWidth, 60+(rect.size.height-35))];
+    }
+    else
+    {
+        [sectionView setFrame:CGRectMake(0, 0, kScreentWidth, 60)];
+    }
+    
+    sectionView.backButton.tag = kPoint3_Section_BackBtn_Tag + viewTag;
+    [sectionView.backButton addTarget:self action:@selector(openSelectedCell:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return sectionView;
+}
+
+#pragma mark - 创建区尾部视图
+- (Score_Point3_Footer_View *)create_point3_footer_view_Tag:(NSInteger)viewTag
+{
+    Score_Point3_Footer_View *sectionView = [[[NSBundle mainBundle]loadNibNamed:@"Score_Point3_Footer_View" owner:self options:0] lastObject];
+    sectionView.tag = viewTag+kPoint3_Footer_Tag;
+    [sectionView setFrame:CGRectMake(0, 0, kScreentWidth, 70)];
+    
+    /*
+         此处需根据老师的反馈 音频 或者 文字 来改变控件的frame
+     */
+
+    
+    return sectionView;
+}
+
+#pragma mark - UI配置
 - (void)uiConfig
 {
     // 顶部 关卡
@@ -136,6 +213,8 @@
     }
 }
 
+#pragma mark - 列表控件 delegate
+#pragma mark - - ROW 个数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView.tag-kTableViewTag == 2)
@@ -144,17 +223,17 @@
     }
     return 6;
 }
-
+#pragma mark - - Section 个数
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (tableView.tag == kTableViewTag+2)
     {
-        return _sectionViewArray.count;
+        return _point3_section_array.count;
     }
-    
     return 1;
 }
 
+#pragma mark - ROW -- Height
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag-kTableViewTag == 2)
@@ -162,20 +241,17 @@
         if (_commit)
         {
             // 提交后的 -- 待完善
-            return 75;
+            if (_openIndex == indexPath.section && _open)
+            {
+                return 60;
+            }
+            return 0;
         }
         else
         {
-            if (_openIndex == indexPath.section)
+            if (_open&& _openIndex == indexPath.section)
             {
-                if (_open)
-                {
-                    // 此处需要根据现实的富文本大小判断高度 ---待完善
-                    CGRect rect = [self getRectWithText:[questionArray objectAtIndex:indexPath.section] Width:kScreentWidth-20 FontSize:12];
-                    NSInteger hhh = (rect.size.height>60)?rect.size.height-60:0;
-                    return 120+hhh;
-                }
-                return 0;
+                return 60;
             }
             return 0;
         }
@@ -184,54 +260,46 @@
     return 75;
 }
 
+#pragma mark - - Section HeaderView --- Height
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (tableView.tag - kTableViewTag == 2)
+    if (tableView.tag == kTableViewTag+2)
     {
-        if (_commit)
-        {
-            // 提交后的 -- 待完善
-            return 75;
-        }
-        else
-        {
-            if (_openIndex == section)
-            {
-                if (_open)
-                {
-                    return 0;
-                }
-                return ((UIView *)[_sectionViewArray objectAtIndex:section]).frame.size.height;
-            }
-            return ((UIView *)[_sectionViewArray objectAtIndex:section]).frame.size.height;
-        }
+        return ((UIView *)[_point3_section_array objectAtIndex:section]).frame.size.height;
     }
     return 0;
 }
-
+#pragma mark - - SectionHeaderView  --- View
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     // 头视图
-    if (tableView.tag - kTableViewTag == 2)
+    if (tableView.tag == kTableViewTag+2)
     {
-        /*
-         关卡3 此处有两种情况 1、未提交：只有问题 2、提交：问题 老师的回答
-         */
+        Score_Point3_Section_View *view = [_point3_section_array objectAtIndex:section];
         if (_commit)
         {
-            // 已提交
-            
+            view.reviewImgV.hidden = NO;
+            view.desLabel.hidden = YES;
         }
         else
         {
-           // 未提交
-            return [_sectionViewArray objectAtIndex:section];
+            if (_openIndex == section )
+            {
+                view.desLabel.hidden = YES;
+            }
+            else
+            {
+                view.desLabel.hidden = NO;
+            }
+            view.reviewImgV.hidden = YES;
         }
+        
+        return view;
     }
     return nil;
 }
 
-#pragma mark - 绘制cell
+#pragma mark - - 绘制cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (tableView.tag)
@@ -245,7 +313,6 @@
             {
                 cell = [[[NSBundle mainBundle]loadNibNamed:@"ScoreMenuCell" owner:self options:0] lastObject];
             }
-            
             return cell;
         }
             break;
@@ -265,21 +332,21 @@
         case kTableViewTag+2:
         {
             // point 3 问答 此处cell 可折叠
-            static NSString *cellId = @"sucCell";
-            ScorePoint_3_Cell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+            static NSString *cellId = @"Score_Point3_Cell";
+            
+            Score_Point3_Cell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
             if (cell == nil)
             {
-                cell = [[[NSBundle mainBundle]loadNibNamed:@"ScorePoint_3_Cell" owner:self options:0] lastObject];
+                cell = [[[NSBundle mainBundle]loadNibNamed:@"Score_Point3_Cell" owner:self options:0] lastObject];
             }
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.controlsColor = _pointColor;
-            cell.questionLabel.numberOfLines = 0;
-            cell.questionLabel.textColor = _textColor;
-            cell.questionLabel.text = [questionArray objectAtIndex:indexPath.section];
-            
-            cell.audioButton.tag = indexPath.section + kAudioButtonTag;
-            [cell.audioButton addTarget:self action:@selector(playMyAnswer:) forControlEvents:UIControlEventTouchUpInside];
-            
+            if (_openIndex == indexPath.section && _open)
+            {
+                //
+            }
+            else
+            {
+                cell.hidden = YES;
+            }
             return cell;
         }
             break;
@@ -289,12 +356,17 @@
     return nil;
 }
 
+#pragma mark - - Section Footer ----- View
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     if (tableView.tag == kTableViewTag+2)
     {
         if (_commit)
         {
+            if (_open && _openIndex== section)
+            {
+                return [_point3_footer_array objectAtIndex:section];
+            }
             return nil;
         }
         else
@@ -307,13 +379,18 @@
     return nil;
 }
 
+#pragma mark - - Section Footer ----- height
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     if (tableView.tag == kTableViewTag+2)
     {
         if (_commit)
         {
-            return 1;
+            if (_openIndex==section &&_open)
+            {
+                return 70;
+            }
+            return 0;
         }
         else
         {
@@ -322,6 +399,7 @@
     }
     return 0.1;
 }
+
 
 - (void)playMyAnswer:(UIButton *)btn
 {
@@ -389,76 +467,35 @@
 #pragma mark - 创建未提交头视图
 - (void)createPoint_3TabHeadView
 {
-    _point_3_tab_headView = [[[NSBundle mainBundle]loadNibNamed:@"TableView_headView" owner:self options:0] lastObject];
-    _point_3_tab_headView.titleLabel.textColor = _backColor;
-    [_point_3_tab_headView.commitButton setBackgroundColor:_backColor];
-    [_point_3_tab_headView.commitButton addTarget:self action:@selector(commitToTeacher:) forControlEvents:UIControlEventTouchUpInside];
+    _point3_tableHeaderView = [[[NSBundle mainBundle]loadNibNamed:@"TableView_headView" owner:self options:0] lastObject];
+    _point3_tableHeaderView.titleLabel.textColor = _backColor;
+    [_point3_tableHeaderView.commitButton setBackgroundColor:_backColor];
+    [_point3_tableHeaderView.commitButton addTarget:self action:@selector(commitToTeacher:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+#pragma mark - 提交按钮
 - (void)commitToTeacher:(UIButton *)btn
 {
     // 提交给老师 从本地获取数据 压缩zip包 上传服务端
 }
 
-#pragma mark - 创建未提交区视图
-- (UIView *)createPoint_3SectionHeadViewWithString:(NSString *)text andTAg:(NSInteger)tag
-{
-    NSInteger width = kScreentWidth-20;
-    NSInteger fontSize = 12;
-    CGRect rect = [self getRectWithText:text Width:width FontSize:fontSize];
-    // 头视图
-    UIView *point_3_secView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, kPoint_3_sectionHeight+(rect.size.height>25?rect.size.height-25:0))];
-    point_3_secView.backgroundColor = [UIColor whiteColor];
-    point_3_secView.tag = tag;
-    // 问题
-    UILabel *questionLab = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, kScreentWidth-20, point_3_secView.frame.size.height-35)];
-    questionLab.text = text;
-    questionLab.textAlignment = NSTextAlignmentLeft;
-    questionLab.numberOfLines = 0;
-    questionLab.font = [UIFont systemFontOfSize:fontSize];
-    [point_3_secView addSubview:questionLab];
-    // 提示
-    UILabel *tipLab = [[UILabel alloc]initWithFrame:CGRectMake(10, point_3_secView.frame.size.height-20, kScreentWidth-20, 15)];
-    tipLab.text = @"点击产看自己对此问题的回答";
-    tipLab.textAlignment = NSTextAlignmentLeft;
-    tipLab.font = [UIFont systemFontOfSize:fontSize-2];
-    [point_3_secView addSubview:tipLab];
-    point_3_secView.userInteractionEnabled = YES;
-    
-    questionLab.textColor = _textColor;
-    tipLab.textColor = _textColor;
-    // 添加手势 点击展开
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openCell:)];
-    [point_3_secView addGestureRecognizer:tap];
-    
-    return point_3_secView;
-}
-
+#pragma mark - 计算文字大小
 - (CGRect )getRectWithText:(NSString *)text Width:(NSInteger)width FontSize:(NSInteger)fontSize
 {
     CGRect rect = [text boundingRectWithSize:CGSizeMake(width, 99999) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont 							systemFontOfSize:fontSize]} context:nil];
     return  rect;
 }
 
-- (void)openCell:(UITapGestureRecognizer *)tap
+#pragma mark - 展开选中的cell
+- (void)openSelectedCell:(UIButton *)btn
 {
     _open = YES;
-    _openIndex = tap.view.tag-kPoint_3_sectionViewTag;
+    _openIndex = btn.tag-kPoint3_Section_BackBtn_Tag;
+    
     UITableView *tabV = (UITableView *)[self.view viewWithTag:kTableViewTag+2];
     [tabV reloadData];
 }
 
-#pragma mark - 创建老师反馈头视图
-- (void)createPoint_3TabHeadView_commited
-{
-    _point_3_tab_headView_commited = [[[NSBundle mainBundle]loadNibNamed:@"TableView_headView_commited" owner:self options:0] lastObject];
-}
-
-#pragma mark - 创建老师反馈区视图
-- (void)createPoint_3SectionHeadView_commited
-{
-    
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

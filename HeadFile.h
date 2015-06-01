@@ -36,11 +36,17 @@
 // 0~~60
 #define kBad_Score_Color [UIColor colorWithRed:255/255.0 green:63/255.0 blue:37/255.0 alpha:1]
 
+// 闯关 part按钮颜色
+#define kPart_Button_Color [UIColor colorWithRed:35/255.0 green:222/255.0 blue:191/255.0 alpha:1]
+// 闯关流程 底色
+#define kPart_Back_Color [UIColor colorWithRed:128/255.0 green:230/255.0 blue:209/255.0 alpha:1]
+
+// 文本颜色
+#define kText_Color [UIColor colorWithWhite:135/255.0 alpha:1]
 
 #define kBaseIPUrl @"http://114.215.172.72:80"
 
 #define kTopicListUrl @"/yasi/examtheme/queryClassTypeInfo.do"
-
 
 
 #endif
