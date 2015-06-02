@@ -256,7 +256,8 @@
 {
     // 录音完成 判断进行下一题 或下一关卡
     // 目前测界面逻辑 手动连接
-    
+    _tipLabel.text = @"准备下一题~~~";
+    [self TextAnimation];
     [self answerEnd];
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(prepareTestQuestion) userInfo:nil repeats:NO];
 }
