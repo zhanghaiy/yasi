@@ -20,6 +20,15 @@
     return self;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self drawShapeLayer];
+    }
+    return self;
+}
+
 - (void)drawShapeLayer
 {
     CAShapeLayer *shapeLayer = [[CAShapeLayer alloc] init];

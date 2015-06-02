@@ -8,6 +8,8 @@
 
 #import "TopicParentsViewController.h"
 
+#import "CircleProgressView.h"
+
 @interface CheckTestViewController : TopicParentsViewController
 @property (weak, nonatomic) IBOutlet UIView *topBackView;
 @property (weak, nonatomic) IBOutlet UILabel *sumTimeLabel;
@@ -18,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
 @property (weak, nonatomic) IBOutlet UIView *stuBackView;
 @property (weak, nonatomic) IBOutlet UIButton *stuHeadBtn;
+@property (strong, nonatomic) IBOutlet CircleProgressView *circleProgressView;
 @property (weak, nonatomic) IBOutlet UIButton *followBtn;
+- (IBAction)followButtonClicked:(id)sender;
 
 @end
