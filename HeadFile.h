@@ -44,9 +44,11 @@
 // 文本颜色
 #define kText_Color [UIColor colorWithWhite:135/255.0 alpha:1]
 
+// 阿里云
 #define kBaseIPUrl @"http://114.215.172.72:80"
-
+// 主页 topic 信息
 #define kTopicListUrl @"/yasi/examtheme/queryClassTypeInfo.do"
-
+// 模考 参数 topid 
+#define kTestUrl @"/yasi/mockquestion/getMockQuestion.do"
 
 #endif

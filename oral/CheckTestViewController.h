@@ -9,5 +9,15 @@
 #import "TopicParentsViewController.h"
 
 @interface CheckTestViewController : TopicParentsViewController
+@property (weak, nonatomic) IBOutlet UIView *topBackView;
+@property (weak, nonatomic) IBOutlet UILabel *sumTimeLabel;
+@property (weak, nonatomic) IBOutlet UIView *teaBackView;
+@property (weak, nonatomic) IBOutlet UIImageView *teaCircleImageView;
+@property (weak, nonatomic) IBOutlet UILabel *teaDesLabel;
+@property (weak, nonatomic) IBOutlet UIButton *teaHeadBtn;
+@property (weak, nonatomic) IBOutlet UILabel *tipLabel;
+@property (weak, nonatomic) IBOutlet UIView *stuBackView;
+@property (weak, nonatomic) IBOutlet UIButton *stuHeadBtn;
+@property (weak, nonatomic) IBOutlet UIButton *followBtn;
 
 @end

@@ -17,10 +17,14 @@
 #import "NetManager.h"
 #import "ZipManager.h"
 
+#import "CheckTestViewController.h"
+
+
 @interface TPCCheckpointViewController ()<UIScrollViewDelegate>
 {
     UIView *_loadingView;
     NSInteger _markPart;
+    BOOL _requestTest_zipUrl;
 }
 @end
 
@@ -190,52 +194,118 @@
 
 
 #pragma mark - 网络请求
+#pragma mark - 下载闯关资源
 - (void)requestTopicZipResource
 {
     NSString *zipfileurl = [_topicDict objectForKey:@"zipfileurl"];
     NSLog(@"%@",zipfileurl);
-    NetManager *netManager = [[NetManager alloc]init];
-    netManager.target = self;
-    netManager.action = @selector(requestFinished:);
-    [netManager netGetUrl:zipfileurl];
+    [self startRequestURL:zipfileurl andCallBackAction:@selector(requestPartZipFinished:)];
 }
 
-- (void)requestFinished:(NetManager *)netManager
+#pragma mark - 下载模考资源
+- (void)requestTestZip
+{
+    NSString *testZipUrl = [NSString stringWithFormat:@"%@%@?topid=%@",kBaseIPUrl,kTestUrl,[_topicDict objectForKey:@"id"]];
+    NSLog(@"%@",testZipUrl);
+    [self startRequestURL:testZipUrl andCallBackAction:@selector(requestTestZipFinished:)];
+}
+
+#pragma mark - 开始请求
+- (void)startRequestURL:(NSString *)urlString andCallBackAction:(SEL)action
+{
+    NetManager *netManager = [[NetManager alloc]init];
+    netManager.target = self;
+    netManager.action = action;
+    [netManager netGetUrl:urlString];
+}
+
+#pragma mark - 请求part zip 包
+- (void)requestPartZipFinished:(NetManager *)netManager
 {
     if (netManager.success)
     {
-        //成功
+        //zip请求成功
         if (netManager.downLoadData)
         {
             // zip保存本地
             NSString *zipPath = [NSString stringWithFormat:@"%@/reqource.zip",[self getLocalSavePath]];
-            if ([self filePathExit:[self getLocalSavePath]]==NO)
+           BOOL success =  [self unZipToLocalData:netManager.downLoadData WithPath:zipPath andFolder:@"topicResource"];
+            if (success)
             {
-                [self createPath:[self getLocalSavePath]];
-            }
-            BOOL saveSuccess = [netManager.downLoadData writeToFile:zipPath atomically:YES];
-            if (saveSuccess)
-            {
-                // 保存成功 解压
-                NSString *toPath = [NSString stringWithFormat:@"%@/topicResource",[self getLocalSavePath]];
-                NSLog(@"~~~~~%@~~~~~~~",[self getLocalSavePath]);
-                [ZipManager unzipFileFromPath:zipPath ToPath:toPath];
                 // 跳转页面 进入闯关
                 [self beginPointWithPointCounts:_markPart];
             }
             else
             {
-                // 保存失败
+                // 保存失败 重新获取
             }
         }
-        NSLog(@"");
     }
     else
     {
-        NSLog(@"");
+        // zip请求失败
+        NSLog(@"zip请求失败");
     }
 }
 
+#pragma mark - 请求 test zipUrl回调
+- (BOOL)unZipToLocalData:(NSData*)data WithPath:(NSString *)path andFolder:(NSString *)folderName
+{
+    if ([self filePathExit:[self getLocalSavePath]]==NO)
+    {
+        [self createPath:[self getLocalSavePath]];
+    }
+    BOOL saveSuccess = [data writeToFile:path atomically:YES];
+    if (saveSuccess)
+    {
+        // 保存成功 解压
+        NSString *toPath = [NSString stringWithFormat:@"%@/%@",[self getLocalSavePath],folderName];
+        NSLog(@"~~~~~%@~~~~~~~",[self getLocalSavePath]);
+        [ZipManager unzipFileFromPath:path ToPath:toPath];
+        return YES;
+    }
+    else
+    {
+        // 保存失败
+        return NO;
+    }
+}
+#pragma mark - 请求 test zip包回调
+- (void)requestTestZipFinished:(NetManager *)netRequest
+{
+    if (_requestTest_zipUrl)
+    {
+        // 请求zip路径
+        if (netRequest.success)
+        {
+            // 成功 ---> zip
+            [self requestTestZip];
+        }
+        else
+        {
+            // 失败
+        }
+    }
+    else
+    {
+       // 请求zip包
+        if (netRequest.success)
+        {
+            // zip包下载成功
+            NSString *testZip = [NSString stringWithFormat:@"%@/test.zip",[self getLocalSavePath]];
+            BOOL success = [self unZipToLocalData:netRequest.downLoadData WithPath:testZip andFolder:@"topicTest"];
+            if (success)
+            {
+                // 进入模考
+            }
+        }
+        else
+        {
+           // zip包下载失败
+        }
+    }
+    
+}
 
 
 #pragma mark - 路径是否存在
@@ -315,6 +385,9 @@
 - (IBAction)testButtonClicked:(id)sender
 {
     //
+    CheckTestViewController *testVC = [[CheckTestViewController alloc]initWithNibName:@"CheckTestViewController" bundle:nil];
+    [self.navigationController pushViewController:testVC animated:YES];
+    
 }
 
 - (IBAction)practiseBook:(id)sender
