@@ -67,6 +67,12 @@
 		FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6244A61B0585820037836E /* CheckFollowViewController.m */; };
 		FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A71B0585820037836E /* CheckFollowViewController.xib */; };
 		FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */; };
+		FD83055A1B1E9993001A3DF5 /* mockinfo.json in Resources */ = {isa = PBXBuildFile; fileRef = FD8305541B1E9993001A3DF5 /* mockinfo.json */; };
+		FD83055B1B1E9993001A3DF5 /* Question_3224.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD8305551B1E9993001A3DF5 /* Question_3224.mp3 */; };
+		FD83055C1B1E9993001A3DF5 /* Question_3241.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD8305561B1E9993001A3DF5 /* Question_3241.mp3 */; };
+		FD83055D1B1E9993001A3DF5 /* Question_3247.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD8305571B1E9993001A3DF5 /* Question_3247.mp3 */; };
+		FD83055E1B1E9993001A3DF5 /* Question_3251.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD8305581B1E9993001A3DF5 /* Question_3251.mp3 */; };
+		FD83055F1B1E9993001A3DF5 /* Question_3256.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD8305591B1E9993001A3DF5 /* Question_3256.mp3 */; };
 		FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */; };
 		FD8453A51B155D3A00B1E84B /* ScoreMenuTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */; };
 		FD8453B21B15A01E00B1E84B /* TableView_headView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453B11B15A01E00B1E84B /* TableView_headView.m */; };
@@ -240,6 +246,12 @@
 		FD6244A71B0585820037836E /* CheckFollowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckFollowViewController.xib; sourceTree = "<group>"; };
 		FD6B80D21B1843FF00F9562C /* NSString+CalculateStringSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CalculateStringSize.h"; sourceTree = "<group>"; };
 		FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CalculateStringSize.m"; sourceTree = "<group>"; };
+		FD8305541B1E9993001A3DF5 /* mockinfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mockinfo.json; sourceTree = "<group>"; };
+		FD8305551B1E9993001A3DF5 /* Question_3224.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3224.mp3; sourceTree = "<group>"; };
+		FD8305561B1E9993001A3DF5 /* Question_3241.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3241.mp3; sourceTree = "<group>"; };
+		FD8305571B1E9993001A3DF5 /* Question_3247.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3247.mp3; sourceTree = "<group>"; };
+		FD8305581B1E9993001A3DF5 /* Question_3251.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3251.mp3; sourceTree = "<group>"; };
+		FD8305591B1E9993001A3DF5 /* Question_3256.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3256.mp3; sourceTree = "<group>"; };
 		FD8453A11B155D2B00B1E84B /* ScoreMenuTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreMenuTestView.h; sourceTree = "<group>"; };
 		FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreMenuTestView.m; sourceTree = "<group>"; };
 		FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreMenuTestView.xib; sourceTree = "<group>"; };
@@ -601,6 +613,19 @@
 			name = Category;
 			sourceTree = "<group>";
 		};
+		FD8305531B1E9993001A3DF5 /* temp 2 */ = {
+			isa = PBXGroup;
+			children = (
+				FD8305541B1E9993001A3DF5 /* mockinfo.json */,
+				FD8305551B1E9993001A3DF5 /* Question_3224.mp3 */,
+				FD8305561B1E9993001A3DF5 /* Question_3241.mp3 */,
+				FD8305571B1E9993001A3DF5 /* Question_3247.mp3 */,
+				FD8305581B1E9993001A3DF5 /* Question_3251.mp3 */,
+				FD8305591B1E9993001A3DF5 /* Question_3256.mp3 */,
+			);
+			path = "temp 2";
+			sourceTree = "<group>";
+		};
 		FD8453A61B15933C00B1E84B /* 闯关成绩单 */ = {
 			isa = PBXGroup;
 			children = (
@@ -933,6 +958,7 @@
 		FDD404101B0492F900DE2E84 /* oral */ = {
 			isa = PBXGroup;
 			children = (
+				FD8305531B1E9993001A3DF5 /* temp 2 */,
 				FD6B80CE1B18434400F9562C /* Category */,
 				FD9958F01B1328B7005892DB /* Net */,
 				FD596D8D1B09E42100D6DE7B /* temp 3 */,
@@ -1088,21 +1114,25 @@
 				FD9957DC1B12BC02005892DB /* ClassDetailViewController.xib in Resources */,
 				FDD4044D1B04972D00DE2E84 /* RightMainCell.xib in Resources */,
 				FD596DCA1B09E42100D6DE7B /* Question_3246.mp3 in Resources */,
+				FD83055B1B1E9993001A3DF5 /* Question_3224.mp3 in Resources */,
 				FD8C40E71B0C6D8200948B6C /* CheckSuccessViewController.xib in Resources */,
 				FDA0C26A1B14719A00900F49 /* ScoreMenuCell.xib in Resources */,
 				FD596DCE1B09E42100D6DE7B /* Question_3250.mp3 in Resources */,
 				FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */,
+				FD83055F1B1E9993001A3DF5 /* Question_3256.mp3 in Resources */,
 				FDA25E171B0DC31900F35545 /* CheckKeyWordViewController.xib in Resources */,
 				FDD4044F1B04972D00DE2E84 /* TopicCell.xib in Resources */,
 				FD596DBF1B09E42100D6DE7B /* Question_3235.mp3 in Resources */,
 				FD596DD21B09E42100D6DE7B /* Question_3254.mp3 in Resources */,
 				FD596DC61B09E42100D6DE7B /* Question_3242.mp3 in Resources */,
+				FD83055A1B1E9993001A3DF5 /* mockinfo.json in Resources */,
 				FD5461451B105D7700409778 /* FooterView.xib in Resources */,
 				FD596DD01B09E42100D6DE7B /* Question_3252.mp3 in Resources */,
 				FDBA32F21B1C38E600C02BF8 /* Score_Point3_Cell.xib in Resources */,
 				FD596DB21B09E42100D6DE7B /* 349207.png in Resources */,
 				FD5461551B10676700409778 /* TPCPersonCenterViewController.xib in Resources */,
 				FD596DBB1B09E42100D6DE7B /* Question_3231.mp3 in Resources */,
+				FD83055D1B1E9993001A3DF5 /* Question_3247.mp3 in Resources */,
 				FDD404591B049B8400DE2E84 /* topic_small.png in Resources */,
 				FD9957E31B12C47B005892DB /* 33.jpg in Resources */,
 				FD8C40EC1B0C6F3A00948B6C /* CheckBlankViewController.xib in Resources */,
@@ -1124,6 +1154,7 @@
 				FD596DB61B09E42100D6DE7B /* Question_3226.mp3 in Resources */,
 				FDD404551B049B5B00DE2E84 /* topic1.png in Resources */,
 				FD596DC71B09E42100D6DE7B /* Question_3243.mp3 in Resources */,
+				FD83055E1B1E9993001A3DF5 /* Question_3251.mp3 in Resources */,
 				FD8C40F11B0C6FAB00948B6C /* CheckAskViewController.xib in Resources */,
 				FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */,
 				FD596DC41B09E42100D6DE7B /* Question_3240.mp3 in Resources */,
@@ -1142,6 +1173,7 @@
 				FD97AFA61B16BB8A00C45A2C /* ScoreTestMenuViewController.xib in Resources */,
 				FD596DB91B09E42100D6DE7B /* Question_3229.mp3 in Resources */,
 				FD596DC51B09E42100D6DE7B /* Question_3241.mp3 in Resources */,
+				FD83055C1B1E9993001A3DF5 /* Question_3241.mp3 in Resources */,
 				FD596DB31B09E42100D6DE7B /* info.json in Resources */,
 				FD596DB71B09E42100D6DE7B /* Question_3227.mp3 in Resources */,
 				FD5461341B1045B800409778 /* SuccessCell.xib in Resources */,

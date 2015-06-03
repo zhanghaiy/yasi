@@ -325,9 +325,6 @@
     [self stopReduceTimer];
     _stuTitleLabel.text = @"请跟读";
     [self textAnimationInView:_stuTitleLabel];
-//    [UIView animateWithDuration:1 animations:^{
-//        _stuTitleLabel.text = @"请跟读";
-//    }];
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(stuImageBrite) userInfo:nil repeats:NO];
 }
 #pragma mark ---头像-->亮

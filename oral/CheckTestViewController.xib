@@ -16,6 +16,7 @@
                 <outlet property="teaCircleImageView" destination="TA2-nh-xzw" id="VzL-r0-4CE"/>
                 <outlet property="teaDesLabel" destination="HQb-5P-adA" id="29F-4l-bQy"/>
                 <outlet property="teaHeadBtn" destination="hgn-tb-edv" id="LzI-oI-CJB"/>
+                <outlet property="tea_show_btn" destination="jld-tc-zpb" id="AfG-AJ-tSo"/>
                 <outlet property="tipLabel" destination="pY6-fb-VtI" id="M7g-w0-5Re"/>
                 <outlet property="topBackView" destination="2PA-rb-eIp" id="n8y-6f-Jlh"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -47,7 +48,7 @@
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6v1-mM-ncs">
                     <rect key="frame" x="0.0" y="131" width="375" height="170"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQb-5P-adA">
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQb-5P-adA">
                             <rect key="frame" x="75" y="15" width="280" height="140"/>
                             <string key="text">Translation Translation Trans lationTran slation Transl ation Transl ationTranslatio nTrans latio nTransl ation Trans lation Translation Translation Trans lationTran slation Transl ation Transl ationTranslatio nTrans latio nTransl ation Trans lation</string>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -62,6 +63,20 @@
                             <state key="normal" backgroundImage="teacher_normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jld-tc-zpb">
+                            <rect key="frame" x="75" y="15" width="280" height="140"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="点击显示问题">
+                                <color key="titleColor" red="0.0" green="0.66990064540000005" blue="0.6258930345" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="showQuestionText:" destination="-1" eventType="touchUpInside" id="PNo-ey-QeS"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>

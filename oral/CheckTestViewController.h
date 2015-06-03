@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *sumTimeLabel;
 @property (weak, nonatomic) IBOutlet UIView *teaBackView;
 @property (weak, nonatomic) IBOutlet UIImageView *teaCircleImageView;
+@property (strong, nonatomic) IBOutlet UIButton *tea_show_btn;
+- (IBAction)showQuestionText:(id)sender;
 @property (weak, nonatomic) IBOutlet UILabel *teaDesLabel;
 @property (weak, nonatomic) IBOutlet UIButton *teaHeadBtn;
 @property (weak, nonatomic) IBOutlet UILabel *tipLabel;
