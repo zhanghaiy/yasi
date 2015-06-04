@@ -19,7 +19,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *middleMarkBtn;
 @property (strong, nonatomic) IBOutlet UIButton *rightMarkBtn;
 @property (weak, nonatomic) IBOutlet UIButton *startTestBtn;
-@property (weak, nonatomic) IBOutlet UIView *partBackView;
 @property (strong, nonatomic) IBOutlet UIScrollView *partScrollView;
 - (IBAction)testButtonClicked:(id)sender;
 - (IBAction)practiseBook:(id)sender;

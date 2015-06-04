@@ -24,7 +24,6 @@
 
 
 
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIButton *followAnswerButton;
 
 - (IBAction)followAnswer:(id)sender;

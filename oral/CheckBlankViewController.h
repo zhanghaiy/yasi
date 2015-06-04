@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIView *teacherView;
 @property (weak, nonatomic) IBOutlet UIImageView *teaHeadImgView;
 
-@property (weak, nonatomic) IBOutlet UIImageView *teaQuestionBackImgV;
+@property (strong, nonatomic) IBOutlet UIView *teaQuestionBackView;
 @property (weak, nonatomic) IBOutlet UILabel *teaQuestionLabel;
 
 
@@ -27,13 +27,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *stuLineLabel;
 @property (weak, nonatomic) IBOutlet UILabel *stuAnswerLabel;
 
-@property (weak, nonatomic) IBOutlet UIView *stuBottomView;
 @property (weak, nonatomic) IBOutlet UILabel *stuTimeProgressLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *stuHeadImgView;
 
 @property (weak, nonatomic) IBOutlet UIButton *stuScoreButton;
 
-@property (weak, nonatomic) IBOutlet UIView *followView;
 @property (weak, nonatomic) IBOutlet UIButton *followAnswerButton;
 
 @property (weak, nonatomic) IBOutlet UIButton *addBookButton;

@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#define KNavTopViewHeight 64
+
 /*
      所有视图父类 --> 用于自定义导航栏
  */
 @interface TopicParentsViewController : UIViewController
 {
+    UIColor *_titleTextColor;
     UIColor *_backColor;// 老师外圈颜色 顶部按钮背景色 导航条颜色
     UIColor *_timeProgressColor;// 时间进度条颜色
     UIColor *_textColor;// 文字颜色

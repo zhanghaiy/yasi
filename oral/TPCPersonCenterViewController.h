@@ -9,26 +9,22 @@
 #import "TopicParentsViewController.h"
 
 @interface TPCPersonCenterViewController : TopicParentsViewController
-@property (weak, nonatomic) IBOutlet UIView *personInfoBackView;
-@property (weak, nonatomic) IBOutlet UIImageView *personBackImgV;
-@property (weak, nonatomic) IBOutlet UIButton *personHeadButton;
-@property (weak, nonatomic) IBOutlet UIButton *sexButton;
-@property (weak, nonatomic) IBOutlet UIButton *ConstellationButton;
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *signatureLabel;
-@property (weak, nonatomic) IBOutlet UILabel *birthLabel;
-@property (weak, nonatomic) IBOutlet UILabel *loveLabel;
+@property (strong, nonatomic) IBOutlet UIView *personInfoBackView;
+@property (strong, nonatomic) IBOutlet UIImageView *personBackImgV;
+@property (strong, nonatomic) IBOutlet UIButton *personHeadButton;
+@property (strong, nonatomic) IBOutlet UIButton *sexButton;
+@property (strong, nonatomic) IBOutlet UIButton *ConstellationButton;
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *signatureLabel;
+@property (strong, nonatomic) IBOutlet UILabel *birthLabel;
+@property (strong, nonatomic) IBOutlet UILabel *loveLabel;
+@property (strong, nonatomic) IBOutlet UIButton *editButton;
 
-@property (weak, nonatomic) IBOutlet UIView *classView;
-
-@property (weak, nonatomic) IBOutlet UILabel *myClassLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *rightClassImgV;
 @property (weak, nonatomic) IBOutlet UIButton *enterClassButton;
 
-@property (weak, nonatomic) IBOutlet UIView *progressView;
-@property (weak, nonatomic) IBOutlet UILabel *progressTitleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *rightProgressImgV;
-@property (weak, nonatomic) IBOutlet UIButton *enterProgressButton;
+@property (strong, nonatomic) IBOutlet UIButton *pointProgressButton;
+
 - (IBAction)enterButtonClicked:(id)sender;
+- (IBAction)editButtonClicked:(id)sender;
 
 @end

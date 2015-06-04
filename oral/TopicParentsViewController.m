@@ -10,6 +10,7 @@
 
 #import "TPCCheckpointViewController.h"
 
+
 @interface TopicParentsViewController ()
 
 @end
@@ -21,15 +22,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    _navTopView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 44)];
+    _navTopView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, KNavTopViewHeight)];
     _navTopView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_navTopView];
     
-    _lineLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 44, kScreentWidth, 1)];
+    _lineLab = [[UILabel alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight, kScreentWidth, 1)];
     _lineLab.backgroundColor = [UIColor colorWithRed:231/255.0 green:238/255.0 blue:239/255.0 alpha:1];
     [self.view addSubview:_lineLab];
     
     
+    _titleTextColor = [UIColor colorWithWhite:91/255.0 alpha:1];
     _backColor = [UIColor colorWithRed:128/255.0 green:230/255.0 blue:209/255.0 alpha:1];
     _timeProgressColor = [UIColor colorWithRed:245/255.0 green:88/255.0 blue:62/255.0 alpha:1];
     _textColor = [UIColor colorWithWhite:135/255.0 alpha:1];
@@ -45,7 +47,7 @@
 - (void)addBackButtonWithImageName:(NSString *)imageName
 {
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setFrame:CGRectMake(0, 0, 47, 44)];
+    [backButton setFrame:CGRectMake(0, 24, 47, 44)];
     [backButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backToPrePage) forControlEvents:UIControlEventTouchUpInside];
     [self.navTopView addSubview:backButton];
@@ -54,21 +56,13 @@
 - (void)backToPrePage
 {
     [self.navigationController popViewControllerAnimated:YES];
-//    for (UIViewController *viewControllers in self.navigationController.viewControllers)
-//    {
-//        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
-//        {
-//            [self.navigationController popToViewController:viewControllers animated:YES];
-//            break;
-//        }
-//    }
 }
 
 // titleLabel
 - (void)addTitleLabelWithTitleWithTitle:(NSString *)title
 {
-    _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(60, 2, kScreentWidth-60*2, 40)];
-    _titleLab.textColor = _textColor;
+    _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(60, 26, kScreentWidth-60*2, 40)];
+    _titleLab.textColor = _titleTextColor;
     _titleLab.font = [UIFont systemFontOfSize:KOneFontSize];
     _titleLab.textAlignment = NSTextAlignmentCenter;
     _titleLab.text = title;
@@ -99,7 +93,7 @@
 
 - (BOOL)prefersStatusBarHidden
 {
-    return YES; // 返回NO表示要显示，返回YES将hiden
+    return NO; // 返回NO表示要显示，返回YES将hiden
 }
 
 - (void)didReceiveMemoryWarning {

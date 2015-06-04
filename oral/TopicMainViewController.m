@@ -29,7 +29,7 @@
 #define kTopicMainTableViewTag 555
 #define kRightTableVIewTag 556
 #define kTopicButtonTag 566
-#define kNavBarHeight 45
+#define kNavBarHeight 66
 //#define kScreentWidth [UIScreen mainScreen].bounds.size.width
 //#define kScreenHeight [UIScreen mainScreen].bounds.size.height
 #define kmainCellHeight ((kScreenHeight-kNavBarHeight)/3)
@@ -42,14 +42,10 @@
     
     _selectFromRight = NO;
     UIButton *personBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [personBtn setFrame:CGRectMake(0, 0, 35, 35)];
-    personBtn.center = self.navTopView.center;
+    [personBtn setFrame:CGRectMake((kScreentWidth-35)/2, 24+(kNavBarHeight-24-35)/2, 35, 35)];
     [personBtn setBackgroundImage:[UIImage imageNamed:@"touxiang.png"] forState:UIControlStateNormal];
     [personBtn addTarget:self action:@selector(toPersonCenter) forControlEvents:UIControlEventTouchUpInside];
     [self.navTopView addSubview:personBtn];
-    
-    // 模拟数据源
-//    _topicArray = @[@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic1.png",@"title":@"I like music",@"color":[UIColor colorWithRed:248/255.0 green:227/255.0 blue:68/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic1.png",@"title":@"I like music",@"color":[UIColor colorWithRed:248/255.0 green:227/255.0 blue:68/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic1.png",@"title":@"I like music",@"color":[UIColor colorWithRed:248/255.0 green:227/255.0 blue:68/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]},@{@"imageName":@"topic2.png",@"title":@"My travel",@"color":[UIColor colorWithRed:176/255.0 green:0/255.0 blue:241/255.0 alpha:1]},@{@"imageName":@"topic.png",@"title":@"My favourite sport",@"color":[UIColor colorWithRed:87/255.0 green:225/255.0 blue:190/255.0 alpha:1]}];
     
     _topicTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, kNavBarHeight, kScreentWidth, kScreenHeight-kNavBarHeight) style:UITableViewStylePlain];
     _topicTableView.delegate = self;

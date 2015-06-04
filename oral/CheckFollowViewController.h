@@ -24,12 +24,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *lineLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *answerTextLabel;
-@property (weak, nonatomic) IBOutlet UIView *answerBottomView;
 @property (weak, nonatomic) IBOutlet UILabel *timeProgressLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *stuImageView;
 @property (weak, nonatomic) IBOutlet UIButton *scoreButton;
 
-@property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIButton *answerButton;
 @property (weak, nonatomic) IBOutlet UIButton *addPracticeButton;
 @property (weak, nonatomic) IBOutlet UIButton *nextButton;

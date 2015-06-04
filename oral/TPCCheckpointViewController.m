@@ -61,38 +61,27 @@
     [_exerciseBookBtn setAdjustsImageWhenHighlighted:NO];
     [_scoreButton setAdjustsImageWhenHighlighted:NO];
     
-    float partBackH = kScreentWidth*2/5;
-    CGRect partBackrect = _partBackView.frame;
-    partBackrect.size.height = partBackH;
-    partBackrect.size.width = kScreentWidth;
-    _partBackView.frame = partBackrect;
-    
     // part1-3 滚动视图 _partScrollView
-    NSInteger partHeight = _partBackView.frame.size.height-50;
-    NSInteger partWidth = partHeight*12/5;
-    CGRect rect = _partScrollView.frame;
-    rect.size.width = partWidth;
-    rect.size.height = partHeight;
-    rect.origin.x = (_partBackView.frame.size.width-partWidth)/2;
-    _partScrollView.frame = rect;
     _partScrollView.contentSize = CGSizeMake(_partScrollView.bounds.size.width*3, _partScrollView.bounds.size.height);
     _partScrollView.delegate = self;
-//    _partScrollView.pagingEnabled = YES;
+    _partScrollView.pagingEnabled = YES;
     
     NSArray *partTitleArray = @[@"Part-one",@"Part-two",@"Part-three"];
     // part 按钮
+    CGRect partSrollViewRect = _partScrollView.frame;
+    partSrollViewRect.origin.y = 0;
     for (int i = 0; i < 3; i ++)
     {
-        CGRect newRec = CGRectMake(5+i*_partScrollView.bounds.size.width, 5, _partScrollView.bounds.size.width-10, _partScrollView.bounds.size.height-10);
+        partSrollViewRect.origin.x = i*partSrollViewRect.size.width;
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setFrame:newRec];
+        [btn setFrame:partSrollViewRect];
         btn.backgroundColor = _pointColor;
         btn.tag = kPartButtonTag+i;
         btn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         btn.layer.cornerRadius = btn.frame.size.height/2;
         [btn setTitle:[partTitleArray objectAtIndex:i] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(startPart:) forControlEvents:UIControlEventTouchUpInside];
-        btn.titleLabel.font = [UIFont systemFontOfSize:30];
+//        btn.titleLabel.font = [UIFont systemFontOfSize:30];
         // @"HiraKakuProN-W3"
         btn.titleLabel.font = [UIFont fontWithName:@"MarkerFelt-thin" size:30];
 
@@ -115,6 +104,8 @@
     [self drawPageButton:_rightMarkBtn];
     
     [self makePagesAloneWithButtonTag:kLeftMarkButtonTag];
+    
+    
 }
 
 #pragma mark - 页码按钮设置为圆形
@@ -152,7 +143,7 @@
         zip包路径 topicResource/topicName
      */
     // 1 判断
-    NSString *topicResourcePath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/",[_topicDict objectForKey:@"classtype"]];
+    NSString *topicResourcePath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",[_topicDict objectForKey:@"classtype"]];
     NSLog(@"%@",topicResourcePath);
     _markPart = btn.tag - kPartButtonTag;
     BOOL ret = [[NSFileManager defaultManager] fileExistsAtPath:topicResourcePath];
@@ -210,6 +201,8 @@
     [self startRequestURL:testZipUrl andCallBackAction:@selector(requestTestZipFinished:)];
 }
 
+
+
 #pragma mark - 开始请求
 - (void)startRequestURL:(NSString *)urlString andCallBackAction:(SEL)action
 {
@@ -219,7 +212,7 @@
     [netManager netGetUrl:urlString];
 }
 
-#pragma mark - 请求part zip 包
+#pragma mark - 缓存闯关资源
 - (void)requestPartZipFinished:(NetManager *)netManager
 {
     if (netManager.success)
@@ -248,7 +241,7 @@
     }
 }
 
-#pragma mark - 请求 test zipUrl回调
+#pragma mark - 解压zip包
 - (BOOL)unZipToLocalData:(NSData*)data WithPath:(NSString *)path andFolder:(NSString *)folderName
 {
     if ([self filePathExit:[self getLocalSavePath]]==NO)
@@ -270,20 +263,25 @@
         return NO;
     }
 }
-#pragma mark - 请求 test zip包回调
+#pragma mark - 请求 test zip资源
 - (void)requestTestZipFinished:(NetManager *)netRequest
 {
     if (_requestTest_zipUrl)
     {
         // 请求zip路径
+        _requestTest_zipUrl = NO;
+        
         if (netRequest.success)
         {
             // 成功 ---> zip
-            [self requestTestZip];
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netRequest.downLoadData options:0 error:nil];
+            NSString *zipUrl = [dict objectForKey:@"zipfileurl"];
+            [self startRequestURL:zipUrl andCallBackAction:@selector(requestTestZipFinished:)];
         }
         else
         {
             // 失败
+            NSLog(@"失败");
         }
     }
     else
@@ -297,6 +295,7 @@
             if (success)
             {
                 // 进入模考
+                [self startEnterTest];
             }
         }
         else
@@ -306,6 +305,7 @@
     }
     
 }
+
 
 
 #pragma mark - 路径是否存在
@@ -384,10 +384,29 @@
 #pragma mark - 直接模考
 - (IBAction)testButtonClicked:(id)sender
 {
-    //
-    CheckTestViewController *testVC = [[CheckTestViewController alloc]initWithNibName:@"CheckTestViewController" bundle:nil];
-    [self.navigationController pushViewController:testVC animated:YES];
+    /*
+     判断模考资源是否存在 不存在 下载 存在 直接模考
+     */
+    NSString *jsonPath = [NSString stringWithFormat:@"%@/topicTest/temp/mockinfo.json",[self getLocalSavePath]];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:jsonPath])
+    {
+        [self startEnterTest];
+    }
+    else
+    {
+        _loadingView.hidden = NO;
+        _requestTest_zipUrl = YES;
+        [self requestTestZip];
+    }
     
+}
+
+- (void)startEnterTest
+{
+    _loadingView.hidden = YES;
+    CheckTestViewController *testVC = [[CheckTestViewController alloc]initWithNibName:@"CheckTestViewController" bundle:nil];
+    testVC.topicName = [_topicDict objectForKey:@"classtype"];
+    [self.navigationController pushViewController:testVC animated:YES];
 }
 
 - (IBAction)practiseBook:(id)sender

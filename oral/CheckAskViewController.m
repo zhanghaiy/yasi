@@ -129,16 +129,16 @@
     _topView.backgroundColor = [UIColor clearColor];
     _teacherView.backgroundColor = [UIColor clearColor];
     _stuView.backgroundColor = [UIColor clearColor];
-    _bottomView.backgroundColor = [UIColor clearColor];
     
     // 背景颜色 去掉
     // 计算出按钮高度  不同尺寸屏幕 高度不同
-    NSInteger btnWid = _topView.frame.size.height-2*8;
+    NSInteger partCountHeight = _topView.frame.size.height;
+    NSInteger btnWid = 30;
     // 根据总问题数创建按钮
     for (int i = 0; i < _sumQuestionCounts; i ++)
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setFrame:CGRectMake(20+i*(btnWid+10), 8, btnWid, btnWid)];
+        [btn setFrame:CGRectMake(20+i*(btnWid+10), (partCountHeight-btnWid)/2, btnWid, btnWid)];
         [btn setTitle:[NSString stringWithFormat:@"%d",i+1] forState:UIControlStateNormal];
         [btn setBackgroundImage:[UIImage imageNamed:@"questionCount-white"] forState:UIControlStateNormal];
         // 选中
@@ -160,27 +160,27 @@
 
     
     // 获取到老师背景View的frame
-    CGRect rect = _teacherView.frame;
-    float ratio = rect.size.width/rect.size.height;
-    rect.size.width = kScreentWidth;
-    rect.size.height = kScreentWidth/ratio;
-    _teacherView.frame = rect;
+//    CGRect rect = _teacherView.frame;
+//    float ratio = rect.size.width/rect.size.height;
+//    rect.size.width = kScreentWidth;
+//    rect.size.height = kScreentWidth/ratio;
+//    _teacherView.frame = rect;
     
     // 老师头像 圆形 有光圈
     _teaHeadImgView.image = [UIImage imageNamed:@"touxiang.png"];
     _teaHeadImgView.layer.masksToBounds = YES;
-    _teaHeadImgView.layer.cornerRadius = (rect.size.height-20)/2;
+    _teaHeadImgView.layer.cornerRadius = _teaHeadImgView.frame.size.height/2;
     _teaHeadImgView.layer.borderColor = _backColor.CGColor;
     _teaHeadImgView.layer.borderWidth = 3;
     
     // 确定问题背景frame
-    NSInteger queBackHH = _teaHeadImgView.frame.size.width;
-    NSInteger queBackX = 30 + queBackHH;
-    NSInteger queBackWW = kScreentWidth - queBackX - 20;
-    _teaQuestioBackV.frame = CGRectMake(queBackX, 10, queBackWW, queBackHH);
+    CGRect questionBackRect = _teaQuestioBackV.frame;
+    questionBackRect.origin.x = 105;
+    questionBackRect.size.width = kScreentWidth-120;
+    _teaQuestioBackV.frame = questionBackRect;
     _teaQuestioBackV.layer.masksToBounds = YES;
     _teaQuestioBackV.backgroundColor = [UIColor whiteColor];
-    _teaQuestioBackV.layer.cornerRadius = _teaQuestioBackV.frame.size.height/1334*kScreenHeight;
+    _teaQuestioBackV.layer.cornerRadius = _teaQuestioBackV.frame.size.height/2;
     
     // 问题文本 其实为空
     _teaQuestionLabel.numberOfLines = 0;
@@ -200,9 +200,9 @@
     _teaQuestionLabel.frame = _questionSmallRect;
     */
     
-    float middleHeight = kScreenHeight-90-_teacherView.frame.size.height-(_bottomView.frame.size.height/_bottomView.frame.size.width*kScreentWidth);
+//    float middleHeight = kScreenHeight-90-_teacherView.frame.size.height-(_bottomView.frame.size.height/_bottomView.frame.size.width*kScreentWidth);
     CGRect stuBackRect = _stuView.bounds;
-    stuBackRect.size.height = middleHeight;
+    stuBackRect.size.height = kScreenHeight-331;
     stuBackRect.size.width = kScreentWidth;
     _stuView.frame = stuBackRect;
     

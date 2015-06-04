@@ -68,7 +68,7 @@
     // 创建一个分段控件
     _segment = [[UISegmentedControl alloc]initWithItems:array];
     // 分段控件的位置
-    _segment.frame = CGRectMake((kScreentWidth-110)/2, 55, 110, 35);
+    _segment.frame = CGRectMake((kScreentWidth-110)/2, KNavTopViewHeight + 12, 110, 35);
     // 分段控件的选中颜色
     _segment.tintColor = _pointColor;
     for (UIView *view in _segment.subviews)
@@ -154,7 +154,7 @@
     {
         // 240 100
         UIButton *partButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [partButton setFrame:CGRectMake(kScreentWidth+(kScreentWidth-kPartButtonWidth)/2, 40+i*(kPartButtonHeight+15), kPartButtonWidth, kPartButtonHeight)];
+        [partButton setFrame:CGRectMake(kScreentWidth+75, 65+i*(kPartButtonHeight+15), kScreentWidth-150, kPartButtonHeight)];
         [partButton setTitle:[partButtonNameArray objectAtIndex:i] forState:UIControlStateNormal];
         [partButton setTitleColor:_pointColor forState:UIControlStateNormal];
         partButton.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];

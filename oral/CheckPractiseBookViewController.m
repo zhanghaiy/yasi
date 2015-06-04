@@ -34,7 +34,7 @@
     self.view.backgroundColor = _backgroundViewColor;
     
     
-    _practiseTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 45, kScreentWidth, kScreenHeight-45) style:UITableViewStylePlain];
+    _practiseTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight+1, kScreentWidth, kScreenHeight-KNavTopViewHeight-1) style:UITableViewStylePlain];
     _practiseTableV.delegate = self;
     _practiseTableV.dataSource = self;
     _practiseTableV.separatorStyle = UITableViewCellSeparatorStyleNone;

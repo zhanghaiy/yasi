@@ -170,7 +170,7 @@
 - (void)uiConfig
 {
     // 顶部 关卡
-    _topBackV = [[UIView alloc]initWithFrame:CGRectMake(0, 45, kScreentWidth, kTopViewHeight)];
+    _topBackV = [[UIView alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight+1, kScreentWidth, kTopViewHeight)];
     _topBackV.backgroundColor = _backgroundViewColor;
     [self.view addSubview:_topBackV];
     
@@ -178,7 +178,7 @@
     {
         UIButton *pointButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [pointButton setFrame:CGRectMake(i*kPointButtonWidth, 0, kPointButtonWidth, kTopViewHeight)];
-        [pointButton setTitle:[NSString stringWithFormat:@"Part%ld-%d",self.currentPartCounts+1,i+1] forState:UIControlStateNormal];
+        [pointButton setTitle:[NSString stringWithFormat:@"Part%d-%d",self.currentPartCounts+1,i+1] forState:UIControlStateNormal];
         [pointButton setTitleColor:_pointColor forState:UIControlStateSelected];
          [pointButton setTitleColor:_textColor forState:UIControlStateNormal];
 //        pointButton.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
@@ -193,7 +193,7 @@
         }
     }
     
-    _pointScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 89, kScreentWidth, kScreenHeight-89)];
+    _pointScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight+kTopViewHeight+1, kScreentWidth, kScreenHeight-KNavTopViewHeight-kTopViewHeight-1)];
     _pointScrollV.tag = kBackScrollViewTag;
     _pointScrollV.contentSize = CGSizeMake(kScreentWidth*3, kScreenHeight-89);
     _pointScrollV.delegate = self;

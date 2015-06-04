@@ -24,21 +24,9 @@
 {
     // Initialization code
     
-    NSString *strHTML = [NSString stringWithFormat:@"<a href='http://my.oschina.net/duxinfeng'>%@</a> 测试富文本 %@",@"暂时用这个例子",@"2015-05-27"];
+    NSString *strHTML = [NSString stringWithFormat:@"<a href='http://my.oschina.net/duxinfeng'>%@</a> 测试富文本 %@",@"The Ansewr is The Ansewr is The Ansewr is The Ansewr is ",@"2015-05-27"];
      [_textWebView loadHTMLString:strHTML baseURL:nil];
     
-//    _questionButton.layer.masksToBounds = YES;
-//    _questionButton.layer.cornerRadius = _questionButton.frame.size.height/2;
-//    
-//    _answerButton.layer.masksToBounds = YES;
-//    _answerButton.layer.cornerRadius = _answerButton.frame.size.height/2;
-//    
-//    _followButton.layer.masksToBounds = YES;
-//    _followButton.layer.cornerRadius = _followButton.frame.size.height/2;
-//    
-//    self.deleteButton.layer.masksToBounds = YES;
-//    self.deleteButton.layer.cornerRadius = _deleteButton.frame.size.height/2;
-//    
     _scoreButton.layer.masksToBounds = YES;
     _scoreButton.layer.cornerRadius = _scoreButton.frame.size.height/2;
     

@@ -11,19 +11,25 @@
 #import "CircleProgressView.h"
 
 @interface CheckTestViewController : TopicParentsViewController
-@property (weak, nonatomic) IBOutlet UIView *topBackView;
-@property (weak, nonatomic) IBOutlet UILabel *sumTimeLabel;
-@property (weak, nonatomic) IBOutlet UIView *teaBackView;
-@property (weak, nonatomic) IBOutlet UIImageView *teaCircleImageView;
+@property (strong, nonatomic) IBOutlet UIView *topBackView;
+@property (strong, nonatomic) IBOutlet UILabel *sumTimeLabel;
+@property (strong, nonatomic) IBOutlet UIView *teaBackView;
+@property (strong, nonatomic) IBOutlet UIImageView *teaCircleImageView;
 @property (strong, nonatomic) IBOutlet UIButton *tea_show_btn;
 - (IBAction)showQuestionText:(id)sender;
-@property (weak, nonatomic) IBOutlet UILabel *teaDesLabel;
-@property (weak, nonatomic) IBOutlet UIButton *teaHeadBtn;
-@property (weak, nonatomic) IBOutlet UILabel *tipLabel;
-@property (weak, nonatomic) IBOutlet UIView *stuBackView;
-@property (weak, nonatomic) IBOutlet UIButton *stuHeadBtn;
+@property (strong, nonatomic) IBOutlet UILabel *teaDesLabel;
+
+@property (strong, nonatomic) IBOutlet UIImageView *teaHeadImageV;
+
+
+//@property (strong, nonatomic) IBOutlet UIButton *teaHeadBtn;
+@property (strong, nonatomic) IBOutlet UILabel *tipLabel;
+@property (strong, nonatomic) IBOutlet UIView *stuBackView;
+//@property (strong, nonatomic) IBOutlet UIButton *stuHeadBtn;
 @property (strong, nonatomic) IBOutlet CircleProgressView *circleProgressView;
 @property (weak, nonatomic) IBOutlet UIButton *followBtn;
 - (IBAction)followButtonClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIImageView *stuHeadImageV;
+
 
 @end

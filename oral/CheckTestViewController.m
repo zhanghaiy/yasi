@@ -39,6 +39,8 @@
     
     BOOL _isFirst;// 用于总倒计时
     NSDate *_beginDate;// 设置开始时间
+    
+    UIColor *_tip_text_Color;// 文字颜色
 }
 @end
 
@@ -46,23 +48,48 @@
 
 #define kPartButtonTag 1000
 
+
+
+#pragma mark - 构成数据
+#pragma mark -- 解析本地json文件
 - (void)LocalData
 {
-    NSString *jsonPath = [[NSBundle mainBundle]pathForResource:@"mockinfo" ofType:@"json"];
+//    NSString *jsonPath = [[NSBundle mainBundle]pathForResource:@"mockinfo" ofType:@"json"];
+    NSString *jsonPath = [NSString stringWithFormat:@"%@/mockinfo.json",[self getFileBasePath]];
+    NSLog(@"%@",jsonPath);
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *testDic = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     _partListArray = [[testDic objectForKey:@"mockquestion"] objectForKey:@"questionlist"];
     _sum_part_Counts = _partListArray.count;
 }
 
-#pragma mark - 切换单个问题数据
+#pragma mark -- 本地资源文件路径
+- (NSString *)getFileBasePath
+{
+    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/temp",self.topicName];
+    NSLog(@"%@",self.topicName);
+    return path;
+}
+
+#pragma mark -- 本地录音文件路径
+- (NSString *)getRecordSavePath
+{
+    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/AnswerFile",self.topicName];
+    if (![[NSFileManager defaultManager]fileExistsAtPath:path])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return path;
+}
+
+#pragma mark -- 切换单个问题数据
 - (void)makeUpCurrentQuestionData
 {
     _currentQuestionDict = [[[_partListArray objectAtIndex:_current_part_Counts] objectForKey:@"question"] objectAtIndex:_current_question_Counts];
     [self changePartButtonSelectedWithButttonTag:_current_part_Counts*100+kPartButtonTag + (_current_question_Counts+1)];
 }
 
-#pragma mark - 切换part 问题数据
+#pragma mark -- 切换part 问题数据
 - (void)makeUpCurrentPartData
 {
     _partQuestionDict = [_partListArray objectAtIndex:_current_part_Counts];
@@ -72,12 +99,14 @@
     [self changePartButtonSelectedWithButttonTag:_current_part_Counts*100+kPartButtonTag + (_current_question_Counts+1)];
 }
 
-#pragma mark - 创建标记问题进行情况的View
+
+#pragma mark - ui配置
+#pragma mark -- 创建标记问题进行情况的View
 - (void)createTopCountProgressButtonWithArray:(NSArray *)array
 {
     NSInteger org_y = _topBackView.frame.size.height;
-    NSInteger btn_big_Height = 30;
-    NSInteger btn_small_height = 10;
+    NSInteger btn_big_Height = 25;
+    NSInteger btn_small_height = 8;
     
     NSInteger org_x = 15;// 从15开始
     for (int i = 0; i < _partListArray.count; i ++)
@@ -90,6 +119,7 @@
         [btn setTitleColor:[UIColor colorWithRed:1/255.0 green:196/255.0 blue:1 alpha:1] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         btn.tag = kPartButtonTag + i * 100;
+        btn.titleLabel.font = [UIFont systemFontOfSize:kFontSize2];
         [_topBackView addSubview:btn];
         
         org_x += btn_big_Height+10;
@@ -102,25 +132,114 @@
             [btn_spot setBackgroundImage:[UIImage imageNamed:@"Test_Top_blue"] forState:UIControlStateSelected];
             [btn_spot setBackgroundImage:[UIImage imageNamed:@"Test_Top_white"] forState:UIControlStateNormal];
             btn_spot.tag = (j+1)+i*100+kPartButtonTag;
+            btn_spot.titleLabel.font = [UIFont systemFontOfSize:kFontSize1+1];
             [_topBackView addSubview:btn_spot];
         }
         org_x += questionArray.count*(btn_small_height+10);
     }
 }
 
-#pragma mark - 标记完成的问题
+#pragma mark -- 标记完成的问题
 - (void)changePartButtonSelectedWithButttonTag:(NSInteger)tag
 {
     UIButton *btn = (UIButton *)[self.view viewWithTag:tag];
     btn.selected = YES;
 }
 
+#pragma mark -- 修改参数
+- (void)uiConfig
+{
+    // 调整背景颜色
+    _teaBackView.backgroundColor = [UIColor clearColor];
+    _stuBackView.backgroundColor = [UIColor clearColor];
+    _sumTimeLabel.backgroundColor = [UIColor clearColor];
+    _sumTimeLabel.textColor = [UIColor colorWithRed:139/255.0 green:185/255.0 blue:200/255.0 alpha:1];
+    _tipLabel.textColor = _tip_text_Color;
+    _tipLabel.backgroundColor = [UIColor clearColor];
+    
+    _sumTimeLabel.textColor = _tip_text_Color;
+    _teaDesLabel.textColor = _tip_text_Color;
+    _tea_show_btn.titleLabel.textColor = _tip_text_Color;
+    
+    // 调整位置 记录大小
+    
+    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
+    
+    // 提问界面
+    float tea_back_View_height = _teaBackView.frame.size.height;
+    _teaBackView.frame = CGRectMake(0, 131, kScreentWidth, tea_back_View_height);
+    
+    // 中心 缩小后的frame
+    _tea_head_small_frame = CGRectMake((kScreentWidth-45)/2, (tea_back_View_height-45)/2, 45, 45);
+    // 中心 放大后的frame
+    _tea_head_big_frame = CGRectMake((kScreentWidth-65)/2, (tea_back_View_height-65)/2, 65, 65);//_tea_head_big_frame;
+    
+    
+    // 左边 缩小后的frame
+    _tea_head_small_frame_left =_tea_head_small_frame;
+    _tea_head_small_frame_left.origin.x = 15;
+    
+    // 设置初始位置 中心 缩小的 （然后放大）
+    [_teaHeadImageV setFrame:_tea_head_small_frame];
+    
+    // 学生界面
+    CGRect stu_middle_rect = _stuHeadImageV.frame;
+    // 缩小时的frame
+    _stu_head_small_frame = stu_middle_rect;
+    _stu_head_small_frame.origin.x = (kScreentWidth-_stu_head_small_frame.size.width)/2;
+    // 放大时的frame
+    _stu_head_big_frame = _stu_head_small_frame;
+    _stu_head_big_frame.origin.x -= 10;
+    _stu_head_big_frame.origin.y -= 10;
+    _stu_head_big_frame.size.width += 20;
+    _stu_head_big_frame.size.height += 20;
+    
+    
+    // 设置圆角半径
+    _teaHeadImageV.layer.masksToBounds = YES;
+    _teaHeadImageV.layer.cornerRadius = _teaHeadImageV.frame.size.height/2;
+    
+    _followBtn.layer.masksToBounds = YES;
+    _followBtn.layer.cornerRadius = _followBtn.frame.size.height/2;
+    
+    _stuHeadImageV.layer.masksToBounds = YES;
+    _stuHeadImageV.layer.cornerRadius = _stuHeadImageV.frame.size.height/2;
+    
+    // 设置初始界面元素 隐藏特定的控件
+    _teaCircleImageView.hidden = YES;// 仿声波动画控件
+    _teaDesLabel.hidden = YES;// 关键词提示控件
+    _followBtn.hidden = YES;// 跟读按钮
+    
+    // 设置文字
+    _tipLabel.text = @"";
+    _sumTimeLabel.text = @"10:00";
+    
+    _teaHeadImageV.alpha = 0.5;
+    _stuHeadImageV.alpha = 0.5;
+    
+    // 光圈动画
+    _teaCircleImageView.animationImages = @[[UIImage imageNamed:@"circle_1"],[UIImage imageNamed:@"circle_2"],[UIImage imageNamed:@"circle_3"]];
+    _teaCircleImageView.animationDuration = 1.5;
+    _teaCircleImageView.animationRepeatCount = 0;
+    
+    // 时间进度
+    _circleProgressView.hidden = YES;
+    _circleProgressView.backgroundColor = [UIColor clearColor];
+    [_circleProgressView settingProgress:0.0 andColor:_timeProgressColor andWidth:3 andCircleLocationWidth:3];
+    
+    _tea_show_btn.hidden = YES;
+    
+    [_stuHeadImageV setFrame:CGRectMake(30, 30, 40, 40)];
+}
+
+#pragma mark - 视图加载
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
     _aloneCounts = 0;
     _prepareTime_point2 = 6;
+    _tip_text_Color = [UIColor colorWithRed:0 green:196/255.0 blue:255/255.0 alpha:1];
     // 返回按钮
     [self addTitleLabelWithTitleWithTitle:@"直接模考"];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -139,163 +258,69 @@
     _audioManager.action = @selector(playTestQuestioCallBack);
 }
 
-#pragma mark - ui配置
-- (void)uiConfig
-{
-    // 调整背景颜色
-    _teaBackView.backgroundColor = [UIColor clearColor];
-    _stuBackView.backgroundColor = [UIColor clearColor];
-    _sumTimeLabel.backgroundColor = [UIColor clearColor];
-    _sumTimeLabel.textColor = [UIColor colorWithRed:139/255.0 green:185/255.0 blue:200/255.0 alpha:1];
-    _tipLabel.textColor = [UIColor colorWithRed:1/255.0 green:196/255.0 blue:255.0/255.0 alpha:1];
-    _tipLabel.backgroundColor = [UIColor clearColor];
-    
-    // 调整位置 记录大小
-    
-    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
-    
-    // 提问界面
-    float tea_back_View_height = _teaBackView.frame.size.height;
-    _teaBackView.frame = CGRectMake(0, 131, kScreentWidth, tea_back_View_height);
-    
-    // 中心 缩小后的frame
-    _tea_head_small_frame = CGRectMake((kScreentWidth-45)/2, (tea_back_View_height-45)/2, 45, 45);
-    // 中心 放大后的frame
-    _tea_head_big_frame = CGRectMake((kScreentWidth-65)/2, (tea_back_View_height-65)/2, 65, 65);//_tea_head_big_frame;
-    
-    // 左边 缩小后的frame
-    _tea_head_small_frame_left =_tea_head_small_frame;
-    _tea_head_small_frame_left.origin.x = 15;
-    
-    // 设置初始位置 中心 缩小的 （然后放大）
-    [_teaHeadBtn setFrame:_tea_head_small_frame];
-    
-    // 学生界面
-    CGRect stu_middle_rect = _stuHeadBtn.frame;
-    // 缩小时的frame
-    _stu_head_small_frame = stu_middle_rect;
-    _stu_head_small_frame.origin.x = (kScreentWidth-_stu_head_small_frame.size.width)/2;
-    // 放大时的frame
-    _stu_head_big_frame = _stu_head_small_frame;
-    _stu_head_big_frame.origin.x -= 10;
-    _stu_head_big_frame.origin.y -= 10;
-    _stu_head_big_frame.size.width += 20;
-    _stu_head_big_frame.size.height += 20;
-    
-    
-    // 设置圆角半径
-    _teaHeadBtn.layer.masksToBounds = YES;
-    _teaHeadBtn.layer.cornerRadius = _teaHeadBtn.frame.size.height/2;
-    
-    _followBtn.layer.masksToBounds = YES;
-    _followBtn.layer.cornerRadius = _followBtn.frame.size.height/2;
-    
-    _stuHeadBtn.layer.masksToBounds = YES;
-    _stuHeadBtn.layer.cornerRadius = _stuHeadBtn.frame.size.height/2;
-    
-    // 设置初始界面元素 隐藏特定的控件
-    _teaCircleImageView.hidden = YES;// 仿声波动画控件
-    _teaDesLabel.hidden = YES;// 关键词提示控件
-    _followBtn.hidden = YES;// 跟读按钮
-    
-    // 设置文字
-    _tipLabel.text = @"";
-    _sumTimeLabel.text = @"10:00";
-    
-    _teaHeadBtn.alpha = 0.5;
-    _stuHeadBtn.alpha = 0.5;
-    
-    // 光圈动画
-    _teaCircleImageView.animationImages = @[[UIImage imageNamed:@"circle_1"],[UIImage imageNamed:@"circle_2"],[UIImage imageNamed:@"circle_3"]];
-    _teaCircleImageView.animationDuration = 1.5;
-    _teaCircleImageView.animationRepeatCount = 0;
-    
-    // 时间进度
-    _circleProgressView.hidden = YES;
-    _circleProgressView.backgroundColor = [UIColor clearColor];
-    [_circleProgressView settingProgress:0.0 andColor:_timeProgressColor andWidth:3 andCircleLocationWidth:3];
-    
-    _tea_show_btn.hidden = YES;
-}
 
-#pragma mark - 视图已经出现
+#pragma mark - 视图出现
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
 
     _tipLabel.text = [NSString stringWithFormat:@"第%ld轮考试马上开始~请集中注意力~~~~",_current_part_Counts+1];// @"考试马上开始~请集中注意力~~~~";
     [self TextAnimationWithView:_tipLabel];
-    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareTestQuestion) userInfo:nil repeats:NO];
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(sumTimeCountDownMethod) userInfo:nil repeats:YES];
+    // 预留准备时间
+    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareTest) userInfo:nil repeats:NO];
 }
 
 
-#pragma mark - 准备提问动画
+#pragma mark - 开始模考
+- (void)prepareTest
+{
+    // 1、开启总时间的定时器
+    _mainTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(sumTimeCountDownMethod) userInfo:nil repeats:YES];
+    
+    [self prepareTestQuestion];
+}
+#pragma mark - 提问
 - (void)prepareTestQuestion
 {
-    // 1、中心 放大后的frame
-    [UIView animateWithDuration:2 animations:^{
-        
-        [_teaHeadBtn setFrame:_tea_head_big_frame];
-        _teaHeadBtn.alpha = 1;
-    }];
-    // 2、文字提示 即将开始提问
+    // 2、中心 放大后的frame
+    [self enlargeTeacherHeadImage];
+    // 3、告知用户即将提问
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(showQuestionBeginTip) userInfo:nil repeats:NO];
+    // 4、开始提问
     [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(beginPlayQuestion) userInfo:nil repeats:NO];
 }
 
-#pragma mark - 显示提示文本
-- (void)showQuestionBeginTip
-{
-    _tipLabel.text = @"老师开始提问，请注意听....";
-    [self TextAnimationWithView:_tipLabel];
-}
 
-#pragma mark - 播放问题音频 开始提问
+
+#pragma mark - 开始提问 播放问题
 - (void)beginPlayQuestion
 {
     _tipLabel.text = @"老师正在提问...";
-    // 展示动画
     [self startAnimotion];
+    
     NSString *audioName = [_currentQuestionDict objectForKey:@"url"];
-    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[[audioName componentsSeparatedByString:@"."] objectAtIndex:0] ofType:[[audioName componentsSeparatedByString:@"."] objectAtIndex:1]];
+    NSString *audioPath = [NSString stringWithFormat:@"%@/%@",[self getFileBasePath],audioName];
     [_audioManager playerPlayWithFilePath:audioPath];
 }
 
-#pragma mark - 结束提问动画
-- (void)endQuestion
-{
-    // 1:文字动画
-    _tipLabel.text = @"提问结束，准备回答....";
-    [self TextAnimationWithView:_tipLabel];
-    // 2: 缩小头像
-    [UIView animateWithDuration:1 animations:^{
-        [_teaHeadBtn setFrame:_tea_head_small_frame];
-        _teaHeadBtn.alpha = 0.5;
-    }];
-    if (_current_part_Counts!=0)
-    {
-        
-        [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(moveToLeft) userInfo:nil repeats:NO];
-        
-        [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(showKeyWordView) userInfo:nil repeats:NO];
-    }
-}
-
-
-#pragma mark - 问题结束 回调
+#pragma mark - 播放问题结束 回调
 - (void)playTestQuestioCallBack
 {
-    [self stopAnimotion];
-    // 1-->问题结束是动画
+    [self stopAnimotion];// 光圈停止
+    
+    // 1--> 问题结束 ----> 老师部分做一系列动画
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(endQuestion) userInfo:nil repeats:NO];
-    [NSTimer scheduledTimerWithTimeInterval:6 target:self selector:@selector(prepareAnswerTestAnimotion) userInfo:nil repeats:NO];
-//    // 开始回答
-//    [NSTimer scheduledTimerWithTimeInterval:8 target:self selector:@selector(startAnswer) userInfo:nil repeats:NO];
+    
+    // 2、学员准备回答 ----> 动画
+    [NSTimer scheduledTimerWithTimeInterval:6 target:self selector:@selector(prepareAnswerTest) userInfo:nil repeats:NO];
+    //    // 开始回答
+    //    [NSTimer scheduledTimerWithTimeInterval:8 target:self selector:@selector(startAnswer) userInfo:nil repeats:NO];
 }
 
-#pragma mark - 准备回答动画
-- (void)prepareAnswerTestAnimotion
+
+
+#pragma mark - 准备回答 --> 动画
+- (void)prepareAnswerTest
 {
     if (_current_part_Counts == 1)
     {
@@ -306,18 +331,19 @@
     }
     else
     {
-        // 1、放大 变亮
+        // 提示标签
         _tipLabel.text = @"准备.....";
         [self TextAnimationWithView:_tipLabel];
-        [UIView animateWithDuration:1 animations:^{
-            [_stuHeadBtn setFrame:_stu_head_big_frame];
-            _stuHeadBtn.alpha = 1;
-        }];
+        
+        // 放大学生头像
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(enlargeStudentHeadImage) userInfo:nil repeats:NO];
+        
         // 开始回答
         [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(startAnswer) userInfo:nil repeats:NO];
     }
 }
 
+#pragma mark - 准备时间
 - (void)prepareTime
 {
     _prepareTime_point2 --;
@@ -330,11 +356,8 @@
     {
         [_aloneTimer invalidate];
         _aloneTimer = nil;
-        [UIView animateWithDuration:1 animations:^{
-            [_stuHeadBtn setFrame:_stu_head_big_frame];
-            _stuHeadBtn.alpha = 1;
-        }];
-        _tipLabel.text = @"请作答~~~~";
+        [self enlargeStudentHeadImage];
+        _tipLabel.text = @"准备~~~~";
         [self TextAnimationWithView:_tipLabel];
         [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(startAnswer) userInfo:nil repeats:NO];
     }
@@ -344,41 +367,160 @@
 - (void)startAnswer
 {
     _tipLabel.text = @"请作答~";
-
-//    if (_current_part_Counts == 0)
-//    {
-//        _tipLabel.text = @"请作答~";
-//    }
-//    else if (_current_part_Counts == 1)
-//    {
-//        _tipLabel.text = @"根据关键词作答~";
-//    }
-//    else
-//    {
-//       _tipLabel.text = @"请作答~";
-//    }
-    //    [self TextAnimationWithView:_tipLabel];
     _followBtn.hidden = NO;
     [self followButtonClicked:_followBtn];
 }
 
-#pragma mark - 回答倒计时
-- (void)answerTimeDecrease
+
+#pragma mark - 回答按钮点击事件 开始录音
+- (IBAction)followButtonClicked:(id)sender
 {
-    _aloneCounts++;
-    float tip = 1.0/20/10.0*_aloneCounts;
-    [_circleProgressView settingProgress:tip andColor:_timeProgressColor andWidth:3 andCircleLocationWidth:3];
-    if (tip>=1)
+    UIButton *btn = (UIButton *)sender;
+    if (btn.selected)
     {
+        btn.selected = NO;
+        //结束录音
         [_aloneTimer invalidate];
         _aloneTimer = nil;
-        _followBtn.selected = NO;
         [self recordFinished];
+    }
+    else
+    {
+        btn.selected = YES;
+        // 开始录音
+        _circleProgressView.hidden = NO;
+        _aloneTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(answerTimeDecrease) userInfo:nil repeats:YES];
     }
 }
 
+#pragma mark - 录音结束 回答完毕
+- (void)recordFinished
+{
+    _followBtn.hidden = YES;
+    // 录音完成
+    [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(answerEnd) userInfo:nil repeats:NO];
+    // 目前测界面逻辑 手动连接
+    [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(nextQuestion_test) userInfo:nil repeats:NO];
+}
 
-#pragma mark - 展示关键词
+#pragma mark - 下一题
+- (void)nextQuestion_test
+{
+    _current_question_Counts ++;
+    if (_current_question_Counts<_sum_question_Counts)
+    {
+        // 下一问题
+        
+        // 重组数据源
+        [self makeUpCurrentQuestionData];
+        _tipLabel.text = @"即将进入下一题...";
+        [self TextAnimationWithView:_tipLabel];
+        
+        // 恢复最初
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(makeSelfViewFomal) userInfo:nil repeats:NO];
+        
+        // 准备下一题
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(prepareTestQuestion) userInfo:nil repeats:NO];
+    }
+    else if (_current_question_Counts >= _sum_question_Counts)
+    {
+        // 下一关卡
+        _current_part_Counts ++;
+        _current_question_Counts = 0;
+        if (_current_part_Counts<_sum_part_Counts)
+        {
+            // 判断进行下一题 或下一关卡
+            [self TextAnimationWithView:self.view];
+            _tipLabel.text =[NSString stringWithFormat:@"第%ld轮考试马上开始~请集中注意力~~~~",_current_part_Counts+1];// @"考试马上开始~请集中注意力~~~~";
+            [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(makeSelfViewFomal) userInfo:nil repeats:NO];
+            [self makeUpCurrentPartData];
+            [self makeUpCurrentQuestionData];
+            [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(prepareTestQuestion) userInfo:nil repeats:NO];
+        }
+        else
+        {
+            _tipLabel.text = @"模考结束";
+            [_mainTimer invalidate];
+            _mainTimer = nil;
+        }
+    }
+}
+
+#pragma mark - 老师提问时 构建动画所用的方法
+#pragma mark -- 放大
+- (void)enlargeTeacherHeadImage
+{
+    _teaHeadImageV.alpha = 1;
+    [UIView animateWithDuration:1 animations:^{
+        _teaHeadImageV.frame = _tea_head_big_frame;
+    }];
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeTeacherLayer) userInfo:nil repeats:NO];
+}
+#pragma mark -- 改变圆角半径
+- (void)changeTeacherLayer
+{
+    _teaHeadImageV.layer.cornerRadius = _teaHeadImageV.frame.size.height/2;
+}
+
+//- (void)changeStudentLayer
+//{
+//    _stuHeadImageV.layer.cornerRadius = _stuHeadImageV.frame.size.height/2;
+//}
+
+#pragma mark -- 缩小
+- (void)narrowTeacherHeadImage
+{
+    _teaHeadImageV.alpha = 0.5;
+    [UIView animateWithDuration:1 animations:^{
+        _teaHeadImageV.frame = _tea_head_small_frame;
+        _teaHeadImageV.layer.cornerRadius = _teaHeadImageV.frame.size.height/2;
+    }];
+//    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeTeacherLayer) userInfo:nil repeats:NO];
+}
+#pragma mark -- 左移
+- (void)moveTeacherHeadImageToLeft
+{
+    _teaHeadImageV.alpha = 0.5;
+    [UIView animateWithDuration:1 animations:^{
+        _teaHeadImageV.frame = _tea_head_small_frame_left;
+    }];
+//    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeTeacherLayer) userInfo:nil repeats:NO];
+}
+
+#pragma mark - 文字动画
+- (void)TextAnimationWithView:(UIView *)view
+{
+    [UIView beginAnimations:@"animationID" context:nil];
+    [UIView setAnimationDuration:1.0f];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationRepeatAutoreverses:NO];
+    if ([view isKindOfClass:[UILabel class]])
+    {
+        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:view cache:YES];
+    }
+    else
+    {
+        [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:view cache:YES];
+    }
+    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
+    [UIView commitAnimations];
+}
+
+
+#pragma mark -- 开始光圈动画
+- (void)startAnimotion
+{
+    _teaCircleImageView.hidden = NO;
+    [_teaCircleImageView startAnimating];
+}
+#pragma mark -- 结束光圈动画
+- (void)stopAnimotion
+{
+    _teaCircleImageView.hidden = YES;
+    [_teaCircleImageView stopAnimating];
+}
+
+#pragma mark -- 展示关键词
 - (void)showKeyWordView
 {
     switch (_current_part_Counts)
@@ -402,83 +544,57 @@
         default:
             break;
     }
-
+    
 }
 
-#pragma mark - 老师头像左移
-- (void)moveToLeft
+#pragma mark -- 提问结束动画
+- (void)endQuestion
+{
+    // 1:文字动画
+    _tipLabel.text = @"提问结束，准备回答....";
+    [self TextAnimationWithView:_tipLabel];
+    // 2: 缩小头像
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(narrowTeacherHeadImage) userInfo:nil repeats:NO];
+    if (_current_part_Counts!=0)
+    {
+        // 左移
+        [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(moveTeacherHeadImageToLeft) userInfo:nil repeats:NO];
+        // 展示关键词
+        [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(showKeyWordView) userInfo:nil repeats:NO];
+    }
+}
+
+#pragma mark -- 告知用户 即将提问
+- (void)showQuestionBeginTip
+{
+    _tipLabel.text = @"老师开始提问，请注意听....";
+    [self TextAnimationWithView:_tipLabel];
+}
+
+#pragma mark - 学生准备回答一系列动画
+#pragma mark -- 放大学生头像
+- (void)enlargeStudentHeadImage
 {
     [UIView animateWithDuration:1 animations:^{
-        [_teaHeadBtn setFrame:_tea_head_small_frame_left];
-        _teaHeadBtn.alpha = 0.5;
+        [_stuHeadImageV setFrame:_stu_head_big_frame];
+        _stuHeadImageV.layer.cornerRadius = _stuHeadImageV.frame.size.height/2;
+        _stuHeadImageV.alpha = 1;
     }];
+//    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeStudentLayer) userInfo:nil repeats:NO];
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-#pragma mark - 下一题
-- (void)nextQuestion_test
+#pragma mark -- 缩小学生头像
+- (void)narrowStudentHeadImage
 {
-    _current_question_Counts ++;
-    if (_current_question_Counts<_sum_question_Counts)
-    {
-        // 下一问题
-        [self makeUpCurrentQuestionData];
-        _tipLabel.text = @"即将进入下一题...";
-        [self TextAnimationWithView:_tipLabel];
-        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(makeSelfViewFomal) userInfo:nil repeats:NO];
-        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(prepareTestQuestion) userInfo:nil repeats:NO];
-    }
-    else if (_current_question_Counts >= _sum_question_Counts)
-    {
-        // 下一关卡
-        _current_part_Counts ++;
-        _current_question_Counts = 0;
-        if (_current_part_Counts<_sum_part_Counts)
-        {
-            // 判断进行下一题 或下一关卡
-            [self TextAnimationWithView:self.view];
-            _tipLabel.text =[NSString stringWithFormat:@"第%ld轮考试马上开始~请集中注意力~~~~",_current_part_Counts+1];// @"考试马上开始~请集中注意力~~~~";
-            [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(makeSelfViewFomal) userInfo:nil repeats:NO];
-            [self makeUpCurrentPartData];
-            [self makeUpCurrentQuestionData];
-            [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(prepareTestQuestion) userInfo:nil repeats:NO];
-        }
-    }
+    [UIView animateWithDuration:1 animations:^{
+        [_stuHeadImageV setFrame:_stu_head_small_frame];
+        _stuHeadImageV.alpha = 0.5;
+        _stuHeadImageV.layer.cornerRadius = _stuHeadImageV.frame.size.height/2;
+    }];
+//    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeStudentLayer) userInfo:nil repeats:NO];
 }
 
-#pragma mark - 录音反馈
-- (void)recordFinished
-{
-    // 录音完成
-    [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(answerEnd) userInfo:nil repeats:NO];
-    // 目前测界面逻辑 手动连接
-    [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(nextQuestion_test) userInfo:nil repeats:NO];
-}
-
-- (void)makeSelfViewFomal
-{
-    _teaDesLabel.hidden = YES;
-    _tea_show_btn.hidden = YES;
-    _tea_show_btn.selected = NO;
-    _teaHeadBtn.frame = _tea_head_small_frame;
-}
-
-#pragma mark - 回答完毕之后的动画流程
+#pragma mark -- 回答完毕之后的动画流程
 - (void)answerEnd
 {
     _tipLabel.text = @"当前问题回答完毕";
@@ -486,68 +602,32 @@
     _circleProgressView.hidden = YES;
     [_circleProgressView settingProgress:0.0 andColor:_timeProgressColor andWidth:3 andCircleLocationWidth:3];
     _aloneCounts = 0;
-    [UIView animateWithDuration:1 animations:^{
-        _stuHeadBtn.frame = _stu_head_small_frame;
-    }];
-    _stuHeadBtn.alpha = 0.5;
+    [self narrowStudentHeadImage];
+    _teaDesLabel.text = @"";
+    _teaDesLabel.hidden = YES;    
 }
 
-- (IBAction)followButtonClicked:(id)sender
+#pragma mark -- 每个问题结束后 回到最开始的样子
+- (void)makeSelfViewFomal
 {
-    UIButton *btn = (UIButton *)sender;
-    if (btn.selected)
-    {
-        btn.selected = NO;
-        //结束录音
-        [_aloneTimer invalidate];
-        _aloneTimer = nil;
-        [self recordFinished];
-    }
-    else
-    {
-        btn.selected = YES;
-        // 开始录音
-        _circleProgressView.hidden = NO;
-        _aloneTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(answerTimeDecrease) userInfo:nil repeats:YES];
-    }
+    [self narrowTeacherHeadImage];
+    _teaDesLabel.hidden = YES;
+    _tea_show_btn.hidden = YES;
+    _tea_show_btn.selected = NO;
+    _teaHeadImageV.frame = _tea_head_small_frame;
 }
 
-#pragma mark - 文字动画
-- (void)TextAnimationWithView:(UIView *)view
-{
-    [UIView beginAnimations:@"animationID" context:nil];
-    [UIView setAnimationDuration:1.0f];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-    [UIView setAnimationRepeatAutoreverses:NO];
-    if ([view isKindOfClass:[UILabel class]])
-    {
-        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:view cache:YES];
-    }
-    else
-    {
-        [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:view cache:YES];
-    }
-    [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
-    [UIView commitAnimations];
-}
-
-
-#pragma mark - 开始光圈动画
-- (void)startAnimotion
-{
-    _teaCircleImageView.hidden = NO;
-    [_teaCircleImageView startAnimating];
-}
-#pragma mark - 结束光圈动画
-- (void)stopAnimotion
-{
-    _teaCircleImageView.hidden = YES;
-    [_teaCircleImageView stopAnimating];
-}
-
+#pragma mark -- 显示问题文本
 - (IBAction)showQuestionText:(id)sender
 {
-    
+    UIButton *btn = (UIButton *)sender;
+    if (!btn.selected)
+    {
+        btn.hidden = YES;
+        _teaDesLabel.hidden = NO;
+        _teaDesLabel.text = [_currentQuestionDict objectForKey:@"question"];
+        [self TextAnimationWithView:_teaDesLabel];
+    }
 }
 
 #pragma mark - 考试总时间倒计时
@@ -585,10 +665,30 @@
     
     NSDateComponents *timeCha = [currentCalendar components:unitFlags fromDate:today toDate:todate options:0];
     
-    NSString *title = [NSString stringWithFormat:@"%ld:%ld",[timeCha minute],[timeCha second]];
+    NSString *minuteString;
+    if ([timeCha minute]<10)
+    {
+        minuteString = [NSString stringWithFormat:@"0%ld",[timeCha minute]];
+    }
+    else
+    {
+        minuteString = [NSString stringWithFormat:@"%ld",[timeCha minute]];
+    }
+    
+    NSString *seconString;
+    if ([timeCha second]<10)
+    {
+        seconString = [NSString stringWithFormat:@"0%ld",[timeCha second]];
+    }
+    else
+    {
+        seconString = [NSString stringWithFormat:@"%ld",[timeCha second]];
+    }
+    
+    NSString *title = [NSString stringWithFormat:@"%@:%@",minuteString,seconString];
     
     _sumTimeLabel.text = title;
-    if ([title isEqualToString:@"0:0"])
+    if ([title isEqualToString:@"00:00"])
     {
         // 模考结束
         [_mainTimer invalidate];
@@ -600,5 +700,36 @@
         }
     }
 }
+
+#pragma mark - 回答倒计时
+- (void)answerTimeDecrease
+{
+    _aloneCounts++;
+    float tip = 1.0/20/10.0*_aloneCounts;
+    [_circleProgressView settingProgress:tip andColor:_timeProgressColor andWidth:3 andCircleLocationWidth:3];
+    if (tip>=1)
+    {
+        [_aloneTimer invalidate];
+        _aloneTimer = nil;
+        _followBtn.selected = NO;
+        [self recordFinished];
+    }
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
