@@ -20,6 +20,13 @@
 
 - (void)uiConfig
 {
+    _topBackView.backgroundColor = [UIColor whiteColor];
+    _titleLabel.textColor = kPart_Button_Color;
+    _timeLAbel.textColor = kPart_Button_Color;
+    _progressLabel.textColor = kPart_Button_Color;
+    _progressV.progress = 0.8;
+    _progressV.color = kPart_Button_Color;
+    
     // 重新确定frame  5:2  375 150
     _middleScrollV.frame = CGRectMake(0, KMiddleScrollViewOrgin_Y, kScreentWidth, kMiddleScrollViewHeight);
     _bottomScrollV.frame = CGRectMake(0, KMiddleScrollViewOrgin_Y+kMiddleScrollViewHeight, kScreentWidth, KBottomScrollViewHeight);
@@ -41,6 +48,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    // 返回按钮
+    [self addBackButtonWithImageName:@"back-Blue"];
+    [self addTitleLabelWithTitleWithTitle:@"闯关进度"];
+    [self uiConfig];
 }
 
 - (void)didReceiveMemoryWarning {

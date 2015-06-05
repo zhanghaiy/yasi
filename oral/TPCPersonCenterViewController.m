@@ -9,6 +9,7 @@
 #import "TPCPersonCenterViewController.h"
 #import "PersonClassViewController.h"
 #import "PersonSettingViewController.h"
+#import "PersonProgressViewController.h"
 
 @interface TPCPersonCenterViewController ()
 
@@ -93,6 +94,8 @@
     if (btn.tag == kEnterProgressButtonTag)
     {
         // 闯关进度
+        PersonProgressViewController *progressVC = [[PersonProgressViewController alloc]initWithNibName:@"PersonProgressViewController" bundle:nil];
+        [self.navigationController pushViewController:progressVC animated:YES];
     }
     else if (btn.tag == kEnterClassButtonTag)
     {
