@@ -602,6 +602,7 @@
         {
             // 下一题
             [self questionCountChanged1];//标记当前进行的问题数
+            [self changeAnswerProgress];
             _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
             [self prepareQuestion];
         }

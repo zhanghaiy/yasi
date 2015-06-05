@@ -159,7 +159,8 @@
     
     _sumTimeLabel.textColor = _tip_text_Color;
     _teaDesLabel.textColor = _tip_text_Color;
-    _tea_show_btn.titleLabel.textColor = _tip_text_Color;
+//    _tea_show_btn.titleLabel.textColor = _tip_text_Color;
+    [_tea_show_btn setTitleColor:_tip_text_Color forState:UIControlStateNormal];
     
     // 调整位置 记录大小
     

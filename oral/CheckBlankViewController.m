@@ -192,13 +192,13 @@
     
     
     // 加入练习簿
-    [_addBookButton setTitleColor:_pointColor forState:UIControlStateNormal];
-    [_addBookButton setAdjustsImageWhenHighlighted:YES];
-    _addBookButton.layer.masksToBounds = YES;
-    _addBookButton.layer.cornerRadius = _addBookButton.frame.size.height/2;
-    [_addBookButton setBackgroundColor:[UIColor whiteColor]];
-    
-    _addBookButton.hidden = YES;
+//    [_addBookButton setTitleColor:_pointColor forState:UIControlStateNormal];
+//    [_addBookButton setAdjustsImageWhenHighlighted:YES];
+//    _addBookButton.layer.masksToBounds = YES;
+//    _addBookButton.layer.cornerRadius = _addBookButton.frame.size.height/2;
+//    [_addBookButton setBackgroundColor:[UIColor whiteColor]];
+//    
+//    _addBookButton.hidden = YES;
     _continueButton.hidden = YES;
     
     // 起始状态：老师头像暗 学生头像 暗 文本不显示
@@ -468,11 +468,11 @@
     
     // 隐藏回答按钮  展示下一题区域
     _followAnswerButton.hidden = YES;
-    _addBookButton.hidden = NO;
+//    _addBookButton.hidden = YES;
     _continueButton.hidden = NO;
     _stuHeadImgView.alpha = 0.3;
     [_continueButton setTitleColor:_textColor forState:UIControlStateNormal];
-    [_addBookButton setTitleColor:_textColor forState:UIControlStateNormal];
+//    [_addBookButton setTitleColor:_textColor forState:UIControlStateNormal];
 }
 
 #pragma mark - 定时器
@@ -594,6 +594,7 @@
     {
         // 下一题
         [self questionCountChanged];//标记当前进行的问题数
+        [self changeAnswerProgress];
         _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
         [self prepareQuestion];
     }
@@ -608,9 +609,9 @@
     _answerTime = 15;
     // 隐藏下一问题按钮区域
     _continueButton.hidden = YES;
-    _addBookButton.hidden = YES;
+//    _addBookButton.hidden = YES;
     _continueButton.selected = NO;
-    _addBookButton.selected = NO;
+//    _addBookButton.selected = NO;
     // 隐藏分数 显示学生头像 时间进度条
     _stuScoreButton.hidden = YES;
     _stuTimeProgressLabel.hidden = NO;

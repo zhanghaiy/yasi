@@ -24,42 +24,6 @@
 		FD54615F1B10761C00409778 /* ClassCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD54615D1B10761C00409778 /* ClassCell.m */; };
 		FD5461601B10761C00409778 /* ClassCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD54615E1B10761C00409778 /* ClassCell.xib */; };
 		FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8B1B09E0D400D6DE7B /* Images.xcassets */; };
-		FD596DB21B09E42100D6DE7B /* 349207.png in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8E1B09E42100D6DE7B /* 349207.png */; };
-		FD596DB31B09E42100D6DE7B /* info.json in Resources */ = {isa = PBXBuildFile; fileRef = FD596D8F1B09E42100D6DE7B /* info.json */; };
-		FD596DB41B09E42100D6DE7B /* Question_3224.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D901B09E42100D6DE7B /* Question_3224.mp3 */; };
-		FD596DB51B09E42100D6DE7B /* Question_3225.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D911B09E42100D6DE7B /* Question_3225.mp3 */; };
-		FD596DB61B09E42100D6DE7B /* Question_3226.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D921B09E42100D6DE7B /* Question_3226.mp3 */; };
-		FD596DB71B09E42100D6DE7B /* Question_3227.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D931B09E42100D6DE7B /* Question_3227.mp3 */; };
-		FD596DB81B09E42100D6DE7B /* Question_3228.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D941B09E42100D6DE7B /* Question_3228.mp3 */; };
-		FD596DB91B09E42100D6DE7B /* Question_3229.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D951B09E42100D6DE7B /* Question_3229.mp3 */; };
-		FD596DBA1B09E42100D6DE7B /* Question_3230.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D961B09E42100D6DE7B /* Question_3230.mp3 */; };
-		FD596DBB1B09E42100D6DE7B /* Question_3231.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D971B09E42100D6DE7B /* Question_3231.mp3 */; };
-		FD596DBC1B09E42100D6DE7B /* Question_3232.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D981B09E42100D6DE7B /* Question_3232.mp3 */; };
-		FD596DBD1B09E42100D6DE7B /* Question_3233.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D991B09E42100D6DE7B /* Question_3233.mp3 */; };
-		FD596DBE1B09E42100D6DE7B /* Question_3234.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D9A1B09E42100D6DE7B /* Question_3234.mp3 */; };
-		FD596DBF1B09E42100D6DE7B /* Question_3235.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D9B1B09E42100D6DE7B /* Question_3235.mp3 */; };
-		FD596DC01B09E42100D6DE7B /* Question_3236.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D9C1B09E42100D6DE7B /* Question_3236.mp3 */; };
-		FD596DC11B09E42100D6DE7B /* Question_3237.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D9D1B09E42100D6DE7B /* Question_3237.mp3 */; };
-		FD596DC21B09E42100D6DE7B /* Question_3238.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D9E1B09E42100D6DE7B /* Question_3238.mp3 */; };
-		FD596DC31B09E42100D6DE7B /* Question_3239.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596D9F1B09E42100D6DE7B /* Question_3239.mp3 */; };
-		FD596DC41B09E42100D6DE7B /* Question_3240.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DA01B09E42100D6DE7B /* Question_3240.mp3 */; };
-		FD596DC51B09E42100D6DE7B /* Question_3241.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DA11B09E42100D6DE7B /* Question_3241.mp3 */; };
-		FD596DC61B09E42100D6DE7B /* Question_3242.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DA21B09E42100D6DE7B /* Question_3242.mp3 */; };
-		FD596DC71B09E42100D6DE7B /* Question_3243.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DA31B09E42100D6DE7B /* Question_3243.mp3 */; };
-		FD596DC81B09E42100D6DE7B /* Question_3244.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DA41B09E42100D6DE7B /* Question_3244.mp3 */; };
-		FD596DC91B09E42100D6DE7B /* Question_3245.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DA51B09E42100D6DE7B /* Question_3245.mp3 */; };
-		FD596DCA1B09E42100D6DE7B /* Question_3246.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DA61B09E42100D6DE7B /* Question_3246.mp3 */; };
-		FD596DCB1B09E42100D6DE7B /* Question_3247.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DA71B09E42100D6DE7B /* Question_3247.mp3 */; };
-		FD596DCC1B09E42100D6DE7B /* Question_3248.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DA81B09E42100D6DE7B /* Question_3248.mp3 */; };
-		FD596DCD1B09E42100D6DE7B /* Question_3249.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DA91B09E42100D6DE7B /* Question_3249.mp3 */; };
-		FD596DCE1B09E42100D6DE7B /* Question_3250.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DAA1B09E42100D6DE7B /* Question_3250.mp3 */; };
-		FD596DCF1B09E42100D6DE7B /* Question_3251.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DAB1B09E42100D6DE7B /* Question_3251.mp3 */; };
-		FD596DD01B09E42100D6DE7B /* Question_3252.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DAC1B09E42100D6DE7B /* Question_3252.mp3 */; };
-		FD596DD11B09E42100D6DE7B /* Question_3253.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DAD1B09E42100D6DE7B /* Question_3253.mp3 */; };
-		FD596DD21B09E42100D6DE7B /* Question_3254.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DAE1B09E42100D6DE7B /* Question_3254.mp3 */; };
-		FD596DD31B09E42100D6DE7B /* Question_3255.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DAF1B09E42100D6DE7B /* Question_3255.mp3 */; };
-		FD596DD41B09E42100D6DE7B /* Question_3256.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DB01B09E42100D6DE7B /* Question_3256.mp3 */; };
-		FD596DD51B09E42100D6DE7B /* Question_3257.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD596DB11B09E42100D6DE7B /* Question_3257.mp3 */; };
 		FD5A05841B0ED899002F0756 /* CircleProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5A05831B0ED899002F0756 /* CircleProgressView.m */; };
 		FD62449F1B0584780037836E /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = FD62449E1B0584780037836E /* touxiang.png */; };
 		FD6244A31B0585450037836E /* TPCCheckpointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6244A11B0585450037836E /* TPCCheckpointViewController.m */; };
@@ -67,12 +31,6 @@
 		FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6244A61B0585820037836E /* CheckFollowViewController.m */; };
 		FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A71B0585820037836E /* CheckFollowViewController.xib */; };
 		FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */; };
-		FD83055A1B1E9993001A3DF5 /* mockinfo.json in Resources */ = {isa = PBXBuildFile; fileRef = FD8305541B1E9993001A3DF5 /* mockinfo.json */; };
-		FD83055B1B1E9993001A3DF5 /* Question_3224.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD8305551B1E9993001A3DF5 /* Question_3224.mp3 */; };
-		FD83055C1B1E9993001A3DF5 /* Question_3241.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD8305561B1E9993001A3DF5 /* Question_3241.mp3 */; };
-		FD83055D1B1E9993001A3DF5 /* Question_3247.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD8305571B1E9993001A3DF5 /* Question_3247.mp3 */; };
-		FD83055E1B1E9993001A3DF5 /* Question_3251.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD8305581B1E9993001A3DF5 /* Question_3251.mp3 */; };
-		FD83055F1B1E9993001A3DF5 /* Question_3256.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FD8305591B1E9993001A3DF5 /* Question_3256.mp3 */; };
 		FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */; };
 		FD8453A51B155D3A00B1E84B /* ScoreMenuTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */; };
 		FD8453B21B15A01E00B1E84B /* TableView_headView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453B11B15A01E00B1E84B /* TableView_headView.m */; };
@@ -199,42 +157,6 @@
 		FD596D831B097E7000D6DE7B /* PchFile.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PchFile.pch; sourceTree = "<group>"; };
 		FD596D851B097F7C00D6DE7B /* HeadFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HeadFile.h; sourceTree = "<group>"; };
 		FD596D8B1B09E0D400D6DE7B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		FD596D8E1B09E42100D6DE7B /* 349207.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 349207.png; sourceTree = "<group>"; };
-		FD596D8F1B09E42100D6DE7B /* info.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = info.json; sourceTree = "<group>"; };
-		FD596D901B09E42100D6DE7B /* Question_3224.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3224.mp3; sourceTree = "<group>"; };
-		FD596D911B09E42100D6DE7B /* Question_3225.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3225.mp3; sourceTree = "<group>"; };
-		FD596D921B09E42100D6DE7B /* Question_3226.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3226.mp3; sourceTree = "<group>"; };
-		FD596D931B09E42100D6DE7B /* Question_3227.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3227.mp3; sourceTree = "<group>"; };
-		FD596D941B09E42100D6DE7B /* Question_3228.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3228.mp3; sourceTree = "<group>"; };
-		FD596D951B09E42100D6DE7B /* Question_3229.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3229.mp3; sourceTree = "<group>"; };
-		FD596D961B09E42100D6DE7B /* Question_3230.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3230.mp3; sourceTree = "<group>"; };
-		FD596D971B09E42100D6DE7B /* Question_3231.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3231.mp3; sourceTree = "<group>"; };
-		FD596D981B09E42100D6DE7B /* Question_3232.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3232.mp3; sourceTree = "<group>"; };
-		FD596D991B09E42100D6DE7B /* Question_3233.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3233.mp3; sourceTree = "<group>"; };
-		FD596D9A1B09E42100D6DE7B /* Question_3234.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3234.mp3; sourceTree = "<group>"; };
-		FD596D9B1B09E42100D6DE7B /* Question_3235.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3235.mp3; sourceTree = "<group>"; };
-		FD596D9C1B09E42100D6DE7B /* Question_3236.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3236.mp3; sourceTree = "<group>"; };
-		FD596D9D1B09E42100D6DE7B /* Question_3237.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3237.mp3; sourceTree = "<group>"; };
-		FD596D9E1B09E42100D6DE7B /* Question_3238.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3238.mp3; sourceTree = "<group>"; };
-		FD596D9F1B09E42100D6DE7B /* Question_3239.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3239.mp3; sourceTree = "<group>"; };
-		FD596DA01B09E42100D6DE7B /* Question_3240.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3240.mp3; sourceTree = "<group>"; };
-		FD596DA11B09E42100D6DE7B /* Question_3241.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3241.mp3; sourceTree = "<group>"; };
-		FD596DA21B09E42100D6DE7B /* Question_3242.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3242.mp3; sourceTree = "<group>"; };
-		FD596DA31B09E42100D6DE7B /* Question_3243.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3243.mp3; sourceTree = "<group>"; };
-		FD596DA41B09E42100D6DE7B /* Question_3244.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3244.mp3; sourceTree = "<group>"; };
-		FD596DA51B09E42100D6DE7B /* Question_3245.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3245.mp3; sourceTree = "<group>"; };
-		FD596DA61B09E42100D6DE7B /* Question_3246.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3246.mp3; sourceTree = "<group>"; };
-		FD596DA71B09E42100D6DE7B /* Question_3247.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3247.mp3; sourceTree = "<group>"; };
-		FD596DA81B09E42100D6DE7B /* Question_3248.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3248.mp3; sourceTree = "<group>"; };
-		FD596DA91B09E42100D6DE7B /* Question_3249.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3249.mp3; sourceTree = "<group>"; };
-		FD596DAA1B09E42100D6DE7B /* Question_3250.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3250.mp3; sourceTree = "<group>"; };
-		FD596DAB1B09E42100D6DE7B /* Question_3251.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3251.mp3; sourceTree = "<group>"; };
-		FD596DAC1B09E42100D6DE7B /* Question_3252.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3252.mp3; sourceTree = "<group>"; };
-		FD596DAD1B09E42100D6DE7B /* Question_3253.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3253.mp3; sourceTree = "<group>"; };
-		FD596DAE1B09E42100D6DE7B /* Question_3254.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3254.mp3; sourceTree = "<group>"; };
-		FD596DAF1B09E42100D6DE7B /* Question_3255.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3255.mp3; sourceTree = "<group>"; };
-		FD596DB01B09E42100D6DE7B /* Question_3256.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3256.mp3; sourceTree = "<group>"; };
-		FD596DB11B09E42100D6DE7B /* Question_3257.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3257.mp3; sourceTree = "<group>"; };
 		FD5A05821B0ED899002F0756 /* CircleProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleProgressView.h; sourceTree = "<group>"; };
 		FD5A05831B0ED899002F0756 /* CircleProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleProgressView.m; sourceTree = "<group>"; };
 		FD62449E1B0584780037836E /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang.png; sourceTree = "<group>"; };
@@ -246,12 +168,6 @@
 		FD6244A71B0585820037836E /* CheckFollowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckFollowViewController.xib; sourceTree = "<group>"; };
 		FD6B80D21B1843FF00F9562C /* NSString+CalculateStringSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CalculateStringSize.h"; sourceTree = "<group>"; };
 		FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CalculateStringSize.m"; sourceTree = "<group>"; };
-		FD8305541B1E9993001A3DF5 /* mockinfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mockinfo.json; sourceTree = "<group>"; };
-		FD8305551B1E9993001A3DF5 /* Question_3224.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3224.mp3; sourceTree = "<group>"; };
-		FD8305561B1E9993001A3DF5 /* Question_3241.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3241.mp3; sourceTree = "<group>"; };
-		FD8305571B1E9993001A3DF5 /* Question_3247.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3247.mp3; sourceTree = "<group>"; };
-		FD8305581B1E9993001A3DF5 /* Question_3251.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3251.mp3; sourceTree = "<group>"; };
-		FD8305591B1E9993001A3DF5 /* Question_3256.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Question_3256.mp3; sourceTree = "<group>"; };
 		FD8453A11B155D2B00B1E84B /* ScoreMenuTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreMenuTestView.h; sourceTree = "<group>"; };
 		FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreMenuTestView.m; sourceTree = "<group>"; };
 		FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreMenuTestView.xib; sourceTree = "<group>"; };
@@ -506,49 +422,6 @@
 			name = cell;
 			sourceTree = "<group>";
 		};
-		FD596D8D1B09E42100D6DE7B /* temp 3 */ = {
-			isa = PBXGroup;
-			children = (
-				FD596D8E1B09E42100D6DE7B /* 349207.png */,
-				FD596D8F1B09E42100D6DE7B /* info.json */,
-				FD596D901B09E42100D6DE7B /* Question_3224.mp3 */,
-				FD596D911B09E42100D6DE7B /* Question_3225.mp3 */,
-				FD596D921B09E42100D6DE7B /* Question_3226.mp3 */,
-				FD596D931B09E42100D6DE7B /* Question_3227.mp3 */,
-				FD596D941B09E42100D6DE7B /* Question_3228.mp3 */,
-				FD596D951B09E42100D6DE7B /* Question_3229.mp3 */,
-				FD596D961B09E42100D6DE7B /* Question_3230.mp3 */,
-				FD596D971B09E42100D6DE7B /* Question_3231.mp3 */,
-				FD596D981B09E42100D6DE7B /* Question_3232.mp3 */,
-				FD596D991B09E42100D6DE7B /* Question_3233.mp3 */,
-				FD596D9A1B09E42100D6DE7B /* Question_3234.mp3 */,
-				FD596D9B1B09E42100D6DE7B /* Question_3235.mp3 */,
-				FD596D9C1B09E42100D6DE7B /* Question_3236.mp3 */,
-				FD596D9D1B09E42100D6DE7B /* Question_3237.mp3 */,
-				FD596D9E1B09E42100D6DE7B /* Question_3238.mp3 */,
-				FD596D9F1B09E42100D6DE7B /* Question_3239.mp3 */,
-				FD596DA01B09E42100D6DE7B /* Question_3240.mp3 */,
-				FD596DA11B09E42100D6DE7B /* Question_3241.mp3 */,
-				FD596DA21B09E42100D6DE7B /* Question_3242.mp3 */,
-				FD596DA31B09E42100D6DE7B /* Question_3243.mp3 */,
-				FD596DA41B09E42100D6DE7B /* Question_3244.mp3 */,
-				FD596DA51B09E42100D6DE7B /* Question_3245.mp3 */,
-				FD596DA61B09E42100D6DE7B /* Question_3246.mp3 */,
-				FD596DA71B09E42100D6DE7B /* Question_3247.mp3 */,
-				FD596DA81B09E42100D6DE7B /* Question_3248.mp3 */,
-				FD596DA91B09E42100D6DE7B /* Question_3249.mp3 */,
-				FD596DAA1B09E42100D6DE7B /* Question_3250.mp3 */,
-				FD596DAB1B09E42100D6DE7B /* Question_3251.mp3 */,
-				FD596DAC1B09E42100D6DE7B /* Question_3252.mp3 */,
-				FD596DAD1B09E42100D6DE7B /* Question_3253.mp3 */,
-				FD596DAE1B09E42100D6DE7B /* Question_3254.mp3 */,
-				FD596DAF1B09E42100D6DE7B /* Question_3255.mp3 */,
-				FD596DB01B09E42100D6DE7B /* Question_3256.mp3 */,
-				FD596DB11B09E42100D6DE7B /* Question_3257.mp3 */,
-			);
-			path = "temp 3";
-			sourceTree = "<group>";
-		};
 		FD5A05811B0ED877002F0756 /* 圆形进度条 */ = {
 			isa = PBXGroup;
 			children = (
@@ -611,19 +484,6 @@
 				FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */,
 			);
 			name = Category;
-			sourceTree = "<group>";
-		};
-		FD8305531B1E9993001A3DF5 /* temp 2 */ = {
-			isa = PBXGroup;
-			children = (
-				FD8305541B1E9993001A3DF5 /* mockinfo.json */,
-				FD8305551B1E9993001A3DF5 /* Question_3224.mp3 */,
-				FD8305561B1E9993001A3DF5 /* Question_3241.mp3 */,
-				FD8305571B1E9993001A3DF5 /* Question_3247.mp3 */,
-				FD8305581B1E9993001A3DF5 /* Question_3251.mp3 */,
-				FD8305591B1E9993001A3DF5 /* Question_3256.mp3 */,
-			);
-			path = "temp 2";
 			sourceTree = "<group>";
 		};
 		FD8453A61B15933C00B1E84B /* 闯关成绩单 */ = {
@@ -958,10 +818,8 @@
 		FDD404101B0492F900DE2E84 /* oral */ = {
 			isa = PBXGroup;
 			children = (
-				FD8305531B1E9993001A3DF5 /* temp 2 */,
 				FD6B80CE1B18434400F9562C /* Category */,
 				FD9958F01B1328B7005892DB /* Net */,
-				FD596D8D1B09E42100D6DE7B /* temp 3 */,
 				FDA25E111B0D9EFF00F35545 /* Models */,
 				FD6244AA1B0585A10037836E /* ViewControllers */,
 				FDD404501B049B4700DE2E84 /* images */,
@@ -1102,84 +960,42 @@
 				FD54614A1B105FF400409778 /* MyTeacherCell.xib in Resources */,
 				FDD4041D1B0492F900DE2E84 /* Main.storyboard in Resources */,
 				FDBA32F71B1C391200C02BF8 /* Score_Point3_Footer_View.xib in Resources */,
-				FD596DD51B09E42100D6DE7B /* Question_3257.mp3 in Resources */,
 				FD97AFAB1B16E11A00C45A2C /* TestReviewCell.xib in Resources */,
-				FD596DC11B09E42100D6DE7B /* Question_3237.mp3 in Resources */,
-				FD596DBC1B09E42100D6DE7B /* Question_3232.mp3 in Resources */,
-				FD596DC01B09E42100D6DE7B /* Question_3236.mp3 in Resources */,
-				FD596DCD1B09E42100D6DE7B /* Question_3249.mp3 in Resources */,
 				FDD404221B0492F900DE2E84 /* LaunchScreen.xib in Resources */,
-				FD596DC21B09E42100D6DE7B /* Question_3238.mp3 in Resources */,
-				FD596DCB1B09E42100D6DE7B /* Question_3247.mp3 in Resources */,
 				FD9957DC1B12BC02005892DB /* ClassDetailViewController.xib in Resources */,
 				FDD4044D1B04972D00DE2E84 /* RightMainCell.xib in Resources */,
-				FD596DCA1B09E42100D6DE7B /* Question_3246.mp3 in Resources */,
-				FD83055B1B1E9993001A3DF5 /* Question_3224.mp3 in Resources */,
 				FD8C40E71B0C6D8200948B6C /* CheckSuccessViewController.xib in Resources */,
 				FDA0C26A1B14719A00900F49 /* ScoreMenuCell.xib in Resources */,
-				FD596DCE1B09E42100D6DE7B /* Question_3250.mp3 in Resources */,
 				FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */,
-				FD83055F1B1E9993001A3DF5 /* Question_3256.mp3 in Resources */,
 				FDA25E171B0DC31900F35545 /* CheckKeyWordViewController.xib in Resources */,
 				FDD4044F1B04972D00DE2E84 /* TopicCell.xib in Resources */,
-				FD596DBF1B09E42100D6DE7B /* Question_3235.mp3 in Resources */,
-				FD596DD21B09E42100D6DE7B /* Question_3254.mp3 in Resources */,
-				FD596DC61B09E42100D6DE7B /* Question_3242.mp3 in Resources */,
-				FD83055A1B1E9993001A3DF5 /* mockinfo.json in Resources */,
 				FD5461451B105D7700409778 /* FooterView.xib in Resources */,
-				FD596DD01B09E42100D6DE7B /* Question_3252.mp3 in Resources */,
 				FDBA32F21B1C38E600C02BF8 /* Score_Point3_Cell.xib in Resources */,
-				FD596DB21B09E42100D6DE7B /* 349207.png in Resources */,
 				FD5461551B10676700409778 /* TPCPersonCenterViewController.xib in Resources */,
-				FD596DBB1B09E42100D6DE7B /* Question_3231.mp3 in Resources */,
-				FD83055D1B1E9993001A3DF5 /* Question_3247.mp3 in Resources */,
 				FDD404591B049B8400DE2E84 /* topic_small.png in Resources */,
 				FD9957E31B12C47B005892DB /* 33.jpg in Resources */,
 				FD8C40EC1B0C6F3A00948B6C /* CheckBlankViewController.xib in Resources */,
-				FD596DBE1B09E42100D6DE7B /* Question_3234.mp3 in Resources */,
-				FD596DCC1B09E42100D6DE7B /* Question_3248.mp3 in Resources */,
 				FDBA32ED1B1C38A000C02BF8 /* Score_Point3_Section_View.xib in Resources */,
 				FDA0C2651B1463C000900F49 /* ScoreDetailViewController.xib in Resources */,
 				FD62449F1B0584780037836E /* touxiang.png in Resources */,
 				FD97AFB01B16FD2400C45A2C /* CheckPractiseBookViewController.xib in Resources */,
 				FD54615A1B10748600409778 /* PersonClassViewController.xib in Resources */,
-				FD596DB41B09E42100D6DE7B /* Question_3224.mp3 in Resources */,
-				FD596DB81B09E42100D6DE7B /* Question_3228.mp3 in Resources */,
-				FD596DBD1B09E42100D6DE7B /* Question_3233.mp3 in Resources */,
 				FDBA32FC1B1C559200C02BF8 /* Score_Point3_TableHeaderView_commited.xib in Resources */,
-				FD596DCF1B09E42100D6DE7B /* Question_3251.mp3 in Resources */,
-				FD596DC91B09E42100D6DE7B /* Question_3245.mp3 in Resources */,
-				FD596DD41B09E42100D6DE7B /* Question_3256.mp3 in Resources */,
 				FD9957E11B12BC1E005892DB /* ClassIntroduceViewController.xib in Resources */,
-				FD596DB61B09E42100D6DE7B /* Question_3226.mp3 in Resources */,
 				FDD404551B049B5B00DE2E84 /* topic1.png in Resources */,
-				FD596DC71B09E42100D6DE7B /* Question_3243.mp3 in Resources */,
-				FD83055E1B1E9993001A3DF5 /* Question_3251.mp3 in Resources */,
 				FD8C40F11B0C6FAB00948B6C /* CheckAskViewController.xib in Resources */,
 				FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */,
-				FD596DC41B09E42100D6DE7B /* Question_3240.mp3 in Resources */,
 				FD54613A1B10576B00409778 /* CheckTestViewController.xib in Resources */,
 				FD5461601B10761C00409778 /* ClassCell.xib in Resources */,
 				FDD404561B049B5B00DE2E84 /* topic2.png in Resources */,
-				FD596DC31B09E42100D6DE7B /* Question_3239.mp3 in Resources */,
-				FD596DBA1B09E42100D6DE7B /* Question_3230.mp3 in Resources */,
-				FD596DD31B09E42100D6DE7B /* Question_3255.mp3 in Resources */,
 				FDD404541B049B5B00DE2E84 /* topic.png in Resources */,
 				FD54613F1B10580A00409778 /* MyTeacherViewController.xib in Resources */,
 				FD97AFB51B17020800C45A2C /* PractiseCell.xib in Resources */,
 				FDA0C2511B1412AA00900F49 /* LICENSE in Resources */,
-				FD596DD11B09E42100D6DE7B /* Question_3253.mp3 in Resources */,
 				FD8453A51B155D3A00B1E84B /* ScoreMenuTestView.xib in Resources */,
 				FD97AFA61B16BB8A00C45A2C /* ScoreTestMenuViewController.xib in Resources */,
-				FD596DB91B09E42100D6DE7B /* Question_3229.mp3 in Resources */,
-				FD596DC51B09E42100D6DE7B /* Question_3241.mp3 in Resources */,
-				FD83055C1B1E9993001A3DF5 /* Question_3241.mp3 in Resources */,
-				FD596DB31B09E42100D6DE7B /* info.json in Resources */,
-				FD596DB71B09E42100D6DE7B /* Question_3227.mp3 in Resources */,
 				FD5461341B1045B800409778 /* SuccessCell.xib in Resources */,
 				FD6244A41B0585450037836E /* TPCCheckpointViewController.xib in Resources */,
-				FD596DC81B09E42100D6DE7B /* Question_3244.mp3 in Resources */,
-				FD596DB51B09E42100D6DE7B /* Question_3225.mp3 in Resources */,
 				FDD4045A1B049B8400DE2E84 /* topic1_small.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

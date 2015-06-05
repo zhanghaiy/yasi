@@ -104,26 +104,30 @@
                         <action selector="followAnswer:" destination="-1" eventType="touchUpInside" id="hZR-Dg-6aO"/>
                     </connections>
                 </button>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yrv-kw-s1C">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yrv-kw-s1C">
                     <rect key="frame" x="61" y="574" width="120" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="2pV-ez-XfJ"/>
                         <constraint firstAttribute="width" constant="120" id="AbW-FT-xmE"/>
                     </constraints>
-                    <state key="normal" title="稍后提交老师" backgroundImage="exesize">
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="稍后提交老师">
+                        <color key="titleColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="commitButtonClicked:" destination="-1" eventType="touchUpInside" id="3km-CK-QvH"/>
                     </connections>
                 </button>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rnN-7g-An6">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rnN-7g-An6">
                     <rect key="frame" x="194" y="574" width="120" height="50"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="oCQ-X7-oOv"/>
                         <constraint firstAttribute="width" constant="120" id="ucS-uH-OaO"/>
                     </constraints>
-                    <state key="normal" title="提交给老师" backgroundImage="nextQuestion">
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <state key="normal" title="提交给老师">
+                        <color key="titleColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -157,8 +161,6 @@
     </objects>
     <resources>
         <image name="answerButton-sele" width="67" height="67"/>
-        <image name="exesize" width="126" height="60"/>
-        <image name="nextQuestion" width="126" height="60"/>
         <image name="touxiang.png" width="70" height="70"/>
     </resources>
 </document>

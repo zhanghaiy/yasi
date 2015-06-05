@@ -244,6 +244,14 @@
     _teaHeadImgView.alpha = 0.3;
     _followAnswerButton.hidden = YES;
     [self narrowStuHeadImage];
+    
+    [_CommitLeftButton setBackgroundColor:[UIColor whiteColor]];
+    [_CommitLeftButton setTitleColor:_pointColor forState:UIControlStateNormal];
+    _CommitLeftButton.hidden = YES;
+    
+    [_commitRightButton setBackgroundColor:[UIColor whiteColor]];
+    [_commitRightButton setTitleColor:_pointColor forState:UIControlStateNormal];
+    _commitRightButton.hidden = YES;
 }
 
 #pragma mark - 创建时间进度条
