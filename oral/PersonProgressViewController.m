@@ -24,6 +24,16 @@
     _middleScrollV.frame = CGRectMake(0, KMiddleScrollViewOrgin_Y, kScreentWidth, kMiddleScrollViewHeight);
     _bottomScrollV.frame = CGRectMake(0, KMiddleScrollViewOrgin_Y+kMiddleScrollViewHeight, kScreentWidth, KBottomScrollViewHeight);
     
+    NSInteger space = 40;
+    NSInteger btnWidth = (kScreentWidth-4*space)/3;
+    
+    for (int i = 0; i < 3; i ++)
+    {
+//        UIButton *topicBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        topicBtn setFrame:CGRectMake(40+i*(btnWidth+40), <#CGFloat y#>, <#CGFloat width#>, <#CGFloat height#>)
+    }
+    
+    
 }
 
 

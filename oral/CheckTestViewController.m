@@ -42,13 +42,15 @@
     NSDate *_beginDate;// 设置开始时间
     
     UIColor *_tip_text_Color;// 文字颜色
+    
+    BOOL _testFinished;
 }
 @end
 
 @implementation CheckTestViewController
 
 #define kPartButtonTag 1000
-#define KLeftCommitButtonTag 8000
+#define KLeftCommitButtonTag 8002
 #define KRightCommitButtonTag 8001
 
 
@@ -236,15 +238,21 @@
     
     
     // 提交按钮
-    [_commitButtonLeft setBackgroundColor:[UIColor whiteColor]];
+    [_commitButtonLeft setBackgroundColor:_backgroundViewColor];
     [_commitButtonLeft setTitleColor:kPart_Back_Color forState:UIControlStateNormal];
     _commitButtonLeft.hidden = YES;
     _commitButtonLeft.tag = KLeftCommitButtonTag;
     
-    [_commitButtonRight setBackgroundColor:[UIColor whiteColor]];
+    [_commitButtonRight setBackgroundColor:_backgroundViewColor];
     [_commitButtonRight setTitleColor:kPart_Back_Color forState:UIControlStateNormal];
     _commitButtonRight.hidden = YES;
     _commitButtonRight.tag = KRightCommitButtonTag;
+    
+    _commitButtonLeft.layer.masksToBounds = YES;
+    _commitButtonLeft.layer.cornerRadius = _commitButtonLeft.frame.size.height/2;
+    
+    _commitButtonRight.layer.masksToBounds = YES;
+    _commitButtonRight.layer.cornerRadius = _commitButtonRight.frame.size.height/2;
 }
 
 #pragma mark - 视图加载
@@ -252,6 +260,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    _testFinished = NO;
     _aloneCounts = 0;
     _prepareTime_point2 = 6;
     _tip_text_Color = [UIColor colorWithRed:0 green:196/255.0 blue:255/255.0 alpha:1];
@@ -279,10 +288,13 @@
 {
     [super viewDidAppear:animated];
 
-    _tipLabel.text = [NSString stringWithFormat:@"第%ld轮考试马上开始~请集中注意力~~~~",_current_part_Counts+1];// @"考试马上开始~请集中注意力~~~~";
-    [self TextAnimationWithView:_tipLabel];
-    // 预留准备时间
-    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareTest) userInfo:nil repeats:NO];
+    if (_testFinished == NO)
+    {
+        _tipLabel.text = [NSString stringWithFormat:@"第%ld轮考试马上开始~请集中注意力~~~~",_current_part_Counts+1];// @"考试马上开始~请集中注意力~~~~";
+        [self TextAnimationWithView:_tipLabel];
+        // 预留准备时间
+        [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareTest) userInfo:nil repeats:NO];
+    }
 }
 
 
@@ -327,7 +339,7 @@
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(endQuestion) userInfo:nil repeats:NO];
     
     // 2、学员准备回答 ----> 动画
-    [NSTimer scheduledTimerWithTimeInterval:6 target:self selector:@selector(prepareAnswerTest) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(prepareAnswerTest) userInfo:nil repeats:NO];
     //    // 开始回答
     //    [NSTimer scheduledTimerWithTimeInterval:8 target:self selector:@selector(startAnswer) userInfo:nil repeats:NO];
 }
@@ -435,7 +447,7 @@
         [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(makeSelfViewFomal) userInfo:nil repeats:NO];
         
         // 准备下一题
-        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(prepareTestQuestion) userInfo:nil repeats:NO];
+        [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(prepareTestQuestion) userInfo:nil repeats:NO];
     }
     else if (_current_question_Counts >= _sum_question_Counts)
     {
@@ -457,8 +469,8 @@
             _tipLabel.text = @"模考结束";
             [_mainTimer invalidate];
             _mainTimer = nil;
-            
-            _commitButtonLeft.hidden = YES;
+            _testFinished = YES;
+            _commitButtonLeft.hidden = NO;
             _commitButtonRight.hidden = NO;
         }
     }
@@ -771,14 +783,15 @@
 #pragma mark - 返回topic详情页
 - (void)backToTopicPage
 {
-    for (UIViewController *viewControllers in self.navigationController.viewControllers)
-    {
-        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
-        {
-            [self.navigationController popToViewController:viewControllers animated:YES];
-            break;
-        }
-    }
+//    for (UIViewController *viewControllers in self.navigationController.viewControllers)
+//    {
+//        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
+//        {
+//            [self.navigationController popToViewController:viewControllers animated:YES];
+//            break;
+//        }
+//    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

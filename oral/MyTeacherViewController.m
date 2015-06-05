@@ -36,7 +36,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(kScreentWidth-70, 0, 70, self.navTopView.frame.size.height)];
+    [rightButton setFrame:CGRectMake(kScreentWidth-70, 24, 70, 44)];
     rightButton.backgroundColor = [UIColor clearColor];
     [rightButton setTitle:@"完成" forState:UIControlStateNormal];
     [rightButton setTitleColor:_backColor forState:UIControlStateNormal];
@@ -47,7 +47,7 @@
     _footerView.backgroundColor = [UIColor clearColor];
     
     
-    _myTeaTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 50, kScreentWidth, kScreenHeight-50) style:UITableViewStylePlain];
+    _myTeaTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight+2, kScreentWidth, kScreenHeight-50) style:UITableViewStylePlain];
     _myTeaTableV.delegate = self;
     _myTeaTableV.dataSource = self;
     _myTeaTableV.separatorStyle = UITableViewCellSeparatorStyleNone;
