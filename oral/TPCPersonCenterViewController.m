@@ -8,7 +8,7 @@
 
 #import "TPCPersonCenterViewController.h"
 #import "PersonClassViewController.h"
-
+#import "PersonSettingViewController.h"
 
 @interface TPCPersonCenterViewController ()
 
@@ -28,15 +28,25 @@
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"我的后院"];
+    
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(kScreentWidth-45, (self.navTopView.frame.size.height-24-20)/2+24, 20, 20)];
+    [rightButton setFrame:CGRectMake(kScreentWidth-40, (self.navTopView.frame.size.height-24-20)/2+24, 20, 20)];
     [rightButton setBackgroundImage:[UIImage imageNamed:@"person_setting"] forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    
+    [rightButton addTarget:self action:@selector(personSetting) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.navTopView addSubview:rightButton];
     self.navTopView.backgroundColor = _backgroundViewColor;
     [self uiConfig];
 }
 
+- (void)personSetting
+{
+    PersonSettingViewController *personSetVC = [[PersonSettingViewController alloc]initWithNibName:@"PersonSettingViewController" bundle:nil];
+    [self.navigationController pushViewController:personSetVC animated:YES];
+}
+  
 - (void)uiConfig
 {
     // 用户头像圆形

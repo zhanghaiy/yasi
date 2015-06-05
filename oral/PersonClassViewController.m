@@ -10,6 +10,7 @@
 #import "ClassCell.h"
 #import "ClassIntroduceViewController.h"
 #import "ClassDetailViewController.h"
+#import "ClassSearchViewController.h"
 
 @interface PersonClassViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -31,20 +32,28 @@
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"我的班级"];
+    
+    
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(kScreentWidth-50, 7, 30, 30)];
-    rightButton.backgroundColor = [UIColor purpleColor];
-    [rightButton setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    [rightButton setFrame:CGRectMake(kScreentWidth-40, 24+(KNavTopViewHeight-24-25)/2, 25, 25)];
+    [rightButton setBackgroundImage:[UIImage imageNamed:@"class_search"] forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    [rightButton addTarget:self action:@selector(searchClass) forControlEvents:UIControlEventTouchUpInside];
     [self.navTopView addSubview:rightButton];
     
     
-    _myClassTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 50, kScreentWidth, kScreenHeight-50) style:UITableViewStylePlain];
+    _myClassTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight+5, kScreentWidth, kScreenHeight-5-KNavTopViewHeight) style:UITableViewStylePlain];
     _myClassTableV.delegate = self;
     _myClassTableV.dataSource = self;
     _myClassTableV.separatorStyle = UITableViewCellSeparatorStyleNone;
     _myClassTableV.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_myClassTableV];
+}
+
+- (void)searchClass
+{
+    ClassSearchViewController *searchVC = [[ClassSearchViewController alloc]initWithNibName:@"ClassSearchViewController" bundle:nil];
+    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 #pragma mark - UITableView delegate dataSource
@@ -74,6 +83,7 @@
     if (cell == nil) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"ClassCell" owner:self options:0] lastObject];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.classImageButton.tag = kClassButtonTag + indexPath.row;
     [cell.classImageButton addTarget:self action:@selector(enterClassIntroducePage:) forControlEvents:UIControlEventTouchUpInside];
     

@@ -505,6 +505,7 @@
     if (btn.tag == kCommitLeftButtonTag)
     {
         // 稍后提交
+        [self backToTopicPage];
     }
     else if (btn.tag == kCommitRightButtonTag)
     {
@@ -512,6 +513,19 @@
         
         MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
         [self.navigationController pushViewController:myTeacherVC animated:YES];
+    }
+}
+
+#pragma mark - 返回topic详情页
+- (void)backToTopicPage
+{
+    for (UIViewController *viewControllers in self.navigationController.viewControllers)
+    {
+        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
+        {
+            [self.navigationController popToViewController:viewControllers animated:YES];
+            break;
+        }
     }
 }
 

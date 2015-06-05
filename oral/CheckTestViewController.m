@@ -8,7 +8,8 @@
 
 #import "CheckTestViewController.h"
 #import "AudioPlayer.h"
-
+#import "TPCCheckpointViewController.h"
+#import "MyTeacherViewController.h"
 
 @interface CheckTestViewController ()
 {
@@ -47,7 +48,8 @@
 @implementation CheckTestViewController
 
 #define kPartButtonTag 1000
-
+#define KLeftCommitButtonTag 8000
+#define KRightCommitButtonTag 8001
 
 
 #pragma mark - 构成数据
@@ -231,6 +233,18 @@
     _tea_show_btn.hidden = YES;
     
     [_stuHeadImageV setFrame:CGRectMake(30, 30, 40, 40)];
+    
+    
+    // 提交按钮
+    [_commitButtonLeft setBackgroundColor:[UIColor whiteColor]];
+    [_commitButtonLeft setTitleColor:kPart_Back_Color forState:UIControlStateNormal];
+    _commitButtonLeft.hidden = YES;
+    _commitButtonLeft.tag = KLeftCommitButtonTag;
+    
+    [_commitButtonRight setBackgroundColor:[UIColor whiteColor]];
+    [_commitButtonRight setTitleColor:kPart_Back_Color forState:UIControlStateNormal];
+    _commitButtonRight.hidden = YES;
+    _commitButtonRight.tag = KRightCommitButtonTag;
 }
 
 #pragma mark - 视图加载
@@ -443,6 +457,9 @@
             _tipLabel.text = @"模考结束";
             [_mainTimer invalidate];
             _mainTimer = nil;
+            
+            _commitButtonLeft.hidden = YES;
+            _commitButtonRight.hidden = NO;
         }
     }
 }
@@ -732,5 +749,37 @@
  // Pass the selected object to the new view controller.
  }
  */
+
+- (IBAction)commitButtonClicked:(id)sender
+{
+    
+    UIButton *btn = (UIButton *)sender;
+    if (btn.tag == KLeftCommitButtonTag)
+    {
+        // 稍后提交
+        [self backToTopicPage];
+    }
+    else if (btn.tag == KRightCommitButtonTag)
+    {
+        // 现在提交
+        
+        MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
+        [self.navigationController pushViewController:myTeacherVC animated:YES];
+    }
+}
+
+#pragma mark - 返回topic详情页
+- (void)backToTopicPage
+{
+    for (UIViewController *viewControllers in self.navigationController.viewControllers)
+    {
+        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
+        {
+            [self.navigationController popToViewController:viewControllers animated:YES];
+            break;
+        }
+    }
+}
+
 
 @end

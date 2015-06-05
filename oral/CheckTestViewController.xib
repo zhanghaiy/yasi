@@ -10,6 +10,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckTestViewController">
             <connections>
                 <outlet property="circleProgressView" destination="d2u-4a-g0V" id="9zQ-eD-Ss7"/>
+                <outlet property="commitButtonLeft" destination="18k-w0-GEx" id="38H-mT-qXr"/>
+                <outlet property="commitButtonRight" destination="iOq-9x-oQa" id="JiB-gI-P70"/>
                 <outlet property="followBtn" destination="met-8R-pv2" id="0M2-0p-26z"/>
                 <outlet property="stuBackView" destination="Zft-eH-nrD" id="Hau-Tm-Mbf"/>
                 <outlet property="stuHeadImageV" destination="JeM-Gw-d4B" id="5nU-yb-AbR"/>
@@ -138,17 +140,46 @@
                                 <constraint firstAttribute="width" constant="45" id="iFu-40-rwG"/>
                             </constraints>
                         </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iOq-9x-oQa">
+                            <rect key="frame" x="202" y="221" width="120" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="120" id="HQC-P3-075"/>
+                                <constraint firstAttribute="height" constant="50" id="VhL-Ao-4m1"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="提交给老师">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="commitButtonClicked:" destination="-1" eventType="touchUpInside" id="Mqb-gB-nXp"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18k-w0-GEx">
+                            <rect key="frame" x="52" y="221" width="120" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="120" id="MVg-iw-4vy"/>
+                                <constraint firstAttribute="height" constant="50" id="Xuh-4J-vs0"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <state key="normal" title="不提交">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="met-8R-pv2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="d2u-4a-g0V" secondAttribute="bottom" priority="800" constant="20" id="3Xa-rM-KS2"/>
                         <constraint firstItem="JeM-Gw-d4B" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Zft-eH-nrD" secondAttribute="top" priority="820" constant="20" id="4TP-tJ-POx"/>
+                        <constraint firstItem="18k-w0-GEx" firstAttribute="centerY" secondItem="iOq-9x-oQa" secondAttribute="centerY" id="Bde-ZM-8GL"/>
                         <constraint firstAttribute="centerX" secondItem="met-8R-pv2" secondAttribute="centerX" id="Ivf-OG-gVd"/>
+                        <constraint firstItem="18k-w0-GEx" firstAttribute="centerY" secondItem="met-8R-pv2" secondAttribute="centerY" id="KAh-EH-t7J"/>
                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="met-8R-pv2" secondAttribute="bottom" priority="820" constant="5" id="Kgv-Xu-NF6"/>
                         <constraint firstItem="d2u-4a-g0V" firstAttribute="centerX" secondItem="JeM-Gw-d4B" secondAttribute="centerX" id="NJN-nY-WEg"/>
                         <constraint firstItem="met-8R-pv2" firstAttribute="top" secondItem="d2u-4a-g0V" secondAttribute="bottom" priority="750" constant="74" id="Phv-xS-AsA"/>
                         <constraint firstAttribute="bottom" secondItem="met-8R-pv2" secondAttribute="bottom" priority="750" constant="34" id="Q5r-pX-XW7"/>
                         <constraint firstItem="d2u-4a-g0V" firstAttribute="centerY" secondItem="JeM-Gw-d4B" secondAttribute="centerY" id="R3q-AB-J0e"/>
+                        <constraint firstAttribute="centerX" secondItem="iOq-9x-oQa" secondAttribute="centerX" constant="-74.5" id="Vc3-0s-ixn"/>
+                        <constraint firstAttribute="centerX" secondItem="18k-w0-GEx" secondAttribute="centerX" constant="75.5" id="c3p-YU-ybl"/>
                         <constraint firstItem="JeM-Gw-d4B" firstAttribute="top" secondItem="Zft-eH-nrD" secondAttribute="top" priority="750" constant="66" id="qWX-UQ-Bpy"/>
                         <constraint firstAttribute="centerX" secondItem="JeM-Gw-d4B" secondAttribute="centerX" id="vzU-lQ-kph"/>
                     </constraints>

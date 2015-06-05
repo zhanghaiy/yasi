@@ -31,5 +31,8 @@
 - (IBAction)followButtonClicked:(id)sender;
 @property (strong, nonatomic) IBOutlet UIImageView *stuHeadImageV;
 
+@property (strong, nonatomic) IBOutlet UIButton *commitButtonLeft;
+@property (strong, nonatomic) IBOutlet UIButton *commitButtonRight;
+- (IBAction)commitButtonClicked:(id)sender;
 
 @end

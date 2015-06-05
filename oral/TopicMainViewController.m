@@ -130,15 +130,17 @@
         [cell.topicButton setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"bgimgurl"]]];
         cell.topicTitle.text = [dic objectForKey:@"classtype"];
         
-        NSArray *colorArr = [[dic objectForKey:@"classcolor"] componentsSeparatedByString:@","];
-        if (colorArr.count == 3)
-        {
-            NSInteger red = [[colorArr objectAtIndex:0] integerValue];
-            NSInteger orange = [[colorArr objectAtIndex:1] integerValue];
-            NSInteger blue = [[colorArr objectAtIndex:2] integerValue];
-            cell.progressColor = [UIColor colorWithRed:red/255.0 green:orange/255.0 blue:blue/255.0 alpha:1];
-            
-        }
+//        NSArray *colorArr = [[dic objectForKey:@"classcolor"] componentsSeparatedByString:@","];
+//        if (colorArr.count == 3)
+//        {
+//            NSInteger red = [[colorArr objectAtIndex:0] integerValue];
+//            NSInteger orange = [[colorArr objectAtIndex:1] integerValue];
+//            NSInteger blue = [[colorArr objectAtIndex:2] integerValue];
+//            cell.progressColor = [UIColor colorWithRed:red/255.0 green:orange/255.0 blue:blue/255.0 alpha:1];
+//            
+//        }
+        cell.progressColor = kPart_Button_Color;
+
         // 暂时写死  此处是根据本地数据（自己存储的）来算出用户的进度
         cell.topicProgressV.progress = 0.8;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;

@@ -15,7 +15,7 @@
                 <outlet property="classInfoView" destination="Jip-Bs-xGk" id="rEL-uX-Yk6"/>
                 <outlet property="classTeacherView" destination="NVi-ez-HFo" id="IDB-7q-yyh"/>
                 <outlet property="classTitleLabel" destination="xOa-BV-f0c" id="1Yy-hs-uYe"/>
-                <outlet property="joinButton" destination="Idd-HB-NIt" id="HcW-Bv-8yU"/>
+                <outlet property="joinButton" destination="rGc-6v-qcb" id="JSs-tg-D7o"/>
                 <outlet property="teaDetailLabel" destination="5RM-uG-Thb" id="ZrK-0Y-JYB"/>
                 <outlet property="teaHeadImageButton" destination="Uon-BY-qAm" id="nbM-w4-wf6"/>
                 <outlet property="teacherDesLabel" destination="hAB-Ub-rXM" id="nNL-aU-ENf"/>
@@ -29,9 +29,9 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Saa-px-dwr">
-                    <rect key="frame" x="0.0" y="45" width="375" height="180"/>
+                    <rect key="frame" x="0.0" y="67" width="375" height="180"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PvP-Wl-ykZ">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="class_introduce_back" translatesAutoresizingMaskIntoConstraints="NO" id="PvP-Wl-ykZ">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="创建时间：2015.04.05" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dNe-Zt-kMN">
@@ -52,22 +52,7 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Idd-HB-NIt">
-                            <rect key="frame" x="295" y="20" width="60" height="30"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="30" id="WEZ-uv-asf"/>
-                                <constraint firstAttribute="width" constant="60" id="v2y-Dt-L6e"/>
-                            </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <state key="normal" title="加入班级">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="joinButtonClicked:" destination="-1" eventType="touchUpInside" id="p8s-ZM-o5c"/>
-                            </connections>
-                        </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="33.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="c4x-bW-9rP">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="class_introduce_classImage" translatesAutoresizingMaskIntoConstraints="NO" id="c4x-bW-9rP">
                             <rect key="frame" x="142" y="20" width="90" height="90"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="90" id="VJz-zL-FYg"/>
@@ -75,10 +60,8 @@
                             </constraints>
                         </imageView>
                     </subviews>
-                    <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="180" id="2Oi-74-lz0"/>
-                        <constraint firstItem="Idd-HB-NIt" firstAttribute="top" secondItem="Saa-px-dwr" secondAttribute="top" constant="20" id="6Be-fi-b0x"/>
                         <constraint firstItem="dNe-Zt-kMN" firstAttribute="top" secondItem="xbh-Td-QKe" secondAttribute="bottom" constant="5" id="8Zp-Nq-e9c"/>
                         <constraint firstItem="PvP-Wl-ykZ" firstAttribute="leading" secondItem="Saa-px-dwr" secondAttribute="leading" id="Cpq-4h-UUK"/>
                         <constraint firstItem="dNe-Zt-kMN" firstAttribute="leading" secondItem="Saa-px-dwr" secondAttribute="leading" constant="10" id="FhH-KJ-wld"/>
@@ -91,11 +74,10 @@
                         <constraint firstAttribute="bottom" secondItem="dNe-Zt-kMN" secondAttribute="bottom" constant="10" id="n6x-yJ-32B"/>
                         <constraint firstItem="c4x-bW-9rP" firstAttribute="top" secondItem="Saa-px-dwr" secondAttribute="top" constant="20" id="nWc-T5-t7v"/>
                         <constraint firstAttribute="trailing" secondItem="xbh-Td-QKe" secondAttribute="trailing" constant="10" id="qc2-0I-XEX"/>
-                        <constraint firstAttribute="trailing" secondItem="Idd-HB-NIt" secondAttribute="trailing" constant="20" id="vt0-eU-sjT"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NVi-ez-HFo">
-                    <rect key="frame" x="0.0" y="230" width="375" height="75"/>
+                    <rect key="frame" x="0.0" y="252" width="375" height="75"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uon-BY-qAm">
                             <rect key="frame" x="15" y="7" width="60" height="60"/>
@@ -103,7 +85,7 @@
                                 <constraint firstAttribute="width" constant="60" id="SdR-8M-egW"/>
                                 <constraint firstAttribute="height" constant="60" id="V8I-8r-HDB"/>
                             </constraints>
-                            <state key="normal" backgroundImage="33.jpg">
+                            <state key="normal" backgroundImage="class_teacher_head">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
@@ -127,18 +109,35 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="轻松活泼的讲课方式，通俗易懂，有深厚的教学功底" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAB-Ub-rXM">
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="轻松活泼的讲课方式，通俗易懂，有深厚的教学功底" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAB-Ub-rXM">
                             <rect key="frame" x="195" y="15" width="170" height="45"/>
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rGc-6v-qcb">
+                            <rect key="frame" x="295" y="22" width="60" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="60" id="dZf-86-U3i"/>
+                                <constraint firstAttribute="height" constant="30" id="tX3-dW-69O"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <state key="normal" title="加入班级" backgroundImage="class_add">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="joinButtonClicked:" destination="-1" eventType="touchUpInside" id="rrY-c6-yjp"/>
+                            </connections>
+                        </button>
                     </subviews>
-                    <color key="backgroundColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
+                        <constraint firstAttribute="trailing" secondItem="rGc-6v-qcb" secondAttribute="trailing" constant="20" id="53L-6Z-J4g"/>
                         <constraint firstItem="hAB-Ub-rXM" firstAttribute="leading" secondItem="5RM-uG-Thb" secondAttribute="trailing" constant="10" id="Iwf-fV-cH9"/>
                         <constraint firstItem="5RM-uG-Thb" firstAttribute="leading" secondItem="Uon-BY-qAm" secondAttribute="trailing" constant="10" id="J4f-vf-Alj"/>
                         <constraint firstItem="5RM-uG-Thb" firstAttribute="top" secondItem="h6N-Xb-jOg" secondAttribute="bottom" id="LHX-7o-9qt"/>
+                        <constraint firstAttribute="centerY" secondItem="rGc-6v-qcb" secondAttribute="centerY" id="PMW-Tf-dLW"/>
                         <constraint firstItem="h6N-Xb-jOg" firstAttribute="top" secondItem="NVi-ez-HFo" secondAttribute="top" constant="15" id="Qd9-Oc-H2m"/>
                         <constraint firstItem="h6N-Xb-jOg" firstAttribute="leading" secondItem="Uon-BY-qAm" secondAttribute="trailing" constant="10" id="WMG-kC-eJO"/>
                         <constraint firstAttribute="centerY" secondItem="Uon-BY-qAm" secondAttribute="centerY" id="bF8-Lx-5ca"/>
@@ -151,7 +150,7 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jip-Bs-xGk">
-                    <rect key="frame" x="0.0" y="306" width="375" height="80"/>
+                    <rect key="frame" x="0.0" y="328" width="375" height="80"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="班级介绍" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOa-BV-f0c">
                             <rect key="frame" x="15" y="10" width="100" height="20"/>
@@ -170,7 +169,6 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="eEy-pj-WQv" firstAttribute="leading" secondItem="Jip-Bs-xGk" secondAttribute="leading" constant="15" id="0Mm-2V-Sue"/>
                         <constraint firstItem="xOa-BV-f0c" firstAttribute="leading" secondItem="Jip-Bs-xGk" secondAttribute="leading" constant="15" id="7w1-zY-2VA"/>
@@ -191,7 +189,7 @@
                 <constraint firstItem="Jip-Bs-xGk" firstAttribute="top" secondItem="NVi-ez-HFo" secondAttribute="bottom" constant="1" id="SVa-go-Y7e"/>
                 <constraint firstAttribute="trailing" secondItem="Saa-px-dwr" secondAttribute="trailing" id="Tgz-Jd-2Gz"/>
                 <constraint firstItem="NVi-ez-HFo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="VBG-qS-Mbu"/>
-                <constraint firstItem="Saa-px-dwr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="45" id="cV7-Fa-dh6"/>
+                <constraint firstItem="Saa-px-dwr" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="67" id="cV7-Fa-dh6"/>
                 <constraint firstItem="NVi-ez-HFo" firstAttribute="top" secondItem="Saa-px-dwr" secondAttribute="bottom" constant="5" id="m0U-8C-zhW"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -199,6 +197,9 @@
         </view>
     </objects>
     <resources>
-        <image name="33.jpg" width="400" height="400"/>
+        <image name="class_add" width="59" height="29"/>
+        <image name="class_introduce_back" width="375" height="183"/>
+        <image name="class_introduce_classImage" width="88" height="88"/>
+        <image name="class_teacher_head" width="59" height="59"/>
     </resources>
 </document>

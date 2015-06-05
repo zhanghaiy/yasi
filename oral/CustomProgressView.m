@@ -15,26 +15,34 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        self.layer.masksToBounds = YES;
-        self.layer.borderWidth = 0;
-        self.layer.cornerRadius = self.frame.size.height/2;
-        self.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
-        _progressView = [[UIView alloc]initWithFrame:self.bounds];
-        _progressView.layer.cornerRadius = self.frame.size.height/2;
-        [self addSubview:_progressView];
+        [self uiconfig];
+
     }
     return self;
 }
 
 - (void)awakeFromNib
 {
-    
+    [self uiconfig];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self uiconfig];
+    }
+    return self;
+}
+
+- (void)uiconfig
+{
     self.layer.masksToBounds = YES;
     self.layer.borderWidth = 0;
     self.layer.cornerRadius = self.bounds.size.height/2;
     self.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
     _progressView = [[UIView alloc]initWithFrame:self.bounds];
-     _progressView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    _progressView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
     _progressView.layer.cornerRadius = self.frame.size.height/2;
     _progressView.layer.cornerRadius = self.frame.size.height/2;
     [self addSubview:_progressView];
