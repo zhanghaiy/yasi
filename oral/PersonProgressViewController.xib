@@ -2,13 +2,10 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PersonProgressViewController">
             <connections>
-                <outlet property="bottomScrollV" destination="Rjk-De-Cmn" id="pbN-Bq-q2C"/>
-                <outlet property="middleScrollV" destination="d9R-FL-h2i" id="JxT-pc-aaj"/>
                 <outlet property="progressLabel" destination="gFn-CV-Tb5" id="QwL-L2-ThS"/>
                 <outlet property="progressV" destination="vaR-9Q-Sqd" id="6qv-9H-FZi"/>
                 <outlet property="timeLAbel" destination="xz5-2p-mNQ" id="ymK-44-99S"/>
@@ -31,7 +28,7 @@
                                 <constraint firstAttribute="height" constant="20" id="7j2-QN-kgn"/>
                                 <constraint firstAttribute="width" constant="375" id="iCE-rZ-fD9"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <color key="textColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -41,7 +38,7 @@
                                 <constraint firstAttribute="width" constant="375" id="PwD-IT-3Ec"/>
                                 <constraint firstAttribute="height" constant="30" id="rlt-Eu-vVG"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <color key="textColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
@@ -78,26 +75,10 @@
                         <constraint firstItem="vaR-9Q-Sqd" firstAttribute="leading" secondItem="XOO-VP-L0p" secondAttribute="leading" constant="20" id="u6w-3a-vrR"/>
                     </constraints>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d9R-FL-h2i">
-                    <rect key="frame" x="0.0" y="206" width="375" height="150"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="d9R-FL-h2i" secondAttribute="height" multiplier="5:2" id="nA0-Yh-sqa"/>
-                    </constraints>
-                </scrollView>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rjk-De-Cmn">
-                    <rect key="frame" x="0.0" y="355" width="375" height="312"/>
-                </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="Rjk-De-Cmn" secondAttribute="bottom" id="3pS-Dc-Mfg"/>
-                <constraint firstAttribute="trailing" secondItem="d9R-FL-h2i" secondAttribute="trailing" id="Ed5-fX-VJ0"/>
-                <constraint firstAttribute="trailing" secondItem="Rjk-De-Cmn" secondAttribute="trailing" id="MAa-nb-UzF"/>
-                <constraint firstItem="Rjk-De-Cmn" firstAttribute="top" secondItem="XOO-VP-L0p" secondAttribute="bottom" constant="150" id="UVC-m9-IP9"/>
-                <constraint firstItem="Rjk-De-Cmn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="XKX-XO-y8P"/>
                 <constraint firstItem="XOO-VP-L0p" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="YmJ-uo-36F"/>
-                <constraint firstItem="d9R-FL-h2i" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aVU-m7-uFI"/>
-                <constraint firstItem="d9R-FL-h2i" firstAttribute="top" secondItem="XOO-VP-L0p" secondAttribute="bottom" constant="1" id="fJD-aN-jwW"/>
                 <constraint firstItem="XOO-VP-L0p" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vgx-9I-mdM"/>
                 <constraint firstAttribute="trailing" secondItem="XOO-VP-L0p" secondAttribute="trailing" id="ztL-4o-uZg"/>
             </constraints>

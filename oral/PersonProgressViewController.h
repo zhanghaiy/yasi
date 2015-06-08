@@ -17,9 +17,4 @@
 @property (strong, nonatomic) IBOutlet UILabel *progressLabel;
 
 
-@property (strong, nonatomic) IBOutlet UIScrollView *middleScrollV;
-
-
-@property (strong, nonatomic) IBOutlet UIScrollView *bottomScrollV;
-
 @end
