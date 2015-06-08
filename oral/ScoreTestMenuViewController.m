@@ -44,7 +44,7 @@
     
     _textArray = @[@"还不错呦，继续努力！！！",@"还不错，部分单词发音不够标准~~，有待加强~目前可以继续往下进行还不错，   部分单词发音不够标准~~，有待加强~目前可以继续往下进行还不错，部分单词发音不够标准~~，有待加强~目前可以继续往下进行",@"成绩不太理想，发音不够标准，流畅，需加强练习，重复练习，不易往下进行，加油~~~"];
     
-    _reviewTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 45, kScreentWidth, kScreenHeight-45) style:UITableViewStylePlain];
+    _reviewTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 65, kScreentWidth, kScreenHeight-65) style:UITableViewStylePlain];
     _reviewTableV.delegate = self;
     _reviewTableV.dataSource = self;
     _reviewTableV.separatorStyle = UITableViewCellSeparatorStyleNone;

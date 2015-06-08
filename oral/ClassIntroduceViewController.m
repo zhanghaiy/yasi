@@ -8,7 +8,7 @@
 
 #import "ClassIntroduceViewController.h"
 #import "NSString+CalculateStringSize.h"
-
+#import "TeacherPersonCenterViewController.h"
 
 @interface ClassIntroduceViewController ()
 
@@ -25,14 +25,14 @@
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"雅思一班"];
     
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(kScreentWidth-40, (self.navTopView.frame.size.height-24-20)/2+24, 20, 20)];
-    [rightButton setBackgroundImage:[UIImage imageNamed:@"class_rigthButton"] forState:UIControlStateNormal];
-    rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
-    
-    [rightButton addTarget:self action:@selector(outClass) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.navTopView addSubview:rightButton];
+//    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [rightButton setFrame:CGRectMake(kScreentWidth-40, (self.navTopView.frame.size.height-24-20)/2+24, 20, 20)];
+//    [rightButton setBackgroundImage:[UIImage imageNamed:@"class_rigthButton"] forState:UIControlStateNormal];
+//    rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+//    
+//    [rightButton addTarget:self action:@selector(outClass) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    [self.navTopView addSubview:rightButton];
     
     self.view.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
     
@@ -108,6 +108,15 @@
 }
 */
 
-- (IBAction)joinButtonClicked:(id)sender {
+- (IBAction)joinButtonClicked:(id)sender
+{
+    
+}
+
+- (IBAction)enter_Teacher_person_center:(id)sender
+{
+    //
+    TeacherPersonCenterViewController *teaPersonCenterVC = [[TeacherPersonCenterViewController alloc]initWithNibName:@"TeacherPersonCenterViewController" bundle:nil];
+    [self.navigationController pushViewController:teaPersonCenterVC animated:YES];
 }
 @end

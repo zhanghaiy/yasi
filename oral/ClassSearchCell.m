@@ -13,6 +13,8 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    
+    _leftBackView.backgroundColor = [UIColor whiteColor];
     _classNameLabel.textColor = [UIColor colorWithWhite:115/255.0 alpha:1];
     _classCountsLabel.textColor = kText_Color;
     _classTeacherLabel.textColor = kText_Color;

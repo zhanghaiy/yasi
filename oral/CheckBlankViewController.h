@@ -34,9 +34,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *followAnswerButton;
 
-@property (weak, nonatomic) IBOutlet UIButton *addBookButton;
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;
-- (IBAction)addBookClicked:(id)sender;
 - (IBAction)continueButtonClicked:(id)sender;
 - (IBAction)followAnswerButtonClicked:(id)sender;
 

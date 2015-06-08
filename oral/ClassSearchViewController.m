@@ -8,7 +8,7 @@
 
 #import "ClassSearchViewController.h"
 #import "ClassSearchCell.h"
-
+#import "ClassIntroduceViewController.h"
 
 @interface ClassSearchViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -17,6 +17,8 @@
     UITableView *_search_Table_View;
 }
 @end
+
+#define kAddClassButtonTag 400
 
 @implementation ClassSearchViewController
 
@@ -85,10 +87,19 @@
     if (cell == nil)
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"ClassSearchCell" owner:self options:0] lastObject];
+        cell.backgroundColor = [UIColor clearColor];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    cell.addClassButton.tag = kAddClassButtonTag+indexPath.row;
+    [cell.addClassButton addTarget:self action:@selector(addClass:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
+}
+
+- (void)addClass:(UIButton *)btn
+{
+    // 加入班级
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,7 +114,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    ClassIntroduceViewController *classIntroduceVC = [[ClassIntroduceViewController alloc]initWithNibName:@"ClassIntroduceViewController" bundle:nil];
+    [self.navigationController pushViewController:classIntroduceVC animated:YES];
 }
 
 

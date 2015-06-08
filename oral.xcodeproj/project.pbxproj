@@ -35,6 +35,8 @@
 		FD5B4FB61B2181CA00BE6F5B /* PersonSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5B4FB41B2181CA00BE6F5B /* PersonSettingViewController.xib */; };
 		FD5B4FBB1B21899300BE6F5B /* PersonProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5B4FB91B21899300BE6F5B /* PersonProgressViewController.m */; };
 		FD5B4FBC1B21899300BE6F5B /* PersonProgressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5B4FBA1B21899300BE6F5B /* PersonProgressViewController.xib */; };
+		FD5FEC331B2533EE005B99AF /* TeacherPersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5FEC311B2533EE005B99AF /* TeacherPersonCenterViewController.m */; };
+		FD5FEC341B2533EE005B99AF /* TeacherPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5FEC321B2533EE005B99AF /* TeacherPersonCenterViewController.xib */; };
 		FD62449F1B0584780037836E /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = FD62449E1B0584780037836E /* touxiang.png */; };
 		FD6244A31B0585450037836E /* TPCCheckpointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6244A11B0585450037836E /* TPCCheckpointViewController.m */; };
 		FD6244A41B0585450037836E /* TPCCheckpointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A21B0585450037836E /* TPCCheckpointViewController.xib */; };
@@ -184,6 +186,9 @@
 		FD5B4FB81B21899300BE6F5B /* PersonProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonProgressViewController.h; sourceTree = "<group>"; };
 		FD5B4FB91B21899300BE6F5B /* PersonProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonProgressViewController.m; sourceTree = "<group>"; };
 		FD5B4FBA1B21899300BE6F5B /* PersonProgressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonProgressViewController.xib; sourceTree = "<group>"; };
+		FD5FEC301B2533EE005B99AF /* TeacherPersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeacherPersonCenterViewController.h; sourceTree = "<group>"; };
+		FD5FEC311B2533EE005B99AF /* TeacherPersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeacherPersonCenterViewController.m; sourceTree = "<group>"; };
+		FD5FEC321B2533EE005B99AF /* TeacherPersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TeacherPersonCenterViewController.xib; sourceTree = "<group>"; };
 		FD62449E1B0584780037836E /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang.png; sourceTree = "<group>"; };
 		FD6244A01B0585450037836E /* TPCCheckpointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCCheckpointViewController.h; sourceTree = "<group>"; };
 		FD6244A11B0585450037836E /* TPCCheckpointViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCCheckpointViewController.m; sourceTree = "<group>"; };
@@ -490,6 +495,16 @@
 			name = "闯关进度";
 			sourceTree = "<group>";
 		};
+		FD5FEC2F1B2533AB005B99AF /* 老师个人中心 */ = {
+			isa = PBXGroup;
+			children = (
+				FD5FEC301B2533EE005B99AF /* TeacherPersonCenterViewController.h */,
+				FD5FEC311B2533EE005B99AF /* TeacherPersonCenterViewController.m */,
+				FD5FEC321B2533EE005B99AF /* TeacherPersonCenterViewController.xib */,
+			);
+			name = "老师个人中心";
+			sourceTree = "<group>";
+		};
 		FD6244AA1B0585A10037836E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -531,6 +546,7 @@
 				FD5461511B10676700409778 /* TPCPersonCenterViewController.h */,
 				FD5461521B10676700409778 /* TPCPersonCenterViewController.m */,
 				FD5461531B10676700409778 /* TPCPersonCenterViewController.xib */,
+				FD5FEC2F1B2533AB005B99AF /* 老师个人中心 */,
 				FD5B4FB71B21896C00BE6F5B /* 闯关进度 */,
 				FD54615B1B10749100409778 /* 班级 */,
 				FD5B4FB11B21819800BE6F5B /* 设置 */,
@@ -1044,6 +1060,7 @@
 				FD8C40EC1B0C6F3A00948B6C /* CheckBlankViewController.xib in Resources */,
 				FDBA32ED1B1C38A000C02BF8 /* Score_Point3_Section_View.xib in Resources */,
 				FDA0C2651B1463C000900F49 /* ScoreDetailViewController.xib in Resources */,
+				FD5FEC341B2533EE005B99AF /* TeacherPersonCenterViewController.xib in Resources */,
 				FD62449F1B0584780037836E /* touxiang.png in Resources */,
 				FD97AFB01B16FD2400C45A2C /* CheckPractiseBookViewController.xib in Resources */,
 				FD54615A1B10748600409778 /* PersonClassViewController.xib in Resources */,
@@ -1100,6 +1117,7 @@
 				FDA0C2541B1412AA00900F49 /* SDWebImageDecoder.m in Sources */,
 				FDBA32F51B1C390800C02BF8 /* Score_Point3_Footer_View.m in Sources */,
 				FDD4044B1B04972D00DE2E84 /* CustomProgressView.m in Sources */,
+				FD5FEC331B2533EE005B99AF /* TeacherPersonCenterViewController.m in Sources */,
 				FDA0C2591B1412AA00900F49 /* UIImageView+WebCache.m in Sources */,
 				FDA25E1B1B0DD98D00F35545 /* RecordManager.m in Sources */,
 				FDA0C2691B14719A00900F49 /* ScoreMenuCell.m in Sources */,

@@ -15,6 +15,7 @@
                 <outlet property="teaCateLabel" destination="YV7-ar-AF7" id="Cde-dW-UMd"/>
                 <outlet property="teaDesLabel" destination="ZQi-1H-IXG" id="EbL-R5-apC"/>
                 <outlet property="teaHeadImageBtn" destination="4Ta-Du-oj9" id="aPI-NG-83T"/>
+                <outlet property="upOpenButton" destination="0QH-Rv-JkG" id="CwT-pL-W15"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -32,39 +33,61 @@
                                 <constraint firstAttribute="height" constant="20" id="X2k-IO-lIP"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tFh-gY-ng3">
                             <rect key="frame" x="0.0" y="85" width="375" height="25"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="25" id="QmV-Mh-eMF"/>
+                                <constraint firstAttribute="height" constant="25" id="MsM-uw-WvQ"/>
                             </constraints>
                             <state key="normal" backgroundImage="Class_notice_up">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <state key="selected" backgroundImage="Class_notice_down"/>
+                            <state key="highlighted" backgroundImage="Class_notice_down"/>
+                            <connections>
+                                <action selector="openNotice:" destination="-1" eventType="touchUpInside" id="FJh-mL-Qke"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="轻松活泼的商铺可方式轻松活泼的商铺可方式轻松活泼的商铺可方式~~轻松活泼的商铺可方式~~轻松活可方式~~轻松活" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ond-Ei-OIo">
                             <rect key="frame" x="15" y="30" width="352" height="50"/>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0QH-Rv-JkG">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="25"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="25" id="hJL-om-RiV"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="xGz-7T-YHb"/>
+                            </constraints>
+                            <state key="normal" backgroundImage="Class_notice_up">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" backgroundImage="Class_notice_down"/>
+                            <state key="highlighted" backgroundImage="Class_notice_down"/>
+                            <connections>
+                                <action selector="upOpenButtonClicked:" destination="-1" eventType="touchUpInside" id="Ohn-VY-NhI"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="ond-Ei-OIo" firstAttribute="leading" secondItem="Dx7-Pp-KQt" secondAttribute="leading" constant="15" id="2wW-T4-Sh2"/>
-                        <constraint firstAttribute="trailing" secondItem="ond-Ei-OIo" secondAttribute="trailing" constant="8" id="4r3-bP-Mhf"/>
+                        <constraint firstAttribute="trailing" secondItem="0QH-Rv-JkG" secondAttribute="trailing" id="0lr-W6-3hk"/>
+                        <constraint firstItem="0QH-Rv-JkG" firstAttribute="top" secondItem="Dx7-Pp-KQt" secondAttribute="top" id="55D-3N-JhR"/>
+                        <constraint firstAttribute="trailing" secondItem="ond-Ei-OIo" secondAttribute="trailing" constant="8" id="7MS-sT-c3q"/>
                         <constraint firstAttribute="height" constant="110" id="7hz-gc-tWn"/>
                         <constraint firstItem="xD5-tO-sNn" firstAttribute="top" secondItem="Dx7-Pp-KQt" secondAttribute="top" constant="10" id="9K0-Ut-edw"/>
                         <constraint firstItem="xD5-tO-sNn" firstAttribute="leading" secondItem="Dx7-Pp-KQt" secondAttribute="leading" constant="15" id="B2h-i0-fGL"/>
                         <constraint firstAttribute="trailing" secondItem="xD5-tO-sNn" secondAttribute="trailing" constant="15" id="FQq-ek-TIc"/>
-                        <constraint firstItem="tFh-gY-ng3" firstAttribute="top" secondItem="ond-Ei-OIo" secondAttribute="bottom" constant="5" id="GEb-lS-1gD"/>
-                        <constraint firstAttribute="bottom" secondItem="tFh-gY-ng3" secondAttribute="bottom" id="VZ4-jk-7SR"/>
-                        <constraint firstAttribute="trailing" secondItem="tFh-gY-ng3" secondAttribute="trailing" id="j2I-lt-oAU"/>
-                        <constraint firstItem="ond-Ei-OIo" firstAttribute="top" secondItem="xD5-tO-sNn" secondAttribute="bottom" id="m7K-xQ-r0c"/>
-                        <constraint firstItem="tFh-gY-ng3" firstAttribute="leading" secondItem="Dx7-Pp-KQt" secondAttribute="leading" id="qAx-DW-bzx"/>
+                        <constraint firstItem="ond-Ei-OIo" firstAttribute="top" secondItem="xD5-tO-sNn" secondAttribute="bottom" id="JSW-6Y-FFQ"/>
+                        <constraint firstItem="tFh-gY-ng3" firstAttribute="top" secondItem="ond-Ei-OIo" secondAttribute="bottom" constant="5" id="K6u-Fe-xNi"/>
+                        <constraint firstItem="0QH-Rv-JkG" firstAttribute="leading" secondItem="Dx7-Pp-KQt" secondAttribute="leading" id="Z05-Al-Dkw"/>
+                        <constraint firstAttribute="bottom" secondItem="tFh-gY-ng3" secondAttribute="bottom" id="jbj-Vb-I0r"/>
+                        <constraint firstAttribute="trailing" secondItem="tFh-gY-ng3" secondAttribute="trailing" id="nrO-AH-arB"/>
+                        <constraint firstItem="tFh-gY-ng3" firstAttribute="leading" secondItem="Dx7-Pp-KQt" secondAttribute="leading" id="rxX-Dh-Jvh"/>
+                        <constraint firstItem="ond-Ei-OIo" firstAttribute="leading" secondItem="Dx7-Pp-KQt" secondAttribute="leading" constant="15" id="yZE-pV-Xhk"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yNx-dw-Bzx">
@@ -79,6 +102,9 @@
                             <state key="normal" backgroundImage="class_teacher_head">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="enter_tea_person_center:" destination="-1" eventType="touchUpInside" id="Ryc-Nb-FR5"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="王老师的班级" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wi8-l1-oue">
                             <rect key="frame" x="85" y="20" width="100" height="20"/>
@@ -87,7 +113,7 @@
                                 <constraint firstAttribute="height" constant="20" id="61k-wc-yJt"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="班主任" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YV7-ar-AF7">
@@ -97,13 +123,13 @@
                                 <constraint firstAttribute="height" constant="20" id="t1J-ZO-NrU"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="轻松活泼的讲课方式，通俗易懂，有深厚的教学功底" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZQi-1H-IXG">
                             <rect key="frame" x="193" y="17" width="170" height="45"/>
                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>

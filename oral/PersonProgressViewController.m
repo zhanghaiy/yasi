@@ -71,6 +71,7 @@
                 [btn setFrame:CGRectMake(i*kScreentWidth+btn_space+j*(btnWith+btn_space), 12, btnWith, btnWith)];
                 btn.tag = kTopBtnBaseTag + mark_topic_count;
                 [btn setBackgroundImage:[UIImage imageNamed:@"topic_moni"] forState:UIControlStateNormal];
+                [btn addTarget:self action:@selector(topicButton_topButton_Clicked:) forControlEvents:UIControlEventTouchUpInside];
                 [_topScrollV addSubview:btn];
                 
                 CustomProgressView *proV = [[CustomProgressView alloc]initWithFrame:CGRectMake(i*kScreentWidth+btn_space+j*(btnWith+btn_space), 25+btnWith, btnWith, 8)];
@@ -111,6 +112,7 @@
                     btn.tag = kBottomBtnTag + mark_topic_count;
                     [btn setBackgroundImage:[UIImage imageNamed:@"topic_moni"] forState:UIControlStateNormal];
 
+                    [btn addTarget:self action:@selector(topicButton_bottomButton_Clicked:) forControlEvents:UIControlEventTouchUpInside];
                     [_bottomScrollV addSubview:btn];
                 }
             }

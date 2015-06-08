@@ -252,6 +252,12 @@
     [_commitRightButton setBackgroundColor:[UIColor whiteColor]];
     [_commitRightButton setTitleColor:_pointColor forState:UIControlStateNormal];
     _commitRightButton.hidden = YES;
+    
+    _CommitLeftButton.layer.masksToBounds = YES;
+    _CommitLeftButton.layer.cornerRadius = _CommitLeftButton.frame.size.height/2;
+    _commitRightButton.layer.masksToBounds = YES;
+    _commitRightButton.layer.cornerRadius = _CommitLeftButton.frame.size.height/2;
+    
 }
 
 #pragma mark - 创建时间进度条
@@ -319,6 +325,8 @@
                                     3）播放问题音频
      */
     // 停顿3秒 开始point3流程
+    
+    
     if (!_pointFinished)// 此处加条件判断：如果是从其他界面返回则不走流程
     {
         _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareQuestion) userInfo:nil repeats:NO];

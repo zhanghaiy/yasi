@@ -22,6 +22,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
+    
     _navTopView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, KNavTopViewHeight)];
     _navTopView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:_navTopView];

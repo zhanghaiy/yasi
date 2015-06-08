@@ -171,8 +171,9 @@
     self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
     
     // 提问界面
-    float tea_back_View_height = _teaBackView.frame.size.height;
+    float tea_back_View_height = kScreentWidth*34/75;
     _teaBackView.frame = CGRectMake(0, 131, kScreentWidth, tea_back_View_height);
+    
     
     // 中心 缩小后的frame
     _tea_head_small_frame = CGRectMake((kScreentWidth-45)/2, (tea_back_View_height-45)/2, 45, 45);
@@ -187,18 +188,17 @@
     // 设置初始位置 中心 缩小的 （然后放大）
     [_teaHeadImageV setFrame:_tea_head_small_frame];
     
-    // 学生界面
-    CGRect stu_middle_rect = _stuHeadImageV.frame;
-    // 缩小时的frame
-    _stu_head_small_frame = stu_middle_rect;
-    _stu_head_small_frame.origin.x = (kScreentWidth-_stu_head_small_frame.size.width)/2;
-    // 放大时的frame
-    _stu_head_big_frame = _stu_head_small_frame;
-    _stu_head_big_frame.origin.x -= 10;
-    _stu_head_big_frame.origin.y -= 10;
-    _stu_head_big_frame.size.width += 20;
-    _stu_head_big_frame.size.height += 20;
+    [_teaCircleImageView setFrame:CGRectMake((kScreentWidth-100)/2, (_teaBackView.frame.size.height-100)/2, 100, 100)];
     
+    // 学生界面
+    [_stuBackView setFrame:CGRectMake(0, 185+tea_back_View_height, kScreentWidth, kScreenHeight-185-tea_back_View_height)];
+    
+    // 缩小时的frame
+    _stu_head_small_frame = CGRectMake((kScreentWidth-45)/2, 66, 45, 45);
+    // 放大时的frame
+    _stu_head_big_frame = CGRectMake((kScreentWidth-65)/2, 56, 65, 65);//_stu_head_small_frame;
+    
+   
     
     // 设置圆角半径
     _teaHeadImageV.layer.masksToBounds = YES;
@@ -282,12 +282,21 @@
     _audioManager.action = @selector(playTestQuestioCallBack);
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [_stuHeadImageV setFrame:_stu_head_small_frame];
+    _circleProgressView.frame = CGRectMake((kScreentWidth-100)/2, _stu_head_big_frame.origin.y-17.5, 100, 100);
+    _circleProgressView.frame = CGRectMake(_stu_head_big_frame.origin.x-17.5, _stu_head_big_frame.origin.y-17.5, 100, 100);
+}
+
 
 #pragma mark - 视图出现
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-
+    
     if (_testFinished == NO)
     {
         _tipLabel.text = [NSString stringWithFormat:@"第%ld轮考试马上开始~请集中注意力~~~~",_current_part_Counts+1];// @"考试马上开始~请集中注意力~~~~";
@@ -483,6 +492,8 @@
     _teaHeadImageV.alpha = 1;
     [UIView animateWithDuration:1 animations:^{
         _teaHeadImageV.frame = _tea_head_big_frame;
+//        _teaHeadImageV.center = _teaBackView.center;
+//        _teaCircleImageView.center = _teaBackView.center;
     }];
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeTeacherLayer) userInfo:nil repeats:NO];
 }
@@ -504,6 +515,8 @@
     [UIView animateWithDuration:1 animations:^{
         _teaHeadImageV.frame = _tea_head_small_frame;
         _teaHeadImageV.layer.cornerRadius = _teaHeadImageV.frame.size.height/2;
+//        _teaHeadImageV.center = _teaBackView.center;
+//        _teaCircleImageView.center = _teaBackView.center;
     }];
 //    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(changeTeacherLayer) userInfo:nil repeats:NO];
 }

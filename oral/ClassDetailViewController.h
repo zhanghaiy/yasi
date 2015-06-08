@@ -18,5 +18,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *classNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *teaCateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *teaDesLabel;
+- (IBAction)enter_tea_person_center:(id)sender;
+- (IBAction)openNotice:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *upOpenButton;
+- (IBAction)upOpenButtonClicked:(id)sender;
 
 @end

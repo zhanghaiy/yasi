@@ -8,7 +8,7 @@
 
 #import "ClassDetailViewController.h"
 #import "ClassDetailCell.h"
-
+#import "TeacherPersonCenterViewController.h"
 
 @interface ClassDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -120,4 +120,69 @@
 }
 */
 
+- (IBAction)enter_tea_person_center:(id)sender
+{
+    TeacherPersonCenterViewController *teaPersonCenterVC = [[TeacherPersonCenterViewController alloc]initWithNibName:@"TeacherPersonCenterViewController" bundle:nil];
+    [self.navigationController pushViewController:teaPersonCenterVC animated:YES];
+}
+
+- (IBAction)openNotice:(id)sender
+{
+    CGRect rect = _classBackView.frame;
+    rect.size.height = 25;
+    rect.size.width = kScreentWidth;
+    
+    CGRect rect2 = _teaBackView.frame;
+    rect2.origin.y -= 94;
+    rect2.size.width = kScreentWidth;
+    
+    CGRect rect3 = _stu_Progress_TableView.frame;
+    rect3.origin.y -= 94;
+    rect3.size.width = kScreentWidth;
+    rect3.size.height = kScreenHeight-rect3.origin.y;
+    
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        _classBackView.frame = rect;
+        _teaBackView.frame = rect2;
+        _stu_Progress_TableView.frame = rect3;
+        _noticeOpenButton.hidden = YES;
+    }];
+    
+    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(moveNotOpen) userInfo:nil repeats:NO];
+}
+- (IBAction)upOpenButtonClicked:(id)sender
+{
+    CGRect rect = _classBackView.frame;
+    rect.size.height = 110;
+    rect.size.width = kScreentWidth;
+    
+    CGRect rect2 = _teaBackView.frame;
+    rect2.origin.y += 94;
+    rect2.size.width = kScreentWidth;
+    
+    CGRect rect3 = _stu_Progress_TableView.frame;
+    rect3.origin.y += 94;
+    rect3.size.width = kScreentWidth;
+    rect3.size.height = kScreenHeight-rect3.origin.y;
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        _classBackView.frame = rect;
+        _teaBackView.frame = rect2;
+        _stu_Progress_TableView.frame = rect3;
+        _upOpenButton.hidden = YES;
+    }];
+    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(moveOpenButton) userInfo:nil repeats:NO];
+
+}
+
+- (void)moveNotOpen
+{
+    _upOpenButton.hidden = NO;
+}
+
+- (void)moveOpenButton
+{
+    _noticeOpenButton.hidden = NO;
+}
 @end

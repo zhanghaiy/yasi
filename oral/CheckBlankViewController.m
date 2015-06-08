@@ -65,7 +65,7 @@
     audioPlayer.action = @selector(playerCallBack);
     _currentPointCounts = 1;
 
-    [self addBackButtonWithImageName:@"back-white"];
+//    [self addBackButtonWithImageName:@"back-white"];
     [self addTitleLabelWithTitleWithTitle:@"Part1-2"];
     self.navTopView.backgroundColor = _backColor;
     self.titleLab.textColor = [UIColor whiteColor];
@@ -163,10 +163,14 @@
     // 时间进度条
     _stuTimeProgressLabel.backgroundColor = _backColor;
     
+    
+    _studentView.frame = CGRectMake(15, 215, kScreentWidth-30,  kScreenHeight-215-160);
+    
     // 标记时间进度条原始frame
     CGRect rect = _stuTimeProgressLabel.frame;
     rect.size.width = kScreentWidth-130;
     rect.origin.x = 8;
+    rect.origin.y = _studentView.frame.size.height-36;
     _stuTimeProgressLabel.frame = rect;
     _timeProgressRect = rect;
     // 学生头像
@@ -190,16 +194,8 @@
     _continueButton.layer.cornerRadius = _continueButton.frame.size.height/2;
     [_continueButton setBackgroundColor:[UIColor whiteColor]];
     
-    
-    // 加入练习簿
-//    [_addBookButton setTitleColor:_pointColor forState:UIControlStateNormal];
-//    [_addBookButton setAdjustsImageWhenHighlighted:YES];
-//    _addBookButton.layer.masksToBounds = YES;
-//    _addBookButton.layer.cornerRadius = _addBookButton.frame.size.height/2;
-//    [_addBookButton setBackgroundColor:[UIColor whiteColor]];
-//    
-//    _addBookButton.hidden = YES;
     _continueButton.hidden = YES;
+    [_continueButton setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
     
     // 起始状态：老师头像暗 学生头像 暗 文本不显示
     _teaHeadImgView.alpha = 0.3;
@@ -502,20 +498,6 @@
     _reduceTimer = nil;
 }
 
-
-
-
-
-#pragma mark- 加入练习本
-- (IBAction)addBookClicked:(id)sender
-{
-//    UIButton *btn = (UIButton *)sender;
-//    [btn setTitleColor:_backColor forState:UIControlStateNormal];
-//    [btn setBackgroundImage:[UIImage imageNamed:@"exesize"] forState:UIControlStateNormal];
-    
-    // 加入练习
-    [self addExsBook];
-}
 #pragma mark - 下一题
 - (IBAction)continueButtonClicked:(id)sender
 {
@@ -547,37 +529,10 @@
         [self startSBC];
         // 时间进度条变化
         _stuTimeProgressLabel.frame = _timeProgressRect;
-        _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeReduce) userInfo:nil repeats:YES];
+        _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:15/_timeProgressRect.size.width target:self selector:@selector(timeReduce) userInfo:nil repeats:YES];
     }
 }
 
-#pragma mark -- 将当前练习数据加入练习簿
-- (void)addExsBook
-{
-    // 此处将当前练习数据加入练习簿  ---待完成
-    
-    
-    
-    // 给用户提示  加入成功
-    UILabel *tipLab = (UILabel *)[self.view viewWithTag:1111];
-    CGRect rect = tipLab.frame;
-    rect.size.width = 100;
-    rect.size.height = 30;
-    [UIView animateWithDuration:0.5 animations:^{
-        tipLab.frame = rect;
-    }];
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addBookFinished) userInfo:nil repeats:NO];
-}
-
-#pragma mark -- 成功加入练习簿
-- (void)addBookFinished
-{
-    [self stopReduceTimer];
-    UILabel *tipLab = (UILabel *)[self.view viewWithTag:1111];
-    tipLab.frame = CGRectMake((kScreentWidth-100)/2, kScreenHeight-40, 0, 0);
-    // 下一题
-    [self jugePointIsFinished];
-}
 
 #pragma mark -- 下一问题
 - (void)next
@@ -626,6 +581,8 @@
         {
             // 下一题
             [self questionCountChanged];//标记当前进行的问题数
+            // 继续当前问题
+            [self changeAnswerProgress];
             _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
             [self prepareQuestion];
         }

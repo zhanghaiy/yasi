@@ -125,10 +125,14 @@
     _lineLabel.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
     // 时间进度条
     _timeProgressLabel.backgroundColor = _backColor;
+    
+    _studentView.frame = CGRectMake(15, 215, kScreentWidth-30,  kScreenHeight-215-160);
+    
     // 标记时间进度条原始frame
     CGRect rect = _timeProgressLabel.frame;
     rect.size.width = kScreentWidth-130;
     rect.origin.x = 15;
+    rect.origin.y = _studentView.frame.size.height-41;
     _timeProgressLabel.frame = rect;
     _timeProgressRect = rect;
     // 学生头像

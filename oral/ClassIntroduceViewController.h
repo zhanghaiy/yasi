@@ -24,5 +24,6 @@
 @property (weak, nonatomic) IBOutlet UIView *classInfoView;
 @property (weak, nonatomic) IBOutlet UILabel *classTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *classDesLabel;
+- (IBAction)enter_Teacher_person_center:(id)sender;
 
 @end
