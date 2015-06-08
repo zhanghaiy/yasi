@@ -464,11 +464,9 @@
     
     // 隐藏回答按钮  展示下一题区域
     _followAnswerButton.hidden = YES;
-//    _addBookButton.hidden = YES;
     _continueButton.hidden = NO;
     _stuHeadImgView.alpha = 0.3;
-    [_continueButton setTitleColor:_textColor forState:UIControlStateNormal];
-//    [_addBookButton setTitleColor:_textColor forState:UIControlStateNormal];
+    [_continueButton setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
 }
 
 #pragma mark - 定时器
@@ -476,9 +474,6 @@
 - (void)timeReduce
 {
     CGRect rect = _stuTimeProgressLabel.frame;
-//    float reduceWid = rect.size.width/_answerTime;
-//    rect.origin.x += reduceWid;
-//    rect.size.width -= reduceWid;
     rect.origin.x ++;
     rect.size.width --;
     _stuTimeProgressLabel.frame = rect;
@@ -501,13 +496,8 @@
 #pragma mark - 下一题
 - (IBAction)continueButtonClicked:(id)sender
 {
-//    UIButton *btn = (UIButton *)sender;
-//    [btn setTitleColor:_backColor forState:UIControlStateNormal];
-//    [btn setBackgroundImage:[UIImage imageNamed:@"nextQuestion"] forState:UIControlStateNormal];
-    
     // 下一题
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(jugePointIsFinished) userInfo:nil repeats:NO];
-    //    [self jugePointIsFinished];
 }
 
 #pragma mark- 跟读按钮被点击

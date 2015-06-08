@@ -126,7 +126,7 @@
     // 时间进度条
     _timeProgressLabel.backgroundColor = _backColor;
     
-    _studentView.frame = CGRectMake(15, 215, kScreentWidth-30,  kScreenHeight-215-160);
+    _studentView.frame = CGRectMake(15, 216, kScreentWidth-30,  kScreenHeight-216-162);
     
     // 标记时间进度条原始frame
     CGRect rect = _timeProgressLabel.frame;

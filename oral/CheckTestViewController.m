@@ -239,12 +239,12 @@
     
     // 提交按钮
     [_commitButtonLeft setBackgroundColor:_backgroundViewColor];
-    [_commitButtonLeft setTitleColor:kPart_Back_Color forState:UIControlStateNormal];
+    [_commitButtonLeft setTitleColor:_tip_text_Color forState:UIControlStateNormal];
     _commitButtonLeft.hidden = YES;
     _commitButtonLeft.tag = KLeftCommitButtonTag;
     
     [_commitButtonRight setBackgroundColor:_backgroundViewColor];
-    [_commitButtonRight setTitleColor:kPart_Back_Color forState:UIControlStateNormal];
+    [_commitButtonRight setTitleColor:_tip_text_Color forState:UIControlStateNormal];
     _commitButtonRight.hidden = YES;
     _commitButtonRight.tag = KRightCommitButtonTag;
     

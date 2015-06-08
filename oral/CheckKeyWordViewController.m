@@ -56,7 +56,11 @@
     [_jumpButton setTitleColor:_pointColor forState:UIControlStateNormal];
 
 
-    CGRect rect = _keyScrollView.bounds;
+    CGRect rect = _keyScrollView.frame;
+    rect.size.width = kScreentWidth;
+    rect.size.height = kScreentWidth*52/75;
+    _keyScrollView.frame = rect;
+    
     _keyScrollView.contentSize = CGSizeMake(rect.size.width*(keyWordArray.count+1), rect.size.height);
     _keyScrollView.pagingEnabled = YES;
     _keyScrollView.delegate = self;
@@ -92,6 +96,7 @@
     {
         CGRect newRect = rect;
         newRect.origin.x = (i+1)*rect.size.width;
+        newRect.origin.y = 0;
         UILabel *keyLabel = [[UILabel alloc]initWithFrame:newRect];
 //        keyLabel.font = [UIFont systemFontOfSize:30];
         // @"MarkerFelt-thin" @"STHeitiSC-Light"

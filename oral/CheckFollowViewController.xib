@@ -221,7 +221,6 @@
             <constraints>
                 <constraint firstItem="He3-Ry-5uz" firstAttribute="top" secondItem="nWT-Pb-Vkp" secondAttribute="bottom" constant="15" id="0Od-fu-siX"/>
                 <constraint firstItem="N7j-VH-R1s" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="66" id="0Qo-J7-E6N"/>
-                <constraint firstItem="icL-bV-wfE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="He3-Ry-5uz" secondAttribute="bottom" priority="750" constant="10" id="1Zu-3p-34J"/>
                 <constraint firstAttribute="bottom" secondItem="icL-bV-wfE" secondAttribute="bottom" priority="750" constant="35" id="2R8-dg-6s0"/>
                 <constraint firstItem="N7j-VH-R1s" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="38N-4S-8EO"/>
                 <constraint firstAttribute="centerX" secondItem="icL-bV-wfE" secondAttribute="centerX" id="GEJ-9v-ghg"/>
@@ -236,7 +235,6 @@
                 <constraint firstItem="KBJ-pI-83K" firstAttribute="centerY" secondItem="lrh-uL-cp6" secondAttribute="centerY" id="dvC-TB-bx3"/>
                 <constraint firstItem="icL-bV-wfE" firstAttribute="top" secondItem="He3-Ry-5uz" secondAttribute="bottom" priority="750" constant="60" id="ftH-qs-kDw"/>
                 <constraint firstItem="He3-Ry-5uz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="iCj-mY-sv3"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="icL-bV-wfE" secondAttribute="bottom" priority="750" constant="10" id="nGg-GJ-PIG"/>
                 <constraint firstAttribute="centerX" secondItem="KBJ-pI-83K" secondAttribute="centerX" constant="65" id="uel-h7-n1u"/>
                 <constraint firstAttribute="bottom" secondItem="lrh-uL-cp6" secondAttribute="bottom" priority="750" constant="38" id="vgn-EY-Il7"/>
                 <constraint firstItem="KBJ-pI-83K" firstAttribute="centerY" secondItem="icL-bV-wfE" secondAttribute="centerY" constant="6" id="y35-Ur-uGj"/>

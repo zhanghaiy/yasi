@@ -11,30 +11,30 @@
   point2 --> 填空
  */
 @interface CheckBlankViewController : TopicParentsViewController
-@property (weak, nonatomic) IBOutlet UIView *topQuestionCountView;
+@property (strong, nonatomic) IBOutlet UIView *topQuestionCountView;
 
-@property (weak, nonatomic) IBOutlet UIView *teacherView;
-@property (weak, nonatomic) IBOutlet UIImageView *teaHeadImgView;
+@property (strong, nonatomic) IBOutlet UIView *teacherView;
+@property (strong, nonatomic) IBOutlet UIImageView *teaHeadImgView;
 
 @property (strong, nonatomic) IBOutlet UIView *teaQuestionBackView;
-@property (weak, nonatomic) IBOutlet UILabel *teaQuestionLabel;
+@property (strong, nonatomic) IBOutlet UILabel *teaQuestionLabel;
 
 
-@property (weak, nonatomic) IBOutlet UIView *studentView;
-@property (weak, nonatomic) IBOutlet UILabel *stuFollowLabel;
-@property (weak, nonatomic) IBOutlet UILabel *stuCountLabel;
+@property (strong, nonatomic) IBOutlet UIView *studentView;
+@property (strong, nonatomic) IBOutlet UILabel *stuFollowLabel;
+@property (strong, nonatomic) IBOutlet UILabel *stuCountLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *stuLineLabel;
-@property (weak, nonatomic) IBOutlet UILabel *stuAnswerLabel;
+@property (strong, nonatomic) IBOutlet UILabel *stuLineLabel;
+@property (strong, nonatomic) IBOutlet UILabel *stuAnswerLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *stuTimeProgressLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *stuHeadImgView;
+@property (strong, nonatomic) IBOutlet UILabel *stuTimeProgressLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *stuHeadImgView;
 
-@property (weak, nonatomic) IBOutlet UIButton *stuScoreButton;
+@property (strong, nonatomic) IBOutlet UIButton *stuScoreButton;
 
-@property (weak, nonatomic) IBOutlet UIButton *followAnswerButton;
+@property (strong, nonatomic) IBOutlet UIButton *followAnswerButton;
 
-@property (weak, nonatomic) IBOutlet UIButton *continueButton;
+@property (strong, nonatomic) IBOutlet UIButton *continueButton;
 - (IBAction)continueButtonClicked:(id)sender;
 - (IBAction)followAnswerButtonClicked:(id)sender;
 
