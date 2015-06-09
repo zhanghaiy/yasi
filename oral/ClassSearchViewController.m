@@ -9,12 +9,16 @@
 #import "ClassSearchViewController.h"
 #import "ClassSearchCell.h"
 #import "ClassIntroduceViewController.h"
+#import "NSURLConnectionRequest.h"
+#import "UIButton+WebCache.h"
+
 
 @interface ClassSearchViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
 {
-    UIView *_table_header_view;
+    NSArray *_searchListArray;
     UILabel *_tipLabel;
     UITableView *_search_Table_View;
+    BOOL _notSearch;
 }
 @end
 
@@ -48,21 +52,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    _notSearch = NO;
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"搜索"];
     self.view.backgroundColor = _backgroundViewColor;
     
     [self uiconfig];
-    
-    _table_header_view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 35)];
-    _table_header_view.backgroundColor = _backgroundViewColor;
-    
-    _tipLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 35)];
-    _tipLabel.text = @"搜索到5条数据";
-    _tipLabel.textAlignment = NSTextAlignmentCenter;
-    _tipLabel.textColor = _textColor;
-    _tipLabel.font = [UIFont systemFontOfSize:kFontSize1];
-    [_table_header_view addSubview:_tipLabel];
     
     _search_Table_View = [[UITableView alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight+55, kScreentWidth, kScreenHeight-KNavTopViewHeight-55) style:UITableViewStylePlain];
     _search_Table_View.delegate = self;
@@ -70,14 +65,48 @@
     _search_Table_View.backgroundColor = _backgroundViewColor;
     _search_Table_View.separatorColor = _backgroundViewColor;
     [self.view addSubview:_search_Table_View];
-    
-    _search_Table_View.tableHeaderView = _table_header_view;
 }
 
+#pragma mark - tableview Delegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = kPart_Button_Color;
+    label.font = [UIFont systemFontOfSize:kFontSize1];
+    label.backgroundColor = _backgroundViewColor;
+    
+    if (_searchListArray.count == 0)
+    {
+        if (_notSearch)
+        {
+            label.text = @"找不到结果~~~";
+        }
+        else
+        {
+            label.text = @"";
+        }
+    }
+    else
+    {
+        label.text = [NSString stringWithFormat:@"搜索到%ld条数据",_searchListArray.count];
+    }
+    return label;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 40;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return _searchListArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -91,15 +120,27 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    NSDictionary *dic = [_searchListArray objectAtIndex:indexPath.row];
+    [cell.classHeadButton setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"iocn"]] placeholderImage:[UIImage imageNamed:@"class_more"]];
+    [cell.classHeadButton setBackgroundImage:nil forState:UIControlStateNormal];
+    
+    cell.classNameLabel.text = [dic objectForKey:@"classname"];
+    cell.classCountsLabel.text = [NSString stringWithFormat:@"%d/%d",[[dic objectForKey:@"nowNumber"] intValue],[[dic objectForKey:@"maxNumber"] intValue]];
+    cell.classDesLabel.text = [dic objectForKey:@"memo"];
+    cell.classTeacherLabel.text = [dic objectForKey:@"teacherName"];
+    
     cell.addClassButton.tag = kAddClassButtonTag+indexPath.row;
     [cell.addClassButton addTarget:self action:@selector(addClass:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
 - (void)addClass:(UIButton *)btn
 {
-    // 加入班级
-    
+    // 申请 加入班级 ----> 待完善
+    NSInteger index = btn.tag - kAddClassButtonTag;
+    NSDictionary *dict = [_searchListArray objectAtIndex:index];
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -114,7 +155,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    // 班级介绍 传入班级id
+    NSString *classId = [[_searchListArray objectAtIndex:indexPath.row] objectForKey:@"classid"];
     ClassIntroduceViewController *classIntroduceVC = [[ClassIntroduceViewController alloc]initWithNibName:@"ClassIntroduceViewController" bundle:nil];
+    classIntroduceVC.classId = classId;
     [self.navigationController pushViewController:classIntroduceVC animated:YES];
 }
 
@@ -147,5 +191,37 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)searchButtonClicked:(id)sender
+{
+    _notSearch = YES;
+    // 搜索
+    NSString *userId = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kUserNotAddClassUrl];
+    NSString *paramsStr;
+    if ([_textFiled.text length]>0)
+    {
+        paramsStr = [NSString stringWithFormat:@"userId=%@&serachClassName=%@",userId,_textFiled.text];
+    }
+    else
+    {
+        paramsStr = [NSString stringWithFormat:@"userId=%@",userId];
+    }
+    [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:paramsStr target:self action:@selector(requestFinished:) andRefresh:YES];
+}
+
+- (void)requestFinished:(NSURLConnectionRequest *)request
+{
+    if ([request.downloadData length]>0)
+    {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
+        {
+            // 成功
+            _searchListArray = [dict objectForKey:@"classlist"];
+            [_search_Table_View reloadData];
+        }
+    }
+}
 
 @end

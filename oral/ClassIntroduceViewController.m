@@ -9,9 +9,14 @@
 #import "ClassIntroduceViewController.h"
 #import "NSString+CalculateStringSize.h"
 #import "TeacherPersonCenterViewController.h"
+#import "NSURLConnectionRequest.h"
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 
 @interface ClassIntroduceViewController ()
-
+{
+    NSString *_teacherId;
+}
 @end
 
 @implementation ClassIntroduceViewController
@@ -25,18 +30,38 @@
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"雅思一班"];
     
-//    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    [rightButton setFrame:CGRectMake(kScreentWidth-40, (self.navTopView.frame.size.height-24-20)/2+24, 20, 20)];
-//    [rightButton setBackgroundImage:[UIImage imageNamed:@"class_rigthButton"] forState:UIControlStateNormal];
-//    rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
-//    
-//    [rightButton addTarget:self action:@selector(outClass) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    [self.navTopView addSubview:rightButton];
-    
     self.view.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
     
     [self uiConfig];
+    [self requestClassInfo];
+}
+
+- (void)requestClassInfo
+{
+    //7B76B93F49034BED88F95C68333578F2
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@?classId=%@",kBaseIPUrl,kSelectClassInfoUrl,_classId];
+    NSLog(@"%@",urlStr);
+    [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestFinished:) andRefresh:YES];
+}
+
+- (void)requestFinished:(NSURLConnectionRequest *)request
+{
+    if ([request.downloadData length]>0)
+    {
+        NSDictionary *mainDict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        if ([[mainDict objectForKey:@"respCode"] integerValue] == 1000)
+        {
+            // 成功 展示信息
+            NSDictionary *dict = [[mainDict objectForKey:@"classlist"] lastObject];
+            [_classImgV setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"classiocn"]] placeholderImage:[UIImage imageNamed:@"class_more"]];
+            _classCountsLabel.text = [NSString stringWithFormat:@"%d/%d",[[dict objectForKey:@"nowNumber"] intValue],[[dict objectForKey:@"maxnumber"] intValue]];
+            _classCreateTimeLabel.text = [NSString stringWithFormat:@"创建时间：%@",[dict objectForKey:@"createtime"]];
+            _teacherNameLabel.text = [dict objectForKey:@"teachername"];
+            [_teaHeadImageButton setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"teacheriocn"]]];
+            _teacherId = [dict objectForKey:@"teacherid"];
+            [self getClassDesRectWithText:[dict objectForKey:@"memo"]];
+        }
+    }
 }
 
 #pragma mark - 退出班级
@@ -71,16 +96,13 @@
     _teacherNameLabel.textColor = _backColor;
 
     _classDesLabel.textColor = _textColor;
-    _teacherDesLabel.textColor = _textColor;
     _teaDetailLabel.textColor = _textColor;
     _classInfoView.backgroundColor = [UIColor whiteColor];
-    
-    
 }
 #pragma mark - 根据文字确定frame
-- (void)getClassDesRect
+- (void)getClassDesRectWithText:(NSString *)text
 {
-    NSString *text = @"雅思一班是由王老师一手创办的，主要是将大体的一些技巧或者如何很好地学习，通过考试,雅思一班是由王老师一手创办的，主要是将大体的一些技巧或者如何很好地学习，通过考试";
+//    NSString *text = @"雅思一班是由王老师一手创办的，主要是将大体的一些技巧或者如何很好地学习，通过考试,雅思一班是由王老师一手创办的，主要是将大体的一些技巧或者如何很好地学习，通过考试";
     _classDesLabel.text = text;
     CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-30 Height:9999 FontSize:kFontSize2];
     if (rect.size.height>40)
@@ -116,7 +138,9 @@
 - (IBAction)enter_Teacher_person_center:(id)sender
 {
     //
+    
     TeacherPersonCenterViewController *teaPersonCenterVC = [[TeacherPersonCenterViewController alloc]initWithNibName:@"TeacherPersonCenterViewController" bundle:nil];
+    teaPersonCenterVC.teacherId = _teacherId;
     [self.navigationController pushViewController:teaPersonCenterVC animated:YES];
 }
 @end

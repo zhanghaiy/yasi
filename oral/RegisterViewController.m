@@ -8,6 +8,8 @@
 
 #import "RegisterViewController.h"
 #import "TopicMainViewController.h"
+#import "NSURLConnectionRequest.h"
+
 
 @interface RegisterViewController ()<UITextFieldDelegate>
 
@@ -69,9 +71,35 @@
 
 - (IBAction)registerButtonClicked:(id)sender
 {
+    if ((_nameTextField.text.length>0)&&(_passwordTextField.text.length>0))
+    {
+        NSString *paramsStr = [NSString stringWithFormat:@"accountname=%@&password=%@",_nameTextField.text,_passwordTextField.text];
+        NSString *registerStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kRegisterUrl];
+        [NSURLConnectionRequest requestPOSTUrlString:registerStr andParamStr:paramsStr target:self action:@selector(requestFinished:) andRefresh:YES];
+    }
+    
+}
+
+- (void)requestFinished:(NSURLConnectionRequest *)request
+{
+    NSLog(@"请求结束");
+    if (request.downloadData)
+    {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        NSLog(@"%@",dict);
+        if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
+        {
+            [self enterTopicPage];
+        }
+    }
+}
+
+- (void)enterTopicPage
+{
     TopicMainViewController *topicVC = [[TopicMainViewController alloc]init];
     UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:topicVC];
     nvc.navigationBarHidden = YES;
     [self presentViewController:nvc animated:YES completion:nil];
 }
+
 @end

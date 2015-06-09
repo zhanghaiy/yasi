@@ -11,10 +11,16 @@
 #import "PersonSettingViewController.h"
 #import "PersonProgressViewController.h"
 #import "PersonEditViewController.h"
+#import "NSURLConnectionRequest.h"
+#import "PersonInfoModel.h"
+#import "UIButton+WebCache.h"
 
 
 @interface TPCPersonCenterViewController ()
-
+{
+//    PersonInfoModel *_personModel;
+    NSDictionary *_personInfoDic;
+}
 @end
 
 @implementation TPCPersonCenterViewController
@@ -42,6 +48,8 @@
     [self.navTopView addSubview:rightButton];
     self.navTopView.backgroundColor = _backgroundViewColor;
     [self uiConfig];
+    
+    [self requestPersonInfo];
 }
 
 - (void)personSetting
@@ -69,6 +77,106 @@
     
     [_enterClassButton setTitleColor:_textColor forState:UIControlStateNormal];
     [_pointProgressButton setTitleColor:_textColor forState:UIControlStateNormal];
+}
+
+#pragma mark - 网络请求
+- (void)requestPersonInfo
+{
+    NSString *userid = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kUserInfoUrl,userid];
+    [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestEnd:) andRefresh:YES];
+}
+
+- (void)requestEnd:(NSURLConnectionRequest *)request
+{
+    if ([request.downloadData length])
+    {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        _personInfoDic = [[dict objectForKey:@"studentInfos"] lastObject];
+        [self blankPersonInfo];
+    }
+}
+
+
+- (void)blankPersonInfo
+{
+    // 头像
+    if ([[_personInfoDic objectForKey:@"icon"] length]>0)
+    {
+        NSString *iconUrl = [_personInfoDic objectForKey:@"icon"];
+        [_personHeadButton setImageWithURL:[NSURL URLWithString:iconUrl]];
+    }
+    else
+    {
+        
+    }
+    
+    if ([[_personInfoDic objectForKey:@"birthday"] length]>0)
+    {
+        // 生日
+        NSString *birthday = [_personInfoDic objectForKey:@"birthday"];
+        _birthLabel.text = birthday;
+    }
+    else
+    {
+        
+    }
+    
+    if ([[_personInfoDic objectForKey:@"hobbies"] length]>0)
+    {
+        // 爱好
+        NSString *hobbies = [_personInfoDic objectForKey:@"hobbies"];
+        _loveLabel.text = hobbies;
+    }
+    else
+    {
+        
+    }
+
+    
+    if ([[_personInfoDic objectForKey:@"constellation"] length]>0)
+    {
+        // 星座
+        NSString *constellation = [_personInfoDic objectForKey:@"constellation"];
+        [_ConstellationButton setTitle:constellation forState:UIControlStateNormal];
+    }
+    else
+    {
+        
+    }
+    
+    if ([[_personInfoDic objectForKey:@"sex"] length]>0)
+    {
+        // 性别
+        NSString *sex = [_personInfoDic objectForKey:@"sex"];
+        [_sexButton setTitle:sex forState:UIControlStateNormal];
+    }
+    else
+    {
+        
+    }
+    
+    if ([[_personInfoDic objectForKey:@"nickname"] length]>0)
+    {
+        // 昵称
+        NSString *nickname = [_personInfoDic objectForKey:@"nickname"];
+        _nameLabel.text = nickname;
+    }
+    else
+    {
+        
+    }
+    
+    if ([[_personInfoDic objectForKey:@"signiture"] length]>0)
+    {
+        // 个性签名
+        NSString *signiture = [_personInfoDic objectForKey:@"signiture"];\
+        _signatureLabel.text = signiture;
+    }
+    else
+    {
+        
+    }
 }
 
 - (void)didReceiveMemoryWarning {

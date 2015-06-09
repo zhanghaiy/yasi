@@ -12,5 +12,6 @@
 @property (strong, nonatomic) IBOutlet UIView *searchBackView;
 @property (strong, nonatomic) IBOutlet UIButton *searchButton;
 @property (strong, nonatomic) IBOutlet UITextField *textFiled;
+- (IBAction)searchButtonClicked:(id)sender;
 
 @end

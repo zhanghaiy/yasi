@@ -18,7 +18,6 @@
                 <outlet property="joinButton" destination="rGc-6v-qcb" id="JSs-tg-D7o"/>
                 <outlet property="teaDetailLabel" destination="5RM-uG-Thb" id="ZrK-0Y-JYB"/>
                 <outlet property="teaHeadImageButton" destination="Uon-BY-qAm" id="nbM-w4-wf6"/>
-                <outlet property="teacherDesLabel" destination="hAB-Ub-rXM" id="nNL-aU-ENf"/>
                 <outlet property="teacherNameLabel" destination="h6N-Xb-jOg" id="hJb-CI-Klq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -112,12 +111,6 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="轻松活泼的讲课方式，通俗易懂，有深厚的教学功底" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hAB-Ub-rXM">
-                            <rect key="frame" x="195" y="15" width="170" height="45"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rGc-6v-qcb">
                             <rect key="frame" x="295" y="22" width="60" height="30"/>
                             <constraints>
@@ -137,19 +130,15 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="rGc-6v-qcb" secondAttribute="trailing" constant="20" id="53L-6Z-J4g"/>
-                        <constraint firstItem="hAB-Ub-rXM" firstAttribute="leading" secondItem="5RM-uG-Thb" secondAttribute="trailing" constant="10" id="Iwf-fV-cH9"/>
                         <constraint firstItem="5RM-uG-Thb" firstAttribute="leading" secondItem="Uon-BY-qAm" secondAttribute="trailing" constant="10" id="J4f-vf-Alj"/>
                         <constraint firstItem="5RM-uG-Thb" firstAttribute="top" secondItem="h6N-Xb-jOg" secondAttribute="bottom" id="LHX-7o-9qt"/>
                         <constraint firstAttribute="centerY" secondItem="rGc-6v-qcb" secondAttribute="centerY" id="PMW-Tf-dLW"/>
                         <constraint firstItem="h6N-Xb-jOg" firstAttribute="top" secondItem="NVi-ez-HFo" secondAttribute="top" constant="15" id="Qd9-Oc-H2m"/>
                         <constraint firstItem="h6N-Xb-jOg" firstAttribute="leading" secondItem="Uon-BY-qAm" secondAttribute="trailing" constant="10" id="WMG-kC-eJO"/>
                         <constraint firstAttribute="centerY" secondItem="Uon-BY-qAm" secondAttribute="centerY" id="bF8-Lx-5ca"/>
-                        <constraint firstAttribute="bottom" secondItem="hAB-Ub-rXM" secondAttribute="bottom" constant="15" id="ccb-BV-lVn"/>
                         <constraint firstAttribute="height" constant="75" id="p3K-uO-iSY"/>
                         <constraint firstItem="5RM-uG-Thb" firstAttribute="centerX" secondItem="h6N-Xb-jOg" secondAttribute="centerX" id="rYm-U2-0Db"/>
                         <constraint firstItem="Uon-BY-qAm" firstAttribute="leading" secondItem="NVi-ez-HFo" secondAttribute="leading" constant="15" id="tIY-hb-OQU"/>
-                        <constraint firstAttribute="trailing" secondItem="hAB-Ub-rXM" secondAttribute="trailing" constant="10" id="wVD-Oo-gZH"/>
-                        <constraint firstItem="hAB-Ub-rXM" firstAttribute="top" secondItem="NVi-ez-HFo" secondAttribute="top" constant="15" id="yvp-e4-S6N"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jip-Bs-xGk">

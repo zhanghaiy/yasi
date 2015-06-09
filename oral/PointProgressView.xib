@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PointProgressView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="140"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="共计录音时长" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fUJ-0H-I52">
+                    <rect key="frame" x="0.0" y="20" width="375" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="daK-10-UtK"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120&quot;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IDC-KW-rc1">
+                    <rect key="frame" x="0.0" y="40" width="375" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="W3l-pM-7YG"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="textColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YXs-9H-NZ8" customClass="CustomProgressView">
+                    <rect key="frame" x="20" y="90" width="335" height="12"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="2ql-fN-T4J"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12/15" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pwv-ex-J9e">
+                    <rect key="frame" x="274" y="107" width="80" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="eux-KA-YgO"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="pwv-ex-J9e" secondAttribute="trailing" constant="21" id="15m-ND-H4B"/>
+                <constraint firstItem="IDC-KW-rc1" firstAttribute="top" secondItem="fUJ-0H-I52" secondAttribute="bottom" id="8Al-vW-ZnA"/>
+                <constraint firstItem="YXs-9H-NZ8" firstAttribute="top" secondItem="IDC-KW-rc1" secondAttribute="bottom" constant="20" id="A9D-P2-jPE"/>
+                <constraint firstItem="pwv-ex-J9e" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="274" id="Ago-mu-XAy"/>
+                <constraint firstItem="YXs-9H-NZ8" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="Hfz-s8-JQE"/>
+                <constraint firstAttribute="trailing" secondItem="IDC-KW-rc1" secondAttribute="trailing" id="P0U-bh-iS2"/>
+                <constraint firstItem="pwv-ex-J9e" firstAttribute="top" secondItem="YXs-9H-NZ8" secondAttribute="bottom" constant="5" id="Pgi-BE-aT9"/>
+                <constraint firstAttribute="trailing" secondItem="YXs-9H-NZ8" secondAttribute="trailing" constant="20" id="aCP-3c-Zyc"/>
+                <constraint firstAttribute="trailing" secondItem="fUJ-0H-I52" secondAttribute="trailing" id="fky-li-1TF"/>
+                <constraint firstItem="fUJ-0H-I52" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="gcF-nW-P1e"/>
+                <constraint firstItem="IDC-KW-rc1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="mGd-ZU-2Qr"/>
+                <constraint firstItem="fUJ-0H-I52" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="rhC-4o-Tv7"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="progressLabel" destination="pwv-ex-J9e" id="c9V-re-U6P"/>
+                <outlet property="progressV" destination="YXs-9H-NZ8" id="6iF-dZ-GWl"/>
+                <outlet property="timeLAbel" destination="IDC-KW-rc1" id="P7T-9Y-7ol"/>
+                <outlet property="titleLabel" destination="fUJ-0H-I52" id="GF5-7c-rqJ"/>
+            </connections>
+            <point key="canvasLocation" x="400.5" y="79"/>
+        </view>
+    </objects>
+</document>

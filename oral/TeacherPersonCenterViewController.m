@@ -8,13 +8,20 @@
 
 #import "TeacherPersonCenterViewController.h"
 #import "PersonClassViewController.h"
+#import "NSURLConnectionRequest.h"
+#import "TeacherCell.h"
+#import "TeacherHeadView.h"
 
 
-@interface TeacherPersonCenterViewController ()<UIScrollViewDelegate>
+
+@interface TeacherPersonCenterViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     NSArray *_pictureArray;
+    NSArray *_infoListArray;
     NSTimer *_picShowTimer;
     NSInteger _currentImageIndex;
+    
+    UITableView *_tableV;
 }
 @end
 
@@ -31,9 +38,6 @@
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"某某老师"];
     
-    _pictureArray = @[[UIImage imageNamed:@"teacher_Back"],[UIImage imageNamed:@"class_introduce_back"],[UIImage imageNamed:@"teacher_Back"],[UIImage imageNamed:@"teacher_Back"]];
-
-    
     NSInteger scrollVHeight = kScreentWidth*12/25;
     CGRect rec = _topScrollV.frame;
     rec.size.width = kScreentWidth;
@@ -43,7 +47,102 @@
     _topScrollV.delegate = self;
     _topScrollV.contentSize = CGSizeMake(kScreentWidth*_pictureArray.count, scrollVHeight);
     _topScrollV.pagingEnabled = YES;
-    [self createShowImageView];
+    
+    [self requestTeacherInfo];
+    
+    _tableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 65+scrollVHeight, kScreentWidth, kScreenHeight-scrollVHeight-65) style:UITableViewStylePlain];
+    _tableV.delegate = self;
+    _tableV.dataSource = self;
+    _tableV.backgroundColor = _backgroundViewColor;
+    _tableV.separatorColor = _backgroundViewColor;
+    [self.view addSubview:_tableV];
+    
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _infoListArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellId = @"TeacherCell";
+    TeacherCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    if (cell == nil)
+    {
+        cell = [[[NSBundle mainBundle]loadNibNamed:@"TeacherCell" owner:self options:0] lastObject];
+    }
+    NSDictionary *dict = [_infoListArray objectAtIndex:indexPath.row];
+    cell.cateLabel.textColor = kText_Color;
+    cell.desLabel.textColor = kText_Color;
+    cell.cateLabel.text = [dict objectForKey:@"infotype"];
+    cell.desLabel.text = [dict objectForKey:@"content"];
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 75;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 80;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    TeacherHeadView *headV = [[[NSBundle mainBundle]loadNibNamed:@"TeacherHeadView" owner:self options:0] lastObject];
+    [headV setFrame:CGRectMake(0, 0, kScreentWidth, 80)];
+    headV.backgroundColor = [UIColor whiteColor];
+    return headV;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 40;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:CGRectMake(0, 0, kScreentWidth, 40)];
+    [btn setBackgroundImage:[UIImage imageNamed:@"person_center_cellBack"] forState:UIControlStateNormal];
+    [btn setTitle:@"    班级列表" forState:UIControlStateNormal];
+    btn.titleLabel.font =  [UIFont systemFontOfSize:kFontSize1];
+    [btn addTarget:self action:@selector(enterTeaClassList) forControlEvents:UIControlEventTouchUpInside];
+    return btn;
+}
+
+#pragma mark - 网络请求
+- (void)requestTeacherInfo
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@?teacherId=%@",kBaseIPUrl,kSelectTeacherUrl,_teacherId];
+    NSLog(@"%@",urlStr);
+    [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestFinished:) andRefresh:YES];
+}
+
+- (void)requestFinished:(NSURLConnectionRequest *)request
+{
+    if ([request.downloadData length]>0)
+    {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        if ([[dict objectForKey:@"respCode"] intValue] == 1000)
+        {
+            //
+            NSLog(@"%@",dict);
+            
+            _pictureArray = [dict objectForKey:@"teacherimagelist"];
+            _infoListArray = [dict objectForKey:@"teacherinfolist"];
+            [self createShowImageView];
+            [_tableV reloadData];
+        }
+    }
 }
 
 #pragma mark - 根据数据创建图片View
@@ -58,7 +157,7 @@
     {
         rect.origin.x = i * kScreentWidth;
         UIImageView *imgV = [[UIImageView alloc]initWithFrame:rect];
-        imgV.image = [_pictureArray objectAtIndex:i];
+        imgV.image = [UIImage imageNamed:@"class_introduce_back"];
         [_topScrollV addSubview:imgV];
         
         UIButton *pageButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -124,6 +223,12 @@
     
 }
 
+
+
+
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -139,10 +244,12 @@
 }
 */
 
-- (IBAction)class_list_button_clicked:(id)sender
+- (void)enterTeaClassList
 {
     PersonClassViewController *personClassVC = [[PersonClassViewController alloc]initWithNibName:@"PersonClassViewController" bundle:nil];
     [self.navigationController pushViewController:personClassVC animated:YES];
 }
+  
+
 
 @end

@@ -9,7 +9,7 @@
 #import "LogInViewController.h"
 #import "TopicMainViewController.h"
 #import "RegisterViewController.h"
-
+#import "NSURLConnectionRequest.h"
 
 @interface LogInViewController ()<UITextFieldDelegate>
 
@@ -71,6 +71,35 @@
 */
 
 - (IBAction)loginButtonClicked:(id)sender
+{
+    if ([_userNameTextFiled.text length]>0&&[_passWordTextField.text length]>0)
+    {
+        NSString *paramStr = [NSString stringWithFormat:@"accountname=%@&password=%@",_userNameTextFiled.text,_passWordTextField.text] ;
+        NSString *logInUrlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kLogInUrl];
+        [NSURLConnectionRequest requestPOSTUrlString:logInUrlStr andParamStr:paramStr target:self action:@selector(requestFinished:) andRefresh:YES];
+    }
+}
+
+- (void)requestFinished:(NSURLConnectionRequest *)request
+{
+    if (request.downloadData)
+    {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        NSLog(@"%@",dict);
+        if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
+        {
+            // 登陆成功 保存个人信息
+            NSString *userid = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"studentid"];
+            NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+            [def setValue:userid forKey:@"UserID"];
+            [def synchronize];
+            // 跳转页面
+            [self enterTopic];
+        }
+    }
+}
+
+- (void)enterTopic
 {
     TopicMainViewController *topicVC = [[TopicMainViewController alloc]init];
     UINavigationController *nvc = [[UINavigationController alloc]initWithRootViewController:topicVC];

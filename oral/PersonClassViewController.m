@@ -15,7 +15,6 @@
 @interface PersonClassViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_myClassTableV;
-    NSMutableArray *_classLIstArray;
 }
 @end
 
@@ -57,10 +56,40 @@
 }
 
 #pragma mark - UITableView delegate dataSource
+
+#pragma mark - numberOfSections
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (_classListArray.count == 0)
+    {
+        return 40;
+    }
+    return 0;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (_classListArray.count == 0)
+    {
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
+        label.text = @"您还没有加入任何班级~";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = kPart_Button_Color;
+        label.font = [UIFont systemFontOfSize:kFontSize1];
+        return label;
+    }
+    return nil;
+}
+
 #pragma mark - numberOfRows
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return _classListArray.count;
 }
 
 #pragma mark - cell 高度
@@ -86,6 +115,11 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.classImageButton.tag = kClassButtonTag + indexPath.row;
     [cell.classImageButton addTarget:self action:@selector(enterClassIntroducePage:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // 班级信息赋值
+//    NSDictionary *dic = [_classListArray objectAtIndex:indexPath.row];
+//    cell.classNameLabel.text = [dic objectForKey:@"classname"];
+//    cell.classCountLabel.text =
     
     return cell;
 }

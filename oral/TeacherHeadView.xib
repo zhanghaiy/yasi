@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TeacherHeadView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="class_teacher_head" translatesAutoresizingMaskIntoConstraints="NO" id="A9u-hp-nUh">
+                    <rect key="frame" x="15" y="10" width="60" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="R02-TJ-ttp"/>
+                        <constraint firstAttribute="height" constant="60" id="a0J-ai-FNX"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="班级介绍班级介绍班级介绍班级介绍班级介绍" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VnB-Ss-8YY">
+                    <rect key="frame" x="92" y="30" width="260" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="gbZ-Ku-f17"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="王老师的班级" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Htc-g2-z5O">
+                    <rect key="frame" x="92" y="10" width="260" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="lDE-TD-rug"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="VnB-Ss-8YY" firstAttribute="leading" secondItem="A9u-hp-nUh" secondAttribute="trailing" constant="17" id="0EM-JD-53d"/>
+                <constraint firstItem="Htc-g2-z5O" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="7dU-5P-BIL"/>
+                <constraint firstAttribute="trailing" secondItem="Htc-g2-z5O" secondAttribute="trailing" constant="23" id="Gv4-Do-8AG"/>
+                <constraint firstItem="A9u-hp-nUh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="NSh-ce-ifB"/>
+                <constraint firstItem="VnB-Ss-8YY" firstAttribute="top" secondItem="Htc-g2-z5O" secondAttribute="bottom" id="YHL-zN-hac"/>
+                <constraint firstItem="Htc-g2-z5O" firstAttribute="leading" secondItem="A9u-hp-nUh" secondAttribute="trailing" constant="17" id="jJj-Ka-UJf"/>
+                <constraint firstItem="A9u-hp-nUh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="mps-2V-9LO"/>
+                <constraint firstAttribute="trailing" secondItem="VnB-Ss-8YY" secondAttribute="trailing" constant="23" id="ryM-Xq-7KB"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="class_teacher_head" width="59" height="59"/>
+    </resources>
+</document>

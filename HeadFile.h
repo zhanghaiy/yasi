@@ -50,5 +50,31 @@
 #define kTopicListUrl @"/yasi/examtheme/queryClassTypeInfo.do"
 // 模考 参数 topid 
 #define kTestUrl @"/yasi/mockquestion/getMockQuestion.do"
+// 注册 accountname  password
+#define kRegisterUrl @"/yasi/student/registeredStudent.do"
+// 登陆
+#define kLogInUrl @"/yasi/student/validationStudent.do"
+// 查询学生个人信息 userId
+#define kPersonInfoUrl @"/yasi/student/selectUserInfo.do"
+// 查询用户信息 userId
+#define kUserInfoUrl @"/yasi/student/selectStudentByUserId.do"
+
+/*
+ // 用户未加入的班级
+ 用户ID	userId	M
+ 查询的班级名称	serachClassName	O
+ 查询老师ID	serachTeacherId	O
+ */
+#define kUserNotAddClassUrl @"/yasi/class/selectNotClassInfoByUserId.do"
+// 用户已经加入的班级  userId userId=B9CD53E6B65B4A8DA2C3410604357F0A
+#define kUserAddClassUrl @"/yasi/class/selectClassInfoByUserId.do"
+// 查询班级介绍信息 参数 classId
+#define kSelectClassInfoUrl @"/yasi/class/selectClassInfoById.do"
+// 查询班级详情信息 带学员信息 参数 classId teacherId
+#define kSelectClassMemoUrl @"/yasi/class/selectClassInfoById.do"
+// 查询老师个人风采  老师ID	teacherId	M
+#define kSelectTeacherUrl @"/yasi/teacher/selectTeacherInfoById.do"
+
+
 
 #endif

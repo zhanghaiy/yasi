@@ -40,6 +40,14 @@
 		FD5E01A91B26889900E3ED4B /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5E01A71B26889900E3ED4B /* LogInViewController.xib */; };
 		FD5E01AD1B2688AD00E3ED4B /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5E01AB1B2688AD00E3ED4B /* RegisterViewController.m */; };
 		FD5E01AE1B2688AD00E3ED4B /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5E01AC1B2688AD00E3ED4B /* RegisterViewController.xib */; };
+		FD5E01C91B26B87500E3ED4B /* NSURLConnectionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5E01C81B26B87500E3ED4B /* NSURLConnectionRequest.m */; };
+		FD5E01CF1B26CBFA00E3ED4B /* PersonInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5E01CE1B26CBFA00E3ED4B /* PersonInfoModel.m */; };
+		FD5E01D21B26F74B00E3ED4B /* PointProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5E01D11B26F74B00E3ED4B /* PointProgressView.m */; };
+		FD5E01D41B26F75500E3ED4B /* PointProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5E01D31B26F75500E3ED4B /* PointProgressView.xib */; };
+		FD5E01D81B27001C00E3ED4B /* TeacherCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5E01D61B27001C00E3ED4B /* TeacherCell.m */; };
+		FD5E01D91B27001C00E3ED4B /* TeacherCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5E01D71B27001C00E3ED4B /* TeacherCell.xib */; };
+		FD5E01DC1B27019B00E3ED4B /* TeacherHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5E01DB1B27019B00E3ED4B /* TeacherHeadView.m */; };
+		FD5E01DE1B2701A300E3ED4B /* TeacherHeadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5E01DD1B2701A300E3ED4B /* TeacherHeadView.xib */; };
 		FD5FEC331B2533EE005B99AF /* TeacherPersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5FEC311B2533EE005B99AF /* TeacherPersonCenterViewController.m */; };
 		FD5FEC341B2533EE005B99AF /* TeacherPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5FEC321B2533EE005B99AF /* TeacherPersonCenterViewController.xib */; };
 		FD5FEC391B25A33E005B99AF /* PersonEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5FEC371B25A33E005B99AF /* PersonEditViewController.m */; };
@@ -203,6 +211,19 @@
 		FD5E01AA1B2688AD00E3ED4B /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		FD5E01AB1B2688AD00E3ED4B /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		FD5E01AC1B2688AD00E3ED4B /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		FD5E01C71B26B87500E3ED4B /* NSURLConnectionRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSURLConnectionRequest.h; sourceTree = "<group>"; };
+		FD5E01C81B26B87500E3ED4B /* NSURLConnectionRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLConnectionRequest.m; sourceTree = "<group>"; };
+		FD5E01CD1B26CBFA00E3ED4B /* PersonInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInfoModel.h; sourceTree = "<group>"; };
+		FD5E01CE1B26CBFA00E3ED4B /* PersonInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInfoModel.m; sourceTree = "<group>"; };
+		FD5E01D01B26F74B00E3ED4B /* PointProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointProgressView.h; sourceTree = "<group>"; };
+		FD5E01D11B26F74B00E3ED4B /* PointProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointProgressView.m; sourceTree = "<group>"; };
+		FD5E01D31B26F75500E3ED4B /* PointProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PointProgressView.xib; sourceTree = "<group>"; };
+		FD5E01D51B27001C00E3ED4B /* TeacherCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeacherCell.h; sourceTree = "<group>"; };
+		FD5E01D61B27001C00E3ED4B /* TeacherCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeacherCell.m; sourceTree = "<group>"; };
+		FD5E01D71B27001C00E3ED4B /* TeacherCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TeacherCell.xib; sourceTree = "<group>"; };
+		FD5E01DA1B27019B00E3ED4B /* TeacherHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeacherHeadView.h; sourceTree = "<group>"; };
+		FD5E01DB1B27019B00E3ED4B /* TeacherHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeacherHeadView.m; sourceTree = "<group>"; };
+		FD5E01DD1B2701A300E3ED4B /* TeacherHeadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TeacherHeadView.xib; sourceTree = "<group>"; };
 		FD5FEC301B2533EE005B99AF /* TeacherPersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeacherPersonCenterViewController.h; sourceTree = "<group>"; };
 		FD5FEC311B2533EE005B99AF /* TeacherPersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeacherPersonCenterViewController.m; sourceTree = "<group>"; };
 		FD5FEC321B2533EE005B99AF /* TeacherPersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TeacherPersonCenterViewController.xib; sourceTree = "<group>"; };
@@ -514,6 +535,9 @@
 				FD5B4FB81B21899300BE6F5B /* PersonProgressViewController.h */,
 				FD5B4FB91B21899300BE6F5B /* PersonProgressViewController.m */,
 				FD5B4FBA1B21899300BE6F5B /* PersonProgressViewController.xib */,
+				FD5E01D01B26F74B00E3ED4B /* PointProgressView.h */,
+				FD5E01D11B26F74B00E3ED4B /* PointProgressView.m */,
+				FD5E01D31B26F75500E3ED4B /* PointProgressView.xib */,
 			);
 			name = "闯关进度";
 			sourceTree = "<group>";
@@ -540,12 +564,27 @@
 			name = "登陆注册";
 			sourceTree = "<group>";
 		};
+		FD5E01C01B26B75400E3ED4B /* NSURLConnection_Request */ = {
+			isa = PBXGroup;
+			children = (
+				FD5E01C71B26B87500E3ED4B /* NSURLConnectionRequest.h */,
+				FD5E01C81B26B87500E3ED4B /* NSURLConnectionRequest.m */,
+			);
+			name = NSURLConnection_Request;
+			sourceTree = "<group>";
+		};
 		FD5FEC2F1B2533AB005B99AF /* 老师个人中心 */ = {
 			isa = PBXGroup;
 			children = (
 				FD5FEC301B2533EE005B99AF /* TeacherPersonCenterViewController.h */,
 				FD5FEC311B2533EE005B99AF /* TeacherPersonCenterViewController.m */,
 				FD5FEC321B2533EE005B99AF /* TeacherPersonCenterViewController.xib */,
+				FD5E01D51B27001C00E3ED4B /* TeacherCell.h */,
+				FD5E01D61B27001C00E3ED4B /* TeacherCell.m */,
+				FD5E01D71B27001C00E3ED4B /* TeacherCell.xib */,
+				FD5E01DA1B27019B00E3ED4B /* TeacherHeadView.h */,
+				FD5E01DB1B27019B00E3ED4B /* TeacherHeadView.m */,
+				FD5E01DD1B2701A300E3ED4B /* TeacherHeadView.xib */,
 			);
 			name = "老师个人中心";
 			sourceTree = "<group>";
@@ -611,6 +650,8 @@
 				FD5B4FB71B21896C00BE6F5B /* 闯关进度 */,
 				FD54615B1B10749100409778 /* 班级 */,
 				FD5B4FB11B21819800BE6F5B /* 设置 */,
+				FD5E01CD1B26CBFA00E3ED4B /* PersonInfoModel.h */,
+				FD5E01CE1B26CBFA00E3ED4B /* PersonInfoModel.m */,
 			);
 			name = "个人中心";
 			sourceTree = "<group>";
@@ -754,6 +795,7 @@
 		FD9958F01B1328B7005892DB /* Net */ = {
 			isa = PBXGroup;
 			children = (
+				FD5E01C01B26B75400E3ED4B /* NSURLConnection_Request */,
 				FDA0C23C1B1412AA00900F49 /* SDWebImage */,
 				FD9958F41B1328FB005892DB /* AFNetworking */,
 				FD9958F11B1328CB005892DB /* NetManager.h */,
@@ -1096,6 +1138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD5E01D41B26F75500E3ED4B /* PointProgressView.xib in Resources */,
 				FD8453B41B15A02E00B1E84B /* TableView_headView.xib in Resources */,
 				FDA0C2601B14568900900F49 /* CheckScoreViewController.xib in Resources */,
 				FD54614A1B105FF400409778 /* MyTeacherCell.xib in Resources */,
@@ -1119,6 +1162,7 @@
 				FD5461551B10676700409778 /* TPCPersonCenterViewController.xib in Resources */,
 				FDD404591B049B8400DE2E84 /* topic_small.png in Resources */,
 				FD9957E31B12C47B005892DB /* 33.jpg in Resources */,
+				FD5E01D91B27001C00E3ED4B /* TeacherCell.xib in Resources */,
 				FD5B4FBC1B21899300BE6F5B /* PersonProgressViewController.xib in Resources */,
 				FD8C40EC1B0C6F3A00948B6C /* CheckBlankViewController.xib in Resources */,
 				FDBA32ED1B1C38A000C02BF8 /* Score_Point3_Section_View.xib in Resources */,
@@ -1135,6 +1179,7 @@
 				FD8C40F11B0C6FAB00948B6C /* CheckAskViewController.xib in Resources */,
 				FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */,
 				FD54613A1B10576B00409778 /* CheckTestViewController.xib in Resources */,
+				FD5E01DE1B2701A300E3ED4B /* TeacherHeadView.xib in Resources */,
 				FD5461601B10761C00409778 /* ClassCell.xib in Resources */,
 				FD5B4FAB1B216E0300BE6F5B /* ClassSearchViewController.xib in Resources */,
 				FDD404561B049B5B00DE2E84 /* topic2.png in Resources */,
@@ -1189,6 +1234,7 @@
 				FDA0C2691B14719A00900F49 /* ScoreMenuCell.m in Sources */,
 				FD5B4FB51B2181CA00BE6F5B /* PersonSettingViewController.m in Sources */,
 				FD9958E81B131794005892DB /* zip.c in Sources */,
+				FD5E01D21B26F74B00E3ED4B /* PointProgressView.m in Sources */,
 				FDD4041A1B0492F900DE2E84 /* ViewController.m in Sources */,
 				FD8453B21B15A01E00B1E84B /* TableView_headView.m in Sources */,
 				FD97AFA51B16BB8A00C45A2C /* ScoreTestMenuViewController.m in Sources */,
@@ -1196,6 +1242,7 @@
 				FD5B4FA41B21538600BE6F5B /* ClassDetailCell.m in Sources */,
 				FD5461391B10576B00409778 /* CheckTestViewController.m in Sources */,
 				FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */,
+				FD5E01C91B26B87500E3ED4B /* NSURLConnectionRequest.m in Sources */,
 				FD9958E51B131794005892DB /* ioapi.c in Sources */,
 				FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */,
 				FD99590D1B1328FB005892DB /* AFURLConnectionOperation.m in Sources */,
@@ -1210,9 +1257,11 @@
 				FDD404401B04952400DE2E84 /* TopicMainViewController.m in Sources */,
 				FDBA32F11B1C38E600C02BF8 /* Score_Point3_Cell.m in Sources */,
 				FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */,
+				FD5E01DC1B27019B00E3ED4B /* TeacherHeadView.m in Sources */,
 				FD5B4FBB1B21899300BE6F5B /* PersonProgressViewController.m in Sources */,
 				FD97AFB41B17020800C45A2C /* PractiseCell.m in Sources */,
 				FDA0C2531B1412AA00900F49 /* SDImageCache.m in Sources */,
+				FD5E01CF1B26CBFA00E3ED4B /* PersonInfoModel.m in Sources */,
 				FD9958E91B131794005892DB /* ZipArchive.m in Sources */,
 				FD5E01A81B26889900E3ED4B /* LogInViewController.m in Sources */,
 				FDA0C25F1B14568900900F49 /* CheckScoreViewController.m in Sources */,
@@ -1225,6 +1274,7 @@
 				FD5461591B10748600409778 /* PersonClassViewController.m in Sources */,
 				FDD4044C1B04972D00DE2E84 /* RightMainCell.m in Sources */,
 				FD5461541B10676700409778 /* TPCPersonCenterViewController.m in Sources */,
+				FD5E01D81B27001C00E3ED4B /* TeacherCell.m in Sources */,
 				FD5B4FAF1B2172DC00BE6F5B /* ClassSearchCell.m in Sources */,
 				FD99590E1B1328FB005892DB /* AFURLRequestSerialization.m in Sources */,
 				FD9957E01B12BC1E005892DB /* ClassIntroduceViewController.m in Sources */,

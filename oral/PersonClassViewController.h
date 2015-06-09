@@ -10,4 +10,6 @@
 
 @interface PersonClassViewController : TopicParentsViewController
 
+@property (nonatomic,strong) NSArray *classListArray;
+
 @end
