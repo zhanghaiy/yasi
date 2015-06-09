@@ -8,7 +8,7 @@
             <connections>
                 <outlet property="ConstellationButton" destination="gtc-E7-Cy0" id="Txg-vb-mqu"/>
                 <outlet property="birthLabel" destination="m9D-Ca-ojn" id="qkO-HB-d9b"/>
-                <outlet property="editButton" destination="e9W-V6-LQX" id="5LK-h3-dpF"/>
+                <outlet property="editButton" destination="e9W-V6-LQX" id="bLo-pW-95K"/>
                 <outlet property="enterClassButton" destination="q3W-ty-YXP" id="S1j-eg-FHw"/>
                 <outlet property="loveLabel" destination="t93-FP-amo" id="PlZ-tb-9Je"/>
                 <outlet property="nameLabel" destination="obR-gy-qyt" id="5ZX-cE-5r7"/>
@@ -112,6 +112,9 @@
                             <state key="normal" backgroundImage="person_edit">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="editButtonClicked:" destination="-1" eventType="touchUpInside" id="aoJ-6G-jLf"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

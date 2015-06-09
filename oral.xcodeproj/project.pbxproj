@@ -35,6 +35,11 @@
 		FD5B4FB61B2181CA00BE6F5B /* PersonSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5B4FB41B2181CA00BE6F5B /* PersonSettingViewController.xib */; };
 		FD5B4FBB1B21899300BE6F5B /* PersonProgressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5B4FB91B21899300BE6F5B /* PersonProgressViewController.m */; };
 		FD5B4FBC1B21899300BE6F5B /* PersonProgressViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5B4FBA1B21899300BE6F5B /* PersonProgressViewController.xib */; };
+		FD5E01A31B26865000E3ED4B /* ConstellationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5E01A21B26865000E3ED4B /* ConstellationManager.m */; };
+		FD5E01A81B26889900E3ED4B /* LogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5E01A61B26889900E3ED4B /* LogInViewController.m */; };
+		FD5E01A91B26889900E3ED4B /* LogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5E01A71B26889900E3ED4B /* LogInViewController.xib */; };
+		FD5E01AD1B2688AD00E3ED4B /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5E01AB1B2688AD00E3ED4B /* RegisterViewController.m */; };
+		FD5E01AE1B2688AD00E3ED4B /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5E01AC1B2688AD00E3ED4B /* RegisterViewController.xib */; };
 		FD5FEC331B2533EE005B99AF /* TeacherPersonCenterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5FEC311B2533EE005B99AF /* TeacherPersonCenterViewController.m */; };
 		FD5FEC341B2533EE005B99AF /* TeacherPersonCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5FEC321B2533EE005B99AF /* TeacherPersonCenterViewController.xib */; };
 		FD5FEC391B25A33E005B99AF /* PersonEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5FEC371B25A33E005B99AF /* PersonEditViewController.m */; };
@@ -190,6 +195,14 @@
 		FD5B4FB81B21899300BE6F5B /* PersonProgressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonProgressViewController.h; sourceTree = "<group>"; };
 		FD5B4FB91B21899300BE6F5B /* PersonProgressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonProgressViewController.m; sourceTree = "<group>"; };
 		FD5B4FBA1B21899300BE6F5B /* PersonProgressViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonProgressViewController.xib; sourceTree = "<group>"; };
+		FD5E01A11B26865000E3ED4B /* ConstellationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstellationManager.h; sourceTree = "<group>"; };
+		FD5E01A21B26865000E3ED4B /* ConstellationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConstellationManager.m; sourceTree = "<group>"; };
+		FD5E01A51B26889900E3ED4B /* LogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInViewController.h; sourceTree = "<group>"; };
+		FD5E01A61B26889900E3ED4B /* LogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInViewController.m; sourceTree = "<group>"; };
+		FD5E01A71B26889900E3ED4B /* LogInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LogInViewController.xib; sourceTree = "<group>"; };
+		FD5E01AA1B2688AD00E3ED4B /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		FD5E01AB1B2688AD00E3ED4B /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		FD5E01AC1B2688AD00E3ED4B /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
 		FD5FEC301B2533EE005B99AF /* TeacherPersonCenterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeacherPersonCenterViewController.h; sourceTree = "<group>"; };
 		FD5FEC311B2533EE005B99AF /* TeacherPersonCenterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeacherPersonCenterViewController.m; sourceTree = "<group>"; };
 		FD5FEC321B2533EE005B99AF /* TeacherPersonCenterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TeacherPersonCenterViewController.xib; sourceTree = "<group>"; };
@@ -505,6 +518,28 @@
 			name = "闯关进度";
 			sourceTree = "<group>";
 		};
+		FD5E01A01B26865000E3ED4B /* 星座 */ = {
+			isa = PBXGroup;
+			children = (
+				FD5E01A11B26865000E3ED4B /* ConstellationManager.h */,
+				FD5E01A21B26865000E3ED4B /* ConstellationManager.m */,
+			);
+			path = "星座";
+			sourceTree = "<group>";
+		};
+		FD5E01A41B26883C00E3ED4B /* 登陆注册 */ = {
+			isa = PBXGroup;
+			children = (
+				FD5E01A51B26889900E3ED4B /* LogInViewController.h */,
+				FD5E01A61B26889900E3ED4B /* LogInViewController.m */,
+				FD5E01A71B26889900E3ED4B /* LogInViewController.xib */,
+				FD5E01AA1B2688AD00E3ED4B /* RegisterViewController.h */,
+				FD5E01AB1B2688AD00E3ED4B /* RegisterViewController.m */,
+				FD5E01AC1B2688AD00E3ED4B /* RegisterViewController.xib */,
+			);
+			name = "登陆注册";
+			sourceTree = "<group>";
+		};
 		FD5FEC2F1B2533AB005B99AF /* 老师个人中心 */ = {
 			isa = PBXGroup;
 			children = (
@@ -518,6 +553,7 @@
 		FD5FEC351B25A311005B99AF /* 个人信息修改 */ = {
 			isa = PBXGroup;
 			children = (
+				FD5E01A01B26865000E3ED4B /* 星座 */,
 				FD5FEC361B25A33E005B99AF /* PersonEditViewController.h */,
 				FD5FEC371B25A33E005B99AF /* PersonEditViewController.m */,
 				FD5FEC381B25A33E005B99AF /* PersonEditViewController.xib */,
@@ -531,6 +567,7 @@
 		FD6244AA1B0585A10037836E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				FD5E01A41B26883C00E3ED4B /* 登陆注册 */,
 				FDA25E121B0DA41F00F35545 /* 父类控制器 */,
 				FD6244AC1B0586140037836E /* topic主页 */,
 			);
@@ -1076,6 +1113,7 @@
 				FDA25E171B0DC31900F35545 /* CheckKeyWordViewController.xib in Resources */,
 				FD5B4FB61B2181CA00BE6F5B /* PersonSettingViewController.xib in Resources */,
 				FDD4044F1B04972D00DE2E84 /* TopicCell.xib in Resources */,
+				FD5E01A91B26889900E3ED4B /* LogInViewController.xib in Resources */,
 				FD5461451B105D7700409778 /* FooterView.xib in Resources */,
 				FDBA32F21B1C38E600C02BF8 /* Score_Point3_Cell.xib in Resources */,
 				FD5461551B10676700409778 /* TPCPersonCenterViewController.xib in Resources */,
@@ -1085,6 +1123,7 @@
 				FD8C40EC1B0C6F3A00948B6C /* CheckBlankViewController.xib in Resources */,
 				FDBA32ED1B1C38A000C02BF8 /* Score_Point3_Section_View.xib in Resources */,
 				FDA0C2651B1463C000900F49 /* ScoreDetailViewController.xib in Resources */,
+				FD5E01AE1B2688AD00E3ED4B /* RegisterViewController.xib in Resources */,
 				FD5FEC341B2533EE005B99AF /* TeacherPersonCenterViewController.xib in Resources */,
 				FD62449F1B0584780037836E /* touxiang.png in Resources */,
 				FD97AFB01B16FD2400C45A2C /* CheckPractiseBookViewController.xib in Resources */,
@@ -1137,6 +1176,7 @@
 				FD54613E1B10580A00409778 /* MyTeacherViewController.m in Sources */,
 				FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */,
 				FD9957DB1B12BC02005892DB /* ClassDetailViewController.m in Sources */,
+				FD5E01AD1B2688AD00E3ED4B /* RegisterViewController.m in Sources */,
 				FD99590F1B1328FB005892DB /* AFURLResponseSerialization.m in Sources */,
 				FD8C40E61B0C6D8200948B6C /* CheckSuccessViewController.m in Sources */,
 				FDA0C2641B1463C000900F49 /* ScoreDetailViewController.m in Sources */,
@@ -1162,6 +1202,7 @@
 				FD97AFAA1B16E11A00C45A2C /* TestReviewCell.m in Sources */,
 				FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */,
 				FD5FEC391B25A33E005B99AF /* PersonEditViewController.m in Sources */,
+				FD5E01A31B26865000E3ED4B /* ConstellationManager.m in Sources */,
 				FD8C40F01B0C6FAB00948B6C /* CheckAskViewController.m in Sources */,
 				FD9958E61B131794005892DB /* mztools.c in Sources */,
 				FD5FEC3E1B25A607005B99AF /* PersonEditCell.m in Sources */,
@@ -1173,6 +1214,7 @@
 				FD97AFB41B17020800C45A2C /* PractiseCell.m in Sources */,
 				FDA0C2531B1412AA00900F49 /* SDImageCache.m in Sources */,
 				FD9958E91B131794005892DB /* ZipArchive.m in Sources */,
+				FD5E01A81B26889900E3ED4B /* LogInViewController.m in Sources */,
 				FDA0C25F1B14568900900F49 /* CheckScoreViewController.m in Sources */,
 				FDD4043B1B04943000DE2E84 /* TopicParentsViewController.m in Sources */,
 				FDA0C2561B1412AA00900F49 /* SDWebImageManager.m in Sources */,

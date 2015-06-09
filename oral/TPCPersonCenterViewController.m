@@ -10,6 +10,8 @@
 #import "PersonClassViewController.h"
 #import "PersonSettingViewController.h"
 #import "PersonProgressViewController.h"
+#import "PersonEditViewController.h"
+
 
 @interface TPCPersonCenterViewController ()
 
@@ -108,5 +110,7 @@
 - (IBAction)editButtonClicked:(id)sender
 {
     // 编辑个人信息
+    PersonEditViewController *editVC = [[PersonEditViewController alloc]initWithNibName:@"PersonEditViewController" bundle:nil];
+    [self.navigationController pushViewController:editVC animated:YES];
 }
 @end
