@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TeacherPersonCenterViewController">
@@ -19,15 +18,15 @@
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lUb-vP-JTw">
                     <rect key="frame" x="0.0" y="65" width="375" height="180"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="lUb-vP-JTw" secondAttribute="height" multiplier="25:12" id="wFp-Y3-Qyv"/>
+                        <constraint firstAttribute="height" constant="180" id="6ec-50-HVb"/>
                     </constraints>
                 </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="lUb-vP-JTw" secondAttribute="trailing" id="7pd-9S-jOg"/>
-                <constraint firstItem="lUb-vP-JTw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ECI-j9-PHb"/>
-                <constraint firstItem="lUb-vP-JTw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="gm4-ar-kk2"/>
+                <constraint firstAttribute="trailing" secondItem="lUb-vP-JTw" secondAttribute="trailing" id="OAJ-Kk-Rrl"/>
+                <constraint firstItem="lUb-vP-JTw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="uaY-97-5tP"/>
+                <constraint firstItem="lUb-vP-JTw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="w4g-Y3-SJH"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
             <point key="canvasLocation" x="347.5" y="370.5"/>

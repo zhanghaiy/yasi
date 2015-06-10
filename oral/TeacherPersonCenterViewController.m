@@ -11,7 +11,7 @@
 #import "NSURLConnectionRequest.h"
 #import "TeacherCell.h"
 #import "TeacherHeadView.h"
-
+#import "UIImageView+WebCache.h"
 
 
 @interface TeacherPersonCenterViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
@@ -38,19 +38,18 @@
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"某某老师"];
     
-    NSInteger scrollVHeight = kScreentWidth*12/25;
+    self.navTopView.backgroundColor  = _backgroundViewColor;
+    
     CGRect rec = _topScrollV.frame;
     rec.size.width = kScreentWidth;
-    rec.size.height = scrollVHeight;
     _topScrollV.frame = rec;
     
     _topScrollV.delegate = self;
-    _topScrollV.contentSize = CGSizeMake(kScreentWidth*_pictureArray.count, scrollVHeight);
     _topScrollV.pagingEnabled = YES;
-    
+    _topScrollV.backgroundColor = _backgroundViewColor;
     [self requestTeacherInfo];
     
-    _tableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 65+scrollVHeight, kScreentWidth, kScreenHeight-scrollVHeight-65) style:UITableViewStylePlain];
+    _tableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 65+_topScrollV.frame.size.height+2, kScreentWidth, kScreenHeight-_topScrollV.frame.size.height-67) style:UITableViewStylePlain];
     _tableV.delegate = self;
     _tableV.dataSource = self;
     _tableV.backgroundColor = _backgroundViewColor;
@@ -100,6 +99,10 @@
     TeacherHeadView *headV = [[[NSBundle mainBundle]loadNibNamed:@"TeacherHeadView" owner:self options:0] lastObject];
     [headV setFrame:CGRectMake(0, 0, kScreentWidth, 80)];
     headV.backgroundColor = [UIColor whiteColor];
+    [headV.teaHeadImageV setImageWithURL:[NSURL URLWithString:[_teacherDic objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"class_teacher_head"]];
+    headV.teaTitleLabel.text = [_teacherDic objectForKey:@"teachername"];
+    headV.teaDesLabel.text = [[[_teacherDic objectForKey:@"teacherinfo"] lastObject] objectForKey:@"content"];
+    
     return headV;
 }
 
@@ -113,7 +116,12 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setFrame:CGRectMake(0, 0, kScreentWidth, 40)];
     [btn setBackgroundImage:[UIImage imageNamed:@"person_center_cellBack"] forState:UIControlStateNormal];
-    [btn setTitle:@"    班级列表" forState:UIControlStateNormal];
+    [btn setTitleColor:kText_Color forState:UIControlStateNormal];
+    [btn setTitle:@"班级列表" forState:UIControlStateNormal];
+    btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//    但是问题又出来，此时文字会紧贴到做边框，我们可以设置
+    btn.contentEdgeInsets = UIEdgeInsetsMake(0,15, 0, 0);
+//    使文字距离做边框保持10个像素的距离。
     btn.titleLabel.font =  [UIFont systemFontOfSize:kFontSize1];
     [btn addTarget:self action:@selector(enterTeaClassList) forControlEvents:UIControlEventTouchUpInside];
     return btn;
@@ -148,16 +156,16 @@
 #pragma mark - 根据数据创建图片View
 - (void)createShowImageView
 {
-    CGRect rect = _topScrollV.bounds;
+    _topScrollV.contentSize = CGSizeMake(kScreentWidth*_pictureArray.count, _topScrollV.frame.size.height);
+    CGRect rect = _topScrollV.frame;
 
     NSInteger _pageControl_H = 20;
     NSInteger _pageControl_Y = rect.size.height+65 - _pageControl_H;
     NSInteger _pageControl_X = (kScreentWidth-20*_pictureArray.count-10)/2;
     for (int i = 0; i < _pictureArray.count; i ++)
     {
-        rect.origin.x = i * kScreentWidth;
-        UIImageView *imgV = [[UIImageView alloc]initWithFrame:rect];
-        imgV.image = [UIImage imageNamed:@"class_introduce_back"];
+        UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(i*kScreentWidth, 0, kScreentWidth, _topScrollV.frame.size.height)];
+        [imgV setImageWithURL:[NSURL URLWithString:[[_pictureArray objectAtIndex:i] objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"teacher_Back"]];
         [_topScrollV addSubview:imgV];
         
         UIButton *pageButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -175,8 +183,12 @@
         }
         [self.view bringSubviewToFront:pageButton];
     }
-    _currentImageIndex = 0;
-    _picShowTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(changPicture) userInfo:nil repeats:YES];
+    if (_picShowTimer==nil)
+    {
+        _currentImageIndex = 0;
+        _picShowTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(changPicture) userInfo:nil repeats:YES];
+    }
+    
 }
 
 #pragma mark -切换图片
@@ -225,9 +237,24 @@
 
 
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+//    [_picShowTimer invalidate];
+//    _picShowTimer = nil;
+}
 
-
-
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+//    NSLog(@"%@",_pictureArray);
+//    if (_pictureArray!=nil&&_picShowTimer==nil)
+//    {
+//        _currentImageIndex = 0;
+//        _picShowTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(changPicture) userInfo:nil repeats:YES];
+//    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -247,6 +274,8 @@
 - (void)enterTeaClassList
 {
     PersonClassViewController *personClassVC = [[PersonClassViewController alloc]initWithNibName:@"PersonClassViewController" bundle:nil];
+    personClassVC.pageTitleString = [NSString stringWithFormat:@"%@老师的班级",[_teacherDic objectForKey:@"teachername"]];
+    personClassVC.teacherId = _teacherId;
     [self.navigationController pushViewController:personClassVC animated:YES];
 }
   

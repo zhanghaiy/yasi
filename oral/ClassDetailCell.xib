@@ -40,24 +40,36 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oWA-1r-I05" customClass="CustomProgressView">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oWA-1r-I05" customClass="CustomProgressView">
                         <rect key="frame" x="180" y="20" width="180" height="6"/>
                         <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="6" id="d32-DG-IRC"/>
+                        </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="18/50" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZE-uk-SW5">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18/50" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZE-uk-SW5">
                         <rect key="frame" x="182" y="32" width="150" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="15" id="XDw-dE-RoO"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="QZE-uk-SW5" secondAttribute="trailing" constant="43" id="2gY-9A-1lc"/>
+                    <constraint firstItem="oWA-1r-I05" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="4Sf-f1-B2l"/>
                     <constraint firstItem="2Fm-5B-og8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="84M-Bu-Mxk"/>
+                    <constraint firstAttribute="trailing" secondItem="oWA-1r-I05" secondAttribute="trailing" constant="15" id="86Q-7a-UWN"/>
                     <constraint firstItem="CzS-0n-vUW" firstAttribute="leading" secondItem="2Fm-5B-og8" secondAttribute="trailing" constant="10" id="Epv-Lk-i7L"/>
                     <constraint firstAttribute="centerY" secondItem="2Fm-5B-og8" secondAttribute="centerY" id="GOZ-r8-fDe"/>
                     <constraint firstItem="53l-3p-aUd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="SRi-AO-34c"/>
+                    <constraint firstAttribute="bottom" secondItem="QZE-uk-SW5" secondAttribute="bottom" constant="12" id="SuW-XS-Lnd"/>
                     <constraint firstItem="53l-3p-aUd" firstAttribute="leading" secondItem="2Fm-5B-og8" secondAttribute="trailing" constant="10" id="YaF-DI-wjF"/>
                     <constraint firstItem="CzS-0n-vUW" firstAttribute="top" secondItem="53l-3p-aUd" secondAttribute="bottom" id="jvd-hO-6Vm"/>
+                    <constraint firstItem="oWA-1r-I05" firstAttribute="leading" secondItem="53l-3p-aUd" secondAttribute="trailing" constant="10" id="mZt-Gi-Vsb"/>
+                    <constraint firstItem="QZE-uk-SW5" firstAttribute="leading" secondItem="CzS-0n-vUW" secondAttribute="trailing" constant="12" id="zub-cu-bTz"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

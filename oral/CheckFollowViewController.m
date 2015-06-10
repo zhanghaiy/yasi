@@ -234,9 +234,9 @@
     audioPlayer.action = @selector(playerCallBack);
     
     _currentPointCounts = 0;
-    
-//    [self addBackButtonWithImageName:@"back-white"];
-    [self addTitleLabelWithTitleWithTitle:@"Part1-1"];
+
+    NSString *title = [NSString stringWithFormat:@"Part%ld-%ld",self.currentPartCounts,_currentPointCounts+1];
+    [self addTitleLabelWithTitleWithTitle:title];
     self.navTopView.backgroundColor = _backColor;
     self.titleLab.textColor = [UIColor whiteColor];
     

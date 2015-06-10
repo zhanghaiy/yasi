@@ -71,10 +71,13 @@
 // 查询班级介绍信息 参数 classId
 #define kSelectClassInfoUrl @"/yasi/class/selectClassInfoById.do"
 // 查询班级详情信息 带学员信息 参数 classId teacherId
-#define kSelectClassMemoUrl @"/yasi/class/selectClassInfoById.do"
+#define kSelectClassMemoUrl @"/yasi/class/selectClassMemberByClassId.do"
 // 查询老师个人风采  老师ID	teacherId	M
 #define kSelectTeacherUrl @"/yasi/teacher/selectTeacherInfoById.do"
 
-
+// 查询老师班级 teacherId
+#define kTeacherClassUrl @"/yasi/class/selectAllClassByTeacherId.do"
+// 学生退出本班
+#define kStuOutClassUrlString @"/yasi/class/deleteClassMemberByStudentId.do"
 
 #endif

@@ -18,8 +18,8 @@
 
 @interface TPCPersonCenterViewController ()
 {
-//    PersonInfoModel *_personModel;
     NSDictionary *_personInfoDic;
+    NSString *_userId;
 }
 @end
 
@@ -82,8 +82,8 @@
 #pragma mark - 网络请求
 - (void)requestPersonInfo
 {
-    NSString *userid = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kUserInfoUrl,userid];
+    _userId = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kUserInfoUrl,_userId];
     [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestEnd:) andRefresh:YES];
 }
 
@@ -205,12 +205,15 @@
     {
         // 闯关进度
         PersonProgressViewController *progressVC = [[PersonProgressViewController alloc]initWithNibName:@"PersonProgressViewController" bundle:nil];
+        progressVC.userId = _userId;
         [self.navigationController pushViewController:progressVC animated:YES];
     }
     else if (btn.tag == kEnterClassButtonTag)
     {
         // 我的班级
         PersonClassViewController *classVc = [[PersonClassViewController alloc]initWithNibName:@"PersonClassViewController" bundle:nil];
+        classVc.pageTitleString = @"我的班级";
+        classVc.userId = _userId;
         [self.navigationController pushViewController:classVc animated:YES];
     }
 }

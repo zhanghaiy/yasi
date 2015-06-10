@@ -35,19 +35,44 @@
                     <color key="textColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="shF-wh-Saf">
+                    <rect key="frame" x="0.0" y="79" width="375" height="1"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="56P-MI-scb"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RBp-sk-OHy">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="VnB-Ss-8YY" firstAttribute="leading" secondItem="A9u-hp-nUh" secondAttribute="trailing" constant="17" id="0EM-JD-53d"/>
                 <constraint firstItem="Htc-g2-z5O" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="7dU-5P-BIL"/>
+                <constraint firstAttribute="trailing" secondItem="shF-wh-Saf" secondAttribute="trailing" id="B22-H9-RZf"/>
                 <constraint firstAttribute="trailing" secondItem="Htc-g2-z5O" secondAttribute="trailing" constant="23" id="Gv4-Do-8AG"/>
                 <constraint firstItem="A9u-hp-nUh" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="NSh-ce-ifB"/>
+                <constraint firstAttribute="bottom" secondItem="shF-wh-Saf" secondAttribute="bottom" id="P4e-pA-xy9"/>
                 <constraint firstItem="VnB-Ss-8YY" firstAttribute="top" secondItem="Htc-g2-z5O" secondAttribute="bottom" id="YHL-zN-hac"/>
                 <constraint firstItem="Htc-g2-z5O" firstAttribute="leading" secondItem="A9u-hp-nUh" secondAttribute="trailing" constant="17" id="jJj-Ka-UJf"/>
                 <constraint firstItem="A9u-hp-nUh" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="mps-2V-9LO"/>
                 <constraint firstAttribute="trailing" secondItem="VnB-Ss-8YY" secondAttribute="trailing" constant="23" id="ryM-Xq-7KB"/>
+                <constraint firstItem="shF-wh-Saf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="sLE-Z7-dKE"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="lineLabel" destination="RBp-sk-OHy" id="xNe-Jw-nWt"/>
+                <outlet property="lineLabel2" destination="shF-wh-Saf" id="6hx-Bh-P7b"/>
+                <outlet property="teaDesLabel" destination="VnB-Ss-8YY" id="e3e-90-0u8"/>
+                <outlet property="teaHeadImageV" destination="A9u-hp-nUh" id="7dl-Bh-XhF"/>
+                <outlet property="teaTitleLabel" destination="Htc-g2-z5O" id="22F-Bm-lIx"/>
+            </connections>
         </view>
     </objects>
     <resources>

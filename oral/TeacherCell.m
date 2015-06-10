@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    _lineLabel_down.backgroundColor = [UIColor colorWithRed:240/255.0 green:249/255.0 blue:250/255.0 alpha:1];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

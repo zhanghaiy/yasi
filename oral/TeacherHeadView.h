@@ -9,5 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface TeacherHeadView : UIView
+@property (strong, nonatomic) IBOutlet UILabel *lineLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lineLabel2;
+@property (strong, nonatomic) IBOutlet UIImageView *teaHeadImageV;
+@property (strong, nonatomic) IBOutlet UILabel *teaTitleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *teaDesLabel;
 
 @end

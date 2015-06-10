@@ -12,4 +12,7 @@
 
 @property (nonatomic,strong) NSArray *classListArray;
 
+@property (nonatomic,copy) NSString *teacherId;
+@property (nonatomic,copy) NSString *userId;
+
 @end

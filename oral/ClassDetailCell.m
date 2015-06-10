@@ -23,8 +23,10 @@
     _stuPassLabel.textColor = [UIColor colorWithWhite:135/255.0 alpha:1];
     _stuPassCountLabel.textColor = kPart_Button_Color;
     
-    _stuPassProgressView.progress = 0.8;
-    _stuPassProgressView.color = kPart_Button_Color;
+    _stuPassProgressView.frame = CGRectMake(180, 20, kScreentWidth-180-15, 6);
+    _stuPassProgressView.backgroundColor = [UIColor colorWithRed:240/255.0 green:249/255.0 blue:250/255.0 alpha:1];
+    
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

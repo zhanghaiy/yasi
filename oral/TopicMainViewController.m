@@ -189,7 +189,7 @@
     {
         _topicTableView.contentOffset = CGPointMake(0, (_topicArray.count-3)*kmainCellHeight);
     }
-    else if (count<3)
+    else if (count<2)
     {
         _topicTableView.contentOffset = CGPointMake(0, 0);
     }

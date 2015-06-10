@@ -34,7 +34,7 @@
 @property (nonatomic,copy) NSString *topicName;
 @property (nonatomic,assign) NSInteger currentPartCounts;// 当前part 共3部分 范围（0--2）
 
-
+@property (nonatomic,copy) NSString *pageTitleString;
 // 返回按钮
 - (void)addBackButtonWithImageName:(NSString *)imageName;
 // titleLabel

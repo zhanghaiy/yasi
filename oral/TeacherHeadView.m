@@ -10,6 +10,13 @@
 
 @implementation TeacherHeadView
 
+- (void)awakeFromNib
+{
+    _lineLabel.backgroundColor = [UIColor colorWithRed:240/255.0 green:249/255.0 blue:250/255.0 alpha:1];
+    _lineLabel2.backgroundColor = [UIColor colorWithRed:240/255.0 green:249/255.0 blue:250/255.0 alpha:1];
+
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

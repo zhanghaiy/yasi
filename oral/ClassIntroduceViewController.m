@@ -16,6 +16,7 @@
 @interface ClassIntroduceViewController ()
 {
     NSString *_teacherId;
+    NSDictionary *_infoDict;
 }
 @end
 
@@ -36,6 +37,7 @@
     [self requestClassInfo];
 }
 
+#pragma mark - 网络请求
 - (void)requestClassInfo
 {
     //7B76B93F49034BED88F95C68333578F2
@@ -52,25 +54,20 @@
         if ([[mainDict objectForKey:@"respCode"] integerValue] == 1000)
         {
             // 成功 展示信息
-            NSDictionary *dict = [[mainDict objectForKey:@"classlist"] lastObject];
-            [_classImgV setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"classiocn"]] placeholderImage:[UIImage imageNamed:@"class_more"]];
-            _classCountsLabel.text = [NSString stringWithFormat:@"%d/%d",[[dict objectForKey:@"nowNumber"] intValue],[[dict objectForKey:@"maxnumber"] intValue]];
-            _classCreateTimeLabel.text = [NSString stringWithFormat:@"创建时间：%@",[dict objectForKey:@"createtime"]];
-            _teacherNameLabel.text = [dict objectForKey:@"teachername"];
-            [_teaHeadImageButton setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"teacheriocn"]]];
-            _teacherId = [dict objectForKey:@"teacherid"];
-            [self getClassDesRectWithText:[dict objectForKey:@"memo"]];
+            _infoDict = [[mainDict objectForKey:@"classlist"] lastObject];
+            [_classImgV setImageWithURL:[NSURL URLWithString:[_infoDict objectForKey:@"classiocn"]] placeholderImage:[UIImage imageNamed:@"class_more"]];
+            _classCountsLabel.text = [NSString stringWithFormat:@"%d/%d",[[_infoDict objectForKey:@"nowNumber"] intValue],[[_infoDict objectForKey:@"maxnumber"] intValue]];
+            _classCreateTimeLabel.text = [NSString stringWithFormat:@"创建时间：%@",[_infoDict objectForKey:@"createtime"]];
+            _teacherNameLabel.text = [_infoDict objectForKey:@"teachername"];
+            [_teaHeadImageButton setImageWithURL:[NSURL URLWithString:[_infoDict objectForKey:@"teacheriocn"]]];
+            _teacherId = [_infoDict objectForKey:@"teacherid"];
+            
+            [self getClassDesRectWithText:[_infoDict objectForKey:@"memo"]];
         }
     }
 }
 
-#pragma mark - 退出班级
-- (void)outClass
-{
-  
-}
-
-
+#pragma mark - UI配置
 - (void)uiConfig
 {
     // 班级图片
@@ -81,7 +78,6 @@
     
     // 加入按钮
     [_joinButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    _joinButton.titleLabel.font = [UIFont fontWithName:@"STHeitiJ-Medium" size:kFontSize2];
     
     // 老师头像
     _classTeacherView.backgroundColor = [UIColor whiteColor];
@@ -99,6 +95,7 @@
     _teaDetailLabel.textColor = _textColor;
     _classInfoView.backgroundColor = [UIColor whiteColor];
 }
+
 #pragma mark - 根据文字确定frame
 - (void)getClassDesRectWithText:(NSString *)text
 {
@@ -130,17 +127,20 @@
 }
 */
 
+#pragma mark - 加入班级 or 退出班级
 - (IBAction)joinButtonClicked:(id)sender
 {
-    
+    // 加入班级 退出班级
 }
 
+#pragma mark - 进入老师界面
 - (IBAction)enter_Teacher_person_center:(id)sender
 {
     //
     
     TeacherPersonCenterViewController *teaPersonCenterVC = [[TeacherPersonCenterViewController alloc]initWithNibName:@"TeacherPersonCenterViewController" bundle:nil];
     teaPersonCenterVC.teacherId = _teacherId;
+    teaPersonCenterVC.teacherDic = _infoDict;
     [self.navigationController pushViewController:teaPersonCenterVC animated:YES];
 }
 @end

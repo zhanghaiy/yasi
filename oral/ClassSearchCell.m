@@ -19,6 +19,11 @@
     _classCountsLabel.textColor = kText_Color;
     _classTeacherLabel.textColor = kText_Color;
     _classDesLabel.textColor = [UIColor colorWithWhite:150/255.0 alpha:1];
+    
+    _classHeadButton.layer.masksToBounds = YES;
+    _classHeadButton.layer.cornerRadius = 5;
+    _classHeadButton.layer.borderColor = [UIColor colorWithRed:240/255.0 green:249/255.0 blue:250/255.0 alpha:1].CGColor;
+    _classHeadButton.layer.borderWidth = 1;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

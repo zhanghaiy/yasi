@@ -14,6 +14,6 @@
 
 
 @property (nonatomic,copy) NSString *teacherId;
-//@property (nonatomic,strong) NSDictionary *teacherDic;
+@property (nonatomic,strong) NSDictionary *teacherDic;
 
 @end

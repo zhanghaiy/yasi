@@ -9,11 +9,15 @@
 #import "ClassDetailViewController.h"
 #import "ClassDetailCell.h"
 #import "TeacherPersonCenterViewController.h"
+#import "NSURLConnectionRequest.h"
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 
-@interface ClassDetailViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface ClassDetailViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIAlertViewDelegate>
 {
     UITableView *_stu_Progress_TableView;
     NSArray *_stu_Progress_Array;
+    NSDictionary *_teaInfoDict;
 }
 @end
 
@@ -40,7 +44,48 @@
 #pragma mark - 退出班级
 - (void)outClass
 {
+    // 退出本班
+    UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:nil destructiveButtonTitle:@"退出本班" otherButtonTitles:@"取消",nil];
+    sheet.delegate = self;
+    [sheet showInView:self.view];
+}
 
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex==0)
+    {
+         //退出本班
+        [self outClass];
+    }
+}
+
+#pragma mark - 退出班级
+- (void)outClassRequest
+{
+    // userId  classId
+    NSString *userId = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+    NSString *urlString = [NSString stringWithFormat:@"%@%@?userId=%@&classId=%@",kBaseIPUrl,kStuOutClassUrlString,userId,_classId];
+    NSLog(@"退出班级url%@",urlString);
+    [NSURLConnectionRequest requestWithUrlString:urlString target:self aciton:@selector(outClassFinished:) andRefresh:YES];
+}
+
+- (void)outClassFinished:(NSURLConnectionRequest *)request
+{
+    if ([request.downloadData length])
+    {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        
+        UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:[dict objectForKey:@"remark"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        alertV.tag = 120;
+        [alertV show];
+    }
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+   
 }
 
 - (void)viewDidLoad
@@ -51,14 +96,18 @@
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"雅思一班"];
     
-    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(kScreentWidth-40, (self.navTopView.frame.size.height-24-20)/2+24, 20, 20)];
-    [rightButton setBackgroundImage:[UIImage imageNamed:@"class_rigthButton"] forState:UIControlStateNormal];
-    rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    if (_teacherId==nil)
+    {
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [rightButton setFrame:CGRectMake(kScreentWidth-40, (self.navTopView.frame.size.height-24-20)/2+24, 20, 20)];
+        [rightButton setBackgroundImage:[UIImage imageNamed:@"class_rigthButton"] forState:UIControlStateNormal];
+        rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+        
+        [rightButton addTarget:self action:@selector(outClass) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.navTopView addSubview:rightButton];
+    }
     
-    [rightButton addTarget:self action:@selector(outClass) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.navTopView addSubview:rightButton];
     
     self.view.backgroundColor = _backgroundViewColor;
     [self uiConfig];
@@ -69,11 +118,38 @@
     _stu_Progress_TableView.backgroundColor = _backgroundViewColor;
     _stu_Progress_TableView.separatorColor = [UIColor colorWithWhite:240/255.0 alpha:1];
     [self.view addSubview:_stu_Progress_TableView];
+    
+    [self requestClassInfo];
 }
+
+- (void)requestClassInfo
+{
+    NSString *url = [NSString stringWithFormat:@"%@%@?classId=%@&teacherId=%@",kBaseIPUrl,kSelectClassMemoUrl,_classId,_teacherId];
+    NSLog(@"%@",url);
+    [NSURLConnectionRequest requestWithUrlString:url target:self aciton:@selector(requestFinished:) andRefresh:YES];
+}
+
+- (void)requestFinished:(NSURLConnectionRequest *)request
+{
+    if ([request.downloadData length]>0)
+    {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        NSLog(@"%@",dic);
+        _stu_Progress_Array = [dic objectForKey:@"studentlist"];
+        [_stu_Progress_TableView reloadData];
+       
+        _teaInfoDict = [[dic objectForKey:@"teacherlist"] lastObject];
+       
+        [_teaHeadImageBtn setImageWithURL:[NSURL URLWithString:[_teaInfoDict objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"class_teacher_head"]];
+        _teaDesLabel.text = [[[_teaInfoDict objectForKey:@"teacherinfo"] lastObject] objectForKey:@"content"];
+        _classNameLabel.text = [_teaInfoDict objectForKey:@"teachername"];
+    }
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;//_stu_Progress_Array.count;
+    return _stu_Progress_Array.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -85,6 +161,16 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"ClassDetailCell" owner:self options:0] lastObject];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    NSDictionary *dict = [_stu_Progress_Array objectAtIndex:indexPath.row];
+    [cell.stuHeadImageView setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"person_head_image"]];
+    cell.stuNameLabel.text = [dict objectForKey:@"studentname"];
+    cell.stuPassCountLabel.text = [NSString stringWithFormat:@"%d/%d",[[dict objectForKey:@"countpassclasstype"] intValue],[[dict objectForKey:@"countclasstype"] intValue]];
+    float progress = [[dict objectForKey:@"countpassclasstype"] floatValue]/[[dict objectForKey:@"countclasstype"] floatValue];
+    NSLog(@"%f",progress);
+    cell.stuPassProgressView.progress = progress;
+    cell.stuPassProgressView.color = kPart_Button_Color;
+
     
     return cell;
 }
@@ -123,6 +209,8 @@
 - (IBAction)enter_tea_person_center:(id)sender
 {
     TeacherPersonCenterViewController *teaPersonCenterVC = [[TeacherPersonCenterViewController alloc]initWithNibName:@"TeacherPersonCenterViewController" bundle:nil];
+    teaPersonCenterVC.teacherDic = _teaInfoDict;
+    teaPersonCenterVC.teacherId = _teacherId;
     [self.navigationController pushViewController:teaPersonCenterVC animated:YES];
 }
 

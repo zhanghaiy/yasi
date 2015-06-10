@@ -23,4 +23,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *upOpenButton;
 - (IBAction)upOpenButtonClicked:(id)sender;
 
+@property (nonatomic,copy) NSString *classId;
+@property (nonatomic,copy) NSString *teacherId;
+
+
 @end

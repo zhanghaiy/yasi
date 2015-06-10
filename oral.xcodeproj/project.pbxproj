@@ -54,6 +54,8 @@
 		FD5FEC3A1B25A33E005B99AF /* PersonEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5FEC381B25A33E005B99AF /* PersonEditViewController.xib */; };
 		FD5FEC3E1B25A607005B99AF /* PersonEditCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5FEC3C1B25A607005B99AF /* PersonEditCell.m */; };
 		FD5FEC3F1B25A607005B99AF /* PersonEditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5FEC3D1B25A607005B99AF /* PersonEditCell.xib */; };
+		FD605B5F1B2823020045BDCD /* ApplyClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD605B5D1B2823020045BDCD /* ApplyClassViewController.m */; };
+		FD605B601B2823020045BDCD /* ApplyClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD605B5E1B2823020045BDCD /* ApplyClassViewController.xib */; };
 		FD62449F1B0584780037836E /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = FD62449E1B0584780037836E /* touxiang.png */; };
 		FD6244A31B0585450037836E /* TPCCheckpointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6244A11B0585450037836E /* TPCCheckpointViewController.m */; };
 		FD6244A41B0585450037836E /* TPCCheckpointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A21B0585450037836E /* TPCCheckpointViewController.xib */; };
@@ -233,6 +235,9 @@
 		FD5FEC3B1B25A607005B99AF /* PersonEditCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonEditCell.h; sourceTree = "<group>"; };
 		FD5FEC3C1B25A607005B99AF /* PersonEditCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonEditCell.m; sourceTree = "<group>"; };
 		FD5FEC3D1B25A607005B99AF /* PersonEditCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonEditCell.xib; sourceTree = "<group>"; };
+		FD605B5C1B2823020045BDCD /* ApplyClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyClassViewController.h; sourceTree = "<group>"; };
+		FD605B5D1B2823020045BDCD /* ApplyClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyClassViewController.m; sourceTree = "<group>"; };
+		FD605B5E1B2823020045BDCD /* ApplyClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplyClassViewController.xib; sourceTree = "<group>"; };
 		FD62449E1B0584780037836E /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang.png; sourceTree = "<group>"; };
 		FD6244A01B0585450037836E /* TPCCheckpointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCCheckpointViewController.h; sourceTree = "<group>"; };
 		FD6244A11B0585450037836E /* TPCCheckpointViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCCheckpointViewController.m; sourceTree = "<group>"; };
@@ -454,6 +459,7 @@
 		FD54615B1B10749100409778 /* 班级 */ = {
 			isa = PBXGroup;
 			children = (
+				FD605B5B1B2822B10045BDCD /* 申请加班 */,
 				FD5461561B10748600409778 /* PersonClassViewController.h */,
 				FD5461571B10748600409778 /* PersonClassViewController.m */,
 				FD5461581B10748600409778 /* PersonClassViewController.xib */,
@@ -601,6 +607,16 @@
 				FD5FEC3D1B25A607005B99AF /* PersonEditCell.xib */,
 			);
 			name = "个人信息修改";
+			sourceTree = "<group>";
+		};
+		FD605B5B1B2822B10045BDCD /* 申请加班 */ = {
+			isa = PBXGroup;
+			children = (
+				FD605B5C1B2823020045BDCD /* ApplyClassViewController.h */,
+				FD605B5D1B2823020045BDCD /* ApplyClassViewController.m */,
+				FD605B5E1B2823020045BDCD /* ApplyClassViewController.xib */,
+			);
+			name = "申请加班";
 			sourceTree = "<group>";
 		};
 		FD6244AA1B0585A10037836E /* ViewControllers */ = {
@@ -1138,6 +1154,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD605B601B2823020045BDCD /* ApplyClassViewController.xib in Resources */,
 				FD5E01D41B26F75500E3ED4B /* PointProgressView.xib in Resources */,
 				FD8453B41B15A02E00B1E84B /* TableView_headView.xib in Resources */,
 				FDA0C2601B14568900900F49 /* CheckScoreViewController.xib in Resources */,
@@ -1232,6 +1249,7 @@
 				FDA0C2591B1412AA00900F49 /* UIImageView+WebCache.m in Sources */,
 				FDA25E1B1B0DD98D00F35545 /* RecordManager.m in Sources */,
 				FDA0C2691B14719A00900F49 /* ScoreMenuCell.m in Sources */,
+				FD605B5F1B2823020045BDCD /* ApplyClassViewController.m in Sources */,
 				FD5B4FB51B2181CA00BE6F5B /* PersonSettingViewController.m in Sources */,
 				FD9958E81B131794005892DB /* zip.c in Sources */,
 				FD5E01D21B26F74B00E3ED4B /* PointProgressView.m in Sources */,

@@ -11,5 +11,6 @@
 
 @interface PersonProgressViewController : TopicParentsViewController
 
+@property (nonatomic,copy) NSString *userId;
 
 @end

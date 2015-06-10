@@ -189,8 +189,7 @@
 #pragma mark - 网络请求
 - (void)requestTopicProgress
 {
-    NSString *userid = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kPersonInfoUrl,userid];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kPersonInfoUrl,_userId];
     [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestCallBack:) andRefresh:YES];
 }
 

@@ -21,24 +21,58 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    _nameTextField.backgroundColor = [UIColor whiteColor];
-    _nameTextField.layer.masksToBounds = YES;
-    _nameTextField.layer.cornerRadius = _nameTextField.frame.size.height/2;
-    _nameTextField.layer.borderWidth = 1;
-    _nameTextField.layer.borderColor = kPart_Button_Color.CGColor;
+    // 确定frame
+    
+    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
+    
+    _backImgV.frame = self.view.bounds;
+    
+    
+    float backButton_Y = 40.0/667.0*kScreenHeight;
+    [_backButton setFrame:CGRectMake(30, backButton_Y, 30, 30)];
+    _backButton.layer.masksToBounds = YES;
+    _backButton.layer.cornerRadius = _backButton.frame.size.height/2;
+    _backButton.layer.borderWidth = 1;
+    _backButton.layer.borderColor = kPart_Button_Color.CGColor;
+    
+    
+    float regBack_Y = 32.0/667*kScreenHeight;
+    [_registerImgV setFrame:CGRectMake(20, regBack_Y, kScreentWidth-40, kScreenHeight-2*regBack_Y)];
+    _registerImgV.layer.masksToBounds = YES;
+    _registerImgV.layer.cornerRadius = 5;
+    _registerImgV.layer.borderColor = kPart_Button_Color.CGColor;
+    _registerImgV.layer.borderWidth = 1;
+    _registerImgV.alpha = 0.5;
+    _registerImgV.backgroundColor = [UIColor whiteColor];
+    
+    float upLine_Y = 153.0/667.0*kScreenHeight;
+    float upLine_x = 65.0/375.0*kScreentWidth;
+    [_upLineLabel setFrame:CGRectMake(upLine_x, upLine_Y, kScreentWidth-2*upLine_x, 1)];
+    [_upLineLabel setBackgroundColor:kPart_Button_Color];
+    _nameTextField.frame = CGRectMake(upLine_x, upLine_Y-30, kScreentWidth-2*upLine_x, 30);
+    
+    float downLine_Y = 184.0/667.0*kScreenHeight;
+    [_downLineLabel setFrame:CGRectMake(upLine_x, downLine_Y, kScreentWidth-2*upLine_x, 1)];
+    [_downLineLabel setBackgroundColor:kPart_Button_Color];
+    _passwordTextField.frame = CGRectMake(upLine_x, downLine_Y-30, kScreentWidth-2*upLine_x, 30);
+    
+    _nameTextField.backgroundColor = [UIColor clearColor];
     _nameTextField.textColor = kPart_Button_Color;
     _nameTextField.delegate = self;
     
     _passwordTextField.delegate = self;
-    _passwordTextField.backgroundColor = [UIColor whiteColor];
-    _passwordTextField.layer.masksToBounds = YES;
-    _passwordTextField.layer.cornerRadius = _passwordTextField.frame.size.height/2;
-    _passwordTextField.layer.borderWidth = 1;
-    _passwordTextField.layer.borderColor = kPart_Button_Color.CGColor;
+    _passwordTextField.backgroundColor = [UIColor clearColor];
     _passwordTextField.textColor = kPart_Button_Color;
+    
+    _passwordTextField.tintColor = kPart_Button_Color;
+    
+    float regButton_Y = 310/667*kScreenHeight;
+    [_registerButton setFrame:CGRectMake((kScreentWidth-85)/2, regButton_Y, 85, 40)];
     
     _registerButton.backgroundColor = kPart_Button_Color;
     [_registerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _registerButton.layer.masksToBounds = YES;
+    _registerButton.layer.cornerRadius = _registerButton.frame.size.height/2;
     
 }
 
@@ -102,4 +136,8 @@
     [self presentViewController:nvc animated:YES completion:nil];
 }
 
+- (IBAction)backToLastPage:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

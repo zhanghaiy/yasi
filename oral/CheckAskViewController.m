@@ -103,7 +103,7 @@
     _markTimeChangeCounts = 0;
     _pointFinished = NO;
 
-    _currentPointCounts = 0;
+    _currentPointCounts = 2;
 
     
     audioPlayer = [AudioPlayer getAudioManager];
@@ -111,7 +111,9 @@
     audioPlayer.action = @selector(playerCallBack);
     
 //    [self addBackButtonWithImageName:@"back-white"];
-    [self addTitleLabelWithTitleWithTitle:@"Part1-3"];
+    NSString *title = [NSString stringWithFormat:@"Part%ld-%ld",self.currentPartCounts,_currentPointCounts+1];
+    [self addTitleLabelWithTitleWithTitle:title];
+
     self.navTopView.backgroundColor = [UIColor colorWithRed:144/255.0 green:231/255.0 blue:208/255.0 alpha:1];
     self.titleLab.textColor = [UIColor whiteColor];
     [self moNiDataFromLocal];
@@ -187,20 +189,8 @@
     _teaQuestionLabel.textColor = _textColor;
     _teaQuestionLabel.textAlignment = NSTextAlignmentCenter;
     _teaQuestionLabel.text = @"";
-    /*
-    _questionNomalRect = _teaQuestioBackV.bounds;
-    _questionNomalRect.size.height -= 10;
-    _questionNomalRect.size.width -= 10;
-    _questionNomalRect.origin.x = 5;
-    _questionNomalRect.origin.y = 5;
     
-    _questionSmallRect = _questionNomalRect;
-    _questionSmallRect.size.width = 0;
     
-    _teaQuestionLabel.frame = _questionSmallRect;
-    */
-    
-//    float middleHeight = kScreenHeight-90-_teacherView.frame.size.height-(_bottomView.frame.size.height/_bottomView.frame.size.width*kScreentWidth);
     CGRect stuBackRect = _stuView.bounds;
     stuBackRect.size.height = kScreenHeight-331;
     stuBackRect.size.width = kScreentWidth;
@@ -370,10 +360,7 @@
 {
     // 获取音频路径
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
-//    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
-//    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
     NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
-
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
 
@@ -439,7 +426,6 @@
     {
         btn.selected = YES;
         // 开始录音
-//        [self startRecord];
         [_recordManager prepareRecorderWithFileName:@"answer1"];
         [self showTimeProgress];
         

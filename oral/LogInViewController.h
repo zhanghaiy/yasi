@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface LogInViewController : UIViewController
-@property (strong, nonatomic) IBOutlet UIImageView *logoImgV;
-@property (strong, nonatomic) IBOutlet UILabel *appNameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *backV;
+
 @property (strong, nonatomic) IBOutlet UITextField *userNameTextFiled;
 @property (strong, nonatomic) IBOutlet UITextField *passWordTextField;
 

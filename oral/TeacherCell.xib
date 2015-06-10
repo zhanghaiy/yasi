@@ -31,9 +31,21 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XiH-M2-TGI">
+                        <rect key="frame" x="0.0" y="74" width="375" height="1"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="nHk-NO-8Tl"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="XiH-M2-TGI" firstAttribute="top" secondItem="nrh-FI-sOR" secondAttribute="bottom" constant="12" id="PvS-Kc-254"/>
+                    <constraint firstAttribute="trailing" secondItem="XiH-M2-TGI" secondAttribute="trailing" id="Rq3-lN-hwv"/>
                     <constraint firstItem="nrh-FI-sOR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Taw-NT-Fu3"/>
+                    <constraint firstItem="XiH-M2-TGI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="aiO-Pw-cjp"/>
                     <constraint firstItem="z03-3U-Prt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="nMl-mq-ynO"/>
                     <constraint firstItem="z03-3U-Prt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="nyf-fv-bAO"/>
                     <constraint firstAttribute="bottom" secondItem="nrh-FI-sOR" secondAttribute="bottom" constant="12" id="oMq-Vn-VQH"/>
@@ -44,6 +56,7 @@
             <connections>
                 <outlet property="cateLabel" destination="z03-3U-Prt" id="BuY-Gw-7mx"/>
                 <outlet property="desLabel" destination="nrh-FI-sOR" id="piC-5Y-BT7"/>
+                <outlet property="lineLabel_down" destination="XiH-M2-TGI" id="qqq-82-X2e"/>
             </connections>
         </tableViewCell>
     </objects>

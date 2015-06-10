@@ -11,5 +11,6 @@
 @interface TeacherCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *cateLabel;
 @property (strong, nonatomic) IBOutlet UILabel *desLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lineLabel_down;
 
 @end
