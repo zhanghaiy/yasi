@@ -80,4 +80,15 @@
 // 学生退出本班
 #define kStuOutClassUrlString @"/yasi/class/deleteClassMemberByStudentId.do"
 
+/*
+ // 学生申请加班
+ 用户ID	userId	M
+ 班级ID	classId	M
+ 申请信息	memo	O
+ 邀请码	inviteCode	O
+ 
+ */
+#define kApplyClassUrl @"/yasi/studentJoinApply/insertJoinApply.do"
+
+
 #endif

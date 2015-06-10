@@ -11,7 +11,7 @@
 #import "ClassIntroduceViewController.h"
 #import "NSURLConnectionRequest.h"
 #import "UIButton+WebCache.h"
-
+#import "ApplyClassViewController.h"
 
 @interface ClassSearchViewController ()<UITextFieldDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -140,6 +140,10 @@
     // 申请 加入班级 ----> 待完善
     NSInteger index = btn.tag - kAddClassButtonTag;
     NSDictionary *dict = [_searchListArray objectAtIndex:index];
+    NSString *classId = [dict objectForKey:@"classid"];
+    ApplyClassViewController *addClassVC = [[ApplyClassViewController alloc]initWithNibName:@"ApplyClassViewController" bundle:nil];
+    addClassVC.classId = classId;
+    [self.navigationController pushViewController:addClassVC animated:YES];
 
 }
 
