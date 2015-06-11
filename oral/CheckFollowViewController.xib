@@ -8,7 +8,7 @@
             <connections>
                 <outlet property="addPracticeButton" destination="KBJ-pI-83K" id="jpJ-bs-OAA"/>
                 <outlet property="answerButton" destination="icL-bV-wfE" id="zcC-ui-lWV"/>
-                <outlet property="answerTextLabel" destination="ITt-9b-c44" id="ij1-B8-PM4"/>
+                <outlet property="answerTextWebView" destination="4Im-QI-ARw" id="83E-HP-gT3"/>
                 <outlet property="lineLabel" destination="gWF-5t-PD8" id="U9O-B9-02R"/>
                 <outlet property="nextButton" destination="lrh-uL-cp6" id="FN7-wy-I03"/>
                 <outlet property="questionCountsView" destination="N7j-VH-R1s" id="RdZ-LF-Ydg"/>
@@ -71,12 +71,6 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The answer is definitely dogs." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITt-9b-c44">
-                            <rect key="frame" x="15" y="46" width="305" height="170"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9Z-LN-uoD">
                             <rect key="frame" x="15" y="248" width="245" height="2"/>
                             <color key="backgroundColor" red="1" green="0.1915859607" blue="0.13115258390000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -107,16 +101,17 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
+                        <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Im-QI-ARw">
+                            <rect key="frame" x="10" y="50" width="315" height="171"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </webView>
                     </subviews>
                     <color key="backgroundColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="UwA-bR-ucJ" secondAttribute="centerX" id="1Ua-gV-PQb"/>
-                        <constraint firstItem="ITt-9b-c44" firstAttribute="top" secondItem="gWF-5t-PD8" secondAttribute="bottom" constant="10" id="2yH-ux-00S"/>
                         <constraint firstItem="gWF-5t-PD8" firstAttribute="top" secondItem="yHL-c9-2Nu" secondAttribute="bottom" constant="5" id="3bp-7D-zmb"/>
                         <constraint firstItem="gWF-5t-PD8" firstAttribute="leading" secondItem="He3-Ry-5uz" secondAttribute="leading" id="6Rf-lI-6B3"/>
-                        <constraint firstAttribute="trailing" secondItem="ITt-9b-c44" secondAttribute="trailing" constant="15" id="6wJ-y1-xfb"/>
                         <constraint firstAttribute="trailing" secondItem="T9Z-LN-uoD" secondAttribute="trailing" constant="75" id="9GH-cM-ffk"/>
-                        <constraint firstItem="ITt-9b-c44" firstAttribute="leading" secondItem="He3-Ry-5uz" secondAttribute="leading" constant="15" id="9e0-r5-amf"/>
                         <constraint firstItem="yHL-c9-2Nu" firstAttribute="top" secondItem="He3-Ry-5uz" secondAttribute="top" constant="5" id="Dex-EP-r0c"/>
                         <constraint firstAttribute="trailing" secondItem="gWF-5t-PD8" secondAttribute="trailing" id="EFT-GS-VPw"/>
                         <constraint firstItem="k8E-Cv-Jpa" firstAttribute="leading" secondItem="He3-Ry-5uz" secondAttribute="leading" constant="10" id="Gsc-w5-8DF"/>
@@ -124,7 +119,6 @@
                         <constraint firstAttribute="bottom" secondItem="fsk-5k-WS9" secondAttribute="bottom" constant="15" id="KTC-MK-57G"/>
                         <constraint firstItem="k8E-Cv-Jpa" firstAttribute="top" secondItem="He3-Ry-5uz" secondAttribute="top" constant="5" id="LUy-u9-Aox"/>
                         <constraint firstAttribute="trailing" secondItem="yHL-c9-2Nu" secondAttribute="trailing" constant="10" id="OSi-lF-kSb"/>
-                        <constraint firstItem="UwA-bR-ucJ" firstAttribute="top" secondItem="ITt-9b-c44" secondAttribute="bottom" constant="8" id="UVk-59-cdc"/>
                         <constraint firstAttribute="height" priority="740" constant="289" id="ZHR-xe-Jfi"/>
                         <constraint firstAttribute="trailing" secondItem="fsk-5k-WS9" secondAttribute="trailing" constant="15" id="ZhT-Ce-0Zg"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="220" id="ZsS-Nz-UsW"/>
@@ -145,7 +139,6 @@
                     </state>
                     <connections>
                         <action selector="addPractiseBook:" destination="-1" eventType="touchUpInside" id="3CG-cv-atH"/>
-                        <action selector="addPractiseBookTouchDown:" destination="-1" eventType="touchDown" id="jnV-DT-lNM"/>
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lrh-uL-cp6">
@@ -160,7 +153,6 @@
                     </state>
                     <connections>
                         <action selector="nextQuestion:" destination="-1" eventType="touchUpInside" id="lYb-A9-DN9"/>
-                        <action selector="nextQuestionTouchDown:" destination="-1" eventType="touchDown" id="2ri-PL-o23"/>
                     </connections>
                 </button>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icL-bV-wfE">

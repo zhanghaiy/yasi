@@ -10,8 +10,11 @@
 #import "AudioPlayer.h"
 #import "CheckSuccessViewController.h"
 #import "TPCCheckpointViewController.h"
+#import "DFAiengineSentObject.h"
 
-@interface CheckBlankViewController ()
+
+
+@interface CheckBlankViewController ()<DFAiengineSentProtocol,UIWebViewDelegate>
 {
     NSDictionary *_topicInfoDict;// 整个topic信息
     NSDictionary *_currentPartDict;// 当前part资源信息
@@ -32,6 +35,8 @@
     NSInteger _answerTime;//跟读时间
     NSTimer *_reduceTimer;
     CGRect _timeProgressRect;// 用于标记时间进度条的原始frame
+    
+    DFAiengineSentObject *_dfEngine;
 }
 @end
 
@@ -62,10 +67,9 @@
     _answerTime = 15;
     audioPlayer = [AudioPlayer getAudioManager];
     audioPlayer.target = self;
-    audioPlayer.action = @selector(playerCallBack);
+    audioPlayer.action = @selector(playerEnd);
     _currentPointCounts = 1;
 
-//    [self addBackButtonWithImageName:@"back-white"];
     NSString *title = [NSString stringWithFormat:@"Part%ld-%ld",self.currentPartCounts+1,_currentPointCounts+1];
     [self addTitleLabelWithTitleWithTitle:title];
     self.navTopView.backgroundColor = _backColor;
@@ -75,6 +79,8 @@
     [self moNiDataFromLocal];
     [self uiConfig];
     [self createTipLabel];
+    
+    _dfEngine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"haiyan"];
 }
 
 #pragma mark - UI布局
@@ -158,8 +164,10 @@
     [self changeAnswerProgress];//当前回答数：1
     _stuCountLabel.textColor = _backColor;
     
-    _stuAnswerLabel.text = @"";//起始为空
-    _stuAnswerLabel.textColor = _textColor;
+//    _stuAnswerLabel.text = @"";//起始为空
+//    _stuAnswerLabel.textColor = _textColor;
+    
+    _StuAnswerWebView.delegate = self;
     _stuLineLabel.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
     // 时间进度条
     _stuTimeProgressLabel.backgroundColor = _backColor;
@@ -202,11 +210,10 @@
     _teaHeadImgView.alpha = 0.3;
     _stuHeadImgView.alpha = 0.3;
     _teaQuestionLabel.text = @"";
-    _stuAnswerLabel.text = @"";
+//    _stuAnswerLabel.text = @"";
     
     _stuFollowLabel.tag = kFollowLabelTag;
     _teaQuestionLabel.tag = kQuestionTextLabelTag;
-    _stuAnswerLabel.tag = kAnswerTextLabelTag;
     
     // 回答区域圆角
     _studentView.layer.cornerRadius = 5;
@@ -303,18 +310,17 @@
     [self playQuestion];
 }
 
-#pragma mark - - 跟读准备
-- (void)prepareFollow
+#pragma mark - 跟读准备
+- (void)prepareBlank
 {
+    // 1、展示answer的文本
     [self showCurrentAnswerText];
-    [self textAnimationInView:_stuAnswerLabel];
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(followTextShow) userInfo:nil repeats:NO];
-    //    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(stuImageBrite) userInfo:nil repeats:NO];
-    //    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(willFollowRecord) userInfo:nil repeats:NO];
+    // 后续的动画
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(blankTextShow) userInfo:nil repeats:NO];
 }
 
-#pragma mark ---显示-->请跟读
-- (void)followTextShow
+#pragma mark - 显示-->请跟读
+- (void)blankTextShow
 {
     [self stopReduceTimer];
     _stuFollowLabel.text = @"请填空";
@@ -323,21 +329,21 @@
     [UIView animateWithDuration:1 animations:^{
         _stuFollowLabel.text = @"请填空";
     }];
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(stuImageBrite) userInfo:nil repeats:NO];
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(stuImageBrite_Blank) userInfo:nil repeats:NO];
 }
 #pragma mark ---头像-->亮
-- (void)stuImageBrite
+- (void)stuImageBrite_Blank
 {
     [self stopReduceTimer];
     [UIView animateWithDuration:1 animations:^{
         _stuHeadImgView.alpha = 1;
         _teaHeadImgView.alpha = 0.3;
     }];
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(willFollowRecord) userInfo:nil repeats:NO];
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(willFollowRecord_blank) userInfo:nil repeats:NO];
 }
 
 #pragma mark ---跟读按钮-->显示
-- (void)willFollowRecord
+- (void)willFollowRecord_blank
 {
     [_reduceTimer invalidate];
     _reduceTimer = nil;
@@ -361,11 +367,11 @@
 
 #pragma mark - 播放器
 #pragma mark -- 播放完成回调
-- (void)playerCallBack
+- (void)playerEnd
 {
     NSLog(@"playerCallBack");
     // 跟读 录音 (思必驰)
-    [self prepareFollow];
+    [self prepareBlank];
 }
 
 #pragma mark -- 播放问题音频
@@ -377,14 +383,10 @@
     }
     // 获取音频路径
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
-//    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
-//    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
     NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
 
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
-
-
 
 
 #pragma mark - 切换问题变换文本
@@ -392,18 +394,17 @@
 - (void)showCurrentQuestionText
 {
     _teaQuestionLabel.text = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"question"];
-    //     //服务端提供的文本带有html标签 要去掉
-    //    NSString *questionStr = [self filterHTML:[dict objectForKey:@"question"]];
 }
 
 #pragma mark -- 展示回答文本
 - (void)showCurrentAnswerText
 {
     _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
-    _stuAnswerLabel.text = [self makeUpBlankStringWithDict:[_currentAnswerListArray objectAtIndex:_currentAnswerCounts]];
+    NSString *answerTextBlank = [self makeUpBlankStringWithDict:[_currentAnswerListArray objectAtIndex:_currentAnswerCounts]];
+    [_StuAnswerWebView loadHTMLString:answerTextBlank baseURL:nil];
 }
 
-#pragma mark -- 去掉html标签
+#pragma mark - 去掉html标签 (改用webView 此方法已不需要 暂时保留 2015.06.11)
 -(NSString *)filterHTML:(NSString *)html
 {
     NSScanner * scanner = [NSScanner scannerWithString:html];
@@ -422,7 +423,7 @@
     return html;
 }
 
-#pragma mark -- 组成填空的字符串
+#pragma mark - 组成填空的字符串
 - (NSString *)makeUpBlankStringWithDict:(NSDictionary *)dict
 {
     NSMutableString *blankStr = [NSMutableString stringWithString:[self filterHTML:[dict objectForKey:@"answer"]]];
@@ -440,28 +441,60 @@
 }
 
 #pragma mark - 模拟思必驰反馈
-#pragma mark -- 开启思必驰
-- (void)startSBC
+#pragma mark - 开启思必驰
+- (void)startSBCAiengine
 {
+    NSString *text = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
+    if(_dfEngine)
+        [_dfEngine startEngineFor:[self filterHTML:text]];
+}
+
+#pragma mark  - 停止思必驰
+- (void)stopSBCAiengine
+{
+    // 展示分数
+    [_dfEngine stopEngine];
+}
+
+#pragma mark - 思必驰反馈
+-(void)processAiengineSentResult:(DFAiengineSentResult *)result
+{
+    NSDictionary *fluency = result.fluency;
+    NSString *msg = [NSString stringWithFormat:@"总体评分：%d\n发音：%d，完整度：%d，流利度：%d", result.overall, result.pron, result.integrity, ((NSNumber *)[fluency objectForKey:@"overall"]).intValue];
+    NSLog(@"%@",msg);
+    [self performSelectorOnMainThread:@selector(showResult:) withObject:[NSString stringWithFormat:@"%d",result.overall] waitUntilDone:NO];
+    
+    NSString *msg1 = [_dfEngine getRichResultString:result.details];
+    NSLog(@"%@",msg1);
+    [self performSelectorOnMainThread:@selector(showHtmlMsg:) withObject:msg1 waitUntilDone:NO];
     
 }
 
-#pragma mark  -- 思必驰反馈（停止思必驰）
-- (void)sBCCallBack
+#pragma mark - - 展示每个单词发音情况
+- (void)showHtmlMsg:(NSString *)htmlStr
 {
-    // 展示分数
+    // 展示每个单词发音情况
+    [_StuAnswerWebView loadHTMLString:htmlStr baseURL:nil];
+}
+
+#pragma mark - 展示分数
+- (void)showResult:(NSString *)score
+{
     _stuTimeProgressLabel.hidden = YES;// 隐藏时间进度条
     _stuTimeProgressLabel.frame = _timeProgressRect;//回复时间进度条 以便下次使用
     _stuHeadImgView.hidden = YES;// 隐藏学生头像
     _stuScoreButton.hidden = NO; // 展示分数区域
     /*
-        根据反馈结果填空 
-                        0,213,136  绿色  80<=x<=100
-                        246,215,0  黄色  60<=x<80
-                        212,0,44   红色   0<=x<60
+     根据反馈结果填空
+     0,213,136  绿色  80<=x<=100
+     246,215,0  黄色  60<=x<80
+     212,0,44   红色   0<=x<60
      待完善
      */
-    
+    NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
+    int scoreCun = [score intValue]>=80?0:([score intValue]>=60?1:2);
+    [_stuScoreButton setTitle:score forState:UIControlStateNormal];
+    [_stuScoreButton setBackgroundColor:[colorArray objectAtIndex:scoreCun]];
     
     // 隐藏回答按钮  展示下一题区域
     _followAnswerButton.hidden = YES;
@@ -501,7 +534,7 @@
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(jugePointIsFinished) userInfo:nil repeats:NO];
 }
 
-#pragma mark- 跟读按钮被点击
+#pragma mark - 跟读按钮被点击
 - (IBAction)followAnswerButtonClicked:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
@@ -511,13 +544,13 @@
         // 停止倒计时
         [self stopReduceTimer];
         // 停止sbc
-        [self sBCCallBack];
+        [self stopSBCAiengine];
     }
     else
     {
         btn.selected = YES;
         // 开启思必驰
-        [self startSBC];
+        [self startSBCAiengine];
         // 时间进度条变化
         _stuTimeProgressLabel.frame = _timeProgressRect;
         _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:15/_timeProgressRect.size.width target:self selector:@selector(timeReduce) userInfo:nil repeats:YES];
@@ -525,7 +558,7 @@
 }
 
 
-#pragma mark -- 下一问题
+#pragma mark - 下一问题
 - (void)next
 {
     _stuFollowLabel.text = @"";
@@ -534,7 +567,7 @@
         // 继续当前问题
         [self changeAnswerProgress];
         _startAnswer = YES;//标记 用于播放器回调方法
-        [self prepareFollow];
+        [self prepareBlank];
     }
     else
     {
@@ -555,9 +588,7 @@
     _answerTime = 15;
     // 隐藏下一问题按钮区域
     _continueButton.hidden = YES;
-//    _addBookButton.hidden = YES;
     _continueButton.selected = NO;
-//    _addBookButton.selected = NO;
     // 隐藏分数 显示学生头像 时间进度条
     _stuScoreButton.hidden = YES;
     _stuTimeProgressLabel.hidden = NO;
@@ -592,7 +623,7 @@
         // 继续当前问题
         [self changeAnswerProgress];
         _startAnswer = YES;//标记 用于播放器回调方法
-        [self prepareFollow];
+        [self prepareBlank];
     }
 }
 
@@ -631,6 +662,11 @@
     if (_reduceTimer != nil)
     {
         [self stopReduceTimer];
+    }
+    if (_dfEngine)
+    {
+        [_dfEngine stopEngine];
+        _dfEngine = nil;
     }
 }
 @end

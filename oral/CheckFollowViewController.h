@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *stuAnswerCountsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *lineLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *answerTextLabel;
+@property (strong, nonatomic) IBOutlet UIWebView *answerTextWebView;
 @property (weak, nonatomic) IBOutlet UILabel *timeProgressLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *stuImageView;
 @property (weak, nonatomic) IBOutlet UIButton *scoreButton;
@@ -35,10 +35,8 @@
 - (IBAction)answerButtonClicked:(id)sender;
 
 - (IBAction)addPractiseBook:(id)sender;
-- (IBAction)addPractiseBookTouchDown:(id)sender;
 
 - (IBAction)nextQuestion:(id)sender;
-- (IBAction)nextQuestionTouchDown:(id)sender;
 
 
 

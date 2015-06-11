@@ -10,9 +10,9 @@
 #import "AudioPlayer.h"
 #import "CheckSuccessViewController.h"
 #import "TPCCheckpointViewController.h"
+#import "DFAiengineSentObject.h"
 
-
-@interface CheckFollowViewController ()
+@interface CheckFollowViewController ()<DFAiengineSentProtocol,UIWebViewDelegate>
 {
     NSDictionary *_topicInfoDict;// 整个topic信息
     NSDictionary *_currentPartDict;// 当前part资源信息
@@ -33,6 +33,8 @@
     NSInteger _answerTime;//跟读时间
     NSTimer *_reduceTimer;
     CGRect _timeProgressRect;// 用于标记时间进度条的原始frame
+    
+    DFAiengineSentObject *_dfEngine;
 }
 
 
@@ -119,9 +121,11 @@
     _stuTitleLabel.text = @"";//起始为空
     [self changeAnswerProgress];//当前回答数：1
     _stuAnswerCountsLabel.textColor = _backColor;
+
+    // webView
+    _answerTextWebView.hidden = NO;
+    _answerTextWebView.delegate =self;
     
-    _answerTextLabel.text = @"";//起始为空
-    _answerTextLabel.textColor = _textColor;
     _lineLabel.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
     // 时间进度条
     _timeProgressLabel.backgroundColor = _backColor;
@@ -172,11 +176,9 @@
     _teacherHeadImgView.alpha = 0.3;
     _stuImageView.alpha = 0.3;
     _questionTextLabel.text = @"";
-    _answerTextLabel.text = @"";
     
     _stuTitleLabel.tag = kFollowLabelTag;
     _questionTextLabel.tag = kQuestionTextLabelTag;
-    _answerTextLabel.tag = kAnswerTextLabelTag;
     
     // 回答区域圆角
     _studentView.layer.cornerRadius = 5;
@@ -243,8 +245,9 @@
     self.view.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
     [self moNiDataFromLocal];
     [self uiConfig];
+    
+    _dfEngine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"haiyan"];
 }
-
 
 
 - (void)viewDidAppear:(BOOL)animated
@@ -256,21 +259,12 @@
 
 #pragma mark - 各阶段逻辑
 #pragma mark - - 文字动画
-- (void)textAnimationInView:(UILabel *)lable
+- (void)textAnimationInView:(UIView *)lable
 {
     [UIView beginAnimations:@"animationID" context:nil];
     [UIView setAnimationDuration:1.0f];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationRepeatAutoreverses:NO];
-//    [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:lable cache:YES];
-//    if (lable.tag == kFollowLabelTag)
-//    {
-//        [UIView setAnimationTransition:UIViewAnimationTransitionCurlDown forView:lable cache:YES];
-//    }
-//    else
-//    {
-//        [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:lable cache:YES];
-//    }
     [UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:lable cache:YES];
     [self showCurrentQuestionText];
     [self.view exchangeSubviewAtIndex:1 withSubviewAtIndex:0];
@@ -280,7 +274,8 @@
 /*
  以下： 播放问题音频、回答音频 开始跟读 均采用定时器延时 为了实现界面控件先后动画
  */
-#pragma mark - - 播放问题准备
+#pragma mark - 播放问题准备
+#pragma mark - 播放之前动画
 - (void)prepareQuestion
 {
     _questionTextLabel.font = [UIFont systemFontOfSize:0];
@@ -292,76 +287,48 @@
         _stuImageView.alpha = 0.3;
     }];
     
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(willPlayQuestion) userInfo:nil repeats:NO];
+   [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(playQuestion) userInfo:nil repeats:NO];
 }
 
-- (void)willPlayQuestion
+#pragma mark -- 播放问题音频
+- (void)playQuestion
 {
-    [_reduceTimer invalidate];
-    _reduceTimer = nil;
-    [self playQuestion];
+    // 获取音频路径
+    NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
+    
+    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
+    NSLog(@"%@",audioPath);
+    [audioPlayer playerPlayWithFilePath:audioPath];
 }
 
-#pragma mark - - 播放回答准备
+
+#pragma mark - 播放回答准备
+#pragma mark - 回答前动画
 - (void)prepareAnswer
 {
-    _answerTextLabel.font = [UIFont systemFontOfSize:0];
     // 文本
     [self showCurrentAnswerText];
-    [self textAnimationInView:_answerTextLabel];
     [UIView animateWithDuration:0.5 animations:^{
         
-        _answerTextLabel.font = [UIFont systemFontOfSize:KThidFontSize];
         _teacherHeadImgView.alpha = 1;
         _stuImageView.alpha = 0.3;
+        
     }];
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(willPlayAnswer) userInfo:nil repeats:NO];
-}
-- (void)willPlayAnswer
-{
-    [_reduceTimer invalidate];
-    _reduceTimer = nil;
-    [self playAnswer];
-}
-#pragma mark - - 跟读准备
-- (void)prepareFollow
-{
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(followTextShow) userInfo:nil repeats:NO];
-//    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(stuImageBrite) userInfo:nil repeats:NO];
-//    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(willFollowRecord) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(playAnswer) userInfo:nil repeats:NO];
 }
 
-#pragma mark ---显示-->请跟读
-- (void)followTextShow
+#pragma mark - 播放回答音频
+- (void)playAnswer
 {
-    [self stopReduceTimer];
-    _stuTitleLabel.text = @"请跟读";
-    [self textAnimationInView:_stuTitleLabel];
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(stuImageBrite) userInfo:nil repeats:NO];
-}
-#pragma mark ---头像-->亮
-- (void)stuImageBrite
-{
-    [self stopReduceTimer];
-    [UIView animateWithDuration:1 animations:^{
-        _stuImageView.alpha = 1;
-        _teacherHeadImgView.alpha = 0.3;
-    }];
-    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(willFollowRecord) userInfo:nil repeats:NO];
+    //合成音频路径
+    NSString *audiourl = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"audiourl"];
+    
+    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
+    
+    [audioPlayer playerPlayWithFilePath:audioPath];
 }
 
-#pragma mark ---跟读按钮-->显示
-- (void)willFollowRecord
-{
-    [_reduceTimer invalidate];
-    _reduceTimer = nil;
-    _answerButton.hidden = NO;// 展示跟读按钮
-    [self answerButtonClicked:_answerButton];
-}
-
-
-#pragma mark - 播放器
-#pragma mark -- 播放完成回调
+#pragma mark - 播放完成回调
 - (void)playerCallBack
 {
     NSLog(@"playerCallBack");
@@ -379,49 +346,73 @@
     }
 }
 
-#pragma mark -- 播放问题音频
-- (void)playQuestion
+
+#pragma mark - 跟读准备
+#pragma mark - 动画
+- (void)prepareFollow
 {
-    // 获取音频路径
-    NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
-//    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
-//    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
-    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
-    NSLog(@"%@",audioPath);
-    [audioPlayer playerPlayWithFilePath:audioPath];
+    // 停顿 1S
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(followTextShow) userInfo:nil repeats:NO];
 }
 
-
-#pragma mark -- 播放回答音频
-- (void)playAnswer
+#pragma mark - 显示-->请跟读
+- (void)followTextShow
 {
-    //合成音频路径
-    NSString *audiourl = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"audiourl"];
-//    NSArray *audioArr = [audiourl componentsSeparatedByString:@"."];
-//    NSString *audioPath = [[NSBundle mainBundle]pathForResource:[audioArr objectAtIndex:0] ofType:[audioArr lastObject]];
-    
-    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
-
-    [audioPlayer playerPlayWithFilePath:audioPath];
+    [self stopReduceTimer];
+    _stuTitleLabel.text = @"请跟读";
+    [self textAnimationInView:_stuTitleLabel];
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(stuImageBrite) userInfo:nil repeats:NO];
 }
+
+#pragma mark - 头像-->亮
+- (void)stuImageBrite
+{
+    [self stopReduceTimer];
+    [UIView animateWithDuration:1 animations:^{
+        _stuImageView.alpha = 1;
+        _teacherHeadImgView.alpha = 0.3;
+    }];
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(willFollowRecord) userInfo:nil repeats:NO];
+}
+
+#pragma mark - 跟读按钮-->显示
+- (void)willFollowRecord
+{
+    [_reduceTimer invalidate];
+    _reduceTimer = nil;
+    _answerButton.hidden = NO;// 展示跟读按钮
+    [self answerButtonClicked:_answerButton];
+}
+
 
 #pragma mark - 切换问题变换文本
-#pragma mark -- 展示问题文本
+#pragma mark - 展示问题文本
 - (void)showCurrentQuestionText
 {
     _questionTextLabel.text = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"question"];
-//     //服务端提供的文本带有html标签 要去掉
-//    NSString *questionStr = [self filterHTML:[dict objectForKey:@"question"]];
 }
 
-#pragma mark -- 展示回答文本
+#pragma mark - 展示回答文本
 - (void)showCurrentAnswerText
 {
     _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
-    _answerTextLabel.text = [self filterHTML:[[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"]];
+    NSString *str = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"] ;
+    [_answerTextWebView loadHTMLString:str baseURL:nil];
 }
 
-#pragma mark -- 去掉html标签
+#pragma mark - webViewDelegate
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSString *bodyStyleVertical = @"document.getElementsByTagName('body')[0].style.verticalAlign = 'middle';";
+    NSString *bodyStyleHorizontal = @"document.getElementsByTagName('body')[0].style.textAlign = 'center';";
+    NSString *mapStyle = @"document.getElementById('mapid').style.margin = 'auto';";
+    
+    [webView stringByEvaluatingJavaScriptFromString:bodyStyleVertical];
+    [webView stringByEvaluatingJavaScriptFromString:bodyStyleHorizontal];
+    [webView stringByEvaluatingJavaScriptFromString:mapStyle];
+}
+
+#pragma mark - 去掉html标签 (未用到----2015.06.11)
 -(NSString *)filterHTML:(NSString *)html
 {
     NSScanner * scanner = [NSScanner scannerWithString:html];
@@ -441,31 +432,71 @@
 }
 
 
-#pragma mark - 模拟思必驰反馈
-#pragma mark -- 开启思必驰
-- (void)startSBC
+#pragma mark - 思必驰语音引擎
+#pragma mark - 开启思必驰引擎
+- (void)startSBCAiengine
 {
-
+    NSString *text = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
+    if(_dfEngine)
+        [_dfEngine startEngineFor:[self filterHTML:text]];
 }
-
-#pragma mark  -- 思必驰反馈（停止思必驰）
-- (void)sBCCallBack
+#pragma mark - 结束思必驰引擎
+- (void)stopSBCAiengine
 {
     // 展示分数
+    [_dfEngine stopEngine];
+    
+}
+
+#pragma mark - 思必驰反馈
+-(void)processAiengineSentResult:(DFAiengineSentResult *)result
+{
+    NSDictionary *fluency = result.fluency;
+    NSString *msg = [NSString stringWithFormat:@"总体评分：%d\n发音：%d，完整度：%d，流利度：%d", result.overall, result.pron, result.integrity, ((NSNumber *)[fluency objectForKey:@"overall"]).intValue];
+    NSLog(@"%@",msg);
+    [self performSelectorOnMainThread:@selector(showResult:) withObject:[NSString stringWithFormat:@"%d",result.overall] waitUntilDone:NO];
+    
+    NSString *msg1 = [_dfEngine getRichResultString:result.details];
+    NSLog(@"%@",msg1);
+    [self performSelectorOnMainThread:@selector(showHtmlMsg:) withObject:msg1 waitUntilDone:NO];
+    
+}
+
+#pragma mark - 展示每个单词发音情况
+- (void)showHtmlMsg:(NSString *)htmlStr
+{
+    // 展示每个单词发音情况
+    [_answerTextWebView loadHTMLString:htmlStr baseURL:nil];
+}
+#pragma mark - 展示分数
+- (void)showResult:(NSString *)score
+{
     _timeProgressLabel.hidden = YES;// 隐藏时间进度条
     _timeProgressLabel.frame = _timeProgressRect;//回复时间进度条 以便下次使用
     _stuImageView.hidden = YES;// 隐藏学生头像
-    _scoreButton.hidden = NO; // 展示分数区域
-    // 展示每个单词发音情况
-    
+    _scoreButton.hidden = NO;
+
     // 隐藏回答按钮  展示下一题区域
     _answerButton.hidden = YES;
     _addPracticeButton.hidden = NO;
     _nextButton.hidden = NO;
+    
+    /*
+     根据反馈结果填空
+     0,213,136  绿色  80<=x<=100
+     246,215,0  黄色  60<=x<80
+     212,0,44   红色   0<=x<60
+     待完善
+     */
+    NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
+    int scoreCun = [score intValue]>=80?0:([score intValue]>=60?1:2);
+    [_scoreButton setTitle:score forState:UIControlStateNormal];
+    [_scoreButton setBackgroundColor:[colorArray objectAtIndex:scoreCun]];
 }
 
+
 #pragma mark - 定时器
-#pragma mark -- 时间倒计时
+#pragma mark -  时间倒计时
 - (void)timeReduce
 {
     CGRect rect = _timeProgressLabel.frame;
@@ -481,7 +512,7 @@
     }
 }
 
-#pragma mark -- 关闭定时器
+#pragma mark - 关闭定时器
 - (void)stopReduceTimer
 {
     [_reduceTimer invalidate];
@@ -511,16 +542,16 @@
     if (btn.selected)
     {
         btn.selected = NO;
+        // 停止sbc
+        [self stopSBCAiengine];
         // 停止倒计时
         [self stopReduceTimer];
-        // 停止sbc
-        [self sBCCallBack];
     }
     else
     {
         btn.selected = YES;
         // 开启思必驰
-        [self startSBC];
+        [self startSBCAiengine];
         // 时间进度条变化
         _timeProgressLabel.frame = _timeProgressRect;
         float widdd = _timeProgressRect.size.width;
@@ -529,7 +560,7 @@
     }
 }
 
-#pragma mark- 加入练习本
+#pragma mark - 加入练习本
 - (IBAction)addPractiseBook:(id)sender
 {
     // 加入练习
@@ -537,12 +568,7 @@
 }
 
 
-- (IBAction)addPractiseBookTouchDown:(id)sender
-{
-    
-}
-
-#pragma mark -- 将当前练习数据加入练习簿
+#pragma mark - 将当前练习数据加入练习簿
 - (void)addExsBook
 {
     // 此处将当前练习数据加入练习簿  ---待完成
@@ -577,10 +603,6 @@
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(jugePointIsFinished_follow) userInfo:nil repeats:NO];
 }
 
-- (IBAction)nextQuestionTouchDown:(id)sender
-{
-
-}
 
 #pragma mark - 判断闯关是否结束
 - (void)jugePointIsFinished_follow
@@ -614,6 +636,7 @@
         {
             //关卡结束 跳转过渡页
             CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
+            NSLog(@"%ld",_currentPointCounts);
             successVC.pointCount = _currentPointCounts;
             successVC.currentPartCounts = self.currentPartCounts;// 当前part
             successVC.topicName = self.topicName;// 当前topic
@@ -669,6 +692,12 @@
     if (_reduceTimer != nil)
     {
         [self stopReduceTimer];
+        
+    }
+    if (_dfEngine)
+    {
+        [_dfEngine stopEngine];
+        _dfEngine = nil;
     }
 }
 

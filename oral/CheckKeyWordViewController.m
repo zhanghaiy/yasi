@@ -198,6 +198,7 @@
 
 - (void)enterNext
 {
+    NSLog(@"%ld",_pointCounts);
     if (_pointCounts == 0)
     {
         CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];

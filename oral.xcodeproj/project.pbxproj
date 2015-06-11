@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD530E351B29612300E3EC26 /* aiengine.provision in Resources */ = {isa = PBXBuildFile; fileRef = FD530E331B29612300E3EC26 /* aiengine.provision */; };
+		FD530E361B29612300E3EC26 /* aiengine.resource.zip in Resources */ = {isa = PBXBuildFile; fileRef = FD530E341B29612300E3EC26 /* aiengine.resource.zip */; };
+		FD530E381B29613C00E3EC26 /* libDFAiengineSentObject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD530E371B29613C00E3EC26 /* libDFAiengineSentObject.a */; };
+		FD530E3B1B29619000E3EC26 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD530E3A1B29619000E3EC26 /* libz.1.1.3.dylib */; };
+		FD530E3D1B2961A800E3EC26 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD530E3C1B2961A800E3EC26 /* libiconv.dylib */; };
+		FD530E3F1B2964F500E3EC26 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD530E3E1B2964F500E3EC26 /* libstdc++.6.dylib */; };
 		FD5461331B1045B800409778 /* SuccessCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5461311B1045B800409778 /* SuccessCell.m */; };
 		FD5461341B1045B800409778 /* SuccessCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5461321B1045B800409778 /* SuccessCell.xib */; };
 		FD5461391B10576B00409778 /* CheckTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD5461371B10576B00409778 /* CheckTestViewController.m */; };
@@ -161,6 +167,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD530E331B29612300E3EC26 /* aiengine.provision */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aiengine.provision; sourceTree = "<group>"; };
+		FD530E341B29612300E3EC26 /* aiengine.resource.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = aiengine.resource.zip; sourceTree = "<group>"; };
+		FD530E371B29613C00E3EC26 /* libDFAiengineSentObject.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDFAiengineSentObject.a; sourceTree = "<group>"; };
+		FD530E391B29615B00E3EC26 /* DFAiengineSentObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFAiengineSentObject.h; sourceTree = "<group>"; };
+		FD530E3A1B29619000E3EC26 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
+		FD530E3C1B2961A800E3EC26 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		FD530E3E1B2964F500E3EC26 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		FD5461301B1045B800409778 /* SuccessCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuccessCell.h; sourceTree = "<group>"; };
 		FD5461311B1045B800409778 /* SuccessCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuccessCell.m; sourceTree = "<group>"; };
 		FD5461321B1045B800409778 /* SuccessCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SuccessCell.xib; sourceTree = "<group>"; };
@@ -403,6 +416,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD530E3F1B2964F500E3EC26 /* libstdc++.6.dylib in Frameworks */,
+				FD530E3D1B2961A800E3EC26 /* libiconv.dylib in Frameworks */,
+				FD530E3B1B29619000E3EC26 /* libz.1.1.3.dylib in Frameworks */,
+				FD530E381B29613C00E3EC26 /* libDFAiengineSentObject.a in Frameworks */,
 				FD9958EC1B1317E6005892DB /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,6 +494,7 @@
 			isa = PBXGroup;
 			children = (
 				FD596D851B097F7C00D6DE7B /* HeadFile.h */,
+				FD530E391B29615B00E3EC26 /* DFAiengineSentObject.h */,
 			);
 			name = HeadFile;
 			sourceTree = "<group>";
@@ -995,6 +1013,12 @@
 		FDD404051B0492F900DE2E84 = {
 			isa = PBXGroup;
 			children = (
+				FD530E3E1B2964F500E3EC26 /* libstdc++.6.dylib */,
+				FD530E3C1B2961A800E3EC26 /* libiconv.dylib */,
+				FD530E3A1B29619000E3EC26 /* libz.1.1.3.dylib */,
+				FD530E371B29613C00E3EC26 /* libDFAiengineSentObject.a */,
+				FD530E331B29612300E3EC26 /* aiengine.provision */,
+				FD530E341B29612300E3EC26 /* aiengine.resource.zip */,
 				FD9958EA1B1317D5005892DB /* CoreGraphics.framework */,
 				FD99586B1B1313B6005892DB /* libz.dylib */,
 				FD596D841B097F5400D6DE7B /* HeadFile */,
@@ -1164,6 +1188,7 @@
 				FD97AFAB1B16E11A00C45A2C /* TestReviewCell.xib in Resources */,
 				FD5B4FA51B21538600BE6F5B /* ClassDetailCell.xib in Resources */,
 				FDD404221B0492F900DE2E84 /* LaunchScreen.xib in Resources */,
+				FD530E361B29612300E3EC26 /* aiengine.resource.zip in Resources */,
 				FD9957DC1B12BC02005892DB /* ClassDetailViewController.xib in Resources */,
 				FDD4044D1B04972D00DE2E84 /* RightMainCell.xib in Resources */,
 				FD8C40E71B0C6D8200948B6C /* CheckSuccessViewController.xib in Resources */,
@@ -1185,6 +1210,7 @@
 				FDBA32ED1B1C38A000C02BF8 /* Score_Point3_Section_View.xib in Resources */,
 				FDA0C2651B1463C000900F49 /* ScoreDetailViewController.xib in Resources */,
 				FD5E01AE1B2688AD00E3ED4B /* RegisterViewController.xib in Resources */,
+				FD530E351B29612300E3EC26 /* aiengine.provision in Resources */,
 				FD5FEC341B2533EE005B99AF /* TeacherPersonCenterViewController.xib in Resources */,
 				FD62449F1B0584780037836E /* touxiang.png in Resources */,
 				FD97AFB01B16FD2400C45A2C /* CheckPractiseBookViewController.xib in Resources */,
@@ -1440,6 +1466,10 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PchFile.pch";
 				INFOPLIST_FILE = oral/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1451,6 +1481,10 @@
 				GCC_PREFIX_HEADER = "$(SRCROOT)/PchFile.pch";
 				INFOPLIST_FILE = oral/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
