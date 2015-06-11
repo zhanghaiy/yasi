@@ -28,34 +28,22 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreentWidth);
+//    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreentWidth);
+    // 返回按钮
+    [self addBackButtonWithImageName:@"back-Blue"];
+    [self addTitleLabelWithTitleWithTitle:@"申请加班"];
+    
+    self.view.backgroundColor = _backgroundViewColor;
     
     _userId = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
-    NSInteger height = 355*40/71;
-    _upRect = CGRectMake(10, 90, kScreentWidth, height);
+    NSInteger height = (kScreentWidth-20)*40/71;
+    _upRect = CGRectMake(10, 90, kScreentWidth-20, height);
     
     _downRect = CGRectMake(10, 110+height, kScreentWidth-20, height);
-    
-//    // 确定frame
-//    CGRect codeRect = _codeView.frame;
-//    codeRect.size.width = kScreentWidth-20;
-//    codeRect.size.height = codeRect.size.width*40/71;
-//    codeRect.origin.x = 10;
-//    codeRect.origin.y = 90;
-//    _codeView.frame = codeRect;
-//    
-//    CGRect infoRect = _infoView.frame;
-//    infoRect.size.width = kScreentWidth-20;
-//    infoRect.size.height = infoRect.size.width*40/71;
-//    infoRect.origin.x = 10;
-//    infoRect.origin.y = 20+90+codeRect.size.height;
-//    _infoView.frame = infoRect;
     
     _codeView.frame = _upRect;
     _infoView.frame = _downRect;
     
-//    _upRect = _codeView.frame;
-//    _downRect = _infoView.frame;
     
     _infoAddButton.layer.masksToBounds = YES;
     _infoAddButton.layer.cornerRadius = _infoAddButton.frame.size.height/2;
@@ -70,7 +58,7 @@
     _infoLineLabel.backgroundColor = kPart_Button_Color;
     
     _infoTextField.delegate = self;
-    _codeTextField.delegate =self;
+    _codeTextField.delegate = self;
     _infoTextField.tag = kInfoTextTag;
     _codeTextField.tag = kCodeTextTag;
     
@@ -83,28 +71,37 @@
     _infoView.frame = _downRect;
 }
 
-
-//#pragma mark - textFieldDidBeginEditing开始编辑
-//- (void)textFieldDidBeginEditing:(UITextField *)textField
-//{
-//    if (textField.tag == kCodeTextTag)
-//    {
-//        [self infoDeleteButtonClicked:_infoDeleteButton];
-//        _infoView.hidden = NO;
-//    }
-//    else
-//    {
-//        [self codeDeleteButtonClicked:_codeDeleteButton];
-//        _codeView.hidden = NO;
-//    }
-//}
-
-- (void)changeFrame
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    CGRect rect = _codeView.frame;
-    CGRect rect1 = _infoView.frame;
-    _codeView.frame = rect1;
-    _infoView.frame = rect;
+    [_codeTextField resignFirstResponder];
+    [_infoTextField resignFirstResponder];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (textField.tag == kCodeTextTag)
+    {
+        [UIView animateWithDuration:1 animations:^{
+            [_codeView setFrame:_upRect];
+            [_infoView setFrame:_downRect];
+        }];
+    }
+    else
+    {
+        [UIView animateWithDuration:1 animations:^{
+            [_infoView setFrame:_upRect];
+            [_codeView setFrame:_downRect];
+
+            NSLog(@"%f",_upRect.origin.y);
+        }];
+    }
+    return YES;
 }
 
 

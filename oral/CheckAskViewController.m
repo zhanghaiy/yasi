@@ -111,7 +111,7 @@
     audioPlayer.action = @selector(playerCallBack);
     
 //    [self addBackButtonWithImageName:@"back-white"];
-    NSString *title = [NSString stringWithFormat:@"Part%ld-%ld",self.currentPartCounts,_currentPointCounts+1];
+    NSString *title = [NSString stringWithFormat:@"Part%ld-%ld",self.currentPartCounts+1,_currentPointCounts+1];
     [self addTitleLabelWithTitleWithTitle:title];
 
     self.navTopView.backgroundColor = [UIColor colorWithRed:144/255.0 green:231/255.0 blue:208/255.0 alpha:1];
@@ -426,7 +426,7 @@
     {
         btn.selected = YES;
         // 开始录音
-        [_recordManager prepareRecorderWithFileName:@"answer1"];
+        [self startRecord];
         [self showTimeProgress];
         
     }
@@ -443,6 +443,13 @@
 {
     // 后续完善（根据数据）
    [_recordManager prepareRecorderWithFileName:@"answer1"];
+//    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/record",self.topicName];
+//    NSLog(@"%@",path);
+//    if ([[NSFileManager defaultManager]fileExistsAtPath:path])
+//    {
+//        [[NSFileManager defaultManager]createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+//    }
+//    [_recordManager recordWithPath:[NSString stringWithFormat:@"%@/1111.mp3",path]];
 }
 
 #pragma mark - 录音结束回调

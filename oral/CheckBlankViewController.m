@@ -66,7 +66,7 @@
     _currentPointCounts = 1;
 
 //    [self addBackButtonWithImageName:@"back-white"];
-    NSString *title = [NSString stringWithFormat:@"Part%ld-%ld",self.currentPartCounts,_currentPointCounts+1];
+    NSString *title = [NSString stringWithFormat:@"Part%ld-%ld",self.currentPartCounts+1,_currentPointCounts+1];
     [self addTitleLabelWithTitleWithTitle:title];
     self.navTopView.backgroundColor = _backColor;
     self.titleLab.textColor = [UIColor whiteColor];

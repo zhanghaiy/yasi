@@ -37,6 +37,11 @@
 
 - (void)uiConfig
 {
+    
+    NSInteger logo_y = 80.0/667*kScreenHeight;
+    NSInteger logo_h = 70.0/667*kScreenHeight;
+    _logoImgV.frame = CGRectMake(0, logo_y, kScreentWidth, logo_h);
+    
     NSInteger control_H = 40.0/667*kScreenHeight;
     NSInteger space_H = 30.0/667*kScreenHeight;
     

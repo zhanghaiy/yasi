@@ -12,6 +12,8 @@
 #import "NSURLConnectionRequest.h"
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
+#import "ApplyClassViewController.h"
+
 
 @interface ClassIntroduceViewController ()
 {
@@ -131,6 +133,8 @@
 - (IBAction)joinButtonClicked:(id)sender
 {
     // 加入班级 退出班级
+    ApplyClassViewController *applyVC = [[ApplyClassViewController alloc]initWithNibName:@"ApplyClassViewController" bundle:nil];
+    [self.navigationController pushViewController:applyVC animated:YES];
 }
 
 #pragma mark - 进入老师界面

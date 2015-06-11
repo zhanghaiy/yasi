@@ -10,6 +10,7 @@
                 <outlet property="backV" destination="oB2-Zh-P1Q" id="ihd-Ru-RcE"/>
                 <outlet property="logInButton" destination="a2y-0a-TB2" id="hzC-Xa-QTP"/>
                 <outlet property="loginBackView" destination="N6V-41-415" id="VKr-X7-570"/>
+                <outlet property="logoImgV" destination="2eI-tQ-poz" id="Pxg-8p-aKG"/>
                 <outlet property="passWordTextField" destination="rVo-rC-jBY" id="fCp-sf-09k"/>
                 <outlet property="registerButton" destination="GeX-nN-BTS" id="FO7-XE-Dc4"/>
                 <outlet property="userNameTextFiled" destination="iWU-ZU-DZW" id="OrV-lV-qnA"/>
@@ -68,14 +69,19 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logLogo" id="2eI-tQ-poz">
+                    <rect key="frame" x="0.0" y="80" width="375" height="70"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="155.5" y="384.5"/>
+            <point key="canvasLocation" x="-65.5" y="148.5"/>
         </view>
     </objects>
     <resources>
         <image name="logBack" width="375" height="667"/>
+        <image name="logLogo" width="375" height="71"/>
         <image name="login" width="187" height="27"/>
         <image name="register" width="187" height="27"/>
     </resources>

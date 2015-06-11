@@ -23,21 +23,21 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     
-//    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-//    if ([def objectForKey:@"UserID"])
-//    {
-//        TopicMainViewController *rootVC = [[TopicMainViewController alloc]init];
-//        UINavigationController *topicNvc = [[UINavigationController alloc]initWithRootViewController:rootVC];
-//        topicNvc.navigationBarHidden = YES;
-//        self.window.rootViewController = topicNvc;
-//    }
-//    else
-//    {
-//         LogInViewController *logInVC = [[LogInViewController alloc]initWithNibName:@"LogInViewController" bundle:nil];
-//         self.window.rootViewController = logInVC;
-//    }
-    LogInViewController *logInVC = [[LogInViewController alloc]initWithNibName:@"LogInViewController" bundle:nil];
-    self.window.rootViewController = logInVC;
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    if ([def objectForKey:@"UserID"])
+    {
+        TopicMainViewController *rootVC = [[TopicMainViewController alloc]init];
+        UINavigationController *topicNvc = [[UINavigationController alloc]initWithRootViewController:rootVC];
+        topicNvc.navigationBarHidden = YES;
+        self.window.rootViewController = topicNvc;
+    }
+    else
+    {
+         LogInViewController *logInVC = [[LogInViewController alloc]initWithNibName:@"LogInViewController" bundle:nil];
+         self.window.rootViewController = logInVC;
+    }
+//    LogInViewController *logInVC = [[LogInViewController alloc]initWithNibName:@"LogInViewController" bundle:nil];
+//    self.window.rootViewController = logInVC;
     
     [self.window makeKeyAndVisible];
     

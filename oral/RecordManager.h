@@ -17,6 +17,7 @@
 @property (nonatomic,strong) NSDate *endDate;
 @property (nonatomic,assign) NSTimeInterval recorderTime;
 - (void)prepareRecorderWithFileName:(NSString *)fileName;
+//- (void)recordWithPath:(NSString *)path;
 - (void)stopRecord;
 - (void)pausestopRecord;
 
