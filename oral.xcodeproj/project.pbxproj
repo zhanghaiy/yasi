@@ -67,6 +67,8 @@
 		FD6244A41B0585450037836E /* TPCCheckpointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A21B0585450037836E /* TPCCheckpointViewController.xib */; };
 		FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6244A61B0585820037836E /* CheckFollowViewController.m */; };
 		FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A71B0585820037836E /* CheckFollowViewController.xib */; };
+		FD6AB7511B2AB6AC004721A7 /* df_oral.db in Resources */ = {isa = PBXBuildFile; fileRef = FD6AB7501B2AB6AC004721A7 /* df_oral.db */; };
+		FD6AB7541B2ABDBC004721A7 /* OralDBFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6AB7531B2ABDBC004721A7 /* OralDBFuncs.m */; };
 		FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */; };
 		FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */; };
 		FD8453A51B155D3A00B1E84B /* ScoreMenuTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */; };
@@ -258,6 +260,9 @@
 		FD6244A51B0585820037836E /* CheckFollowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckFollowViewController.h; sourceTree = "<group>"; };
 		FD6244A61B0585820037836E /* CheckFollowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckFollowViewController.m; sourceTree = "<group>"; };
 		FD6244A71B0585820037836E /* CheckFollowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckFollowViewController.xib; sourceTree = "<group>"; };
+		FD6AB7501B2AB6AC004721A7 /* df_oral.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = df_oral.db; sourceTree = "<group>"; };
+		FD6AB7521B2ABDBC004721A7 /* OralDBFuncs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OralDBFuncs.h; sourceTree = "<group>"; };
+		FD6AB7531B2ABDBC004721A7 /* OralDBFuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OralDBFuncs.m; sourceTree = "<group>"; };
 		FD6B80D21B1843FF00F9562C /* NSString+CalculateStringSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CalculateStringSize.h"; sourceTree = "<group>"; };
 		FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CalculateStringSize.m"; sourceTree = "<group>"; };
 		FD8453A11B155D2B00B1E84B /* ScoreMenuTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreMenuTestView.h; sourceTree = "<group>"; };
@@ -829,6 +834,8 @@
 		FD9958F01B1328B7005892DB /* Net */ = {
 			isa = PBXGroup;
 			children = (
+				FD6AB7521B2ABDBC004721A7 /* OralDBFuncs.h */,
+				FD6AB7531B2ABDBC004721A7 /* OralDBFuncs.m */,
 				FD5E01C01B26B75400E3ED4B /* NSURLConnection_Request */,
 				FDA0C23C1B1412AA00900F49 /* SDWebImage */,
 				FD9958F41B1328FB005892DB /* AFNetworking */,
@@ -1019,6 +1026,7 @@
 				FD530E371B29613C00E3EC26 /* libDFAiengineSentObject.a */,
 				FD530E331B29612300E3EC26 /* aiengine.provision */,
 				FD530E341B29612300E3EC26 /* aiengine.resource.zip */,
+				FD6AB7501B2AB6AC004721A7 /* df_oral.db */,
 				FD9958EA1B1317D5005892DB /* CoreGraphics.framework */,
 				FD99586B1B1313B6005892DB /* libz.dylib */,
 				FD596D841B097F5400D6DE7B /* HeadFile */,
@@ -1221,6 +1229,7 @@
 				FDD404551B049B5B00DE2E84 /* topic1.png in Resources */,
 				FD8C40F11B0C6FAB00948B6C /* CheckAskViewController.xib in Resources */,
 				FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */,
+				FD6AB7511B2AB6AC004721A7 /* df_oral.db in Resources */,
 				FD54613A1B10576B00409778 /* CheckTestViewController.xib in Resources */,
 				FD5E01DE1B2701A300E3ED4B /* TeacherHeadView.xib in Resources */,
 				FD5461601B10761C00409778 /* ClassCell.xib in Resources */,
@@ -1336,6 +1345,7 @@
 				FDA0C2521B1412AA00900F49 /* README.md in Sources */,
 				FD9958E41B131794005892DB /* JSONKit.m in Sources */,
 				FDD404141B0492F900DE2E84 /* main.m in Sources */,
+				FD6AB7541B2ABDBC004721A7 /* OralDBFuncs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,4 +10,6 @@
 
 @interface PersonEditViewController : TopicParentsViewController
 
+@property (nonatomic,strong) NSDictionary *personInfoDict;
+
 @end

@@ -16,6 +16,9 @@
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;
 
+@property (nonatomic,strong) AVAudioPlayer *player;
+
+
 + (AudioPlayer*)getAudioManager;
 - (void)playerPlayWithFilePath:(NSString *)filePath;
 - (void)beginePlay;

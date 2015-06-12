@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "TopicMainViewController.h"
 #import "LogInViewController.h"
+#import "OralDBFuncs.h"
 
 @interface AppDelegate ()
 
@@ -38,6 +39,10 @@
     }
 //    LogInViewController *logInVC = [[LogInViewController alloc]initWithNibName:@"LogInViewController" bundle:nil];
 //    self.window.rootViewController = logInVC;
+    if (![OralDBFuncs initializeDb])
+    {
+        NSLog(@"init DB fail");
+    }
     
     [self.window makeKeyAndVisible];
     

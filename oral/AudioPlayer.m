@@ -9,9 +9,7 @@
 #import "AudioPlayer.h"
 
 @implementation AudioPlayer
-{
-    AVAudioPlayer *_player;
-}
+
 
 static AudioPlayer *audioPlayer;
 
@@ -48,11 +46,15 @@ static AudioPlayer *audioPlayer;
 #pragma mark - 通过路径播放
 - (void)playerPlayWithFilePath:(NSString *)filePath
 {
+    if (_player)
+    {
+        _player = nil;
+    }
     _player = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:filePath] error:nil];
     _player.delegate = self;
     _player.volume = 1;
     [_player prepareToPlay];
-     [_player play];
+    [_player play];
 }
 
 #pragma mark - 播放

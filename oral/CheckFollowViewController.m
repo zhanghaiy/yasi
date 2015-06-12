@@ -694,11 +694,7 @@
         [self stopReduceTimer];
         
     }
-    if (_dfEngine)
-    {
-        [_dfEngine stopEngine];
-        _dfEngine = nil;
-    }
+     _dfEngine = nil;
 }
 
 - (void)backToPrePage

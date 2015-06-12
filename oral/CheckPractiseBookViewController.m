@@ -8,12 +8,15 @@
 
 #import "CheckPractiseBookViewController.h"
 #import "PractiseCell.h"
+#import "AudioPlayer.h"
+#import "DFAiengineSentObject.h"
 
-
-
-@interface CheckPractiseBookViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface CheckPractiseBookViewController ()<UITableViewDataSource,UITableViewDelegate,DFAiengineSentProtocol>
 {
     UITableView *_practiseTableV;
+    AudioPlayer *_playerManager;
+    DFAiengineSentObject *_dfAiengine;
+    NSInteger _markCurrentPractise_index;
 }
 @end
 
@@ -41,6 +44,23 @@
     [self.view addSubview:_practiseTableV];
     
     _practiseTableV.backgroundColor = _backgroundViewColor;
+    
+    _playerManager = [AudioPlayer getAudioManager];
+    _playerManager.target = self;
+    _playerManager.action = @selector(playFinished:);
+    
+    _dfAiengine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"haiyan"];
+}
+
+- (void)stopPlay
+{
+    [_playerManager stopPlay];
+}
+
+- (void)playFinished:(id)obj
+{
+    // 播放完成
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -85,10 +105,15 @@
             if (btn.selected)
             {
                 btn.selected = NO;
+                // 暂停播放
+                [_playerManager stopPlay];
             }
             else
             {
                 btn.selected = YES;
+                // 开始播放
+                NSString *audioPath;
+                [_playerManager playerPlayWithFilePath:audioPath];
             }
         }
             break;
@@ -98,10 +123,15 @@
             if (btn.selected)
             {
                 btn.selected = NO;
+                // 暂停播放
+                [_playerManager stopPlay];
             }
             else
             {
                 btn.selected = YES;
+                // 开始播放
+                NSString *audioPath;
+                [_playerManager playerPlayWithFilePath:audioPath];
             }
         }
             break;
@@ -111,10 +141,14 @@
             if (btn.selected)
             {
                 btn.selected = NO;
+                // 停止思必驰
+                [self stopSBCAiengine];
             }
             else
             {
                 btn.selected = YES;
+                // 开启思必驰引擎
+                [self startSBCAiengine];
             }
         }
             break;
@@ -124,10 +158,13 @@
             if (btn.selected)
             {
                 btn.selected = NO;
+                //
             }
             else
             {
                 btn.selected = YES;
+                // 从练习簿里删除此条记录
+                
             }
         }
             break;
@@ -135,6 +172,60 @@
             break;
     }
 }
+
+
+#pragma mark - 思必驰语音引擎
+#pragma mark - 开启思必驰引擎
+- (void)startSBCAiengine
+{
+    // 参考文本
+    NSString *text;// = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
+    if(_dfAiengine)
+        [_dfAiengine startEngineFor:text];
+}
+#pragma mark - 结束思必驰引擎
+- (void)stopSBCAiengine
+{
+    // 展示分数
+    [_dfAiengine stopEngine];
+    
+}
+
+#pragma mark - 思必驰反馈
+-(void)processAiengineSentResult:(DFAiengineSentResult *)result
+{
+    NSDictionary *fluency = result.fluency;
+    NSString *msg = [NSString stringWithFormat:@"总体评分：%d\n发音：%d，完整度：%d，流利度：%d", result.overall, result.pron, result.integrity, ((NSNumber *)[fluency objectForKey:@"overall"]).intValue];
+    NSLog(@"%@",msg);
+    [self performSelectorOnMainThread:@selector(showResult:) withObject:[NSString stringWithFormat:@"%d",result.overall] waitUntilDone:NO];
+    
+    NSString *msg1 = [_dfAiengine getRichResultString:result.details];
+    NSLog(@"%@",msg1);
+    [self performSelectorOnMainThread:@selector(showHtmlMsg:) withObject:msg1 waitUntilDone:NO];
+    
+}
+
+#pragma mark - 展示每个单词发音情况
+- (void)showHtmlMsg:(NSString *)htmlStr
+{
+    // 展示每个单词发音情况 彩色文本
+}
+#pragma mark - 展示分数
+- (void)showResult:(NSString *)score
+{
+    /*
+     根据反馈结果填空
+     0,213,136  绿色  80<=x<=100
+     246,215,0  黄色  60<=x<80
+     212,0,44   红色   0<=x<60
+     待完善
+     */
+    NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
+    int scoreCun = [score intValue]>=80?0:([score intValue]>=60?1:2);
+}
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
