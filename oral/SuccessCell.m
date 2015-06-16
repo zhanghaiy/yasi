@@ -17,7 +17,6 @@
     _scoreButton.layer.masksToBounds = YES;
     _scoreButton.layer.cornerRadius = _scoreButton.bounds.size.height/2;
     _lineLabel.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1];
-    _desLabel.textColor = [UIColor colorWithWhite:142/255.0 alpha:1];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

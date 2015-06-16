@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SuccessCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *desLabel;
+@property (strong, nonatomic) IBOutlet UIWebView *htmlWebView;
 @property (weak, nonatomic) IBOutlet UIButton *scoreButton;
 @property (weak, nonatomic) IBOutlet UILabel *lineLabel;
 

@@ -48,6 +48,13 @@
 #define kBaseIPUrl @"http://114.215.172.72:80"
 // 主页 topic 信息
 #define kTopicListUrl @"/yasi/examtheme/queryClassTypeInfo.do"
+
+// 提交闯关给老师 参数 uploadfile 接受zip
+#define kPartCommitUrl @"/yasi/clearance/insertStudentClearance.do"
+
+// 选择老师 userId teacherName change
+#define kSelectTeacherUrl @"/yasi/teacher/slectTeacherToChoose.do"
+
 // 模考 参数 topid 
 #define kTestUrl @"/yasi/mockquestion/getMockQuestion.do"
 // 注册 accountname  password

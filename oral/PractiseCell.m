@@ -24,8 +24,8 @@
 {
     // Initialization code
     
-    NSString *strHTML = [NSString stringWithFormat:@"<a href='http://my.oschina.net/duxinfeng'>%@</a> 测试富文本 %@",@"The Ansewr is The Ansewr is The Ansewr is The Ansewr is ",@"2015-05-27"];
-     [_textWebView loadHTMLString:strHTML baseURL:nil];
+//    NSString *strHTML = [NSString stringWithFormat:@"<a href='http://my.oschina.net/duxinfeng'>%@</a> 测试富文本 %@",@"The Ansewr is The Ansewr is The Ansewr is The Ansewr is ",@"2015-05-27"];
+//     [_textWebView loadHTMLString:strHTML baseURL:nil];
     
     _scoreButton.layer.masksToBounds = YES;
     _scoreButton.layer.cornerRadius = _scoreButton.frame.size.height/2;

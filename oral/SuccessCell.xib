@@ -13,12 +13,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="It has often been said that travel bordens the mind" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWM-Vm-Dtt">
-                        <rect key="frame" x="20" y="10" width="285" height="50"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SqG-jf-lSx">
                         <rect key="frame" x="315" y="15" width="40" height="40"/>
                         <color key="backgroundColor" red="0.033761818040000002" green="0.86167378080000001" blue="0.050852253799999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -32,25 +26,35 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="auq-lJ-tTm">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="auq-lJ-tTm">
                         <rect key="frame" x="20" y="68" width="335" height="1"/>
                         <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="mzM-9m-kT7"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FPY-t7-CpH">
+                        <rect key="frame" x="20" y="10" width="285" height="50"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </webView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="SqG-jf-lSx" firstAttribute="leading" secondItem="bWM-Vm-Dtt" secondAttribute="trailing" constant="10" id="6tx-SD-NQ4"/>
-                    <constraint firstItem="bWM-Vm-Dtt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="E9X-dB-9sQ"/>
+                    <constraint firstAttribute="trailing" secondItem="auq-lJ-tTm" secondAttribute="trailing" constant="20" id="0vX-By-bfg"/>
+                    <constraint firstItem="FPY-t7-CpH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="64H-LI-rYl"/>
+                    <constraint firstAttribute="bottom" secondItem="auq-lJ-tTm" secondAttribute="bottom" id="blV-Gr-A4F"/>
                     <constraint firstAttribute="centerY" secondItem="SqG-jf-lSx" secondAttribute="centerY" id="h8m-Bw-aCx"/>
-                    <constraint firstAttribute="bottom" secondItem="bWM-Vm-Dtt" secondAttribute="bottom" constant="9" id="m30-Uw-iNq"/>
-                    <constraint firstItem="bWM-Vm-Dtt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="nkv-Ng-pc8"/>
+                    <constraint firstItem="SqG-jf-lSx" firstAttribute="leading" secondItem="FPY-t7-CpH" secondAttribute="trailing" constant="10" id="nBx-pd-Jag"/>
+                    <constraint firstItem="FPY-t7-CpH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="naf-XV-oXh"/>
+                    <constraint firstItem="auq-lJ-tTm" firstAttribute="top" secondItem="FPY-t7-CpH" secondAttribute="bottom" constant="8" symbolic="YES" id="vPh-ma-Zh5"/>
                     <constraint firstAttribute="trailing" secondItem="SqG-jf-lSx" secondAttribute="trailing" constant="20" id="vdE-87-IEG"/>
+                    <constraint firstItem="auq-lJ-tTm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="zvn-HV-jQe"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="desLabel" destination="bWM-Vm-Dtt" id="eVv-xs-sjI"/>
+                <outlet property="htmlWebView" destination="FPY-t7-CpH" id="SBC-VK-tXa"/>
                 <outlet property="lineLabel" destination="auq-lJ-tTm" id="Ivu-GG-QHx"/>
                 <outlet property="scoreButton" destination="SqG-jf-lSx" id="Ji4-HB-LDn"/>
             </connections>

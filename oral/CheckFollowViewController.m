@@ -11,6 +11,8 @@
 #import "CheckSuccessViewController.h"
 #import "TPCCheckpointViewController.h"
 #import "DFAiengineSentObject.h"
+#import "OralDBFuncs.h"
+
 
 @interface CheckFollowViewController ()<DFAiengineSentProtocol,UIWebViewDelegate>
 {
@@ -24,7 +26,7 @@
     NSInteger _currentQuestionCounts;// 当前进行的问题
     NSInteger _sumAnswerCounts;//当前问题的总回答数
     NSInteger _currentAnswerCounts;// 当前回答数
-   
+    
     BOOL _currentQuestionFinished;
     BOOL _startAnswer;
     
@@ -35,6 +37,19 @@
     CGRect _timeProgressRect;// 用于标记时间进度条的原始frame
     
     DFAiengineSentObject *_dfEngine;
+    
+    NSString *_currentAnswerId;
+    NSString *_currentAnswerHtml;
+    NSString *_currentAnswerText;
+    NSString *_currentAnswerAudioName;// 自己录音
+    NSString *_currentAnswerReferAudioName;// 参考录音
+    int _currentAnswerScore;
+    int _currentAnswerPron;
+    int _currentAnswerIntegrity;
+    int _currentAnswerFluency;
+    
+    float _sumScore;
+    int _sumCounts;
 }
 
 
@@ -198,18 +213,18 @@
      当前part的所有关卡信息 -- > pointArray = [curretPart objectForKey:@"levellist"] --> 数组
      当前关卡信息 pointDict = [pointArray objectAtIndex:_currentPointCounts] --> 字典
      */
-//    NSString *path = [[NSBundle mainBundle]pathForResource:@"info" ofType:@"json"];
     
-    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",self.topicName];
+    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",[OralDBFuncs getCurrentTopic]];
 
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     // 整个topic资源信息
     _topicInfoDict = [dict objectForKey:@"classtypeinfo"];
     // 当前part资源信息
-    _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:self.currentPartCounts];
+    NSLog(@"%d  %d",[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint]);
+    _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:[OralDBFuncs getCurrentPart]-1];
     // 当前关卡信息 关卡一
-    _currentPointDict = [[_currentPartDict objectForKey:@"levellist"] objectAtIndex:_currentPointCounts];
+    _currentPointDict = [[_currentPartDict objectForKey:@"levellist"] objectAtIndex:[OralDBFuncs getCurrentPoint]-1];
     // 当前关卡所有问题
     _questioListArray = [_currentPointDict objectForKey:@"questionlist"];
     // 总问题数
@@ -230,14 +245,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    _sumCounts = 0;
+    _sumScore = 0;
+    
+    [OralDBFuncs setCurrentPoint:1];
+    
     _answerTime = 15;
     audioPlayer = [AudioPlayer getAudioManager];
     audioPlayer.target = self;
     audioPlayer.action = @selector(playerCallBack);
     
-    _currentPointCounts = 0;
-
-    NSString *title = [NSString stringWithFormat:@"Part%ld-%ld",self.currentPartCounts+1,_currentPointCounts+1];
+    NSString *title = [NSString stringWithFormat:@"Part%d-%d",[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint]];
     [self addTitleLabelWithTitleWithTitle:title];
     self.navTopView.backgroundColor = _backColor;
     self.titleLab.textColor = [UIColor whiteColor];
@@ -296,7 +314,7 @@
     // 获取音频路径
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
     
-    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
+    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",[OralDBFuncs getCurrentTopic],audiourl];
     NSLog(@"%@",audioPath);
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
@@ -323,7 +341,7 @@
     //合成音频路径
     NSString *audiourl = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"audiourl"];
     
-    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
+    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",[OralDBFuncs getCurrentTopic],audiourl];
     
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
@@ -426,8 +444,6 @@
         //替换字符
         html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
     }
-    //    NSString * regEx = @"<([^>]*)>";
-    //    html = [html stringByReplacingOccurrencesOfString:regEx withString:@""];
     return html;
 }
 
@@ -451,31 +467,65 @@
 #pragma mark - 思必驰反馈
 -(void)processAiengineSentResult:(DFAiengineSentResult *)result
 {
-    NSDictionary *fluency = result.fluency;
-    NSString *msg = [NSString stringWithFormat:@"总体评分：%d\n发音：%d，完整度：%d，流利度：%d", result.overall, result.pron, result.integrity, ((NSNumber *)[fluency objectForKey:@"overall"]).intValue];
-    NSLog(@"%@",msg);
-    [self performSelectorOnMainThread:@selector(showResult:) withObject:[NSString stringWithFormat:@"%d",result.overall] waitUntilDone:NO];
+//    NSDictionary *fluency = result.fluency;
+//    NSString *msg = [NSString stringWithFormat:@"总体评分：%d\n发音：%d，完整度：%d，流利度：%d", result.overall, result.pron, result.integrity, ((NSNumber *)[fluency objectForKey:@"overall"]).intValue];
+//    NSLog(@"%@",msg);
+//    [self performSelectorOnMainThread:@selector(showResult:) withObject:[NSString stringWithFormat:@"%d",result.overall] waitUntilDone:NO];
     
     NSString *msg1 = [_dfEngine getRichResultString:result.details];
     NSLog(@"%@",msg1);
-    [self performSelectorOnMainThread:@selector(showHtmlMsg:) withObject:msg1 waitUntilDone:NO];
+//    [self performSelectorOnMainThread:@selector(showHtmlMsg:) withObject:msg1 waitUntilDone:NO];
+    
+    [self performSelectorOnMainThread:@selector(showResult:) withObject:result waitUntilDone:NO];
     
 }
 
-#pragma mark - 展示每个单词发音情况
-- (void)showHtmlMsg:(NSString *)htmlStr
+//#pragma mark - 展示每个单词发音情况
+//- (void)showHtmlMsg:(NSString *)htmlStr
+//{
+//    _currentAnswerHtml = htmlStr;
+//    // 展示每个单词发音情况
+//    [_answerTextWebView loadHTMLString:htmlStr baseURL:nil];
+//}
+
+
+#pragma mark - 思必驰反馈信息
+- (void)showResult:(DFAiengineSentResult *)result
 {
-    // 展示每个单词发音情况
-    [_answerTextWebView loadHTMLString:htmlStr baseURL:nil];
-}
-#pragma mark - 展示分数
-- (void)showResult:(NSString *)score
-{
+    // 转移思必驰录音 清空原有的
+    NSString *sbcPath = [NSString stringWithFormat:@"%@/Documents/record/%@.wav",NSHomeDirectory(),result.recordId];
+    NSString *sbcToPath =  [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/part%d-%d-%ld-%ld.wav",[OralDBFuncs getCurrentTopic],[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint],_currentQuestionCounts+1,_currentAnswerCounts+1];
+    NSData *fileData = [NSData dataWithContentsOfFile:sbcPath];
+    BOOL saveSuc = [fileData writeToFile:sbcToPath atomically:YES];
+    if (saveSuc)
+    {
+        // 清空文件夹
+    }
+    
+    NSString *msg1 = [_dfEngine getRichResultString:result.details];
+    _currentAnswerHtml = msg1;
+    [_answerTextWebView loadHTMLString:_currentAnswerHtml baseURL:nil];
+    _currentAnswerScore = result.overall;
+    _currentAnswerIntegrity = result.integrity;
+    _currentAnswerFluency = [[result.fluency objectForKey:@"overall"] intValue];
+    _currentAnswerPron = result.pron;
+    _currentAnswerAudioName = [[sbcToPath componentsSeparatedByString:@"/"] lastObject];
+    _currentAnswerReferAudioName = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"audiourl"];
+    NSLog(@"^^^^^^^^^^^^^^%@^^^^^^^^^^^^^",_currentAnswerAudioName);
+    NSLog(@"^^^^^^^^^^^^^%@^^^^^^^^^^^^^",_currentAnswerReferAudioName);
+    _currentAnswerId = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"id"];
+    
+    NSLog(@"%d",[OralDBFuncs getCurrentPart]);
+    
+    // 存储一条记录 到数据库
+    BOOL saveSuccess = [OralDBFuncs replaceLastRecordFor:[OralDBFuncs getCurrentUserName] TopicName:[OralDBFuncs getCurrentTopic] answerId:_currentAnswerId partNum:[OralDBFuncs getCurrentPart] levelNum:[OralDBFuncs getCurrentPoint] withRecordId:[OralDBFuncs getCurrentRecordId] lastText:_currentAnswerHtml lastScore:_currentAnswerScore lastPron:_currentAnswerPron lastIntegrity:_currentAnswerIntegrity lastFluency:_currentAnswerFluency lastAudioName:_currentAnswerReferAudioName];
+    NSLog(@"saveSuccess:%d",saveSuccess);
+    
     _timeProgressLabel.hidden = YES;// 隐藏时间进度条
     _timeProgressLabel.frame = _timeProgressRect;//回复时间进度条 以便下次使用
     _stuImageView.hidden = YES;// 隐藏学生头像
     _scoreButton.hidden = NO;
-
+    
     // 隐藏回答按钮  展示下一题区域
     _answerButton.hidden = YES;
     _addPracticeButton.hidden = NO;
@@ -489,10 +539,14 @@
      待完善
      */
     NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
-    int scoreCun = [score intValue]>=80?0:([score intValue]>=60?1:2);
-    [_scoreButton setTitle:score forState:UIControlStateNormal];
+    int scoreCun = _currentAnswerScore>=80?0:(_currentAnswerScore>=60?1:2);
+    [_scoreButton setTitle:[NSString stringWithFormat:@"%d",_currentAnswerScore] forState:UIControlStateNormal];
     [_scoreButton setBackgroundColor:[colorArray objectAtIndex:scoreCun]];
+    
+    _sumScore += _currentAnswerScore;
+    _sumCounts ++;
 }
+
 
 
 #pragma mark - 定时器
@@ -564,16 +618,31 @@
 - (IBAction)addPractiseBook:(id)sender
 {
     // 加入练习
-    [self addExsBook];
-}
-
-
-#pragma mark - 将当前练习数据加入练习簿
-- (void)addExsBook
-{
-    // 此处将当前练习数据加入练习簿  ---待完成
     
-    // 给用户提示  加入成功
+     // 此处将当前练习数据加入练习簿
+    NSString *_tipStr;
+    if ([OralDBFuncs isInPracticeBook:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId])
+    {
+        // 已加入过
+        _tipStr = @"练习簿已存在该题";
+    }
+    else
+    {
+        // 加入练习簿
+        BOOL suc = [OralDBFuncs addPracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId andReferAudioName:_currentAnswerAudioName];
+        NSLog(@"%d",suc);
+        [OralDBFuncs updatePracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId andResultText:_currentAnswerHtml score:_currentAnswerScore pron:_currentAnswerPron integrity:_currentAnswerIntegrity fluency:_currentAnswerFluency andLastAudioName:_currentAnswerAudioName];
+        if (suc)
+        {
+            _tipStr = @"成功加入练习簿";
+        }
+        else
+        {
+            _tipStr = @"加入练习本失败";
+        }
+    }
+
+    // 给用户提示  加入是否成功
     UILabel *tipLab = (UILabel *)[self.view viewWithTag:1111];
     CGRect rect = tipLab.frame;
     rect.size.width = 100;
@@ -585,6 +654,7 @@
     tipLab.textColor = _pointColor;
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addBookFinished) userInfo:nil repeats:NO];
 }
+
 
 #pragma mark -- 成功加入练习簿
 - (void)addBookFinished
@@ -635,11 +705,12 @@
         else
         {
             //关卡结束 跳转过渡页
+            //计算总分 存储记录 提交服务端 (网络提交暂时搁置)
+            float levelScore = _sumScore/_sumCounts;
+            [OralDBFuncs updateTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[OralDBFuncs getCurrentTopic] part:[OralDBFuncs getCurrentPart] level:[OralDBFuncs getCurrentPoint] andScore:levelScore];
+            NSLog(@"~~~~~~~~~~~~~~~");
+            
             CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
-            NSLog(@"%ld",_currentPointCounts);
-            successVC.pointCount = _currentPointCounts;
-            successVC.currentPartCounts = self.currentPartCounts;// 当前part
-            successVC.topicName = self.topicName;// 当前topic
             [self.navigationController pushViewController:successVC animated:YES];
         }
         

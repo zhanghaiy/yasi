@@ -10,6 +10,7 @@
 #import "AudioPlayer.h"
 #import "TPCCheckpointViewController.h"
 #import "MyTeacherViewController.h"
+#import "OralDBFuncs.h"
 
 @interface CheckTestViewController ()
 {
@@ -70,15 +71,14 @@
 #pragma mark -- 本地资源文件路径
 - (NSString *)getFileBasePath
 {
-    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/temp",self.topicName];
-    NSLog(@"%@",self.topicName);
+    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/temp",[OralDBFuncs getCurrentTopic]];
     return path;
 }
 
 #pragma mark -- 本地录音文件路径
 - (NSString *)getRecordSavePath
 {
-    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/AnswerFile",self.topicName];
+    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/AnswerFile",[OralDBFuncs getCurrentTopic]];
     if (![[NSFileManager defaultManager]fileExistsAtPath:path])
     {
         [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];

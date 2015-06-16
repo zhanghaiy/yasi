@@ -12,6 +12,5 @@
 @property (weak, nonatomic) IBOutlet UIView *backView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *selectedButton;
-- (IBAction)selectButtonClicked:(id)sender;
 
 @end

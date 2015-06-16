@@ -11,30 +11,19 @@
 #import "CheckKeyWordViewController.h"
 #import "CheckAskViewController.h"
 #import "SuccessCell.h"
+#import "OralDBFuncs.h"
 
-
-@interface CheckSuccessViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface CheckSuccessViewController ()<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate>
 {
     UIColor *_oraColor;
     UIColor *_blueColor;
-    
+    NSMutableArray *_scoreMenuArray;
 }
 
 @end
 
 @implementation CheckSuccessViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    // 分数显示top区域有两种颜色 1：黄色 2： 蓝色
-    _oraColor = [UIColor colorWithRed:242/255.0 green:222/255.0 blue:44/255.0 alpha:1];
-    _blueColor = [UIColor blueColor];// 暂时 后续补上
-    self.lineLab.hidden = YES;
-    self.navTopView.hidden = YES;
-    [self uiConfig];
-}
 
 - (void)uiConfig
 {
@@ -72,6 +61,94 @@
 }
 
 
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    // 分数显示top区域有两种颜色 1：黄色 2： 蓝色
+    _oraColor = [UIColor colorWithRed:242/255.0 green:222/255.0 blue:44/255.0 alpha:1];
+    _blueColor = [UIColor blueColor];// 暂时 后续补上
+    self.lineLab.hidden = YES;
+    self.navTopView.hidden = YES;
+    [self uiConfig];
+    
+    // 获取总分
+    if ([OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[OralDBFuncs getCurrentTopic]])
+    {
+        TopicRecord *topicRecord = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[OralDBFuncs getCurrentTopic]];
+        if ([OralDBFuncs getCurrentPart] == 1)
+        {
+            if ([OralDBFuncs getCurrentPoint] == 1)
+            {
+                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p1_1];
+            }
+            else if ([OralDBFuncs getCurrentPoint] == 2)
+            {
+                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p1_2];
+            }
+        }
+        else if ([OralDBFuncs getCurrentPart] == 2)
+        {
+            if ([OralDBFuncs getCurrentPoint] == 1)
+            {
+                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p2_1];
+            }
+            else if ([OralDBFuncs getCurrentPoint] == 2)
+            {
+                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p2_2];
+            }
+        }
+        else if ([OralDBFuncs getCurrentPart] == 3)
+        {
+            if ([OralDBFuncs getCurrentPoint] == 1)
+            {
+                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p3_1];
+            }
+            else if ([OralDBFuncs getCurrentPoint] == 2)
+            {
+                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p3_2];
+            }
+        }
+
+    }
+        // 合成成绩单数据源
+    _scoreMenuArray = [[NSMutableArray alloc]init];
+    [self makeUpScoreMenu];
+}
+
+- (void)makeUpScoreMenu
+{
+    /*
+     数据结构
+     
+     _topicInfoDict--> topic闯关信息---> dict(字典)
+     当前topic所有part--> partListArray = [_topicInfoDict objectForKey:@"partlist"] -->数组
+     当前part--> curretPartDict = [partListArray objectAtIndex:_currentPartCounts] -->字典
+     当前part的所有关卡信息 -- > pointArray = [curretPart objectForKey:@"levellist"] --> 数组
+     当前关卡信息 pointDict = [pointArray objectAtIndex:_currentPointCounts] --> 字典
+     */
+    //    NSString *path = [[NSBundle mainBundle]pathForResource:@"info" ofType:@"json"];
+    
+    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",[OralDBFuncs getCurrentTopic]];
+    
+    NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
+    NSDictionary *maindict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+    // 整个topic资源信息
+    NSDictionary *dict = [maindict objectForKey:@"classtypeinfo"];
+    // 当前part资源信息
+    NSDictionary *subDict = [[dict objectForKey:@"partlist"] objectAtIndex:[OralDBFuncs getCurrentPart]-1];
+    NSArray *questionList = [[[subDict objectForKey:@"levellist"] objectAtIndex:[OralDBFuncs getCurrentPoint]-1] objectForKey:@"questionlist"];
+    for (NSDictionary *subSubdict in questionList)
+    {
+        NSArray *answerArray = [subSubdict objectForKey:@"answerlist"];
+        for (NSDictionary *subSubSubDic in answerArray)
+        {
+            [_scoreMenuArray addObject:subSubSubDic];
+        }
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 70;
@@ -79,7 +156,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return _scoreMenuArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -90,8 +167,17 @@
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"SuccessCell" owner:self options:0] lastObject];
     }
+    NSString *answerId = [[_scoreMenuArray objectAtIndex:indexPath.row] objectForKey:@"id"];
+   PracticeBookRecord *scoreInfoRecord = [OralDBFuncs getLastRecordFor:[OralDBFuncs getCurrentUserName] topicName:[OralDBFuncs getCurrentTopic] answerId:answerId partNum:[OralDBFuncs getCurrentPart] andLevelNum:[OralDBFuncs getCurrentPoint]];
+    [cell.htmlWebView loadHTMLString:scoreInfoRecord.lastText baseURL:nil];
+    cell.htmlWebView.delegate = self;
     
-    cell.desLabel.text = @"Good grades~Continue to work hard，Continue to work hard，Continue to work hard";
+    NSArray *colorArr = @[_perfColor,_goodColor,_badColor];
+    int scoreCun = scoreInfoRecord.lastScore>=80?0:(scoreInfoRecord.lastScore>=60?1:2);
+    [cell.scoreButton setBackgroundColor:[colorArr objectAtIndex:scoreCun]];
+    [cell.scoreButton setTitle:[NSString stringWithFormat:@"%d",scoreInfoRecord.lastScore] forState:UIControlStateNormal];
+
+    
     return cell;
 }
 
@@ -126,9 +212,6 @@
 - (IBAction)continueNextPoint:(id)sender
 {
     CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
-    keyVC.pointCounts = _pointCount+1;
-    keyVC.topicName = self.topicName;
-    keyVC.currentPartCounts = self.currentPartCounts;
     [self.navigationController pushViewController:keyVC animated:YES];
 }
 @end

@@ -18,12 +18,13 @@
 #import "ZipManager.h"
 
 #import "CheckTestViewController.h"
-
+#import "OralDBFuncs.h"
+#import "ConstellationManager.h"
 
 @interface TPCCheckpointViewController ()<UIScrollViewDelegate>
 {
     UIView *_loadingView;
-    NSInteger _markPart;
+    int _markPart;
     BOOL _requestTest_zipUrl;
 }
 @end
@@ -40,13 +41,29 @@
     // Do any additional setup after loading the view from its nib.
     
     [self createLoadingView];
-//    _loadingView.hidden = NO;
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"My Travel"];
     // 界面元素
     [self uiConfig];
+    
+    NSDate *date = [NSDate date];
+    NSString *dateStr = [ConstellationManager transformNSStringWithDate:date];
+    NSString *recordId = [NSString stringWithFormat:@"record%@",dateStr];
+    [OralDBFuncs setCurrentRecordId:recordId];
+    [OralDBFuncs setCurrentTopic:[_topicDict objectForKey:@"classtype"]];
+    NSLog(@"%@",[_topicDict objectForKey:@"classtype"]);
+    if ([OralDBFuncs addTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[OralDBFuncs getCurrentTopic]])
+    {
+        NSLog(@"success");
+    }
+    else
+    {
+        NSLog(@"fail");
+    }
+    
 }
+
 
 #pragma mark - UI调整
 - (void)uiConfig
@@ -145,13 +162,13 @@
     // 1 判断
     NSString *topicResourcePath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",[_topicDict objectForKey:@"classtype"]];
     NSLog(@"%@",topicResourcePath);
-    _markPart = btn.tag - kPartButtonTag;
+    _markPart = (int)(btn.tag - kPartButtonTag);
     BOOL ret = [[NSFileManager defaultManager] fileExistsAtPath:topicResourcePath];
     if (ret)
     {
         // 存在
         // 开始闯关
-        [self beginPointWithPointCounts:btn.tag - kPartButtonTag];
+        [self beginPointWithPointCounts:_markPart];
     }
     else
     {
@@ -163,12 +180,11 @@
 
 
 #pragma mark - 开始闯关
-- (void)beginPointWithPointCounts:(NSInteger)pointCounts
+- (void)beginPointWithPointCounts:(int)pointCounts
 {
+    [OralDBFuncs setCurrentPart:(pointCounts+1)];
     _loadingView.hidden = YES;
     CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
-    followVC.currentPartCounts = pointCounts;
-    followVC.topicName = [_topicDict objectForKey:@"classtype"];
     [self.navigationController pushViewController:followVC animated:YES];
 }
 
@@ -176,7 +192,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSInteger mark = (scrollView.contentOffset.x+10)/(scrollView.contentSize.width/3);
-    NSLog(@"%ld",mark);
+    NSLog(@"~~~~scrollViewDidScroll~~~mark : %ld~~~~~~~~",mark);
      NSLog(@"++++++++%f++++++++++",scrollView.contentOffset.x);
     [self makePagesAloneWithButtonTag:kLeftMarkButtonTag+mark];
 }
@@ -225,6 +241,8 @@
            BOOL success =  [self unZipToLocalData:netManager.downLoadData WithPath:zipPath andFolder:@"topicResource"];
             if (success)
             {
+                BOOL addSuccess = [OralDBFuncs addTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[_topicDict objectForKey:@"classtype"]];
+                NSLog(@"~~~~~~~增加topic successs : %d~~~~~~",addSuccess);
                 // 跳转页面 进入闯关
                 [self beginPointWithPointCounts:_markPart];
             }
@@ -405,7 +423,6 @@
 {
     _loadingView.hidden = YES;
     CheckTestViewController *testVC = [[CheckTestViewController alloc]initWithNibName:@"CheckTestViewController" bundle:nil];
-    testVC.topicName = [_topicDict objectForKey:@"classtype"];
     [self.navigationController pushViewController:testVC animated:YES];
 }
 

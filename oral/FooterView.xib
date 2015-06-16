@@ -24,18 +24,17 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qc2-Fq-54j">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qc2-Fq-54j">
                             <rect key="frame" x="210" y="10" width="25" height="25"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="25" id="fCd-KL-tSe"/>
                                 <constraint firstAttribute="height" constant="25" id="rwP-9d-Zj2"/>
                             </constraints>
-                            <state key="normal" backgroundImage="preTip">
+                            <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
-                            <connections>
-                                <action selector="selectButtonClicked:" destination="iN0-l3-epB" eventType="touchUpInside" id="FPa-6q-FPu"/>
-                            </connections>
+                            <state key="selected" backgroundImage="selected_teacher"/>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -64,6 +63,6 @@
         </view>
     </objects>
     <resources>
-        <image name="preTip" width="33" height="33"/>
+        <image name="selected_teacher" width="23" height="23"/>
     </resources>
 </document>

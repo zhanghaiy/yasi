@@ -10,6 +10,8 @@
 #import "CheckFollowViewController.h"
 #import "CheckBlankViewController.h"
 #import "CheckAskViewController.h"
+#import "OralDBFuncs.h"
+
 
 @interface CheckKeyWordViewController ()<UIScrollViewDelegate>
 {
@@ -198,26 +200,14 @@
 
 - (void)enterNext
 {
-    NSLog(@"%ld",_pointCounts);
-    if (_pointCounts == 0)
-    {
-        CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
-        [self.navigationController pushViewController:followVC animated:YES];
-    }
-    else if (_pointCounts == 1)
+    if ([OralDBFuncs getCurrentPoint] == 1)
     {
         CheckBlankViewController *blankVC = [[CheckBlankViewController alloc]initWithNibName:@"CheckBlankViewController" bundle:nil];
-        blankVC.topicName = self.topicName;
-        NSLog(@"%@",self.topicName);
-        blankVC.currentPartCounts = self.currentPartCounts;
         [self.navigationController pushViewController:blankVC animated:YES];
     }
-    else if (_pointCounts == 2)
+    else if ([OralDBFuncs getCurrentPoint] == 2)
     {
         CheckAskViewController *askVC = [[CheckAskViewController alloc]initWithNibName:@"CheckAskViewController" bundle:nil];
-        askVC.topicName = self.topicName;
-        askVC.currentPartCounts = self.currentPartCounts;
-        NSLog(@"%@",self.topicName);
         [self.navigationController pushViewController:askVC animated:YES];
     }
 }

@@ -20,6 +20,9 @@
 #import "Score_Point3_Footer_View.h"
 #import "Score_Point3_Section_View.h"
 #import "Score_Point3_TableHeaderView_commited.h"
+#import "OralDBFuncs.h"
+
+
 
 @interface ScoreDetailViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -178,10 +181,9 @@
     {
         UIButton *pointButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [pointButton setFrame:CGRectMake(i*kPointButtonWidth, 0, kPointButtonWidth, kTopViewHeight)];
-        [pointButton setTitle:[NSString stringWithFormat:@"Part%d-%d",self.currentPartCounts+1,i+1] forState:UIControlStateNormal];
+        [pointButton setTitle:[NSString stringWithFormat:@"Part%d-%d",[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint]] forState:UIControlStateNormal];
         [pointButton setTitleColor:_pointColor forState:UIControlStateSelected];
          [pointButton setTitleColor:_textColor forState:UIControlStateNormal];
-//        pointButton.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
         
         pointButton.tag = kPointButtonTag + i;
         pointButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize2];

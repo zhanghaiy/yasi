@@ -229,7 +229,6 @@
 {
      // part1 -- 3
     ScoreDetailViewController *scoreVC = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil];
-    scoreVC.currentPartCounts = btn.tag - kPartButtonTag;
     [self.navigationController pushViewController:scoreVC animated:YES];
 }
 

@@ -8,6 +8,15 @@
 
 #import "TopicParentsViewController.h"
 
+
+@protocol SelectTeacherDelegate <NSObject>
+
+- (void)selectTeacherId:(NSString *)teacherID;
+
+@end
+
 @interface MyTeacherViewController : TopicParentsViewController
+
+@property (nonatomic,assign) id<SelectTeacherDelegate>delegate;
 
 @end

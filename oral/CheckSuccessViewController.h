@@ -29,8 +29,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *continueButton;
 - (IBAction)continueNextPoint:(id)sender;
 
-@property (nonatomic,assign) NSInteger pointCount;
-
 
 
 @end

@@ -95,7 +95,7 @@
                                 <constraint firstAttribute="width" constant="100" id="IBl-xF-tjl"/>
                                 <constraint firstAttribute="height" constant="50" id="fRr-1Y-e9m"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
                             <state key="normal" title="96">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -233,7 +233,7 @@
                 <constraint firstAttribute="bottom" secondItem="KBJ-pI-83K" secondAttribute="bottom" priority="750" constant="38" id="zv5-Bz-chp"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="352.5" y="342.5"/>
+            <point key="canvasLocation" x="240.5" y="156.5"/>
         </view>
     </objects>
     <resources>

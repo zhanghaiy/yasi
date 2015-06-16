@@ -10,6 +10,8 @@
 #import "TopicMainViewController.h"
 #import "RegisterViewController.h"
 #import "NSURLConnectionRequest.h"
+#import "OralDBFuncs.h"
+
 
 @interface LogInViewController ()<UITextFieldDelegate>
 
@@ -124,9 +126,11 @@
         {
             // 登陆成功 保存个人信息
             NSString *userid = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"studentid"];
-            NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-            [def setValue:userid forKey:@"UserID"];
-            [def synchronize];
+            NSString *userName = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"studentname"];
+            [OralDBFuncs setCurrentUser:userName UserId:userid];
+            [OralDBFuncs addUser:userName];
+            //更新登录时间 (待殷总确定 此处是否需要)
+//            [OralDBFuncs updateUserLastLoginTimeStamp:userName];
             // 跳转页面
             [self enterTopic];
         }

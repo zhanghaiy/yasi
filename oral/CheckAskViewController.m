@@ -12,8 +12,13 @@
 #import "CircleProgressView.h"
 #import "MyTeacherViewController.h"
 #import "TPCCheckpointViewController.h"
+#import "OralDBFuncs.h"
+#import "JSONKit.h"
+#import "ZipArchive.h"
+#import "NSURLConnectionRequest.h"
 
-@interface CheckAskViewController ()
+
+@interface CheckAskViewController ()<SelectTeacherDelegate>
 {
     NSDictionary *_topicInfoDict;// 整个topic信息
     NSDictionary *_currentPartDict;// 当前part资源信息
@@ -36,9 +41,8 @@
     NSInteger _markTimeChangeCounts;
     
     BOOL _pointFinished;
-
-//    CGRect _questionNomalRect;
-//    CGRect _questionSmallRect;
+    NSString *_teacherId;
+    NSMutableArray *_recordPathArray;
 }
 @end
 
@@ -76,15 +80,15 @@
      ----待完善-----
      
      */
-    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",self.topicName];
+    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",[OralDBFuncs getCurrentTopic]];
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     // 整个topic资源信息
     _topicInfoDict = [dict objectForKey:@"classtypeinfo"];
     // 当前part资源信息
-    _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:self.currentPartCounts];
+    _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:[OralDBFuncs getCurrentPart]-1];
     // 当前关卡信息
-    _currentPointDict = [[_currentPartDict objectForKey:@"levellist"] objectAtIndex:_currentPointCounts];
+    _currentPointDict = [[_currentPartDict objectForKey:@"levellist"] objectAtIndex:[OralDBFuncs getCurrentPoint]-1];
     // 当前关卡所有问题
     _questioListArray = [_currentPointDict objectForKey:@"questionlist"];
     // 总问题数
@@ -99,19 +103,17 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    _recordPathArray = [[NSMutableArray alloc]init];
     _answerTime = 15;
     _markTimeChangeCounts = 0;
     _pointFinished = NO;
-
-    _currentPointCounts = 2;
-
     
     audioPlayer = [AudioPlayer getAudioManager];
     audioPlayer.target = self;
     audioPlayer.action = @selector(playerCallBack);
     
-//    [self addBackButtonWithImageName:@"back-white"];
-    NSString *title = [NSString stringWithFormat:@"Part%ld-%ld",self.currentPartCounts+1,_currentPointCounts+1];
+    [OralDBFuncs setCurrentPoint:3];
+    NSString *title = [NSString stringWithFormat:@"Part%d-%d",[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint]];
     [self addTitleLabelWithTitleWithTitle:title];
 
     self.navTopView.backgroundColor = [UIColor colorWithRed:144/255.0 green:231/255.0 blue:208/255.0 alpha:1];
@@ -122,7 +124,6 @@
     _recordManager = [[RecordManager alloc]init];
     _recordManager.target = self;
     _recordManager.action = @selector(recordFinished:);
-    _recordManager.filePath = [NSHomeDirectory() stringByAppendingString:@"/Documents"];
 }
 
 - (void)uiConfig
@@ -360,7 +361,7 @@
 {
     // 获取音频路径
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
-    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",self.topicName,audiourl];
+    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",[OralDBFuncs getCurrentTopic],audiourl];
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
 
@@ -441,15 +442,9 @@
 #pragma mark - 开始录音
 - (void)startRecord
 {
-    // 后续完善（根据数据）
-   [_recordManager prepareRecorderWithFileName:@"answer1"];
-//    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/record",self.topicName];
-//    NSLog(@"%@",path);
-//    if ([[NSFileManager defaultManager]fileExistsAtPath:path])
-//    {
-//        [[NSFileManager defaultManager]createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
-//    }
-//    [_recordManager recordWithPath:[NSString stringWithFormat:@"%@/1111.mp3",path]];
+    NSString *filePath = [NSString stringWithFormat:@"%@/Documents/%@/topicResource/Part%d-%d-%ld.wav",NSHomeDirectory(),[OralDBFuncs getCurrentTopic],[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint],_currentQuestionCounts+1];
+    [_recordPathArray addObject:filePath];
+   [_recordManager prepareRecorderWithFilePath:filePath];
 }
 
 #pragma mark - 录音结束回调
@@ -507,14 +502,231 @@
     {
         // 稍后提交
         [self backToTopicPage];
+        [OralDBFuncs setPartLevel3Commit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
     }
     else if (btn.tag == kCommitRightButtonTag)
     {
-        // 现在提交
+        // 现在提交 打包
         
-        MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
-        [self.navigationController pushViewController:myTeacherVC animated:YES];
+        [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+        // 判断是否有默认老师 无---跳转到选择老师界面  有----直接提交
+        if ([OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]])
+        {
+            _teacherId = [OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]];
+            // 有默认老师
+            [self startRequst];
+        }
+        else
+        {
+            MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
+            myTeacherVC.delegate = self;
+            [self.navigationController pushViewController:myTeacherVC animated:YES];
+        }
     }
+}
+
+#pragma mark - 提交
+- (void)startRequst
+{
+    BOOL makeUpSuccess = [self makeUpJsonFile];
+    if (makeUpSuccess)
+    {
+        // 压缩zip包
+        NSData *zipData = [self zipCurrentPartFile];
+        // 网络提交 uploadfile
+        NSString *paramStr = [NSString stringWithFormat:@"uploadfile=%@",zipData];
+        [NSURLConnectionRequest requestPOSTUrlString:kPartCommitUrl andParamStr:paramStr target:self action:@selector(commitFinished:) andRefresh:YES];
+        
+    }
+}
+
+#pragma mark - 提交反馈
+- (void)commitFinished:(NSURLConnectionRequest *)request
+{
+    if (request.downloadData)
+    {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        NSLog(@"%@",dic);
+        if ([[dic objectForKey:@"respCode"] intValue] == 1000)
+        {
+            // 提交成功后回到topic详情页面
+            [self backToTopicPage];
+        }
+        else
+        {
+           // 提交失败
+        }
+        
+    }
+}
+
+#pragma mark - 压缩zip包
+- (NSData *)zipCurrentPartFile
+{
+    NSString *zipPath = [NSString stringWithFormat:@"%@/part.zip",[self basePath]];
+    ZipArchive *zip = [[ZipArchive alloc] init];
+    BOOL ret = [zip CreateZipFile2:zipPath];
+    if (ret)
+    {
+        for (NSString *audioPath  in _recordPathArray)
+        {
+            NSString *audioName = [[audioPath componentsSeparatedByString:@"/"] lastObject];
+            [zip addFileToZip:audioPath newname:audioName];
+        }
+        NSString *jsonPath = [NSString stringWithFormat:@"%@/part.json",[self basePath]];
+        [zip addFileToZip:jsonPath newname:@"part.json"];
+    }
+    NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
+    return zipData;
+}
+
+#pragma mark - 基础路径
+- (NSString *)basePath
+{
+    NSString *basePath = [NSString stringWithFormat:@"%@/Documents/%@/topicResource",NSHomeDirectory(),[OralDBFuncs getCurrentTopic]];
+    return basePath;
+}
+
+#pragma mark - 合成json文件 保存本地
+- (BOOL)makeUpJsonFile
+{
+    NSString *topicid = [_topicInfoDict objectForKey:@"id"];
+    // 获取闯关分数
+    TopicRecord *record = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[OralDBFuncs getCurrentTopic]];
+   
+    NSMutableArray *checkPoint = [[NSMutableArray alloc]init];
+    for (int i = 0; i < 3; i ++)
+    {
+        NSDictionary *levelDic = [[_currentPartDict objectForKey:@"levellist"] objectAtIndex:i];
+        NSString *level = [NSString stringWithFormat:@"%d",[[levelDic objectForKey:@"level"] intValue]];
+        NSString *levelid = [levelDic objectForKey:@"id"];
+
+        int currentPart = [OralDBFuncs getCurrentPart];
+        int currentPoint = i+1;
+        int score = [self getScoreWithPart:currentPart Point:currentPoint Record:record];
+        NSDictionary *subDic = @{@"ifsubmitteacher":@"否",@"level":level,@"levelid":levelid,@"score":[NSNumber numberWithInt:score],@"status":@"通关",@"topicid":topicid,@"userid":[OralDBFuncs getCurrentUserID]};
+        [checkPoint addObject:subDic];
+    }
+    
+    NSDictionary *level3Dic = _currentPointDict;
+    NSArray *questionList = [level3Dic objectForKey:@"questionlist"];
+    NSString *partid = [NSString stringWithFormat:@"%d",[[level3Dic objectForKey:@"partid"] intValue]];
+    
+    NSMutableArray *partInfo = [[NSMutableArray alloc]init];
+    for (int i = 0; i <questionList.count; i ++)
+    {
+        NSString *level = [NSString stringWithFormat:@"%d",[[level3Dic objectForKey:@"level"] intValue]];
+        
+        NSDictionary *questioDic = [questionList objectAtIndex:i];
+        NSString *questionid = [questioDic objectForKey:@"id"];
+        NSString *questiontext = [questioDic objectForKey:@"questiontext"];
+        NSDictionary *answerDic = [[questioDic objectForKey:@"answerlist"] objectAtIndex:0];
+        
+        NSString *answerid = [answerDic objectForKey:@"id"];
+        
+        NSString *audioUrl = [NSString stringWithFormat:@"Part%d-%d-%ld.wav",[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint],_currentQuestionCounts+1];
+        
+        NSDictionary *subDic = @{@"answerid":answerid,@"audioUrl":audioUrl,@"level":level,@"partid":partid,@"questionid":questionid,@"questiontext":questiontext,@"topicid":topicid,@"longtime":@"33"};
+        [partInfo addObject:subDic];
+    }
+    
+    NSDictionary *finalDict = @{@"partInfo":partInfo,@"checkPoint":checkPoint,@"teacherid":_teacherId};
+   
+    NSString *jsonStr=[finalDict JSONString];
+    NSLog(@"~~~~~~~~合成json串：%@~~~~~~~~",jsonStr);
+    NSData *jsonData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
+   
+    NSString *jsonFilePath = [NSString stringWithFormat:@"%@/part.json",[self basePath]];
+    NSLog(@"~~~~~~~json文件保存路径：%@~~~~~~~",jsonFilePath);
+    BOOL saveSuc = [jsonData writeToFile:jsonFilePath atomically:YES];
+    return saveSuc;
+}
+
+#pragma mark - 获取分数
+- (int)getScoreWithPart:(int)currentPart Point:(int)point Record:(TopicRecord *)record
+{
+    switch (currentPart)
+    {
+        case 1:
+        {
+            switch (point)
+            {
+                case 1:
+                {
+                    return record.p1_1;
+                }
+                    break;
+                case 2:
+                {
+                    return  record.p1_2;
+                }
+                    break;
+                case 3:
+                {
+                    return record.p1_3;
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+            break;
+        case 2:
+        {
+            switch (point)
+            {
+                case 1:
+                {
+                    return record.p2_1;
+                }
+                    break;
+                case 2:
+                {
+                    return record.p2_2;
+                }
+                    break;
+                case 3:
+                {
+                    return record.p2_3;
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+            break;
+        case 3:
+        {
+            switch (point)
+            {
+                case 1:
+                {
+                    return record.p3_1;
+                }
+                    break;
+                case 2:
+                {
+                    return record.p3_2;
+                }
+                    break;
+                case 3:
+                {
+                    return record.p3_3;
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return 0;
 }
 
 #pragma mark - 返回topic详情页
@@ -541,6 +753,14 @@
     {
         [self stopTimer];
     }
+}
+
+#pragma mark - 选取老师后回调
+- (void)selectTeacherId:(NSString *)teacherID
+{
+    _teacherId = teacherID;
+    // 此处需给用户提示正在提交给老师 ----> 待完善
+    [self startRequst];
 }
 
 @end

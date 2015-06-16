@@ -9,7 +9,7 @@
 #import "RegisterViewController.h"
 #import "TopicMainViewController.h"
 #import "NSURLConnectionRequest.h"
-
+#import "OralDBFuncs.h"
 
 @interface RegisterViewController ()<UITextFieldDelegate>
 
@@ -123,6 +123,10 @@
         NSLog(@"%@",dict);
         if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
         {
+            NSString *userid = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"id"];
+            NSString *userName = _nameTextField.text;
+            [OralDBFuncs setCurrentUser:userName UserId:userid];
+            [OralDBFuncs addUser:userName];
             [self enterTopicPage];
         }
     }
