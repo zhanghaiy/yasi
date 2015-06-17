@@ -358,12 +358,15 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
         
         oneRecord.userName = [[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 0)];
         oneRecord.answerId = [[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 1)];
-
-        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
-        NSDate *date=[formatter dateFromString:[[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 2)]];
-        oneRecord.timeStamp = date.timeIntervalSince1970;
+        
+//        oneRecord.timeStamp = sqlite3_column_int(dbps, 2);
+       
+//        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+//        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+//        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+//        NSDate *date=[formatter dateFromString:[[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 3)]];
+//        oneRecord.timeStamp = date.timeIntervalSince1970;
+        
         
         oneRecord.lastText = [[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 3)];
         oneRecord.referAudioName = [[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 4)];

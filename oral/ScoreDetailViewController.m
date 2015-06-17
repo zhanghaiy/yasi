@@ -430,6 +430,7 @@
 - (void)playFinished:(AudioPlayer *)player
 {
     //
+    NSLog(@"playfinished");
 }
 
 

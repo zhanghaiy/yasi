@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Part1 - 1" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AV2-NP-CvD">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AV2-NP-CvD">
                         <rect key="frame" x="15" y="5" width="320" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="5Pj-QM-Yji"/>
@@ -52,6 +52,14 @@
                             <action selector="buttonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4Tt-vU-h3j"/>
                         </connections>
                     </button>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hET-JI-dd8" customClass="CircleProgressView">
+                        <rect key="frame" x="141" y="100" width="33" height="33"/>
+                        <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="33" id="Bit-HA-Uwm"/>
+                            <constraint firstAttribute="width" constant="33" id="pNV-mx-HPk"/>
+                        </constraints>
+                    </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jcd-TP-BOi">
                         <rect key="frame" x="83" y="100" width="33" height="33"/>
                         <constraints>
@@ -70,8 +78,10 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EI2-cr-SCm">
                         <rect key="frame" x="141" y="100" width="33" height="33"/>
                         <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="33" id="9iS-DS-a1T"/>
                             <constraint firstAttribute="height" constant="33" id="bbu-oQ-XdS"/>
                             <constraint firstAttribute="width" constant="33" id="oHM-L7-UtQ"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="vCa-fT-BDe"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <state key="normal" backgroundImage="Prac_follow_n">
@@ -121,10 +131,12 @@
                     <constraint firstItem="9A4-0O-MSx" firstAttribute="top" secondItem="AV2-NP-CvD" secondAttribute="bottom" constant="5" id="R0W-gN-mRx"/>
                     <constraint firstItem="EI2-cr-SCm" firstAttribute="leading" secondItem="Jcd-TP-BOi" secondAttribute="trailing" constant="25" id="SFT-a1-DEQ"/>
                     <constraint firstItem="3ru-rt-da3" firstAttribute="top" secondItem="Zcv-t9-VcE" secondAttribute="bottom" constant="15" id="YEU-kf-vFn"/>
+                    <constraint firstItem="hET-JI-dd8" firstAttribute="centerY" secondItem="EI2-cr-SCm" secondAttribute="centerY" id="cqP-ic-apl"/>
                     <constraint firstItem="Jcd-TP-BOi" firstAttribute="leading" secondItem="Zcv-t9-VcE" secondAttribute="trailing" constant="25" id="eh1-MF-FRa"/>
                     <constraint firstItem="2gJ-C2-GxH" firstAttribute="leading" secondItem="EI2-cr-SCm" secondAttribute="trailing" constant="25" id="f9z-dQ-Gyq"/>
                     <constraint firstItem="Zcv-t9-VcE" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="hDp-uZ-JPr"/>
                     <constraint firstAttribute="trailing" secondItem="3ru-rt-da3" secondAttribute="trailing" id="qsH-uw-WGH"/>
+                    <constraint firstItem="hET-JI-dd8" firstAttribute="centerX" secondItem="EI2-cr-SCm" secondAttribute="centerX" id="rOQ-02-kfs"/>
                     <constraint firstItem="AV2-NP-CvD" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="rPg-h2-KOK"/>
                     <constraint firstItem="bFu-rh-QIz" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="rc4-rm-JTc"/>
                     <constraint firstItem="EI2-cr-SCm" firstAttribute="centerY" secondItem="Jcd-TP-BOi" secondAttribute="centerY" id="vM3-Dj-9eq"/>
@@ -137,6 +149,7 @@
                 <bool key="isElement" value="YES"/>
             </accessibility>
             <connections>
+                <outlet property="circleProV" destination="hET-JI-dd8" id="RCC-hU-jDd"/>
                 <outlet property="deleteButton" destination="2gJ-C2-GxH" id="9JO-9g-bh3"/>
                 <outlet property="followButton" destination="EI2-cr-SCm" id="74w-EK-5FM"/>
                 <outlet property="lineLabel" destination="3ru-rt-da3" id="sbU-A3-1IF"/>

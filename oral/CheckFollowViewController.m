@@ -493,6 +493,15 @@
 #pragma mark - 思必驰反馈信息
 - (void)showResult:(DFAiengineSentResult *)result
 {
+    
+    // 若思必驰出错 停止
+    if (_reduceTimer)
+    {
+        [_reduceTimer invalidate];
+        _reduceTimer = nil;
+        _answerButton.selected = NO;
+    }
+    
     // 获取录音时长
     long recordTime = result.systime;
     // 增加录音时长
@@ -518,12 +527,13 @@
     _currentAnswerPron = result.pron;
     _currentAnswerAudioName = [[sbcToPath componentsSeparatedByString:@"/"] lastObject];
     _currentAnswerReferAudioName = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"audiourl"];
+    NSLog(@"%@",_currentAnswerReferAudioName);
     _currentAnswerId = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"id"];
     
     NSLog(@"%d",[OralDBFuncs getCurrentPart]);
     
     // 存储一条记录 到数据库
-    BOOL saveSuccess = [OralDBFuncs replaceLastRecordFor:[OralDBFuncs getCurrentUserName] TopicName:[OralDBFuncs getCurrentTopic] answerId:_currentAnswerId partNum:[OralDBFuncs getCurrentPart] levelNum:[OralDBFuncs getCurrentPoint] withRecordId:[OralDBFuncs getCurrentRecordId] lastText:_currentAnswerHtml lastScore:_currentAnswerScore lastPron:_currentAnswerPron lastIntegrity:_currentAnswerIntegrity lastFluency:_currentAnswerFluency lastAudioName:_currentAnswerReferAudioName];
+    BOOL saveSuccess = [OralDBFuncs replaceLastRecordFor:[OralDBFuncs getCurrentUserName] TopicName:[OralDBFuncs getCurrentTopic] answerId:_currentAnswerId partNum:[OralDBFuncs getCurrentPart] levelNum:[OralDBFuncs getCurrentPoint] withRecordId:[OralDBFuncs getCurrentRecordId] lastText:_currentAnswerHtml lastScore:_currentAnswerScore lastPron:_currentAnswerPron lastIntegrity:_currentAnswerIntegrity lastFluency:_currentAnswerFluency lastAudioName:_currentAnswerAudioName];
     NSLog(@"saveSuccess:%d",saveSuccess);
     
     _timeProgressLabel.hidden = YES;// 隐藏时间进度条
@@ -634,7 +644,7 @@
     else
     {
         // 加入练习簿
-        BOOL suc = [OralDBFuncs addPracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId andReferAudioName:_currentAnswerAudioName];
+        BOOL suc = [OralDBFuncs addPracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId andReferAudioName:_currentAnswerReferAudioName];
         NSLog(@"%d",suc);
         [OralDBFuncs updatePracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId andResultText:_currentAnswerHtml score:_currentAnswerScore pron:_currentAnswerPron integrity:_currentAnswerIntegrity fluency:_currentAnswerFluency andLastAudioName:_currentAnswerAudioName];
         if (suc)
@@ -746,6 +756,7 @@
         }
     }
 }
+
 
 
 

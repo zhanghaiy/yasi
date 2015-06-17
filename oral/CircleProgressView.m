@@ -35,7 +35,7 @@
     shapeLayer.frame = self.bounds;
     shapeLayer.fillColor = nil;
     
-    shapeLayer.cornerRadius = 45;
+    shapeLayer.cornerRadius = self.frame.size.height/2;
     [self.layer addSublayer:shapeLayer];
     self.shapeLayer = shapeLayer;
 }
