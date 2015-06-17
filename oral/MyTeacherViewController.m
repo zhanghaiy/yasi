@@ -19,6 +19,8 @@
     NSMutableArray *_teacherArray;
     FooterView *_footerView;
     NSString *_teacherId;
+    
+    BOOL _markDefault;
 }
 @end
 
@@ -30,7 +32,8 @@
 - (void)startRequest
 {
     // 选择老师 userId teacherName change
-    NSString *str = [NSString stringWithFormat:@"%@%@?userId=%@&teacherName=%@&change=%d",kBaseIPUrl,kSelectTeacherUrl,[OralDBFuncs getCurrentUserID],nil,0];
+    NSString *str = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kChooseTeacherUrl,[OralDBFuncs getCurrentUserID]];
+    NSLog(@"~~~~~~选择老师：%@~~~~~~",str);
     [NSURLConnectionRequest requestWithUrlString:str target:self aciton:@selector(requestFinished:) andRefresh:YES];
 }
 
@@ -39,7 +42,9 @@
     if ([request.downloadData length])
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        NSLog(@"%@",dict);
+        NSLog(@"选择老师反馈结果：%@",dict);
+        _teacherArray = [dict objectForKey:@"teacherinfolist"];
+        [_myTeaTableV reloadData];
     }
 }
 
@@ -74,26 +79,35 @@
     [self.view addSubview:_myTeaTableV];
     _myTeaTableV.backgroundColor = [UIColor clearColor];
     
+    [self startRequest];
 }
+
 
 - (void)finishButtonClicked:(UIButton *)btn
 {
     // 完成
+    if (_markDefault)
+    {
+        // 存储默认老师
+        [OralDBFuncs setDefaultTeacherID:_teacherId UserName:[OralDBFuncs getCurrentUserName]];
+    }
     [self.delegate selectTeacherId:_teacherId];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark - 设置默认老师
 - (void)settingDefaultTeacher:(UIButton *)btn
 {
     if (btn.selected)
     {
         btn.selected = NO;
+        _markDefault = NO;
     }
     else
     {
         btn.selected = YES;
+        _markDefault = YES;
     }
-    _teacherId = @"";
 }
 
 
@@ -105,7 +119,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return _teacherArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -118,20 +132,31 @@
     }
     cell.teacherName.textColor = _backColor;
     
+    NSDictionary *dic = [_teacherArray objectAtIndex:indexPath.row];
+    
+    cell.teacherDesLabel.text = [dic objectForKey:@"signiture"];
+    cell.teacherName.text = [dic objectForKey:@"teachername"];
+    
     cell.selectButton.tag = kSelectedButonTag + indexPath.row;
     [cell.selectButton addTarget:self action:@selector(selectTeacxher:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
+#pragma mark - 选择老师
 - (void)selectTeacxher:(UIButton *)btn
 {
-    if (btn.selected)
+    for (int i = 0; i < _teacherArray.count; i ++)
     {
-        btn.selected = NO;
-    }
-    else
-    {
-        btn.selected = YES;
+        UIButton *newBtn = (UIButton *)[self.view viewWithTag:i+kSelectedButonTag];
+        if (newBtn.tag == btn.tag)
+        {
+            newBtn.selected = YES;
+            _teacherId = [[_teacherArray objectAtIndex:i] objectForKey:@"teacherid"];
+        }
+        else
+        {
+            newBtn.selected = NO;
+        }
     }
 }
 

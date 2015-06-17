@@ -20,6 +20,12 @@
     _teaHeadImgV.layer.borderColor = [UIColor colorWithWhite:235/255.0 alpha:1].CGColor;
     _teaHeadImgV.layer.borderWidth = 1;
     
+    _selectButton.layer.masksToBounds = YES;
+    _selectButton.layer.cornerRadius = _selectButton.frame.size.height/2;
+    _selectButton.layer.borderColor = kPart_Button_Color.CGColor;
+    _selectButton.layer.borderWidth = 1;
+    
+    
     _lineLabel.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
 }
 

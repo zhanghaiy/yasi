@@ -38,10 +38,6 @@
          self.window.rootViewController = logInVC;
     }
     
-//     NSString *str = [NSString stringWithFormat:@"%@%@?userId=%@&teacherName=%@&change=0",kBaseIPUrl,kSelectTeacherUrl,[OralDBFuncs getCurrentUserID],@"林大"];
-//    NSLog(@"%@",str);
-//    http://114.215.172.72:80/yasi/teacher/selectTeacherInfoById.do?userId=FF3E0ED4D67A4294A55A7D7A7CC41785&teacherName=林大&change=0
-    
     if (![OralDBFuncs initializeDb])
     {
         NSLog(@"init DB fail");

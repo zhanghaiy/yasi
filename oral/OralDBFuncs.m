@@ -172,8 +172,12 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     
     int completion = (part - 1) * 3 + level;  // 完成度从0～9，每part有三关，每topic有三part
     
-    NSString *subStatementStart = @",start_timestamp=datetime('now','localtime') ";
-    NSString *subStatementStop = @",stop_timestamp=datetime('now','localtime') ";
+//    NSString *subStatementStart = @",start_timestamp=datetime('now','localtime') ";
+//    NSString *subStatementStop = @",stop_timestamp=datetime('now','localtime') ";
+    
+    int timestamp = [[NSDate date] timeIntervalSince1970];//生成十位数时间
+    NSString *subStatementStart = [NSString stringWithFormat:@",start_timestamp=%d ",timestamp];
+    NSString *subStatementStop = [NSString stringWithFormat:@",stop_timestamp=%d ",timestamp];    
     NSString *statement = [NSString stringWithFormat:@"update topic_records set completion='%d',p%d_%d='%d' ", completion, part, level, score];
     if(completion == 1)
         statement = [statement stringByAppendingString:subStatementStart];
@@ -222,14 +226,14 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
         oneRecord.p3_2 = sqlite3_column_int(dbps, 10);
         oneRecord.p3_3 = sqlite3_column_int(dbps, 11);
         
-        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
-        NSDate *date=[formatter dateFromString:[[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 12)]];
-        oneRecord.startTimeStamp = date.timeIntervalSince1970;
-        
-        date = [formatter dateFromString:[[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 13)]];
-        oneRecord.stopTimeStamp = date.timeIntervalSince1970;
+//        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+//        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+//        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+//        NSDate *date=[formatter dateFromString:[[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 12)]];
+//        oneRecord.startTimeStamp = date.timeIntervalSince1970;
+//        
+//        date = [formatter dateFromString:[[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 13)]];
+//        oneRecord.stopTimeStamp = date.timeIntervalSince1970;
     }
     
     // done with the db.  finalize the statement and close

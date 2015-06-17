@@ -53,7 +53,7 @@
 #define kPartCommitUrl @"/yasi/clearance/insertStudentClearance.do"
 
 // 选择老师 userId teacherName change
-#define kSelectTeacherUrl @"/yasi/teacher/slectTeacherToChoose.do"
+#define kChooseTeacherUrl @"/yasi/teacher/selectTeacherToChoose.do"
 
 // 模考 参数 topid 
 #define kTestUrl @"/yasi/mockquestion/getMockQuestion.do"

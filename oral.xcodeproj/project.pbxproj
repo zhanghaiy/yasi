@@ -69,7 +69,9 @@
 		FD6AB7511B2AB6AC004721A7 /* df_oral.db in Resources */ = {isa = PBXBuildFile; fileRef = FD6AB7501B2AB6AC004721A7 /* df_oral.db */; };
 		FD6AB7541B2ABDBC004721A7 /* OralDBFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6AB7531B2ABDBC004721A7 /* OralDBFuncs.m */; };
 		FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */; };
-		FD6EB55F1B2EBB880044DA1A /* libDFAiengineSentObject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6EB55E1B2EBB880044DA1A /* libDFAiengineSentObject.a */; };
+		FD6FC7601B3109BC00CE143F /* SaveRecordTime.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6FC75F1B3109BC00CE143F /* SaveRecordTime.m */; };
+		FD6FC7671B312F0C00CE143F /* libDFAiengineSentObject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD6FC7661B312F0C00CE143F /* libDFAiengineSentObject.a */; };
+		FD6FC7681B31302500CE143F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD99586B1B1313B6005892DB /* libz.dylib */; };
 		FD73CBAF1B30340200979B1A /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD73CBAE1B30340200979B1A /* LoadingView.m */; };
 		FD73CBB11B30340E00979B1A /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD73CBB01B30340E00979B1A /* LoadingView.xib */; };
 		FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */; };
@@ -102,7 +104,6 @@
 		FD9958E71B131794005892DB /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = FD9958DE1B131794005892DB /* unzip.c */; };
 		FD9958E81B131794005892DB /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = FD9958E01B131794005892DB /* zip.c */; };
 		FD9958E91B131794005892DB /* ZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9958E31B131794005892DB /* ZipArchive.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		FD9958EC1B1317E6005892DB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD99586B1B1313B6005892DB /* libz.dylib */; };
 		FD9958EF1B13180F005892DB /* ZipManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9958EE1B13180F005892DB /* ZipManager.m */; };
 		FD9958F31B1328CB005892DB /* NetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9958F21B1328CB005892DB /* NetManager.m */; };
 		FD9959081B1328FB005892DB /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9958F61B1328FB005892DB /* AFHTTPRequestOperation.m */; };
@@ -266,7 +267,9 @@
 		FD6AB7531B2ABDBC004721A7 /* OralDBFuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OralDBFuncs.m; sourceTree = "<group>"; };
 		FD6B80D21B1843FF00F9562C /* NSString+CalculateStringSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CalculateStringSize.h"; sourceTree = "<group>"; };
 		FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CalculateStringSize.m"; sourceTree = "<group>"; };
-		FD6EB55E1B2EBB880044DA1A /* libDFAiengineSentObject.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDFAiengineSentObject.a; sourceTree = "<group>"; };
+		FD6FC75E1B3109BC00CE143F /* SaveRecordTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveRecordTime.h; sourceTree = "<group>"; };
+		FD6FC75F1B3109BC00CE143F /* SaveRecordTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveRecordTime.m; sourceTree = "<group>"; };
+		FD6FC7661B312F0C00CE143F /* libDFAiengineSentObject.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDFAiengineSentObject.a; sourceTree = "<group>"; };
 		FD73CBAD1B30340200979B1A /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
 		FD73CBAE1B30340200979B1A /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
 		FD73CBB01B30340E00979B1A /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
@@ -426,11 +429,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD6FC7681B31302500CE143F /* libz.dylib in Frameworks */,
 				FD530E3F1B2964F500E3EC26 /* libstdc++.6.dylib in Frameworks */,
 				FD530E3D1B2961A800E3EC26 /* libiconv.dylib in Frameworks */,
-				FD6EB55F1B2EBB880044DA1A /* libDFAiengineSentObject.a in Frameworks */,
+				FD6FC7671B312F0C00CE143F /* libDFAiengineSentObject.a in Frameworks */,
 				FD530E3B1B29619000E3EC26 /* libz.1.1.3.dylib in Frameworks */,
-				FD9958EC1B1317E6005892DB /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -718,6 +721,15 @@
 			name = Category;
 			sourceTree = "<group>";
 		};
+		FD6FC7611B3109C100CE143F /* 存储时间 */ = {
+			isa = PBXGroup;
+			children = (
+				FD6FC75E1B3109BC00CE143F /* SaveRecordTime.h */,
+				FD6FC75F1B3109BC00CE143F /* SaveRecordTime.m */,
+			);
+			name = "存储时间";
+			sourceTree = "<group>";
+		};
 		FD73CBAC1B3033EA00979B1A /* LoadingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -994,6 +1006,7 @@
 		FDA25E111B0D9EFF00F35545 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FD6FC7611B3109C100CE143F /* 存储时间 */,
 				FD9958D31B131753005892DB /* 压缩 */,
 				FD5A05811B0ED877002F0756 /* 圆形进度条 */,
 				FDA25E181B0DD97F00F35545 /* 录音 */,
@@ -1042,7 +1055,7 @@
 		FDD404051B0492F900DE2E84 = {
 			isa = PBXGroup;
 			children = (
-				FD6EB55E1B2EBB880044DA1A /* libDFAiengineSentObject.a */,
+				FD6FC7661B312F0C00CE143F /* libDFAiengineSentObject.a */,
 				FD530E3E1B2964F500E3EC26 /* libstdc++.6.dylib */,
 				FD530E3C1B2961A800E3EC26 /* libiconv.dylib */,
 				FD530E3A1B29619000E3EC26 /* libz.1.1.3.dylib */,
@@ -1329,6 +1342,7 @@
 				FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */,
 				FD5FEC391B25A33E005B99AF /* PersonEditViewController.m in Sources */,
 				FD5E01A31B26865000E3ED4B /* ConstellationManager.m in Sources */,
+				FD6FC7601B3109BC00CE143F /* SaveRecordTime.m in Sources */,
 				FD8C40F01B0C6FAB00948B6C /* CheckAskViewController.m in Sources */,
 				FD9958E61B131794005892DB /* mztools.c in Sources */,
 				FD5FEC3E1B25A607005B99AF /* PersonEditCell.m in Sources */,

@@ -60,19 +60,9 @@
     
 }
 
-
-
-- (void)viewDidLoad
+#pragma mark - 获取总分
+- (void)getSumScore
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    // 分数显示top区域有两种颜色 1：黄色 2： 蓝色
-    _oraColor = [UIColor colorWithRed:242/255.0 green:222/255.0 blue:44/255.0 alpha:1];
-    _blueColor = [UIColor blueColor];// 暂时 后续补上
-    self.lineLab.hidden = YES;
-    self.navTopView.hidden = YES;
-    [self uiConfig];
-    
     // 获取总分
     if ([OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[OralDBFuncs getCurrentTopic]])
     {
@@ -110,9 +100,41 @@
                 _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p3_2];
             }
         }
-
+        
     }
-        // 合成成绩单数据源
+    
+    // 根据分数设置颜色
+    int score = [_topScoreLabel.text intValue];
+    NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
+    int index = score>=80?0:(score>=60?1:2);
+    _topBackView.backgroundColor = [colorArray objectAtIndex:index];
+    [_topShareButton setTitleColor:[colorArray objectAtIndex:index] forState:UIControlStateNormal];
+    // 根据分数 设置标题
+    NSArray *textArray = @[@"成绩不错呦~超过了%62的小伙伴!",@"成绩不错呦~超过了%62的小伙伴!",@"没及格~需要加强联系呦~努力努力！！！！"];
+    _topDesLabel.text = [textArray objectAtIndex:index];
+    if (index==2)
+    {
+        // 不及格 不可以继续闯关
+//        _continueButton.enabled = NO;
+    }
+
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    // 分数显示top区域有两种颜色 1：黄色 2： 蓝色
+    _oraColor = [UIColor colorWithRed:242/255.0 green:222/255.0 blue:44/255.0 alpha:1];
+    _blueColor = [UIColor blueColor];// 暂时 后续补上
+    self.lineLab.hidden = YES;
+    self.navTopView.hidden = YES;
+    [self uiConfig];
+    
+    // 获取总分 此处由于时间问题 一直崩溃 暂不获取
+    [self getSumScore];
+    // 合成成绩单数据源
     _scoreMenuArray = [[NSMutableArray alloc]init];
     [self makeUpScoreMenu];
 }
@@ -169,6 +191,7 @@
     }
     NSString *answerId = [[_scoreMenuArray objectAtIndex:indexPath.row] objectForKey:@"id"];
    PracticeBookRecord *scoreInfoRecord = [OralDBFuncs getLastRecordFor:[OralDBFuncs getCurrentUserName] topicName:[OralDBFuncs getCurrentTopic] answerId:answerId partNum:[OralDBFuncs getCurrentPart] andLevelNum:[OralDBFuncs getCurrentPoint]];
+    NSLog(@"~~~~~%@~~~~~~~~",scoreInfoRecord.lastText);
     [cell.htmlWebView loadHTMLString:scoreInfoRecord.lastText baseURL:nil];
     cell.htmlWebView.delegate = self;
     

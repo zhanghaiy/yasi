@@ -36,7 +36,7 @@
                                 <constraint firstAttribute="width" constant="110" id="7CN-ud-axk"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <state key="normal" title="返回">
+                            <state key="normal" title="再来一次">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -52,7 +52,7 @@
                                 <constraint firstAttribute="height" constant="50" id="Zcm-Hl-tgz"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <state key="normal" title="继续">
+                            <state key="normal" title="继续闯关">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>

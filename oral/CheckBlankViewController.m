@@ -484,21 +484,10 @@
 
 }
 
-#pragma mark - - 展示每个单词发音情况
-- (void)showHtmlMsg:(NSString *)htmlStr
-{
-    _currentAnswerHtml = htmlStr;
-    // 展示每个单词发音情况
-    [_StuAnswerWebView loadHTMLString:htmlStr baseURL:nil];
-}
 
 #pragma mark - 展示分数
 - (void)showResult:(DFAiengineSentResult *)result
 {
-    _currentAnswerHtml = [_dfEngine getRichResultString:result.details];
-    // 展示每个单词发音情况
-    [_StuAnswerWebView loadHTMLString:_currentAnswerHtml baseURL:nil];
-    
     _stuTimeProgressLabel.hidden = YES;// 隐藏时间进度条
     _stuTimeProgressLabel.frame = _timeProgressRect;//回复时间进度条 以便下次使用
     _stuHeadImgView.hidden = YES;// 隐藏学生头像
@@ -511,14 +500,37 @@
     _stuHeadImgView.alpha = 0.3;
     [_continueButton setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
     
+    
+    // 转移思必驰录音 清空原有的
+    NSString *sbcPath = [NSString stringWithFormat:@"%@/Documents/record/%@.wav",NSHomeDirectory(),result.recordId];
+    NSString *sbcToPath =  [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/part%d-%d-%ld-%ld.wav",[OralDBFuncs getCurrentTopic],[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint],_currentQuestionCounts+1,_currentAnswerCounts+1];
+    NSData *fileData = [NSData dataWithContentsOfFile:sbcPath];
+    BOOL saveSuc = [fileData writeToFile:sbcToPath atomically:YES];
+    if (saveSuc)
+    {
+        // 删除原来的文件
+        [[NSFileManager defaultManager]removeItemAtPath:sbcPath error:nil];
+    }
+    
+    _currentAnswerHtml = [_dfEngine getRichResultString:result.details];
+    // 展示每个单词发音情况
+    [_StuAnswerWebView loadHTMLString:_currentAnswerHtml baseURL:nil];
+    
+    
+    
     // 存储分数有关
     _currentAnswerScore = result.overall;
     _currentAnswerIntegrity = result.integrity;
     _currentAnswerFluency = [[result.fluency objectForKey:@"overall"] intValue];
     _currentAnswerPron = result.pron;
-    _currentAnswerAudioName = result.recordId;
+    _currentAnswerAudioName = [[sbcToPath componentsSeparatedByString:@"/"] lastObject];
     _currentAnswerReferAudioName = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"audiourl"];
     _currentAnswerId = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"id"];
+    
+    // 获取录音时长
+    long recordTime = result.systime;
+    // 增加录音时长
+    [OralDBFuncs addPlayTime:recordTime ForUser:[OralDBFuncs getCurrentUserName]];
     
     // 存储一条记录
     [OralDBFuncs replaceLastRecordFor:[OralDBFuncs getCurrentUserName] TopicName:[OralDBFuncs getCurrentTopic] answerId:_currentAnswerId partNum:[OralDBFuncs getCurrentPart] levelNum:[OralDBFuncs getCurrentPoint] withRecordId:[OralDBFuncs getCurrentRecordId] lastText:_currentAnswerHtml lastScore:_currentAnswerScore lastPron:_currentAnswerPron lastIntegrity:_currentAnswerIntegrity lastFluency:_currentAnswerFluency lastAudioName:_currentAnswerReferAudioName];

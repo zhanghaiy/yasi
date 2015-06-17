@@ -13,7 +13,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touxiang.png" translatesAutoresizingMaskIntoConstraints="NO" id="wGs-IH-V7r">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="class_teacher_head" translatesAutoresizingMaskIntoConstraints="NO" id="wGs-IH-V7r">
                         <rect key="frame" x="10" y="8" width="60" height="60"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="I4y-Ln-Dqz"/>
@@ -86,7 +86,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="class_teacher_head" width="59" height="59"/>
         <image name="selected_teacher" width="23" height="23"/>
-        <image name="touxiang.png" width="70" height="70"/>
     </resources>
 </document>

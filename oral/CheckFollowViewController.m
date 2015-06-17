@@ -453,6 +453,7 @@
 - (void)startSBCAiengine
 {
     NSString *text = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
+    NSLog(@"~~~~~~~~~%@~~~~~~~~~~",text);
     if(_dfEngine)
         [_dfEngine startEngineFor:[self filterHTML:text]];
 }
@@ -472,8 +473,8 @@
 //    NSLog(@"%@",msg);
 //    [self performSelectorOnMainThread:@selector(showResult:) withObject:[NSString stringWithFormat:@"%d",result.overall] waitUntilDone:NO];
     
-    NSString *msg1 = [_dfEngine getRichResultString:result.details];
-    NSLog(@"%@",msg1);
+//    NSString *msg1 = [_dfEngine getRichResultString:result.details];
+//    NSLog(@"%@",msg1);
 //    [self performSelectorOnMainThread:@selector(showHtmlMsg:) withObject:msg1 waitUntilDone:NO];
     
     [self performSelectorOnMainThread:@selector(showResult:) withObject:result waitUntilDone:NO];
@@ -492,6 +493,10 @@
 #pragma mark - 思必驰反馈信息
 - (void)showResult:(DFAiengineSentResult *)result
 {
+    // 获取录音时长
+    long recordTime = result.systime;
+    // 增加录音时长
+    [OralDBFuncs addPlayTime:recordTime ForUser:[OralDBFuncs getCurrentUserName]];
     // 转移思必驰录音 清空原有的
     NSString *sbcPath = [NSString stringWithFormat:@"%@/Documents/record/%@.wav",NSHomeDirectory(),result.recordId];
     NSString *sbcToPath =  [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/part%d-%d-%ld-%ld.wav",[OralDBFuncs getCurrentTopic],[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint],_currentQuestionCounts+1,_currentAnswerCounts+1];
@@ -499,9 +504,11 @@
     BOOL saveSuc = [fileData writeToFile:sbcToPath atomically:YES];
     if (saveSuc)
     {
-        // 清空文件夹
+        // 删除原来的文件
+        [[NSFileManager defaultManager]removeItemAtPath:sbcPath error:nil];
     }
     
+    // 存储的字段赋值
     NSString *msg1 = [_dfEngine getRichResultString:result.details];
     _currentAnswerHtml = msg1;
     [_answerTextWebView loadHTMLString:_currentAnswerHtml baseURL:nil];
@@ -511,8 +518,6 @@
     _currentAnswerPron = result.pron;
     _currentAnswerAudioName = [[sbcToPath componentsSeparatedByString:@"/"] lastObject];
     _currentAnswerReferAudioName = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"audiourl"];
-    NSLog(@"^^^^^^^^^^^^^^%@^^^^^^^^^^^^^",_currentAnswerAudioName);
-    NSLog(@"^^^^^^^^^^^^^%@^^^^^^^^^^^^^",_currentAnswerReferAudioName);
     _currentAnswerId = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"id"];
     
     NSLog(@"%d",[OralDBFuncs getCurrentPart]);
