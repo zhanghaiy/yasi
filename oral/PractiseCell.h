@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CircleProgressView.h"
-
+#import "PracticeFollowButton.h"
 
 @interface PractiseCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *partLabel;
@@ -16,13 +15,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *scoreButton;
 @property (weak, nonatomic) IBOutlet UIButton *play_self_Button;
 @property (weak, nonatomic) IBOutlet UIButton *play_answer_Button;
-@property (weak, nonatomic) IBOutlet UIButton *followButton;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 @property (weak, nonatomic) IBOutlet UILabel *lineLabel;
 - (IBAction)buttonClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet PracticeFollowButton *followButton;
 
 
-@property (strong, nonatomic) IBOutlet CircleProgressView *circleProV;
 @property (nonatomic,assign) id delegate;
 @property (nonatomic,assign) SEL action;
 @property (nonatomic,assign) NSInteger buttonIndex;// 标记被点击的按钮tag值

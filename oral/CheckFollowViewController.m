@@ -453,7 +453,6 @@
 - (void)startSBCAiengine
 {
     NSString *text = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
-    NSLog(@"~~~~~~~~~%@~~~~~~~~~~",text);
     if(_dfEngine)
         [_dfEngine startEngineFor:[self filterHTML:text]];
 }
@@ -529,6 +528,7 @@
     _currentAnswerReferAudioName = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"audiourl"];
     NSLog(@"%@",_currentAnswerReferAudioName);
     _currentAnswerId = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"id"];
+    NSLog(@"%@",_currentAnswerId);
     
     NSLog(@"%d",[OralDBFuncs getCurrentPart]);
     
@@ -636,25 +636,19 @@
     
      // 此处将当前练习数据加入练习簿
     NSString *_tipStr;
-    if ([OralDBFuncs isInPracticeBook:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId])
+    // 加入练习簿
+    BOOL suc = [OralDBFuncs addPracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId andReferAudioName:_currentAnswerReferAudioName andLastAUdioName:_currentAnswerAudioName andLastText:_currentAnswerHtml andLastScore:_currentAnswerScore Pron:_currentAnswerPron Integrity:_currentAnswerIntegrity fluency:_currentAnswerFluency];
+    NSLog(@"%d",suc);
+    if (suc)
     {
-        // 已加入过
-        _tipStr = @"练习簿已存在该题";
+        _tipStr = @"成功加入练习簿";
+        NSString *text = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
+        
+        [OralDBFuncs setAddPracticeTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] AnswerId:_currentAnswerId   AnswerText:text];
     }
     else
     {
-        // 加入练习簿
-        BOOL suc = [OralDBFuncs addPracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId andReferAudioName:_currentAnswerReferAudioName];
-        NSLog(@"%d",suc);
-        [OralDBFuncs updatePracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId andResultText:_currentAnswerHtml score:_currentAnswerScore pron:_currentAnswerPron integrity:_currentAnswerIntegrity fluency:_currentAnswerFluency andLastAudioName:_currentAnswerAudioName];
-        if (suc)
-        {
-            _tipStr = @"成功加入练习簿";
-        }
-        else
-        {
-            _tipStr = @"加入练习本失败";
-        }
+        _tipStr = @"加入练习簿失败";
     }
 
     // 给用户提示  加入是否成功
@@ -665,7 +659,7 @@
     [UIView animateWithDuration:0.5 animations:^{
         tipLab.frame = rect;
     }];
-    tipLab.text = @"成功加入练习簿";
+    tipLab.text = _tipStr;
     tipLab.textColor = _pointColor;
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(addBookFinished) userInfo:nil repeats:NO];
 }

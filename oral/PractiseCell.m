@@ -24,9 +24,6 @@
 {
     // Initialization code
     
-//    NSString *strHTML = [NSString stringWithFormat:@"<a href='http://my.oschina.net/duxinfeng'>%@</a> 测试富文本 %@",@"The Ansewr is The Ansewr is The Ansewr is The Ansewr is ",@"2015-05-27"];
-//     [_textWebView loadHTMLString:strHTML baseURL:nil];
-    
     [_play_self_Button setImage:[UIImage imageNamed:@"Prac_listen_n"] forState:UIControlStateNormal];
     [_play_self_Button setImage:[UIImage imageNamed:@"person_head_image"] forState:UIControlStateSelected];
     

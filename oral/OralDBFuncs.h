@@ -88,9 +88,14 @@
 // 获取当前关卡
 +(int)getCurrentPart;
 
+// 标记加入练习簿的id
++ (void)setAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName AnswerId:(NSString *)answerid AnswerText:(NSString *)answerText;
++ (NSArray *)getAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName;
+
 // 标记关卡3是否提交
 +(void)setPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName;
 +(BOOL)getPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName;
+
 // 标记 默认老师
 + (void)setDefaultTeacherID:(NSString *)teacherId UserName:(NSString *)userName;
 + (NSString *)getDefaultTeacherIDForUserName:(NSString *)userName;
@@ -119,14 +124,20 @@
 // 获取闯关每一关卡的总得分
 +(TopicRecord *)getTopicRecordFor:(NSString *)userName withTopic:(NSString *)topicName;
 
+
 // 判断练习簿里是否存在该题 （根据AnswerId）
 +(BOOL)isInPracticeBook:(NSString *)userName withAnswerId:(NSString *)answer_id;
 // 练习簿增加一条记录（总记录 具体内容根据AnswerId查询）
-+(BOOL)addPracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId andReferAudioName:(NSString *)referAudioName;
+//+(BOOL)addPracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId andReferAudioName:(NSString *)referAudioName;
+
+// 更新加入练习簿功能 （避免存数据时 出现某些字段为空）
++(BOOL)addPracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId andReferAudioName:(NSString *)referAudioName andLastAUdioName:(NSString *)lastAudioName andLastText:(NSString *)lastText andLastScore:(int)score Pron:(int)pron Integrity:(int)interity fluency:(int)fluency;
+
 // 标记练习结果
 +(void)updatePracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId andResultText:(NSString *)lastText score:(int)score pron:(int)pron integrity:(int)interity fluency:(int)fluency andLastAudioName:(NSString *)lastAudioName;
 // 获取练习结果
 +(PracticeBookRecord *)getPracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId;
+
 
 // 增加练习时间
 +(void)addPracticeTime:(long)seconds ForUser:(NSString *)userName;

@@ -263,8 +263,8 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     
     // select stuff
     sqlite3_stmt *dbps; // database prepared statement
-//    NSString *selectStr = [NSString stringWithFormat:@"select * from practice_book where answer_id = %@;",answer_id];
-     NSString *selectStr = [NSString stringWithFormat:@"select * from practice_book;"];
+    NSString *selectStr = [NSString stringWithFormat:@"select * from practice_book where answer_id = %@;",answer_id];
+//     NSString *selectStr = [NSString stringWithFormat:@"select * from practice_book;"];
     const char *queryStatement = [selectStr UTF8String];
     dbrc = sqlite3_prepare_v2 (db, queryStatement, -1, &dbps, NULL);
     
@@ -274,14 +274,14 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
         oneRecord = [[PracticeBookRecord alloc] init];
         oneRecord.userName = [[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 0)];
         oneRecord.answerId = [[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 1)];
-        NSLog(@"~~~~~~~%@",oneRecord.answerId);
+        NSLog(@"~~~~~~~%@~~~",oneRecord.answerId);
     }
     
     // done with the db.  finalize the statement and close
     sqlite3_finalize (dbps);
     sqlite3_close(db);
     
-    if ([oneRecord.answerId isEqualToString:answer_id])
+    if (oneRecord)
     {
         return YES;
     }
@@ -302,6 +302,7 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     sqlite3_stmt *dbps; // database prepared statement
     NSString *saveStatementNS = @"replace into practice_book(user_name,answer_id,refer_audio_name) values(?,?,?);";
     
+    
     const char *saveStatement = [saveStatementNS UTF8String];
     
     dbrc = sqlite3_prepare_v2(db, saveStatement, -1, &dbps, NULL);
@@ -321,6 +322,52 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     
     return YES;
 }
+
+// 修改加入练习本
++(BOOL)addPracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId andReferAudioName:(NSString *)referAudioName andLastAUdioName:(NSString *)lastAudioName andLastText:(NSString *)lastText andLastScore:(int)score Pron:(int)pron Integrity:(int)interity fluency:(int)fluency
+{
+    sqlite3 *db;
+    int dbrc; // database return code
+    const char* dbFilePathUTF8 = [[OralDBFuncs getDbFilePath] UTF8String];
+    dbrc = sqlite3_open (dbFilePathUTF8, &db);
+    if (dbrc) {
+        NSLog (@"couldn't open db:");
+        return NO;
+    }
+    
+    sqlite3_stmt *dbps; // database prepared statement
+    //    NSString *saveStatementNS = @"replace into practice_book(user_name,answer_id,refer_audio_name) values(?,?,?);";
+    
+    // @"update practice_book set timestamp='%d', last_text='%@', last_audio_name='%@', last_score='%d', last_pron='%d', last_integrity='%d', last_fluency='%d' where user_name='%@' and answer_id='%@'",
+    NSString *saveStatementNS = @"replace into practice_book(user_name,answer_id,refer_audio_name,last_audio_name,last_text,last_score,last_pron,last_integrity,last_fluency) values(?,?,?,?,?,?,?,?,?);";
+    
+    
+    const char *saveStatement = [saveStatementNS UTF8String];
+    
+    dbrc = sqlite3_prepare_v2(db, saveStatement, -1, &dbps, NULL);
+    sqlite3_bind_text(dbps, 1, [userName cStringUsingEncoding:NSUTF8StringEncoding], -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(dbps, 2, [answerId cStringUsingEncoding:NSUTF8StringEncoding], -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(dbps, 3, [referAudioName cStringUsingEncoding:NSUTF8StringEncoding], -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(dbps, 4, [lastAudioName cStringUsingEncoding:NSUTF8StringEncoding], -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(dbps, 5, [lastText cStringUsingEncoding:NSUTF8StringEncoding], -1, SQLITE_TRANSIENT);
+    sqlite3_bind_int(dbps, 6, score);
+    sqlite3_bind_int(dbps, 7, pron);
+    sqlite3_bind_int(dbps, 8, interity);
+    sqlite3_bind_int(dbps, 9, fluency);
+    
+    if(SQLITE_DONE != sqlite3_step(dbps))
+    {
+        NSLog(@"Save topic record to db failed!");
+        sqlite3_finalize(dbps);
+        sqlite3_close(db);
+        return NO;
+    }
+    sqlite3_finalize (dbps);
+    sqlite3_close(db);
+    
+    return YES;
+}
+
 
 +(void)updatePracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId andResultText:(NSString *)lastText score:(int)score pron:(int)pron integrity:(int)interity fluency:(int)fluency andLastAudioName:(NSString *)lastAudioName
 {
@@ -359,6 +406,7 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
         oneRecord.userName = [[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 0)];
         oneRecord.answerId = [[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 1)];
         
+        // 此处时间戳暂时去掉
 //        oneRecord.timeStamp = sqlite3_column_int(dbps, 2);
        
 //        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
@@ -748,15 +796,51 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     return [number intValue];
 }
 
+// 标记加入练习簿的id
++ (void)setAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName AnswerId:(NSString *)answerid AnswerText:(NSString *)answerText
+{
+    NSString *key = [NSString stringWithFormat:@"ADD-PRACTICE-%@-%@",topicName,userName];
+    BOOL mark = NO;
+    NSMutableArray *addArray;
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:key])
+    {
+        addArray = [[NSMutableArray alloc]initWithArray:[[NSUserDefaults standardUserDefaults]objectForKey:key]];
+        for (NSDictionary *answerdic in addArray)
+        {
+            if ([[answerdic objectForKey:@"id"] isEqualToString:answerid])
+            {
+                mark = YES;
+            }
+        }
+    }
+    else
+    {
+        addArray = [[NSMutableArray alloc]init];
+    }
+    NSDictionary *subDic = @{@"id":answerid,@"text":answerText};
+    if (mark == NO)
+    {
+        [addArray addObject:subDic];
+    }
+    [[NSUserDefaults standardUserDefaults]setObject:addArray forKey:key];
+}
++ (NSArray *)getAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"ADD-PRACTICE-%@-%@",topicName,userName];
+    NSLog(@"%@",key);
+    return [[NSUserDefaults standardUserDefaults]objectForKey:key];
+}
+
+
 +(void)setPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName
 {
-    NSString *key = [NSString stringWithFormat:@"%@-%@",topicName,userName];
+    NSString *key = [NSString stringWithFormat:@"PartLevel-3-%@-%@",topicName,userName];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:commit] forKey:key];
 }
 
 +(BOOL)getPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName
 {
-    NSString *key = [NSString stringWithFormat:@"%@-%@",topicName,userName];
+    NSString *key = [NSString stringWithFormat:@"PartLevel-3-%@-%@",topicName,userName];
     return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
 }
 

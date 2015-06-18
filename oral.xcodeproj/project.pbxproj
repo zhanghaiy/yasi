@@ -74,6 +74,7 @@
 		FD6FC7681B31302500CE143F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD99586B1B1313B6005892DB /* libz.dylib */; };
 		FD73CBAF1B30340200979B1A /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD73CBAE1B30340200979B1A /* LoadingView.m */; };
 		FD73CBB11B30340E00979B1A /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD73CBB01B30340E00979B1A /* LoadingView.xib */; };
+		FD78FDE81B326E6900BB4AF6 /* PracticeFollowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD78FDE71B326E6900BB4AF6 /* PracticeFollowButton.m */; };
 		FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */; };
 		FD8453A51B155D3A00B1E84B /* ScoreMenuTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */; };
 		FD8453B21B15A01E00B1E84B /* TableView_headView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453B11B15A01E00B1E84B /* TableView_headView.m */; };
@@ -273,6 +274,8 @@
 		FD73CBAD1B30340200979B1A /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingView.h; sourceTree = "<group>"; };
 		FD73CBAE1B30340200979B1A /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingView.m; sourceTree = "<group>"; };
 		FD73CBB01B30340E00979B1A /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
+		FD78FDE61B326E6900BB4AF6 /* PracticeFollowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PracticeFollowButton.h; sourceTree = "<group>"; };
+		FD78FDE71B326E6900BB4AF6 /* PracticeFollowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PracticeFollowButton.m; sourceTree = "<group>"; };
 		FD8453A11B155D2B00B1E84B /* ScoreMenuTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreMenuTestView.h; sourceTree = "<group>"; };
 		FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreMenuTestView.m; sourceTree = "<group>"; };
 		FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreMenuTestView.xib; sourceTree = "<group>"; };
@@ -953,6 +956,8 @@
 				FD97AFB11B17020800C45A2C /* PractiseCell.h */,
 				FD97AFB21B17020800C45A2C /* PractiseCell.m */,
 				FD97AFB31B17020800C45A2C /* PractiseCell.xib */,
+				FD78FDE61B326E6900BB4AF6 /* PracticeFollowButton.h */,
+				FD78FDE71B326E6900BB4AF6 /* PracticeFollowButton.m */,
 			);
 			name = "练习簿";
 			sourceTree = "<group>";
@@ -1336,6 +1341,7 @@
 				FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */,
 				FD5E01C91B26B87500E3ED4B /* NSURLConnectionRequest.m in Sources */,
 				FD9958E51B131794005892DB /* ioapi.c in Sources */,
+				FD78FDE81B326E6900BB4AF6 /* PracticeFollowButton.m in Sources */,
 				FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */,
 				FD99590D1B1328FB005892DB /* AFURLConnectionOperation.m in Sources */,
 				FD97AFAA1B16E11A00C45A2C /* TestReviewCell.m in Sources */,
