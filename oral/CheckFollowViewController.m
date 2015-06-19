@@ -629,8 +629,16 @@
     
      // 此处将当前练习数据加入练习簿
     NSString *_tipStr;
+    NSString *pracAnswerAudioName = [NSString stringWithFormat:@"practice-%@",_currentAnswerAudioName];
+    
+    NSString *pracPath =  [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/%@",[OralDBFuncs getCurrentTopic],_currentAnswerAudioName];
+    
+    NSString *pracToPath =  [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/%@",[OralDBFuncs getCurrentTopic],pracAnswerAudioName];
+    
+    NSData *praData = [NSData dataWithContentsOfFile:pracPath];
+    [praData writeToFile:pracToPath atomically:YES];
     // 加入练习簿
-    BOOL suc = [OralDBFuncs addPracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId andReferAudioName:_currentAnswerReferAudioName andLastAUdioName:_currentAnswerAudioName andLastText:_currentAnswerHtml andLastScore:_currentAnswerScore Pron:_currentAnswerPron Integrity:_currentAnswerIntegrity fluency:_currentAnswerFluency];
+    BOOL suc = [OralDBFuncs addPracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId andReferAudioName:_currentAnswerReferAudioName andLastAUdioName:pracAnswerAudioName andLastText:_currentAnswerHtml andLastScore:_currentAnswerScore Pron:_currentAnswerPron Integrity:_currentAnswerIntegrity fluency:_currentAnswerFluency];
     NSLog(@"%d",suc);
     if (suc)
     {

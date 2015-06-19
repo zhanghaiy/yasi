@@ -248,6 +248,7 @@
     }
 }
 
+// 循环播放当前part的音频 ----- 待完善
 - (void)circlePlayQuestionAndAnswerWithIndex:(int)index
 {
     NSArray *partAttay = [_playPathArray objectAtIndex:index];
@@ -255,8 +256,11 @@
 }
 
 
+
 - (void)startPlay
 {
+    // 此处为 ： 时间进度条减小 获取到所有音频大小 然后加起来 构成倒计时
+    // 获取音频文件的时长----待完善
     CustomProgressView *progressV = (CustomProgressView *)[self.view viewWithTag:kProgressViewTag+_ClickedIndex];
     progressV.progress = 1;
     _decreaseRatio = 1.0/4.2/10;
