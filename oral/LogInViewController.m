@@ -40,17 +40,17 @@
 - (void)uiConfig
 {
     
-    NSInteger logo_y = 80.0/667*kScreenHeight;
-    NSInteger logo_h = 70.0/667*kScreenHeight;
-    _logoImgV.frame = CGRectMake(0, logo_y, kScreentWidth, logo_h);
+    NSInteger logo_y = 55.0/667*kScreenHeight;
+    NSInteger logo_h = 170.0/667*kScreenHeight;
+    _logoImgV.frame = CGRectMake((kScreentWidth-logo_h-1)/2, logo_y, logo_h-1, logo_h);
     
     NSInteger control_H = 40.0/667*kScreenHeight;
     NSInteger space_H = 30.0/667*kScreenHeight;
     
-    NSInteger nameTextFie_Y = 205.0/667*kScreenHeight;
+    NSInteger nameTextFie_Y = 240.0/667*kScreenHeight;
     _userNameTextFiled.frame = CGRectMake((kScreentWidth-240)/2, nameTextFie_Y, 240, control_H);
     
-    NSInteger passwordTextFie_Y = 584.0/1334*kScreenHeight;
+    NSInteger passwordTextFie_Y = 325.0/667*kScreenHeight;
     _passWordTextField.frame = CGRectMake((kScreentWidth-240)/2, passwordTextFie_Y, 240, control_H);
     
     

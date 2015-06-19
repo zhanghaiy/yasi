@@ -471,7 +471,7 @@
     NSString *modellongtime = [NSString stringWithFormat:@"%ld",audioTime];
     NSString *question = [_currentQuestionDict objectForKey:@"question"];
     NSString *id = [_currentQuestionDict objectForKey:@"id"];
-    NSString *recorderUrl = [NSString stringWithFormat:@"test%ld-%ld.wav",_current_part_Counts,_current_question_Counts];
+    NSString *recorderUrl = [NSString stringWithFormat:@"test%ld-%ld.wav",_current_part_Counts+1,_current_question_Counts+1];
     NSString *urltime = [NSString transformNSStringWithDate:record.endDate andFormatter:@"yyyy-MM-dd HH:mm:ss"];
     NSDictionary *dic = @{@"answer":question,@"modellongtime":modellongtime,@"partid":id,@"recorderUrl":recorderUrl,@"urltime":urltime};
     [_jsonArray addObject:dic];
@@ -832,10 +832,7 @@
     else if (btn.tag == KRightCommitButtonTag)
     {
         // 现在提交
-        
-        
-        //1、 标记 关卡3是否提交
-        [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+        //1、 标记 关卡3是否提交 成功提交后再做标记
         // 2、判断是否有默认老师 无---跳转到选择老师界面  有----直接提交
         if ([OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]])
         {
@@ -886,6 +883,7 @@
                  {
                      NSLog(@"upload success!");
                      // 提交成功后回到topic详情页面
+                     [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
                      NSLog(@"模考提交老师成功");
                      [self backToTopicPage];
 

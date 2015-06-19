@@ -11,7 +11,7 @@
 #import "ScoreMenuTestView.h"
 #import "CustomProgressView.h"// 进度条
 #import "ScoreTestMenuViewController.h"
-
+#import "OralDBFuncs.h"
 
 @interface CheckScoreViewController ()<UIScrollViewDelegate>
 {
@@ -20,6 +20,10 @@
     float _decreaseRatio;// 根据音频时间换算出进度条每次减少的比率
     NSInteger _ClickedIndex;
     NSTimer *_timer;
+    
+    NSArray *_partListArray;
+    int _currentPlayCount;
+    NSMutableArray *_playPathArray;
 }
 @end
 
@@ -37,7 +41,35 @@
 #define kTestCommitButtonHeight 37
 #define kTestCommitButtonWidth 100
 
+#pragma mark - 将问题音频 答案音频 文件名 组成一个数据 便于使用
+- (void)analysizeTestJson
+{
+    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/temp/mockinfo.json",[OralDBFuncs getCurrentTopic]];
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:jsonPath] options:0 error:nil];
+    _partListArray = [[dic objectForKey:@"mockquestion"] objectForKey:@"questionlist"];
+    
+    _playPathArray = [[NSMutableArray alloc]init];
+    for (int i = 0; i < _partListArray.count; i ++)
+    {
+        NSDictionary *partDic = [_partListArray objectAtIndex:i];
+        NSArray *question = [partDic objectForKey:@"question"];
+        
+        NSMutableArray *part_alone_array = [[NSMutableArray alloc]init];
+        for (int j = 0; j < question.count; j ++)
+        {
+            NSDictionary *questionDic =[question objectAtIndex:j];
+            NSString *questionAudioUrl = [questionDic objectForKey:@"url"];
+            NSString *answerAudioUrl = [NSString stringWithFormat:@"test%d-%d.wav",i+1,j+1];
+            NSDictionary *dic = @{@"quesUrl":questionAudioUrl,@"answerUrl":answerAudioUrl};
+            [part_alone_array addObject:dic];
+        }
+        [_playPathArray addObject:part_alone_array];
+    }
+    
+}
 
+
+#pragma mark - 数据加载
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -46,9 +78,8 @@
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"My Travel"];
-    
     [self uiConfig];
-    
+    [self analysizeTestJson];
 
     for (int i = 0; i < 3; i ++)
     {
@@ -60,6 +91,7 @@
     }
 }
 
+#pragma mark - UI配置
 - (void)uiConfig
 {
 // -------------分段控制器-----------
@@ -148,6 +180,10 @@
     [commitTestButton addTarget:self action:@selector(commitTest:) forControlEvents:UIControlEventTouchUpInside];
     [_backScrollV addSubview:commitTestButton];
     
+    
+    // 判断是否莫考过 --- 未完待续
+    
+    
     // 闯关
     NSArray *partButtonNameArray = @[@"Part-One",@"Part-Two",@"Part-Three"];
     for (int i = 0; i < partButtonNameArray.count; i ++)
@@ -183,15 +219,41 @@
     if (playButton.selected)
     {
         playButton.selected = NO;
-        [self stopTimer];
     }
     else
     {
         _ClickedIndex = playButton.tag - kPlayButtonTag;
         playButton.selected = YES;
-        [self startPlay];
+    }
+    
+    switch (playButton.tag - kPlayButtonTag)
+    {
+        case 0:
+        {
+            // part1
+        }
+            break;
+        case 1:
+        {
+            // part2
+        }
+            break;
+        case 2:
+        {
+           // part3
+        }
+            break;
+        default:
+            break;
     }
 }
+
+- (void)circlePlayQuestionAndAnswerWithIndex:(int)index
+{
+    NSArray *partAttay = [_playPathArray objectAtIndex:index];
+    
+}
+
 
 - (void)startPlay
 {
