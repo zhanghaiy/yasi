@@ -304,6 +304,8 @@
 #pragma mark - 思必驰反馈
 -(void)processAiengineSentResult:(DFAiengineSentResult *)result
 {
+    // 增加练习时间
+    [OralDBFuncs addPracticeTime:round(result.systime) ForUser:[OralDBFuncs getCurrentUserName]];
     NSDictionary *fluency = result.fluency;
     NSString *msg = [NSString stringWithFormat:@"总体评分：%d\n发音：%d，完整度：%d，流利度：%d", result.overall, result.pron, result.integrity, ((NSNumber *)[fluency objectForKey:@"overall"]).intValue];
     NSLog(@"%@",msg);

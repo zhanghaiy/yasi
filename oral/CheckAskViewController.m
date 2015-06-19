@@ -443,6 +443,8 @@
     NSTimeInterval time = [manager.endDate timeIntervalSinceDate:manager.beginDate];
     // 时间总长 累加 ---- 待确定
     _recordTime += round(time);
+    // 增加录音时长
+    [OralDBFuncs addPlayTime:_recordTime ForUser:[OralDBFuncs getCurrentUserName]];
     
     // 合成json文件所需
     NSString *level = [NSString stringWithFormat:@"%d",[[_currentPointDict objectForKey:@"level"] intValue]];

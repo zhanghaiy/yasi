@@ -465,6 +465,8 @@
     _followBtn.hidden = YES;
     
     long audioTime = record.recorderTime*1000;
+    // 增加模考时间
+    [OralDBFuncs addExamTime:audioTime ForUser:[OralDBFuncs getCurrentUserName]];
     // 问题文本
     NSString *modellongtime = [NSString stringWithFormat:@"%ld",audioTime];
     NSString *question = [_currentQuestionDict objectForKey:@"question"];

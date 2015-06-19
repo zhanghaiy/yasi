@@ -480,13 +480,6 @@
     
 }
 
-//#pragma mark - 展示每个单词发音情况
-//- (void)showHtmlMsg:(NSString *)htmlStr
-//{
-//    _currentAnswerHtml = htmlStr;
-//    // 展示每个单词发音情况
-//    [_answerTextWebView loadHTMLString:htmlStr baseURL:nil];
-//}
 
 
 #pragma mark - 思必驰反馈信息
