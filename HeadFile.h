@@ -29,6 +29,11 @@
 #define kPract_Follow_Button_Tag 2000
 #define kPract_Delete_Button_Tag 3000
 
+// 回答时间
+// 思必驰
+#define KAnswerSumTime 30
+#define kLevel_3_time 60
+
 // 80~~100
 #define kPer_Score_Color [UIColor colorWithRed:0 green:231/255.0 blue:136/255.0 alpha:1]
 // 60~~80
@@ -51,6 +56,8 @@
 
 // 提交闯关给老师 参数 uploadfile 接受zip
 #define kPartCommitUrl @"/yasi/clearance/insertStudentClearance.do"
+// 提交模考
+#define kTestCommitUrl @"/yasi/mockanswer/insertMockAnswer.do"
 
 // 选择老师 userId teacherName change
 #define kChooseTeacherUrl @"/yasi/teacher/selectTeacherToChoose.do"

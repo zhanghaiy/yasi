@@ -250,7 +250,7 @@
     
     [OralDBFuncs setCurrentPoint:1];
     
-    _answerTime = 15;
+    _answerTime = KAnswerSumTime;
     audioPlayer = [AudioPlayer getAudioManager];
     audioPlayer.target = self;
     audioPlayer.action = @selector(playerCallBack);
@@ -687,7 +687,7 @@
 - (void)jugePointIsFinished_follow
 {
     [self stopReduceTimer];
-    _answerTime = 15;
+    _answerTime = KAnswerSumTime;
     // 隐藏下一问题按钮区域
     _nextButton.hidden = YES;
     _addPracticeButton.hidden = YES;

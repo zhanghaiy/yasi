@@ -42,8 +42,9 @@
     
     [self createLoadingView];
     // 返回按钮
+    NSString *topicName = [_topicDict objectForKey:@"classtype"];
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"My Travel"];
+    [self addTitleLabelWithTitleWithTitle:topicName];
     // 界面元素
     [self uiConfig];
     
@@ -51,7 +52,7 @@
     NSString *dateStr = [ConstellationManager transformNSStringWithDate:date];
     NSString *recordId = [NSString stringWithFormat:@"record%@",dateStr];
     [OralDBFuncs setCurrentRecordId:recordId];
-    [OralDBFuncs setCurrentTopic:[_topicDict objectForKey:@"classtype"]];
+    [OralDBFuncs setCurrentTopic:topicName];
     NSLog(@"%@",[_topicDict objectForKey:@"classtype"]);
     if ([OralDBFuncs addTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[OralDBFuncs getCurrentTopic]])
     {

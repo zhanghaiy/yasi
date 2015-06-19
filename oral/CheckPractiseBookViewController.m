@@ -11,25 +11,27 @@
 #import "AudioPlayer.h"
 #import "DFAiengineSentObject.h"
 #import "OralDBFuncs.h"
+#import "NSString+CalculateStringSize.h"
+
 
 @interface CheckPractiseBookViewController ()<UITableViewDataSource,UITableViewDelegate,DFAiengineSentProtocol>
 {
     UITableView *_practiseTableV;
     AudioPlayer *_playerManager;
-    DFAiengineSentObject *_dfAiengine;
-    NSInteger _markCurrentPractise_index;// 当前练习的索引
     
-    NSMutableArray *_practiceArray;
+    DFAiengineSentObject *_dfAiengine;//思必驰引擎
+    NSInteger _markCurrentPractise_index;// 当前练习的索引 --- cell索引
+    
+    NSMutableArray *_practiceArray;// 列表控件数据源 内容：练习记录
     
     int _markButtonTag;// 标记被点击的button
     
-    NSTimer *_sbcTimer;
+    NSTimer *_sbcTimer;// 定时器 全局=----方便
     NSInteger _markAnswerTime; // 累计时间
-    NSInteger _sumAnswerTime;// 总时间
-    PracticeBookRecord *_currentPracticeRecord;
-    NSMutableDictionary *_answerTextDict;
+    PracticeBookRecord *_currentPracticeRecord;// 标记当前正在练习的记录
+    NSMutableDictionary *_answerTextDict;// topic下 所有练习题的text文本 开启思必驰引擎时用到 整合起来 用时方便
     
-    PracticeFollowButton *_currentPracticeButton;
+    PracticeFollowButton *_currentPracticeButton;// 标记正在跟读的按钮  以便倒计时 时方便获取 （用途：此按钮 1、用于 思必驰-->开关 2、 时间倒计时 ）
 }
 @end
 
@@ -38,6 +40,8 @@
 // webview宽度 用于计算文本高度
 #define kWebViewWidth (kScreentWidth-80)
 
+
+#pragma mark - 合成练习簿数据
 - (void)makeUpPracticeBookDataArray
 {
     _practiceArray = [[NSMutableArray alloc]init];
@@ -54,7 +58,7 @@
     }
 }
 
-
+#pragma mark - 视图 加载
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -64,8 +68,6 @@
     [self addTitleLabelWithTitleWithTitle:@"练习簿"];
     
     self.view.backgroundColor = _backgroundViewColor;
-    
-    _sumAnswerTime = 10;
     
     [self makeUpPracticeBookDataArray];
     
@@ -84,33 +86,38 @@
     _dfAiengine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"haiyan"];
 }
 
-
-- (void)stopPlay
-{
-    [_playerManager stopPlay];
-}
-
+#pragma mark - 播放回调
 - (void)playFinished:(id)obj
 {
-    // 播放完成
-    
+    // 播放完成 将按钮回复默认状态
     UIButton *btn = (UIButton *)[self.view viewWithTag:_markButtonTag];
     btn.selected = NO;
 }
 
+#pragma mark - tableview delegate
+#pragma mark - cell数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _practiceArray.count;
 }
 
+#pragma mark - cell高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     /*
         此处根据文字大小计算出宽高 ---待完善
      */
+    PracticeBookRecord *record = [_practiceArray objectAtIndex:indexPath.row];
+    NSString *text = [_answerTextDict objectForKey:record.answerId];
+    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:99999 FontSize:kFontSize1];
+    if (rect.size.height>70)
+    {
+        return kCellHeight+rect.size.height-70;
+    }
     return kCellHeight;
 }
 
+#pragma mark - 绘制cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"PractiseCell";
@@ -124,7 +131,6 @@
     cell.delegate = self;
     cell.action = @selector(pracCellCallBack:);
     cell.partLabel.textColor = _pointColor;
-//    cell.recive_score = 90;
     
     PracticeBookRecord *record = [_practiceArray objectAtIndex:indexPath.row];
     [cell.textWebView loadHTMLString:record.lastText baseURL:nil];
@@ -212,7 +218,6 @@
                     NSString *lastText = [_answerTextDict objectForKey:_currentPracticeRecord.answerId];
                     NSLog(@"开启思必驰引擎 : 文本： %@",lastText);
                     [self startSBCAiengineWithText:lastText];
-                    _sumAnswerTime = 15;
                     _markAnswerTime = 0;
                     [self showTimeProgress];
                 }
@@ -231,7 +236,18 @@
             {
                 btn.selected = YES;
                 // 从练习簿里删除此条记录
-//                [OralDBFuncs ]
+                BOOL deleteSuc = [OralDBFuncs deletePracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentPracticeRecord.answerId];
+                if (deleteSuc)
+                {
+                    NSLog(@"删除成功");
+                    [OralDBFuncs deleteAddPracticeTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] AnswerId:_currentPracticeRecord.answerId];
+                    [self makeUpPracticeBookDataArray];
+                    [_practiseTableV reloadData];
+                }
+                else
+                {
+                    NSLog(@"删除失败~~");
+                }
             }
         }
             break;
@@ -250,7 +266,7 @@
 - (void)progressTimeReduce
 {
     _markAnswerTime ++;
-    float tip = 1.0/_sumAnswerTime/10.0*_markAnswerTime;
+    float tip = 1.0/KAnswerSumTime/10.0*_markAnswerTime;
     [_currentPracticeButton settingProgress:tip andColor:_badColor
                             andWidth:1 andCircleLocationWidth:3];
     if (tip >= 1)

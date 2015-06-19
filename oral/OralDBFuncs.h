@@ -91,10 +91,16 @@
 // 标记加入练习簿的id
 + (void)setAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName AnswerId:(NSString *)answerid AnswerText:(NSString *)answerText;
 + (NSArray *)getAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName;
++ (void)deleteAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName AnswerId:(NSString *)answerid;
+
 
 // 标记关卡3是否提交
 +(void)setPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName;
 +(BOOL)getPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName;
+
+// 标记模考是否提交
++(void)setTestCommit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName;
++(BOOL)getTestCommit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName;
 
 // 标记 默认老师
 + (void)setDefaultTeacherID:(NSString *)teacherId UserName:(NSString *)userName;
@@ -132,6 +138,8 @@
 
 // 更新加入练习簿功能 （避免存数据时 出现某些字段为空）
 +(BOOL)addPracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId andReferAudioName:(NSString *)referAudioName andLastAUdioName:(NSString *)lastAudioName andLastText:(NSString *)lastText andLastScore:(int)score Pron:(int)pron Integrity:(int)interity fluency:(int)fluency;
+// 删除记录
++(BOOL)deletePracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId;
 
 // 标记练习结果
 +(void)updatePracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId andResultText:(NSString *)lastText score:(int)score pron:(int)pron integrity:(int)interity fluency:(int)fluency andLastAudioName:(NSString *)lastAudioName;

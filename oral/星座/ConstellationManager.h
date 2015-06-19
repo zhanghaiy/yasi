@@ -13,5 +13,5 @@
 +(NSString *)getAstroWithMonth:(int)month day:(int)day;
 +(NSString *)transformNSStringWithDate:(NSDate *)date;
 +(NSDate *)transformDateWithString:(NSString *)str;
-
++(NSString *)transformNSStringWithDate:(NSDate *)date andFormatter:(NSString *)formatter;
 @end

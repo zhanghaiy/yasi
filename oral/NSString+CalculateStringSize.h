@@ -14,4 +14,11 @@
 
 + (CGRect)CalculateSizeOfString:(NSString *)text Width:(NSInteger)width Height:(NSInteger)height FontSize:(NSInteger)fontSize;
 
++(NSString *)getAstroWithMonth:(int)month day:(int)day;
++(NSString *)transformNSStringWithDate:(NSDate *)date;
++(NSDate *)transformDateWithString:(NSString *)str;
++(NSString *)transformNSStringWithDate:(NSDate *)date andFormatter:(NSString *)formatter;
+
+
+
 @end

@@ -368,6 +368,12 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     return YES;
 }
 
++(BOOL)deletePracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId
+{
+    NSString *statement = [NSString stringWithFormat:@"delete from practice_book where user_name='%@' and answer_id='%@'", userName,answerId];
+    return [OralDBFuncs performCmd:statement];
+}
+
 
 +(void)updatePracticeBookRecordFor:(NSString *)userName withAnswerId:(NSString *)answerId andResultText:(NSString *)lastText score:(int)score pron:(int)pron integrity:(int)interity fluency:(int)fluency andLastAudioName:(NSString *)lastAudioName
 {
@@ -824,6 +830,26 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     }
     [[NSUserDefaults standardUserDefaults]setObject:addArray forKey:key];
 }
+
++ (void)deleteAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName AnswerId:(NSString *)answerid
+{
+    NSString *key = [NSString stringWithFormat:@"ADD-PRACTICE-%@-%@",topicName,userName];
+    NSMutableArray *addArray = [[NSUserDefaults standardUserDefaults]objectForKey:key];
+    NSInteger deleteIndex = 0;
+    for (int i = 0 ;i < addArray.count ; i++)
+    {
+        NSDictionary *answerDict = [addArray objectAtIndex:i];
+        NSString *answerid_saved = [answerDict objectForKey:@"id"];
+        if ([answerid_saved isEqualToString:answerid])
+        {
+            NSLog(@"savedId:%@ ===== answerid:%@",answerid_saved,answerid);
+            deleteIndex = i;
+        }
+    }
+    [addArray removeObjectAtIndex:deleteIndex];
+    [[NSUserDefaults standardUserDefaults]setObject:addArray forKey:key];
+}
+
 + (NSArray *)getAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName
 {
     NSString *key = [NSString stringWithFormat:@"ADD-PRACTICE-%@-%@",topicName,userName];
@@ -841,6 +867,20 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 +(BOOL)getPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName
 {
     NSString *key = [NSString stringWithFormat:@"PartLevel-3-%@-%@",topicName,userName];
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
+}
+
+// 标记模考是否提交
++(void)setTestCommit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"Test-%@-%@",topicName,userName];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:commit] forKey:key];
+   
+}
+
++(BOOL)getTestCommit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"Test-%@-%@",topicName,userName];
     return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
 }
 

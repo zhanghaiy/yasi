@@ -65,7 +65,7 @@
 {
     _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(60, 26, kScreentWidth-60*2, 40)];
     _titleLab.textColor = _titleTextColor;
-    _titleLab.font = [UIFont systemFontOfSize:KOneFontSize];
+    _titleLab.font = [UIFont systemFontOfSize:kTitleFontSize];
     _titleLab.textAlignment = NSTextAlignmentCenter;
     _titleLab.text = title;
     [self.navTopView addSubview:_titleLab];

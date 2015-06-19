@@ -78,7 +78,7 @@
     
     _sumScore = 0;
     _sumCounts = 0;
-    _answerTime = 15;
+    _answerTime = KAnswerSumTime;
     audioPlayer = [AudioPlayer getAudioManager];
     audioPlayer.target = self;
     audioPlayer.action = @selector(playerEnd);
@@ -634,7 +634,7 @@
 - (void)jugePointIsFinished
 {
     [self stopReduceTimer];
-    _answerTime = 15;
+    _answerTime = KAnswerSumTime;
     // 隐藏下一问题按钮区域
     _continueButton.hidden = YES;
     _continueButton.selected = NO;

@@ -12,10 +12,10 @@
 @interface RecordManager : NSObject<AVAudioRecorderDelegate>
 @property (nonatomic,assign) id target;
 @property (nonatomic,assign) SEL action;
-//@property (nonatomic,copy) NSString *filePath;
 @property (nonatomic,strong) NSDate *beginDate;
 @property (nonatomic,strong) NSDate *endDate;
 @property (nonatomic,assign) NSTimeInterval recorderTime;
+
 - (void)prepareRecorderWithFilePath:(NSString *)filePath;
 - (void)stopRecord;
 - (void)pausestopRecord;

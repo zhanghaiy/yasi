@@ -15,22 +15,21 @@
 #import "OralDBFuncs.h"
 #import "JSONKit.h"
 #import "ZipArchive.h"
-#import "NSURLConnectionRequest.h"
-
+#import "AFNetworking/AFHTTPRequestOperationManager.h"
 
 @interface CheckAskViewController ()<SelectTeacherDelegate>
 {
     NSDictionary *_topicInfoDict;// 整个topic信息
     NSDictionary *_currentPartDict;// 当前part资源信息
     NSDictionary *_currentPointDict;// 当前关卡资源信息
-    NSArray *_questioListArray;
+    NSArray *_questioListArray; // 当前关卡的所有问题数组
     NSInteger _sumQuestionCounts;//总的问题个数
-    NSInteger _currentQuestionCounts;
+    NSInteger _currentQuestionCounts; // 当前正在进行的问题
    
-    AudioPlayer *audioPlayer;
-    RecordManager *_recordManager;
+    AudioPlayer *audioPlayer;// 播放
+    RecordManager *_recordManager; // 录音
     
-    NSInteger _answerTime;//跟读时间
+    NSInteger _markTimeChangeCounts;// 标记进度
     NSTimer *_reduceTimer;
     
     CGRect _stuHeadImgViewRect;// 放大后学生头像的frame
@@ -38,14 +37,12 @@
     
     CircleProgressView *_progressView;
     
-    NSInteger _markTimeChangeCounts;
-    
-    BOOL _pointFinished;
-    NSString *_teacherId;
-    NSMutableArray *_recordPathArray;
+    BOOL _pointFinished;// 标记闯关是否已经完成 避免从其他页面返回时 造成混乱
+    NSString *_teacherId;// 标记老师id 用于将练习提交给老师 评价
+    NSMutableArray *_recordPathArray;// 记录每次录音的路径 用于压缩zip包
     
     int _recordTime;// 累加的录音时间
-    NSMutableArray *_partInfoArray;
+    NSMutableArray *_partInfoArray;// 用于合成json文件 每个回答的进本信息 组成一个字典
 }
 @end
 
@@ -70,19 +67,7 @@
 #pragma mark - 模拟数据
 - (void)moNiDataFromLocal
 {
-    /*
-     数据结构
-     
-     _topicInfoDict--> topic闯关信息---> dict(字典)
-     当前topic所有part--> partListArray = [_topicInfoDict objectForKey:@"partlist"] -->数组
-     当前part--> curretPartDict = [partListArray objectAtIndex:_currentPartCounts] -->字典
-     当前part的所有关卡信息 -- > pointArray = [curretPart objectForKey:@"levellist"] --> 数组
-     当前关卡信息 pointDict = [pointArray objectAtIndex:_currentPointCounts] --> 字典
-     pointDict
-     
-     ----待完善-----
-     
-     */
+    // json文件路径
     NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",[OralDBFuncs getCurrentTopic]];
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
@@ -107,11 +92,10 @@
     // Do any additional setup after loading the view from its nib.
     
     _partInfoArray = [[NSMutableArray alloc]init];
+    _recordPathArray = [[NSMutableArray alloc]init];
 
     _recordTime = 0;
-    _recordPathArray = [[NSMutableArray alloc]init];
-    _answerTime = 15;
-    _markTimeChangeCounts = 0;
+    _markTimeChangeCounts = 0;// 起始为零 用于倒计时 每次进行新问题前 置0
     _pointFinished = NO;
     
     audioPlayer = [AudioPlayer getAudioManager];
@@ -278,7 +262,7 @@
 - (void)progressTimeReduce
 {
     _markTimeChangeCounts ++;
-    float tip = 1.0/_answerTime/10.0*_markTimeChangeCounts;
+    float tip = 1.0/kLevel_3_time/10.0*_markTimeChangeCounts;
     [_progressView settingProgress:tip andColor:_timeProgressColor andWidth:3 andCircleLocationWidth:3];
     if (tip >= 1)
     {
@@ -563,30 +547,45 @@
         // 压缩zip包
         NSData *zipData = [self zipCurrentPartFile];
         // 网络提交 uploadfile
-        NSString *paramStr = [NSString stringWithFormat:@"uploadfile=%@",zipData];
-        [NSURLConnectionRequest requestPOSTUrlString:[NSString stringWithFormat:@"%@%@",kBaseIPUrl,kPartCommitUrl] andParamStr:paramStr target:self action:@selector(commitFinished:) andRefresh:YES];
-    }
-}
-
-#pragma mark - 提交反馈
-- (void)commitFinished:(NSURLConnectionRequest *)request
-{
-    if (request.downloadData)
-    {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        NSLog(@"%@",dic);
-        if ([[dic objectForKey:@"respCode"] intValue] == 1000)
-        {
-            // 提交成功后回到topic详情页面
-            [self backToTopicPage];
-        }
-        else
-        {
-           // 提交失败
-        }
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kPartCommitUrl];
+        NSDictionary *dict = @{@"uploadfile":@"part"};
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        [manager POST:urlStr parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+         {
+             if (zipData)
+             {
+                 [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"modelpart.zip" mimeType:@"application/zip"];
+                 
+             }
+         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             
+             if (responseObject)
+             {
+                 NSDictionary *dicRes = responseObject;
+                 NSString *strState = [dicRes objectForKey:@"state"];
+                 if (strState && [strState isEqualToString:@"success"])
+                 {
+                     NSLog(@"upload success!");
+                     // 提交成功后回到topic详情页面
+                     [self backToTopicPage];
+                 } else
+                 {
+                     
+                 }
+             } else
+             {
+                 
+             }
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"失败乃");
+         }];
         
     }
 }
+
 
 #pragma mark - 压缩zip包
 - (NSData *)zipCurrentPartFile
@@ -641,10 +640,6 @@
     
     NSError *parseError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:finalDict options:NSJSONWritingPrettyPrinted error:&parseError];
-    
-//    NSString *jsonStr = [finalDict JSONString];
-//    NSLog(@"~~~~~~~~合成json串：%@~~~~~~~~",jsonStr);
-//    NSData *jsonData = [jsonStr dataUsingEncoding:NSUTF8StringEncoding];
    
     NSString *jsonFilePath = [NSString stringWithFormat:@"%@/part.json",[self basePath]];
     NSLog(@"~~~~~~~json文件保存路径：%@~~~~~~~",jsonFilePath);

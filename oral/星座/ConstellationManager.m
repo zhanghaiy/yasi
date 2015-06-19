@@ -44,6 +44,14 @@
     return str;
 }
 
++(NSString *)transformNSStringWithDate:(NSDate *)date andFormatter:(NSString *)formatter
+{
+    NSDateFormatter *dateFormatter= [[NSDateFormatter alloc]init];//格式化
+    [dateFormatter setDateFormat:formatter];
+    NSString *str = [dateFormatter stringFromDate:date];
+    return str;
+}
+
 +(NSDate *)transformDateWithString:(NSString *)str
 {
     NSString* string = @"2011-08-26";

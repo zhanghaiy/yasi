@@ -11,8 +11,13 @@
 #import "TPCCheckpointViewController.h"
 #import "MyTeacherViewController.h"
 #import "OralDBFuncs.h"
+#import "RecordManager.h"
+#import "NSString+CalculateStringSize.h"
+#import "ZipArchive.h"
+#import "AFHTTPRequestOperationManager.h"
 
-@interface CheckTestViewController ()
+
+@interface CheckTestViewController ()<SelectTeacherDelegate>
 {
     CGRect _tea_head_big_frame;// 中心 放大后的
     CGRect _tea_head_small_frame;// 中心 缩小的
@@ -26,7 +31,8 @@
     NSInteger _aloneCounts;
     
     NSArray *_partListArray;// 总的数据
-    
+    NSMutableArray *_testAudioPathArray;// 录音文件路径
+    NSMutableArray *_jsonArray;
     NSInteger _sum_part_Counts;
     NSInteger _sum_question_Counts;
 
@@ -37,13 +43,13 @@
     NSDictionary *_partQuestionDict;
     
     AudioPlayer *_audioManager;
-    NSInteger _prepareTime_point2;// 第二关准备时间
-    
+    RecordManager *_recordManager;
+    NSInteger _prepareTime_point2;// 第二关准备总时间
     BOOL _isFirst;// 用于总倒计时
     NSDate *_beginDate;// 设置开始时间
-    
     UIColor *_tip_text_Color;// 文字颜色
     
+    NSString *_teacherid;
     BOOL _testFinished;
 }
 @end
@@ -59,7 +65,6 @@
 #pragma mark -- 解析本地json文件
 - (void)LocalData
 {
-//    NSString *jsonPath = [[NSBundle mainBundle]pathForResource:@"mockinfo" ofType:@"json"];
     NSString *jsonPath = [NSString stringWithFormat:@"%@/mockinfo.json",[self getFileBasePath]];
     NSLog(@"%@",jsonPath);
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
@@ -78,7 +83,7 @@
 #pragma mark -- 本地录音文件路径
 - (NSString *)getRecordSavePath
 {
-    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/AnswerFile",[OralDBFuncs getCurrentTopic]];
+    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest",[OralDBFuncs getCurrentTopic]];
     if (![[NSFileManager defaultManager]fileExistsAtPath:path])
     {
         [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
@@ -167,13 +172,11 @@
     [_tea_show_btn setTitleColor:_tip_text_Color forState:UIControlStateNormal];
     
     // 调整位置 记录大小
-    
     self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
     
     // 提问界面
     float tea_back_View_height = kScreentWidth*34/75;
     _teaBackView.frame = CGRectMake(0, 131, kScreentWidth, tea_back_View_height);
-    
     
     // 中心 缩小后的frame
     _tea_head_small_frame = CGRectMake((kScreentWidth-45)/2, (tea_back_View_height-45)/2, 45, 45);
@@ -198,7 +201,6 @@
     // 放大时的frame
     _stu_head_big_frame = CGRectMake((kScreentWidth-65)/2, 56, 65, 65);//_stu_head_small_frame;
     
-   
     
     // 设置圆角半径
     _teaHeadImageV.layer.masksToBounds = YES;
@@ -262,8 +264,11 @@
     
     _testFinished = NO;
     _aloneCounts = 0;
-    _prepareTime_point2 = 6;
+    _prepareTime_point2 = 30; //总时间为30秒 此处为了便于调试暂时用10秒
     _tip_text_Color = [UIColor colorWithRed:0 green:196/255.0 blue:255/255.0 alpha:1];
+    
+    _testAudioPathArray = [[NSMutableArray alloc]init];
+    _jsonArray = [[NSMutableArray alloc]init];
     // 返回按钮
     [self addTitleLabelWithTitleWithTitle:@"直接模考"];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -280,8 +285,13 @@
     _audioManager = [AudioPlayer getAudioManager];
     _audioManager.target = self;
     _audioManager.action = @selector(playTestQuestioCallBack);
+    
+    _recordManager = [[RecordManager alloc]init];
+    _recordManager.target = self;
+    _recordManager.action = @selector(recordFinished:);
 }
 
+#pragma mark -- 视图将要出现
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -292,7 +302,7 @@
 }
 
 
-#pragma mark - 视图出现
+#pragma mark -- 视图出现
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -307,7 +317,7 @@
 }
 
 
-#pragma mark - 开始模考
+#pragma mark -- 开始模考
 - (void)prepareTest
 {
     // 1、开启总时间的定时器
@@ -323,53 +333,52 @@
     // 3、告知用户即将提问
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(showQuestionBeginTip) userInfo:nil repeats:NO];
     // 4、开始提问
-    [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(beginPlayQuestion) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(beginPlayQuestion) userInfo:nil repeats:NO];
 }
 
 
-
-#pragma mark - 开始提问 播放问题
+#pragma mark  - 播放
+#pragma mark -- 开始提问 播放问题
 - (void)beginPlayQuestion
 {
-    _tipLabel.text = @"老师正在提问...";
-    [self startAnimotion];
-    
+    [self startAnimotion]; // 光圈动画开启
     NSString *audioName = [_currentQuestionDict objectForKey:@"url"];
     NSString *audioPath = [NSString stringWithFormat:@"%@/%@",[self getFileBasePath],audioName];
+    // 播放
     [_audioManager playerPlayWithFilePath:audioPath];
 }
 
-#pragma mark - 播放问题结束 回调
+#pragma mark -- 播放问题结束 回调
 - (void)playTestQuestioCallBack
 {
     [self stopAnimotion];// 光圈停止
     
     // 1--> 问题结束 ----> 老师部分做一系列动画
-    [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(endQuestion) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(endQuestion) userInfo:nil repeats:NO];
     
     // 2、学员准备回答 ----> 动画
-    [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(prepareAnswerTest) userInfo:nil repeats:NO];
+    [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(prepareAnswerTest) userInfo:nil repeats:NO];
     //    // 开始回答
     //    [NSTimer scheduledTimerWithTimeInterval:8 target:self selector:@selector(startAnswer) userInfo:nil repeats:NO];
 }
 
 
-
-#pragma mark - 准备回答 --> 动画
+#pragma mark - 回答
+#pragma mark -- 准备回答 --> 动画
 - (void)prepareAnswerTest
 {
     if (_current_part_Counts == 1)
     {
         // 有30“时间准备
-        _tipLabel.text = @"此题根据关键词作答~~你有30\"的准备时间~~~";
+        _tipLabel.text = [NSString stringWithFormat:@"此题根据关键词作答~~你有%ld\"的准备时间~~~",_prepareTime_point2];
         [self TextAnimationWithView:_tipLabel];
-        _aloneTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(prepareTime) userInfo:nil repeats:YES];
+        [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(prepareTransition) userInfo:nil repeats:NO];
     }
     else
     {
         // 提示标签
-        _tipLabel.text = @"准备.....";
-        [self TextAnimationWithView:_tipLabel];
+//        _tipLabel.text = @"准备.....";
+//        [self TextAnimationWithView:_tipLabel];
         
         // 放大学生头像
         [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(enlargeStudentHeadImage) userInfo:nil repeats:NO];
@@ -379,27 +388,32 @@
     }
 }
 
-#pragma mark - 准备时间
+#pragma mark -- 准备时间过渡
+- (void)prepareTransition
+{
+    _aloneTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(prepareTime) userInfo:nil repeats:YES];
+}
+
+#pragma mark -- 准备时间
 - (void)prepareTime
 {
     _prepareTime_point2 --;
-    if (_prepareTime_point2 == 5)
-    {
-        _tipLabel.text = @"准备时间即将结束~~";
-        [self TextAnimationWithView:_tipLabel];
-    }
+    _tipLabel.text = [NSString stringWithFormat:@"剩余准备时间：%ld\"",_prepareTime_point2];
+    
     if (_prepareTime_point2 <= 0)
     {
         [_aloneTimer invalidate];
         _aloneTimer = nil;
         [self enlargeStudentHeadImage];
-        _tipLabel.text = @"准备~~~~";
+        _tipLabel.text = @"准备回答.....";
         [self TextAnimationWithView:_tipLabel];
         [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(startAnswer) userInfo:nil repeats:NO];
     }
 }
 
-#pragma mark - 开始回答
+
+
+#pragma mark -- 开始回答
 - (void)startAnswer
 {
     _tipLabel.text = @"请作答~";
@@ -418,26 +432,55 @@
         //结束录音
         [_aloneTimer invalidate];
         _aloneTimer = nil;
-        [self recordFinished];
+        [self stopRecord];
     }
     else
     {
         btn.selected = YES;
         // 开始录音
         _circleProgressView.hidden = NO;
+        [self startRecord];
         _aloneTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(answerTimeDecrease) userInfo:nil repeats:YES];
     }
 }
 
-#pragma mark - 录音结束 回答完毕
-- (void)recordFinished
+#pragma mark - 录音
+#pragma mark -- 开始录音
+- (void)startRecord
+{
+    NSString *testPath =[NSString stringWithFormat:@"%@/test-%ld-%ld.wav",[self  getRecordSavePath],_current_part_Counts+1,_current_question_Counts+1];
+    [_recordManager prepareRecorderWithFilePath:testPath];
+    [_testAudioPathArray addObject:testPath];
+}
+
+#pragma mark -- 结束录音
+- (void)stopRecord
+{
+    [_recordManager stopRecord];
+}
+
+#pragma mark -- 录音反馈
+- (void)recordFinished:(RecordManager *)record
 {
     _followBtn.hidden = YES;
+    
+    long audioTime = record.recorderTime*1000;
+    // 问题文本
+    NSString *modellongtime = [NSString stringWithFormat:@"%ld",audioTime];
+    NSString *question = [_currentQuestionDict objectForKey:@"question"];
+    NSString *id = [_currentQuestionDict objectForKey:@"id"];
+    NSString *recorderUrl = [NSString stringWithFormat:@"test%ld-%ld.wav",_current_part_Counts,_current_question_Counts];
+    NSString *urltime = [NSString transformNSStringWithDate:record.endDate andFormatter:@"yyyy-MM-dd HH:mm:ss"];
+    NSDictionary *dic = @{@"answer":question,@"modellongtime":modellongtime,@"partid":id,@"recorderUrl":recorderUrl,@"urltime":urltime};
+    [_jsonArray addObject:dic];
+    
+    
     // 录音完成
     [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(answerEnd) userInfo:nil repeats:NO];
     // 目前测界面逻辑 手动连接
     [NSTimer scheduledTimerWithTimeInterval:4 target:self selector:@selector(nextQuestion_test) userInfo:nil repeats:NO];
 }
+
 
 #pragma mark - 下一题
 - (void)nextQuestion_test
@@ -534,7 +577,7 @@
 - (void)TextAnimationWithView:(UIView *)view
 {
     [UIView beginAnimations:@"animationID" context:nil];
-    [UIView setAnimationDuration:1.0f];
+    [UIView setAnimationDuration:0.7f];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
     [UIView setAnimationRepeatAutoreverses:NO];
     if ([view isKindOfClass:[UILabel class]])
@@ -574,7 +617,7 @@
             _teaDesLabel.hidden = NO;
             _tea_show_btn.hidden = YES;
             // 显示关键词
-            _teaDesLabel.text = @"Translation Translation Trans lationTran slation Transl ation Transl ationTranslatio nTrans latio nTransl ation Trans lation Translation Translation Trans lationTran slation Transl ation Transl ationTranslatio nTrans latio nTransl ation Trans lation";
+            _teaDesLabel.text = @"此处展示关键词，关键词的内容还未给出，暂时无法展示";
         }
             break;
         case 2:
@@ -594,9 +637,9 @@
 - (void)endQuestion
 {
     // 1:文字动画
-    _tipLabel.text = @"提问结束，准备回答....";
+    _tipLabel.text = @"考官提问结束，考生请做好准备...";
     [self TextAnimationWithView:_tipLabel];
-    // 2: 缩小头像
+    // 2: 缩小考官头像
     [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(narrowTeacherHeadImage) userInfo:nil repeats:NO];
     if (_current_part_Counts!=0)
     {
@@ -610,7 +653,7 @@
 #pragma mark -- 告知用户 即将提问
 - (void)showQuestionBeginTip
 {
-    _tipLabel.text = @"老师开始提问，请注意听....";
+    _tipLabel.text = @"考官正在提问提问，请注意听....";
     [self TextAnimationWithView:_tipLabel];
 }
 
@@ -752,10 +795,7 @@
     [_circleProgressView settingProgress:tip andColor:_timeProgressColor andWidth:3 andCircleLocationWidth:3];
     if (tip>=1)
     {
-        [_aloneTimer invalidate];
-        _aloneTimer = nil;
-        _followBtn.selected = NO;
-        [self recordFinished];
+        [self followButtonClicked:_followBtn];
     }
 }
 
@@ -775,6 +815,7 @@
  }
  */
 
+#pragma mark - 提交
 - (IBAction)commitButtonClicked:(id)sender
 {
     
@@ -782,15 +823,126 @@
     if (btn.tag == KLeftCommitButtonTag)
     {
         // 稍后提交
+        //1、 标记 关卡3是否提交
+        [OralDBFuncs setTestCommit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
         [self backToTopicPage];
     }
     else if (btn.tag == KRightCommitButtonTag)
     {
         // 现在提交
         
-        MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
-        [self.navigationController pushViewController:myTeacherVC animated:YES];
+        
+        //1、 标记 关卡3是否提交
+        [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+        // 2、判断是否有默认老师 无---跳转到选择老师界面  有----直接提交
+        if ([OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]])
+        {
+            _teacherid = [OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]];
+            // 有默认老师
+            [self startRequst_test];
+        }
+        else
+        {
+            MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
+            myTeacherVC.delegate = self;
+            [self.navigationController pushViewController:myTeacherVC animated:YES];
+        }
     }
+}
+
+
+#pragma mark - 网络请求
+- (void)startRequst_test
+{
+    // 合成json文件
+    BOOL makeUpSuccess = [self makeUpLocalJsonFile_test];
+    if (makeUpSuccess)
+    {
+        // 压缩zip包
+        NSData *zipData = [self zipCurrentTestFile];
+        // 网络提交 uploadfile
+        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+        [parameters setObject:@"modelpart" forKey:@"uploadfile"];
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTestCommitUrl];
+
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+         {
+             if (zipData)
+             {
+                 [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"modelpart.zip" mimeType:@"application/zip"];
+                 
+             }
+         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             
+             if (responseObject)
+             {
+                 NSDictionary *dicRes = responseObject;
+                 NSString *strState = [dicRes objectForKey:@"state"];
+                 if (strState && [strState isEqualToString:@"success"])
+                 {
+                     NSLog(@"upload success!");
+                     // 提交成功后回到topic详情页面
+                     NSLog(@"模考提交老师成功");
+                     [self backToTopicPage];
+
+                 }
+                 else
+                 {
+                     
+                 }
+             }
+             else
+             {
+                 
+             }
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"失败乃");
+         }];
+
+    }
+}
+
+
+#pragma mark - 合成json文件
+- (BOOL)makeUpLocalJsonFile_test
+{
+    NSDictionary *modelpartInfo = @{@"modelpartInfo":_jsonArray,@"teacherid":_teacherid,@"topic":[OralDBFuncs getCurrentTopic],@"useid":[OralDBFuncs getCurrentUserID]};
+    NSError *parseError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:modelpartInfo options:NSJSONWritingPrettyPrinted error:&parseError];
+    NSString *jsonFilePath = [NSString stringWithFormat:@"%@/modelpart.json",[self getRecordSavePath]];
+    NSLog(@"~~~~~~~json文件保存路径：%@~~~~~~~",jsonFilePath);
+    BOOL saveSuc = [jsonData writeToFile:jsonFilePath atomically:YES];
+    return saveSuc;
+}
+
+#pragma mark - 压缩zip包
+- (NSData *)zipCurrentTestFile
+{
+    NSString *zipPath = [NSString stringWithFormat:@"%@/modelpart.zip",[self getRecordSavePath]];
+    ZipArchive *zip = [[ZipArchive alloc] init];
+    BOOL ret = [zip CreateZipFile2:zipPath];
+    if (ret)
+    {
+        for (NSString *testAudioPath  in _testAudioPathArray)
+        {
+            NSString *audioName = [[testAudioPath componentsSeparatedByString:@"/"] lastObject];
+            [zip addFileToZip:testAudioPath newname:audioName];
+        }
+        NSString *jsonPath = [NSString stringWithFormat:@"%@/modelpart.json",[self getRecordSavePath]];
+        [zip addFileToZip:jsonPath newname:@"modelpart.json"];
+    }
+    NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
+    return zipData;
+}
+
+#pragma mark - 选择老师回调
+- (void)selectTeacherId:(NSString *)teacherID
+{
+    _teacherid = teacherID;
+    [self startRequst_test];
 }
 
 #pragma mark - 返回topic详情页
