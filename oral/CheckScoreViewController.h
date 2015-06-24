@@ -10,4 +10,7 @@
 
 @interface CheckScoreViewController : TopicParentsViewController
 
+@property (nonatomic,copy) NSString *topicId;
+
+
 @end

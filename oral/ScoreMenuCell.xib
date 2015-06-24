@@ -17,32 +17,38 @@
                         <rect key="frame" x="324" y="19" width="36" height="36"/>
                         <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="36" id="GxB-g9-SaX"/>
-                            <constraint firstAttribute="height" constant="36" id="pmj-pw-Bj0"/>
+                            <constraint firstAttribute="height" constant="36" id="fhO-dd-a5A"/>
+                            <constraint firstAttribute="width" constant="36" id="rit-Qm-y3a"/>
                         </constraints>
                         <state key="normal" title="58">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
                     <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTI-2N-dKP">
-                        <rect key="frame" x="10" y="10" width="300" height="55"/>
+                        <rect key="frame" x="10" y="10" width="300" height="53"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </webView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiX-Vb-GHZ">
-                        <rect key="frame" x="0.0" y="74" width="375" height="1"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiX-Vb-GHZ">
+                        <rect key="frame" x="0.0" y="73" width="375" height="1"/>
                         <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="OHj-55-T7q"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="centerY" secondItem="N0w-uk-jsw" secondAttribute="centerY" id="CVa-ce-7hT"/>
-                    <constraint firstItem="hTI-2N-dKP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="FKd-0g-Uo3"/>
-                    <constraint firstItem="N0w-uk-jsw" firstAttribute="leading" secondItem="hTI-2N-dKP" secondAttribute="trailing" constant="14" id="XfH-y7-amY"/>
-                    <constraint firstItem="hTI-2N-dKP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="heh-Pr-4yT"/>
-                    <constraint firstAttribute="trailing" secondItem="N0w-uk-jsw" secondAttribute="trailing" constant="15" id="iUt-sx-JRs"/>
-                    <constraint firstAttribute="bottom" secondItem="hTI-2N-dKP" secondAttribute="bottom" constant="9" id="rRP-ye-KK6"/>
+                    <constraint firstAttribute="trailing" secondItem="fiX-Vb-GHZ" secondAttribute="trailing" id="S3a-l8-ebH"/>
+                    <constraint firstAttribute="trailing" secondItem="N0w-uk-jsw" secondAttribute="trailing" constant="15" id="Wea-31-GtE"/>
+                    <constraint firstAttribute="centerY" secondItem="N0w-uk-jsw" secondAttribute="centerY" id="gEx-zY-eo0"/>
+                    <constraint firstItem="fiX-Vb-GHZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="gUm-Ll-cSw"/>
+                    <constraint firstAttribute="bottom" secondItem="fiX-Vb-GHZ" secondAttribute="bottom" id="hCI-2w-JEN"/>
+                    <constraint firstItem="N0w-uk-jsw" firstAttribute="leading" secondItem="hTI-2N-dKP" secondAttribute="trailing" constant="14" id="jWv-LV-Kik"/>
+                    <constraint firstItem="hTI-2N-dKP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="ono-WH-liC"/>
+                    <constraint firstItem="fiX-Vb-GHZ" firstAttribute="top" secondItem="hTI-2N-dKP" secondAttribute="bottom" constant="10" id="xZ3-RM-EBO"/>
+                    <constraint firstItem="hTI-2N-dKP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="zs4-Zv-r5q"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

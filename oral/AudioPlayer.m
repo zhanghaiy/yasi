@@ -22,39 +22,28 @@ static AudioPlayer *audioPlayer;
     return audioPlayer;
 }
 
-- (void)playSoundWithString:(NSString *)fileName
-{
-    NSArray *arr = [fileName componentsSeparatedByString:@"."];
-    if (arr.count == 2)
-    {
-        NSString *path = [[NSBundle mainBundle]pathForResource:[arr objectAtIndex:0] ofType:[arr objectAtIndex:1]];
-        
-        _player = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:path] error:nil];
-        
-        _player.delegate = self;
-        _player.volume = 1;
-        [_player prepareToPlay];
-    }
-    else
-    {
-        NSLog(@"路径不存在");
-    }
-    
-}
-
-
 #pragma mark - 通过路径播放
 - (void)playerPlayWithFilePath:(NSString *)filePath
 {
-    if (_player)
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
     {
-        _player = nil;
+        if (_player)
+        {
+            _player = nil;
+        }
+        _player = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:filePath] error:nil];
+        _player.delegate = self;
+        _audioDuration = _player.duration ;
+        _player.volume = 1;
+        [_player prepareToPlay];
+        [_player play];
+        NSLog(@"正在播放");
     }
-    _player = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL fileURLWithPath:filePath] error:nil];
-    _player.delegate = self;
-    _player.volume = 1;
-    [_player prepareToPlay];
-    [_player play];
+    else
+    {
+        NSLog(@"找不到音频路径");
+    }
+    
 }
 
 #pragma mark - 播放

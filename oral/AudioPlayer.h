@@ -24,5 +24,6 @@
 - (void)beginePlay;
 - (void)stopPlay;
 - (void)pausePlay;
+@property (nonatomic,assign) float audioDuration;
 
 @end

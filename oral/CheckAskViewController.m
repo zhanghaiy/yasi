@@ -482,6 +482,7 @@
     }
     else
     {
+        [OralDBFuncs setPartLevel3Practiceed:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
        // 提交给老师
         _CommitLeftButton.hidden = NO;
         _commitRightButton.hidden = NO;
@@ -515,14 +516,14 @@
         // 稍后提交
         [self backToTopicPage];
         //1、 标记 关卡3是否提交
-        [OralDBFuncs setPartLevel3Commit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+        [OralDBFuncs setPartLevel3Commit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
     }
     else if (btn.tag == kCommitRightButtonTag)
     {
         // 现在提交 打包
         
         //1、 标记 关卡3是否提交
-        [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+        [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
         // 2、判断是否有默认老师 无---跳转到选择老师界面  有----直接提交
         if ([OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]])
         {

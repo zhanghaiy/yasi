@@ -104,5 +104,9 @@
  */
 #define kApplyClassUrl @"/yasi/studentJoinApply/insertJoinApply.do"
 
+// 查询学生最新提交给老师的已处理待办事项 参数  userId
+#define kSelectNewWatingEvent @"/yasi/waiting/selectNewWaitingByStudentId.do"
+// 查询已处理待办事项 参数 waitingid
+#define kReviewWatingEvent @"/yasi/waiting/selectWaitingByUserId.do"
 
 #endif

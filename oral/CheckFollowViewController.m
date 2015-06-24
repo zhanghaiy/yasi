@@ -50,6 +50,7 @@
     
     float _sumScore;
     int _sumCounts;
+    NSMutableArray *_markAllAnswerIdArray;
 }
 
 
@@ -247,8 +248,10 @@
     
     _sumCounts = 0;
     _sumScore = 0;
+    _markAllAnswerIdArray = [[NSMutableArray alloc]init];
     
     [OralDBFuncs setCurrentPoint:1];
+    
     
     _answerTime = KAnswerSumTime;
     audioPlayer = [AudioPlayer getAudioManager];
@@ -264,7 +267,7 @@
     [self moNiDataFromLocal];
     [self uiConfig];
     
-    _dfEngine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"haiyan"];
+    _dfEngine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"cocim_haiyan"];
 }
 
 
@@ -340,10 +343,11 @@
 {
     //合成音频路径
     NSString *audiourl = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"audiourl"];
-    
     NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",[OralDBFuncs getCurrentTopic],audiourl];
-    
     [audioPlayer playerPlayWithFilePath:audioPath];
+    
+    NSString *answerid = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"id"];
+    [_markAllAnswerIdArray addObject:answerid];
 }
 
 #pragma mark - 播放完成回调
@@ -485,7 +489,6 @@
 #pragma mark - 思必驰反馈信息
 - (void)showResult:(DFAiengineSentResult *)result
 {
-    
     // 若思必驰出错 停止
     if (_reduceTimer)
     {
@@ -493,7 +496,6 @@
         _reduceTimer = nil;
         _answerButton.selected = NO;
     }
-    
     // 获取录音时长
     long recordTime = result.systime;
     // 增加录音时长

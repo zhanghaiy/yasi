@@ -438,6 +438,7 @@
 {
     // 成绩单
     CheckScoreViewController *scoreMenuVC = [[CheckScoreViewController alloc]initWithNibName:@"CheckScoreViewController" bundle:nil];
+    scoreMenuVC.topicId = [_topicDict objectForKey:@"id"];
     [self.navigationController pushViewController:scoreMenuVC animated:YES];
 }
 

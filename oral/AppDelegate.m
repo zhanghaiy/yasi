@@ -27,6 +27,7 @@
 //    NSString *key = [NSString stringWithFormat:@"ADD-PRACTICE-%@-%@",[OralDBFuncs getCurrentTopic],[OralDBFuncs getCurrentUserName]];
 //    NSLog(@"%@",key);
 //    [[NSUserDefaults standardUserDefaults]removeObjectForKey:key];
+  
     
     if ([OralDBFuncs getCurrentUserName])
     {

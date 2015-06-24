@@ -15,10 +15,11 @@
     _spotImgV.layer.masksToBounds = YES;
     _spotImgV.layer.cornerRadius = _spotImgV.frame.size.height/2;
     
-    _reviewBackV.layer.masksToBounds = YES;
-    _reviewBackV.layer.cornerRadius = _reviewBackV.frame.size.height/2;
-    
-    _reviewBackV.backgroundColor = kPart_Button_Color;
+    _reviewLabel.userInteractionEnabled = YES;
+    _reviewLabel.textAlignment = NSTextAlignmentCenter;
+    _reviewLabel.layer.masksToBounds = YES;
+    _reviewLabel.layer.cornerRadius = _reviewLabel.frame.size.height/2;
+    _reviewLabel.backgroundColor = kPart_Button_Color;
     _spotImgV.backgroundColor = kPart_Button_Color;
 }
 

@@ -67,6 +67,7 @@
                 <outlet property="scoreButton" destination="RWt-jv-Ocl" id="GIt-px-TVh"/>
                 <outlet property="titleLabel" destination="tOF-w5-ggU" id="qa6-JJ-PjF"/>
             </connections>
+            <point key="canvasLocation" x="81.5" y="252.5"/>
         </view>
     </objects>
 </document>

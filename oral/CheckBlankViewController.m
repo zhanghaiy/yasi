@@ -50,6 +50,8 @@
     
     float _sumScore;
     int _sumCounts;
+    
+    NSMutableArray *_saveAnswerIdArray;
 }
 @end
 
@@ -76,6 +78,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    _saveAnswerIdArray = [[NSMutableArray alloc]init];
     _sumScore = 0;
     _sumCounts = 0;
     _answerTime = KAnswerSumTime;
@@ -95,7 +98,7 @@
     [self uiConfig];
     [self createTipLabel];
     
-    _dfEngine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"haiyan"];
+    _dfEngine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"cocim_haiyan"];
 }
 
 #pragma mark - UI布局
@@ -462,6 +465,9 @@
     NSString *text = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
     if(_dfEngine)
         [_dfEngine startEngineFor:[self filterHTML:text]];
+    
+    NSString *answerid = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"id"];
+    [_saveAnswerIdArray addObject:answerid];
 }
 
 #pragma mark  - 停止思必驰
@@ -659,7 +665,6 @@
         }
         else
         {
-            
             float levelScore = _sumScore/_sumCounts;
             [OralDBFuncs updateTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[OralDBFuncs getCurrentTopic] part:[OralDBFuncs getCurrentPart] level:[OralDBFuncs getCurrentPoint] andScore:levelScore];
             NSLog(@"~~~~~~~~~~~~~~~");

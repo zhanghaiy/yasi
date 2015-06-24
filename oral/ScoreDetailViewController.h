@@ -10,6 +10,7 @@
 
 @interface ScoreDetailViewController : TopicParentsViewController
 
-//@property (nonatomic,assign) NSInteger partCounts;
+@property (nonatomic,strong) NSDictionary *watingDic;
+@property (nonatomic,assign) BOOL review_part;
 
 @end

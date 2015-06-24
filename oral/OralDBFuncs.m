@@ -520,7 +520,8 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     
     // select stuff
     sqlite3_stmt *dbps; // database prepared statement
-    NSString *queryStatementNS = [NSString stringWithFormat:@"select timestamp, record_id,last_text,last_score,last_pron,last_integrity,last_fluency,last_audio_name from last_record where user_name='%@' and topic_name='%@' and answer_id='%@' and part_num='%d' and level_num='%d'", userName, topicName, answerId, partNum, levelNum];
+//    NSString *queryStatementNS = [NSString stringWithFormat:@"select timestamp, record_id,last_text,last_score,last_pron,last_integrity,last_fluency,last_audio_name from last_record where user_name='%@' and topic_name='%@' and answer_id='%@' and part_num='%d' and level_num='%d'", userName, topicName, answerId, partNum, levelNum];
+     NSString *queryStatementNS = [NSString stringWithFormat:@"select timestamp, record_id,last_text,last_score,last_pron,last_integrity,last_fluency,last_audio_name from last_record where user_name='%@' and topic_name='%@' and answer_id='%@' and part_num='%d' and level_num='%d'", userName, topicName, answerId, partNum, levelNum];
     const char *queryStatement = [queryStatementNS UTF8String];
     dbrc = sqlite3_prepare_v2 (db, queryStatement, -1, &dbps, NULL);
     
@@ -532,11 +533,11 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
         oneRecord.userName = userName;
         oneRecord.answerId = answerId;
         
-        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
-        NSDate *date=[formatter dateFromString:[[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 0)]];
-        oneRecord.timeStamp = date.timeIntervalSince1970;
+//        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+//        [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+//        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
+//        NSDate *date=[formatter dateFromString:[[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 0)]];
+//        oneRecord.timeStamp = date.timeIntervalSince1970;
         
         /* referAudioName此时当作recordId来使用，调用者需要清楚这个事实。*/
         oneRecord.referAudioName = [[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 1)];
@@ -554,6 +555,43 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     
     return oneRecord;
 }
+
++(BOOL)isInLastBook:(NSString *)userName withAnswerId:(NSString *)answer_id
+{
+    sqlite3 *db;
+    int dbrc; // database return code
+    const char* dbFilePathUTF8 = [[OralDBFuncs getDbFilePath] UTF8String];
+    dbrc = sqlite3_open (dbFilePathUTF8, &db);
+    if (dbrc) {
+        NSLog (@"couldn't open db:");
+        return nil;
+    }
+    
+    // select stuff
+    sqlite3_stmt *dbps; // database prepared statement
+    NSString *selectStr = [NSString stringWithFormat:@"select * from last_record where answer_id = %@;",answer_id];
+    const char *queryStatement = [selectStr UTF8String];
+    dbrc = sqlite3_prepare_v2 (db, queryStatement, -1, &dbps, NULL);
+    
+    PracticeBookRecord *oneRecord = nil;
+    if ((dbrc = sqlite3_step (dbps)) == SQLITE_ROW)
+    {
+        oneRecord = [[PracticeBookRecord alloc] init];
+        oneRecord.userName = [[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 0)];
+        oneRecord.answerId = [[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(dbps, 1)];
+    }
+    
+    // done with the db.  finalize the statement and close
+    sqlite3_finalize (dbps);
+    sqlite3_close(db);
+    if (oneRecord)
+    {
+        return YES;
+    }
+    return NO;
+}
+
+
 
 #pragma mark -- 各part的第三关的闯关纪录
 
@@ -850,6 +888,20 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     [[NSUserDefaults standardUserDefaults]setObject:addArray forKey:key];
 }
 
++ (void)setAnswerIdArray:(NSArray *)answeridArray Topic:(NSString *)topicName UserName:(NSString *)userName PartNum:(int)partNum PointNum:(int)pointNum
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-part%d-point%d-AnswerIdArray",userName,topicName,partNum,pointNum];
+    [[NSUserDefaults standardUserDefaults] setObject:answeridArray forKey:key];
+
+
+}
+
++ (NSArray *)getAnswerIdArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName PartNum:(int)partNum PointNum:(int)pointNum
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-part%d-point%d-AnswerIdArray",userName,topicName,partNum,pointNum];
+    return [[NSUserDefaults standardUserDefaults] objectForKey:key];
+}
+
 + (NSArray *)getAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName
 {
     NSString *key = [NSString stringWithFormat:@"ADD-PRACTICE-%@-%@",topicName,userName];
@@ -858,16 +910,40 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 }
 
 
-+(void)setPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName
++(void)setPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum
 {
-    NSString *key = [NSString stringWithFormat:@"PartLevel-3-%@-%@",topicName,userName];
+    NSString *key = [NSString stringWithFormat:@"%@-%@-Part-%d-Level-3-commit",topicName,userName,partNum];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:commit] forKey:key];
 }
 
-+(BOOL)getPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName
++(BOOL)getPartLevel3CommitwithTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum
 {
-    NSString *key = [NSString stringWithFormat:@"PartLevel-3-%@-%@",topicName,userName];
+    NSString *key = [NSString stringWithFormat:@"%@-%@-Part-%d-Level-3-commit",topicName,userName,partNum];
     return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
+}
+
++(void)setPartLevel3Practiceed:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-Part-%d-Level-3-practiced",topicName,userName,partNum];
+    return [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:commit] forKey:key];
+}
+
++(BOOL)getPartLevel3PracticeedwithTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-Part-%d-Level-3-practiced",topicName,userName,partNum];
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
+}
+
++(void)setTestPartDuration:(float)duration andPart:(int)partNum Topic:(NSString *)topic Username:(NSString *)username
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-test-part%d",username,topic,partNum];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:duration] forKey:key];
+}
+
++(float)getTestPartDurationWithPart:(int)partNum Topic:(NSString *)topic Username:(NSString *)username
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-test-part%d",username,topic,partNum];
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:key] floatValue];
 }
 
 // 标记模考是否提交
@@ -878,7 +954,7 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
    
 }
 
-+(BOOL)getTestCommit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName
++(BOOL)getTestCommitTopic:(NSString *)topicName andUserName:(NSString *)userName
 {
     NSString *key = [NSString stringWithFormat:@"Test-%@-%@",topicName,userName];
     return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];

@@ -11,7 +11,6 @@
 @interface Score_Point3_Footer_View : UIView
 @property (weak, nonatomic) IBOutlet UIImageView *headImgV;
 @property (weak, nonatomic) IBOutlet UIImageView *spotImgV;
-@property (weak, nonatomic) IBOutlet UIView *reviewBackV;
 @property (weak, nonatomic) IBOutlet UILabel *reviewLabel;
 
 @end

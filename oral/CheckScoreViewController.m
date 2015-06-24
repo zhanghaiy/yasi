@@ -12,6 +12,9 @@
 #import "CustomProgressView.h"// 进度条
 #import "ScoreTestMenuViewController.h"
 #import "OralDBFuncs.h"
+#import "AudioPlayer.h"
+#import "NSURLConnectionRequest.h"
+#import "AFNetworking/AFHTTPRequestOperationManager.h"
 
 @interface CheckScoreViewController ()<UIScrollViewDelegate>
 {
@@ -24,6 +27,18 @@
     NSArray *_partListArray;
     int _currentPlayCount;
     NSMutableArray *_playPathArray;
+    int _markPlayCounts;
+    
+    AudioPlayer *_playerManager;
+    NSArray *_currentTestArray;
+    
+    float _test_part_sumTime;
+    
+    BOOL _wating_part; // 判断当前topic是否有处理信息
+    BOOL _wating_test;
+    
+    NSDictionary *_watingDict_part;
+    NSDictionary *_watingDict_test;
 }
 @end
 
@@ -45,56 +60,42 @@
 - (void)analysizeTestJson
 {
     NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/temp/mockinfo.json",[OralDBFuncs getCurrentTopic]];
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:jsonPath] options:0 error:nil];
-    _partListArray = [[dic objectForKey:@"mockquestion"] objectForKey:@"questionlist"];
-    
-    _playPathArray = [[NSMutableArray alloc]init];
-    for (int i = 0; i < _partListArray.count; i ++)
+    if ([[NSFileManager defaultManager] fileExistsAtPath:jsonPath])
     {
-        NSDictionary *partDic = [_partListArray objectAtIndex:i];
-        NSArray *question = [partDic objectForKey:@"question"];
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:jsonPath] options:0 error:nil];
+        _partListArray = [[dic objectForKey:@"mockquestion"] objectForKey:@"questionlist"];
         
-        NSMutableArray *part_alone_array = [[NSMutableArray alloc]init];
-        for (int j = 0; j < question.count; j ++)
+        _playPathArray = [[NSMutableArray alloc]init];
+        for (int i = 0; i < _partListArray.count; i ++)
         {
-            NSDictionary *questionDic =[question objectAtIndex:j];
-            NSString *questionAudioUrl = [questionDic objectForKey:@"url"];
-            NSString *answerAudioUrl = [NSString stringWithFormat:@"test%d-%d.wav",i+1,j+1];
-            NSDictionary *dic = @{@"quesUrl":questionAudioUrl,@"answerUrl":answerAudioUrl};
-            [part_alone_array addObject:dic];
+            NSDictionary *partDic = [_partListArray objectAtIndex:i];
+            NSArray *question = [partDic objectForKey:@"question"];
+            
+            NSMutableArray *part_alone_array = [[NSMutableArray alloc]init];
+            for (int j = 0; j < question.count; j ++)
+            {
+                NSDictionary *questionDic =[question objectAtIndex:j];
+                NSString *questionAudioUrl = [questionDic objectForKey:@"url"];
+                NSString *answerAudioUrl = [NSString stringWithFormat:@"test-%d-%d.wav",i+1,j+1];
+                NSDictionary *dic = @{@"quesUrl":questionAudioUrl,@"answerUrl":answerAudioUrl};
+                [part_alone_array addObject:dic];
+            }
+            [_playPathArray addObject:part_alone_array];
         }
-        [_playPathArray addObject:part_alone_array];
+        
+        NSLog(@"%@",_playPathArray);
     }
-    
-}
-
-
-#pragma mark - 数据加载
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
-    // 返回按钮
-    [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"My Travel"];
-    [self uiConfig];
-    [self analysizeTestJson];
-
-    for (int i = 0; i < 3; i ++)
+    else
     {
-        ScoreMenuTestView *testV = (ScoreMenuTestView *)[self.view viewWithTag:kTestViewTAg+i];
-        testV.timeBackLabel.backgroundColor  =[UIColor purpleColor];
-        testV.timeBackLabel.frame = CGRectMake(50, 18, 30, 20);
-        testV.timeLabel.backgroundColor = _pointColor;
-        testV.progress = 1;
+        NSLog(@"json文件路径不存在");
     }
 }
+
 
 #pragma mark - UI配置
 - (void)uiConfig
 {
-// -------------分段控制器-----------
+    // -------------分段控制器-----------
     // 先创建数组 给分段控件赋值
     NSArray *array = [[NSArray alloc]initWithObjects:@"模考", @"关卡",nil];
     // 创建一个分段控件
@@ -120,7 +121,7 @@
     [_segment addTarget:self action:@selector(segment:) forControlEvents:UIControlEventValueChanged];
     // 添加到视图上
     [self.view addSubview:_segment];
-// -------------scrollView-----------
+    // -------------scrollView-----------
     
     _backScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 100, kScreentWidth, kScreenHeight-100)];
     _backScrollV.pagingEnabled = YES;
@@ -159,7 +160,7 @@
         progressV.progressView.backgroundColor = _pointColor;
         [testBAckView addSubview:progressV];
         NSLog(@"~~~~~~~~%ld",progressV.tag);
-
+        
     }
     
     // 提交按钮
@@ -167,21 +168,30 @@
     UIButton *commitTestButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [commitTestButton setFrame:CGRectMake((kScreentWidth-kTestCommitButtonWidth)/2, yyy, kTestCommitButtonWidth, kTestCommitButtonHeight)];
     
-    // 一共三种状态 1：未提交 --》tijiao geilaoshi 
+    // 一共三种状态 1：未提交 --》tijiao geilaoshi
     
-    [commitTestButton setTitle:@"提交给老师" forState:UIControlStateNormal];
     [commitTestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [commitTestButton setTitle:@"查看反馈" forState:UIControlStateSelected];
-    [commitTestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-
+    
     commitTestButton.layer.cornerRadius = kTestCommitButtonHeight/2;
     commitTestButton.backgroundColor = _pointColor;
     commitTestButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
     [commitTestButton addTarget:self action:@selector(commitTest:) forControlEvents:UIControlEventTouchUpInside];
+    commitTestButton.tag = kTestCommitButtonTag;
     [_backScrollV addSubview:commitTestButton];
     
-    
+    [commitTestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     // 判断是否莫考过 --- 未完待续
+    BOOL commited = [OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+    if (commited)
+    {
+        // 已提交
+        [commitTestButton setTitle:@"等待老师评价" forState:UIControlStateNormal];
+    }
+    else
+    {
+        // 未提交
+        [commitTestButton setTitle:@"提交给老师" forState:UIControlStateNormal];
+    }
     
     
     // 闯关
@@ -204,82 +214,284 @@
     
 }
 
+
+
+#pragma mark - 数据加载
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    
+    // 返回按钮
+    [self addBackButtonWithImageName:@"back-Blue"];
+    [self addTitleLabelWithTitleWithTitle:@"My Travel"];
+    [self uiConfig];
+    [self analysizeTestJson];
+
+    for (int i = 0; i < 3; i ++)
+    {
+        ScoreMenuTestView *testV = (ScoreMenuTestView *)[self.view viewWithTag:kTestViewTAg+i];
+        testV.timeBackLabel.backgroundColor  =[UIColor purpleColor];
+        testV.timeBackLabel.frame = CGRectMake(50, 18, 30, 20);
+        testV.timeLabel.backgroundColor = _pointColor;
+        testV.progress = 1;
+    }
+    
+    _playerManager = [AudioPlayer getAudioManager];
+    _playerManager.action = @selector(playTestFinished:);
+    _playerManager.target = self;
+    
+    [self requestTestWating];
+    
+}
+
+#pragma mark - 网络
+#pragma mark -- 请求老师已处理事项
+- (void)requestTestWating
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kSelectNewWatingEvent,[OralDBFuncs getCurrentUserID]];
+    NSLog(@"%@",urlStr);
+    [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestWatingFinished:) andRefresh:YES];
+}
+
+#pragma mark -- 请求老师已处理事项 回调
+- (void)requestWatingFinished:(NSURLConnectionRequest *)reuqest
+{
+    if ([reuqest.downloadData length])
+    {
+        // 有数据
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:reuqest.downloadData options:0 error:nil];
+        if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
+        {
+            // 成功
+            NSArray *waitingList = [dic objectForKey:@"waitingList"];
+            NSArray *joinclassinfo = [dic objectForKey:@"joinclassinfo"];
+            // 此处需：遍历数组 找到 当前topic 当前的模考反馈信息 此处需和后台确认
+            
+            if (waitingList.count)
+            {
+                // 老师已反馈  从反馈中找到当前topic 的 反馈
+                for (NSDictionary *watingListDic in waitingList)
+                {
+                    NSString *topicid = [watingListDic objectForKey:@"topicid"];
+                    if ([topicid isEqualToString:_topicId])
+                    {
+                        // 此处判断 是模考还是闯关 与后台确认
+                        if ([[watingListDic objectForKey:@"part"] intValue] == 3)
+                        {
+                            // part3
+                            _wating_part = YES;
+                            _watingDict_part = watingListDic;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // 没有反馈 
+            }
+            
+        }
+    }
+}
+
+#pragma mark -- 请求当前topic的已处理事项
+- (void)requestWithWatingId:(NSString *)waitingid
+{
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@?waitingid=%@",kBaseIPUrl,kReviewWatingEvent,waitingid];
+    [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestWatingInfo:) andRefresh:YES];
+}
+
+#pragma mark -- 请求当前topic的已处理事项  回调
+- (void)requestWatingInfo:(NSURLConnectionRequest *)request
+{
+    if ([request.downloadData length])
+    {
+        //
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
+        {
+            // 查询成功
+            NSDictionary *reviewDic = [[dic objectForKey:@"teacheranswerlist"] lastObject];
+        }
+    }
+}
+
+- (void)commitTestInfo
+{
+    NSString *testZipPath =  [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/modelpart.zip",[OralDBFuncs getCurrentTopic]];
+    NSData *zipData = [NSData dataWithContentsOfFile:testZipPath];
+    
+    // 网络提交 uploadfile
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:@"modelpart" forKey:@"uploadfile"];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTestCommitUrl];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+     {
+         if (zipData)
+         {
+             [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"modelpart.zip" mimeType:@"application/zip"];
+             
+         }
+     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         
+         if (responseObject)
+         {
+             NSDictionary *dicRes = responseObject;
+             NSString *strState = [dicRes objectForKey:@"state"];
+             if (strState && [strState isEqualToString:@"success"])
+             {
+                 NSLog(@"upload success!");
+                 // 提交成功后回到topic详情页面
+                 [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+                 NSLog(@"模考提交老师成功");
+                 //
+                 
+             }
+             else
+             {
+                 
+             }
+         }
+         else
+         {
+             
+         }
+         
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         NSLog(@"失败乃");
+     }];
+    
+
+}
+
+
 #pragma mark - 模考
-#pragma mark - - 提交模考
+#pragma mark -- 提交模考
 - (void)commitTest:(UIButton *)commitButton
 {
     // 1：未提交给老师 提交老师  2：已经提交 但是未反馈 3：老师已反馈
-    ScoreTestMenuViewController *testVC = [[ScoreTestMenuViewController alloc]init];
-    [self.navigationController pushViewController:testVC animated:YES];
+    if (![OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentUserID] andUserName:[OralDBFuncs getCurrentUserName]])
+    {
+        // 提交给老师
+    }
+    
+    // 如果老师已反馈
+    BOOL review = NO;
+    if (review)
+    {
+        ScoreTestMenuViewController *testVC = [[ScoreTestMenuViewController alloc]init];
+        [self.navigationController pushViewController:testVC animated:YES];
+    }
 }
-#pragma mark - - 播放音频按钮点击事件
+#pragma mark - 模考播放
+#pragma mark -- 播放音频按钮点击事件
 - (void)playButtonClicked:(UIButton *)playButton
 {
+    for (int i = 0; i < 3; i ++)
+    {
+        UIButton *newBtn = (UIButton *)[self.view viewWithTag:kPlayButtonTag+1];
+        if (newBtn.tag != playButton.tag)
+        {
+            newBtn.selected = NO;
+            [self stopTimer];
+            [_playerManager stopPlay];
+        }
+    }
+
     // 调用播放器 进度条随着播放逐渐减少  ---- 待完善
     if (playButton.selected)
     {
         playButton.selected = NO;
+        [self stopTimer];
+        [_playerManager stopPlay];
     }
     else
     {
         _ClickedIndex = playButton.tag - kPlayButtonTag;
         playButton.selected = YES;
-    }
-    
-    switch (playButton.tag - kPlayButtonTag)
-    {
-        case 0:
-        {
-            // part1
-        }
-            break;
-        case 1:
-        {
-            // part2
-        }
-            break;
-        case 2:
-        {
-           // part3
-        }
-            break;
-        default:
-            break;
+        NSInteger inde = playButton.tag - kPlayButtonTag;
+        [self circlePlayQuestionAndAnswerWithIndex:inde];
     }
 }
 
-// 循环播放当前part的音频 ----- 待完善
-- (void)circlePlayQuestionAndAnswerWithIndex:(int)index
+#pragma mark -- 循环播放当前part的音频
+- (void)circlePlayQuestionAndAnswerWithIndex:(NSInteger)index
 {
-    NSArray *partAttay = [_playPathArray objectAtIndex:index];
-    
+    _currentTestArray = [_playPathArray objectAtIndex:index];
+    _markPlayCounts = 0;
+    _test_part_sumTime = [OralDBFuncs getTestPartDurationWithPart:(int)index Topic:[OralDBFuncs getCurrentTopic] Username:[OralDBFuncs getCurrentUserName]];
+    [self startTimeReduce];
+    [self playQuestion_test];
 }
 
+#pragma mark -- 播放问题
+- (void)playQuestion_test
+{
+    NSString *questionName = [[_currentTestArray objectAtIndex:_markPlayCounts/2] objectForKey:@"quesUrl"];
+    NSString *questionPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/temp/%@",[OralDBFuncs getCurrentTopic],questionName];
+    NSLog(@"%@",questionPath);
+    [_playerManager playerPlayWithFilePath:questionPath];
+}
 
+#pragma mark -- 播放回答
+- (void)playAnswer_test
+{
+    NSString *answerName = [[_currentTestArray objectAtIndex:_markPlayCounts/2] objectForKey:@"answerUrl"];
+    NSString *answerPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/%@",[OralDBFuncs getCurrentTopic],answerName];
+    NSLog(@"%@",answerPath);
+    [_playerManager playerPlayWithFilePath:answerPath];
+}
 
-- (void)startPlay
+#pragma mark -- 播放结束
+- (void)playTestFinished:(AudioPlayer *)player
+{
+    _markPlayCounts++;
+    if (_markPlayCounts/2 < _currentTestArray.count)
+    {
+        if (_markPlayCounts%2)
+        {
+            // 奇数 播放回答
+            [self playAnswer_test];
+        }
+        else
+        {
+            [self playQuestion_test];
+        }
+    }
+    else
+    {
+        // 全部播放完成
+        [self stopTimer];
+    }
+}
+
+#pragma mark -- 开启倒计时
+- (void)startTimeReduce
 {
     // 此处为 ： 时间进度条减小 获取到所有音频大小 然后加起来 构成倒计时
     // 获取音频文件的时长----待完善
     CustomProgressView *progressV = (CustomProgressView *)[self.view viewWithTag:kProgressViewTag+_ClickedIndex];
     progressV.progress = 1;
-    _decreaseRatio = 1.0/4.2/10;
+    _decreaseRatio = 1.0/_test_part_sumTime/10;
     _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timeDaoJiShi) userInfo:nil repeats:YES];
 }
 
+#pragma mark -- 停止倒计时
 - (void)stopTimer
 {
     [_timer invalidate];
      _timer = nil;
 }
 
-#pragma mark - - 音频倒计时
+#pragma mark -- 音频倒计时
 - (void)timeDaoJiShi
 {
     CustomProgressView *progressV = (CustomProgressView *)[self.view viewWithTag:kProgressViewTag+_ClickedIndex];
-    NSLog(@"~~~~~~~~%ld",progressV.tag);
     progressV.progress -= _decreaseRatio;
-    NSLog(@"%f",progressV.progress);
     
     if (progressV.progress<=0)
     {
@@ -290,11 +502,17 @@
 }
 
 #pragma mark - 闯关
-#pragma mark - - 闯关按钮被点击
+#pragma mark -- 闯关按钮被点击
 - (void)partButtonClicked:(UIButton *)btn
 {
      // part1 -- 3
+    [OralDBFuncs setCurrentPart:(int)(btn.tag-kPartButtonTag+1)];
     ScoreDetailViewController *scoreVC = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil];
+    scoreVC.review_part = _wating_part;
+    if (_wating_part)
+    {
+        scoreVC.watingDic = _watingDict_part;
+    }
     [self.navigationController pushViewController:scoreVC animated:YES];
 }
 

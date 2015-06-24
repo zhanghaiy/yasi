@@ -36,7 +36,7 @@
     NSInteger _sum_part_Counts;
     NSInteger _sum_question_Counts;
 
-    NSInteger _current_part_Counts;
+    int _current_part_Counts;
     NSInteger _current_question_Counts;
     
     NSDictionary *_currentQuestionDict;
@@ -51,6 +51,8 @@
     
     NSString *_teacherid;
     BOOL _testFinished;
+    
+    float _markTime_PartAlone;
 }
 @end
 
@@ -289,6 +291,8 @@
     _recordManager = [[RecordManager alloc]init];
     _recordManager.target = self;
     _recordManager.action = @selector(recordFinished:);
+    
+    _markTime_PartAlone = 0;
 }
 
 #pragma mark -- 视图将要出现
@@ -346,6 +350,8 @@
     NSString *audioPath = [NSString stringWithFormat:@"%@/%@",[self getFileBasePath],audioName];
     // 播放
     [_audioManager playerPlayWithFilePath:audioPath];
+    _markTime_PartAlone += _audioManager.audioDuration;
+    NSLog(@"_markTime_PartAlone: %f",_markTime_PartAlone);
 }
 
 #pragma mark -- 播放问题结束 回调
@@ -463,6 +469,8 @@
 - (void)recordFinished:(RecordManager *)record
 {
     _followBtn.hidden = YES;
+    // 标记part 时间
+    _markTime_PartAlone += record.recorderTime;
     
     long audioTime = record.recorderTime*1000;
     // 增加模考时间
@@ -471,7 +479,7 @@
     NSString *modellongtime = [NSString stringWithFormat:@"%ld",audioTime];
     NSString *question = [_currentQuestionDict objectForKey:@"question"];
     NSString *id = [_currentQuestionDict objectForKey:@"id"];
-    NSString *recorderUrl = [NSString stringWithFormat:@"test%ld-%ld.wav",_current_part_Counts+1,_current_question_Counts+1];
+    NSString *recorderUrl = [NSString stringWithFormat:@"test-%d-%ld.wav",_current_part_Counts+1,_current_question_Counts+1];
     NSString *urltime = [NSString transformNSStringWithDate:record.endDate andFormatter:@"yyyy-MM-dd HH:mm:ss"];
     NSDictionary *dic = @{@"answer":question,@"modellongtime":modellongtime,@"partid":id,@"recorderUrl":recorderUrl,@"urltime":urltime};
     [_jsonArray addObject:dic];
@@ -506,13 +514,17 @@
     else if (_current_question_Counts >= _sum_question_Counts)
     {
         // 下一关卡
+        // 存储 清零
+        [OralDBFuncs setTestPartDuration:_markTime_PartAlone andPart:_current_part_Counts Topic:[OralDBFuncs getCurrentTopic] Username:[OralDBFuncs getCurrentUserName]];
+        
+        _markTime_PartAlone = 0;
         _current_part_Counts ++;
         _current_question_Counts = 0;
         if (_current_part_Counts<_sum_part_Counts)
         {
             // 判断进行下一题 或下一关卡
             [self TextAnimationWithView:self.view];
-            _tipLabel.text =[NSString stringWithFormat:@"第%ld轮考试马上开始~请集中注意力~~~~",_current_part_Counts+1];// @"考试马上开始~请集中注意力~~~~";
+            _tipLabel.text =[NSString stringWithFormat:@"第%d轮考试马上开始~请集中注意力~~~~",_current_part_Counts+1];
             [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(makeSelfViewFomal) userInfo:nil repeats:NO];
             [self makeUpCurrentPartData];
             [self makeUpCurrentQuestionData];
@@ -820,12 +832,13 @@
 #pragma mark - 提交
 - (IBAction)commitButtonClicked:(id)sender
 {
-    
     UIButton *btn = (UIButton *)sender;
     if (btn.tag == KLeftCommitButtonTag)
     {
         // 稍后提交
         //1、 标记 关卡3是否提交
+        [self makeUpLocalJsonFile_test];
+        [self zipCurrentTestFile];
         [OralDBFuncs setTestCommit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
         [self backToTopicPage];
     }
@@ -848,7 +861,6 @@
         }
     }
 }
-
 
 #pragma mark - 网络请求
 - (void)startRequst_test

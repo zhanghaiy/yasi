@@ -13,54 +13,39 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touxiang.png" translatesAutoresizingMaskIntoConstraints="NO" id="XUS-bu-KKw">
                     <rect key="frame" x="315" y="5" width="45" height="45"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="45" id="5JQ-lP-gkz"/>
-                        <constraint firstAttribute="height" constant="45" id="yPs-58-T9o"/>
+                        <constraint firstAttribute="width" constant="45" id="DCu-2o-PJc"/>
+                        <constraint firstAttribute="height" constant="45" id="Vf5-95-e17"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fWx-YO-aFQ">
                     <rect key="frame" x="305" y="25" width="5" height="5"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="5" id="cvQ-i1-4jd"/>
-                        <constraint firstAttribute="width" constant="5" id="whj-iE-nOP"/>
+                        <constraint firstAttribute="height" constant="5" id="vmi-NA-3Qt"/>
+                        <constraint firstAttribute="width" constant="5" id="wg3-GT-Axj"/>
                     </constraints>
                 </imageView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rtR-uE-kaQ">
-                    <rect key="frame" x="200" y="10" width="100" height="35"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V4A-v4-5eC">
-                            <rect key="frame" x="5" y="5" width="90" height="25"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="11" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V4A-v4-5eC">
+                    <rect key="frame" x="207" y="13" width="90" height="30"/>
                     <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="100" id="0ca-bc-Cbf"/>
-                        <constraint firstItem="V4A-v4-5eC" firstAttribute="leading" secondItem="rtR-uE-kaQ" secondAttribute="leading" constant="5" id="9dR-JX-fGI"/>
-                        <constraint firstAttribute="bottom" secondItem="V4A-v4-5eC" secondAttribute="bottom" constant="5" id="W7v-4e-IYm"/>
-                        <constraint firstAttribute="height" constant="35" id="cwj-jY-FzY"/>
-                        <constraint firstItem="V4A-v4-5eC" firstAttribute="top" secondItem="rtR-uE-kaQ" secondAttribute="top" constant="5" id="fmP-vn-Wcq"/>
-                        <constraint firstAttribute="trailing" secondItem="V4A-v4-5eC" secondAttribute="trailing" constant="5" id="o9F-5L-z0P"/>
-                    </constraints>
-                </view>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="XUS-bu-KKw" firstAttribute="centerY" secondItem="fWx-YO-aFQ" secondAttribute="centerY" id="1l1-jy-mQc"/>
-                <constraint firstItem="XUS-bu-KKw" firstAttribute="centerY" secondItem="rtR-uE-kaQ" secondAttribute="centerY" id="7fS-Jd-IKb"/>
-                <constraint firstItem="XUS-bu-KKw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="ESw-cb-sFv"/>
-                <constraint firstItem="fWx-YO-aFQ" firstAttribute="leading" secondItem="rtR-uE-kaQ" secondAttribute="trailing" constant="5" id="SNH-cO-MLo"/>
-                <constraint firstAttribute="trailing" secondItem="XUS-bu-KKw" secondAttribute="trailing" constant="15" id="jTR-6Z-KJQ"/>
-                <constraint firstItem="XUS-bu-KKw" firstAttribute="leading" secondItem="fWx-YO-aFQ" secondAttribute="trailing" constant="5" id="y0D-p1-O05"/>
+                <constraint firstItem="XUS-bu-KKw" firstAttribute="leading" secondItem="fWx-YO-aFQ" secondAttribute="trailing" constant="5" id="2mO-4F-50m"/>
+                <constraint firstItem="fWx-YO-aFQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="25" id="6Ax-XI-RPp"/>
+                <constraint firstAttribute="trailing" secondItem="XUS-bu-KKw" secondAttribute="trailing" constant="15" id="DYi-M8-qw4"/>
+                <constraint firstItem="XUS-bu-KKw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="fM2-4F-JtA"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="headImgV" destination="XUS-bu-KKw" id="eQA-hZ-9eb"/>
-                <outlet property="reviewBackV" destination="rtR-uE-kaQ" id="cfc-A0-dnb"/>
                 <outlet property="reviewLabel" destination="V4A-v4-5eC" id="t33-hV-uSS"/>
                 <outlet property="spotImgV" destination="fWx-YO-aFQ" id="ezS-XB-Eqa"/>
             </connections>
+            <point key="canvasLocation" x="33.5" y="216"/>
         </view>
     </objects>
     <resources>
