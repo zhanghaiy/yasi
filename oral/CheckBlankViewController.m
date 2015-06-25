@@ -253,7 +253,7 @@
      ----待完善-----
      
      */
-    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",[OralDBFuncs getCurrentTopic]];
+    NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/info.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     // 整个topic资源信息
@@ -401,8 +401,7 @@
     }
     // 获取音频路径
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
-    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",[OralDBFuncs getCurrentTopic],audiourl];
-
+    NSString *audioPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES],audiourl];
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
 
@@ -509,7 +508,7 @@
     
     // 转移思必驰录音 清空原有的
     NSString *sbcPath = [NSString stringWithFormat:@"%@/Documents/record/%@.wav",NSHomeDirectory(),result.recordId];
-    NSString *sbcToPath =  [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/part%d-%d-%ld-%ld.wav",[OralDBFuncs getCurrentTopic],[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint],_currentQuestionCounts+1,_currentAnswerCounts+1];
+    NSString *sbcToPath =  [NSString stringWithFormat:@"%@/part%d-%d-%ld-%ld.wav",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES],[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint],_currentQuestionCounts+1,_currentAnswerCounts+1];
     NSData *fileData = [NSData dataWithContentsOfFile:sbcPath];
     BOOL saveSuc = [fileData writeToFile:sbcToPath atomically:YES];
     if (saveSuc)

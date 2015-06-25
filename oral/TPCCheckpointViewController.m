@@ -161,7 +161,7 @@
         zip包路径 topicResource/topicName
      */
     // 1 判断
-    NSString *topicResourcePath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",[_topicDict objectForKey:@"classtype"]];
+    NSString *topicResourcePath = [NSString stringWithFormat:@"%@/temp/info.json",[_topicDict objectForKey:@"classtype"]];
     NSLog(@"%@",topicResourcePath);
     _markPart = (int)(btn.tag - kPartButtonTag);
     BOOL ret = [[NSFileManager defaultManager] fileExistsAtPath:topicResourcePath];

@@ -67,7 +67,7 @@
 #pragma mark -- 解析本地json文件
 - (void)LocalData
 {
-    NSString *jsonPath = [NSString stringWithFormat:@"%@/mockinfo.json",[self getFileBasePath]];
+    NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/mockinfo.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
     NSLog(@"%@",jsonPath);
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *testDic = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
@@ -75,17 +75,17 @@
     _sum_part_Counts = _partListArray.count;
 }
 
-#pragma mark -- 本地资源文件路径
-- (NSString *)getFileBasePath
-{
-    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/temp",[OralDBFuncs getCurrentTopic]];
-    return path;
-}
+//#pragma mark -- 本地资源文件路径
+//- (NSString *)getFileBasePath
+//{
+//    NSString *path = [NSString stringWithFormat:@"%@/temp"];[NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/temp",[OralDBFuncs getCurrentTopic]];
+//    return path;
+//}
 
 #pragma mark -- 本地录音文件路径
 - (NSString *)getRecordSavePath
 {
-    NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest",[OralDBFuncs getCurrentTopic]];
+    NSString *path = [self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO];
     if (![[NSFileManager defaultManager]fileExistsAtPath:path])
     {
         [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
@@ -313,7 +313,7 @@
     
     if (_testFinished == NO)
     {
-        _tipLabel.text = [NSString stringWithFormat:@"第%ld轮考试马上开始~请集中注意力~~~~",_current_part_Counts+1];// @"考试马上开始~请集中注意力~~~~";
+        _tipLabel.text = [NSString stringWithFormat:@"第%d轮考试马上开始~请集中注意力~~~~",_current_part_Counts+1];// @"考试马上开始~请集中注意力~~~~";
         [self TextAnimationWithView:_tipLabel];
         // 预留准备时间
         [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareTest) userInfo:nil repeats:NO];
@@ -347,7 +347,7 @@
 {
     [self startAnimotion]; // 光圈动画开启
     NSString *audioName = [_currentQuestionDict objectForKey:@"url"];
-    NSString *audioPath = [NSString stringWithFormat:@"%@/%@",[self getFileBasePath],audioName];
+    NSString *audioPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO],audioName];
     // 播放
     [_audioManager playerPlayWithFilePath:audioPath];
     _markTime_PartAlone += _audioManager.audioDuration;
@@ -454,7 +454,7 @@
 #pragma mark -- 开始录音
 - (void)startRecord
 {
-    NSString *testPath =[NSString stringWithFormat:@"%@/test-%ld-%ld.wav",[self  getRecordSavePath],_current_part_Counts+1,_current_question_Counts+1];
+    NSString *testPath =[NSString stringWithFormat:@"%@/test-%d-%ld.wav",[self  getRecordSavePath],_current_part_Counts+1,_current_question_Counts+1];
     [_recordManager prepareRecorderWithFilePath:testPath];
     [_testAudioPathArray addObject:testPath];
 }
@@ -885,31 +885,24 @@
                  [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"modelpart.zip" mimeType:@"application/zip"];
                  
              }
-         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             
-             if (responseObject)
-             {
-                 NSDictionary *dicRes = responseObject;
-                 NSString *strState = [dicRes objectForKey:@"state"];
-                 if (strState && [strState isEqualToString:@"success"])
-                 {
-                     NSLog(@"upload success!");
-                     // 提交成功后回到topic详情页面
-                     [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
-                     NSLog(@"模考提交老师成功");
-                     [self backToTopicPage];
+         } success:^(AFHTTPRequestOperation *operation, id responseObject)
+         {
+             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
+             NSLog(@"%@",dic);
 
-                 }
-                 else
-                 {
-                     
-                 }
+             if ([[dic objectForKey:@"respCode"] intValue] == 1000)
+             {
+                 // 提交成功后回到topic详情页面
+                 NSLog(@"upload success!");
+                 // 提交成功后回到topic详情页面
+                 [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+                 NSLog(@"模考提交老师成功");
+                 [self backToTopicPage];
              }
              else
              {
-                 
+                 NSLog(@"提交失败");
              }
-             
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"失败乃");
          }];

@@ -152,7 +152,7 @@
      */
     //    NSString *path = [[NSBundle mainBundle]pathForResource:@"info" ofType:@"json"];
     
-    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",[OralDBFuncs getCurrentTopic]];
+    NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/info.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
     
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *maindict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];

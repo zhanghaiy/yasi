@@ -98,6 +98,15 @@
     return NO; // 返回NO表示要显示，返回YES将hiden
 }
 
+
+- (NSString *)getPathWithTopic:(NSString *)topicName IsPart:(BOOL)isPart
+{
+    NSArray *sectionArr = @[@"topicTest",@"topicResource"];
+    return [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/%@",topicName,[sectionArr objectAtIndex:isPart]];
+}
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

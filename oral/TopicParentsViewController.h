@@ -41,5 +41,6 @@
 - (void)addTitleLabelWithTitleWithTitle:(NSString *)title;
 // 返回上一页
 - (void)backToPrePage;
+- (NSString *)getPathWithTopic:(NSString *)topicName IsPart:(BOOL)isPart;
 
 @end

@@ -21,10 +21,13 @@
 #import "NSString+CalculateStringSize.h"
 #import "NSURLConnectionRequest.h"
 
+#import "UIButton+WebCache.h"
+#import "UIImageView+WebCache.h"
+
 @interface ScoreDetailViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
-    UIView *_topBackV;
-    UIScrollView *_pointScrollV;
+    UIView *_topBackV; //背景
+    UIScrollView *_pointScrollV; // 滚动视图
     
     BOOL _open;// 是否展开
     NSInteger _openIndex;// 展开的索引
@@ -37,18 +40,19 @@
     
 
     TableView_headView *_point3_tableHeaderView;// 未提交状态
-    Score_Point3_TableHeaderView_commited *_point3_TableHeaderView_commited;// 提交状态
-    AudioPlayer *_audioPlayerManager;
+    Score_Point3_TableHeaderView_commited *_point3_TableHeaderView_commited;// 已反馈状态
+    AudioPlayer *_audioPlayerManager;// 播放器
     
-    NSMutableArray *_point_1_scoreMenu_Array;
-    NSMutableArray *_point_2_scoreMenu_Array;
-    NSMutableArray *_point_1_text_Array;
-    NSMutableArray *_point_2_text_Array;
-    NSMutableArray *_point_3_text_Array;
+    NSMutableArray *_point_1_scoreMenu_Array; //关卡1数据库存储结果
+    NSMutableArray *_point_2_scoreMenu_Array; //关卡2数据库存储结果
+    NSMutableArray *_point_1_text_Array;// 关卡1文本
+    NSMutableArray *_point_2_text_Array;// 关卡2文本
+    NSMutableArray *_point_3_text_Array;// 关卡3问题与回答资源
     
-    BOOL _requestReviewSuccess;
+    BOOL _requestReviewSuccess;// 请求评价成功
+    NSMutableArray *_reviewArray;// 老师评价结果
     
-    NSMutableArray *_reviewArray;
+    NSDictionary *_review_sum_dict;
 }
 @end
 
@@ -67,6 +71,7 @@
 #define kPoint3_Footer_Tag 999
 
 #define kPoint3_Section_BackBtn_Tag 500
+#define kReviewBackViewTag 550
 
 
 #pragma mark - 获取本地音频时长
@@ -82,10 +87,12 @@
     return audioDurationSeconds;
 }
 
-#pragma mark - 合成point 1 、2 、数据源
+#pragma mark - 手动合成所需数据
+#pragma mark -- 合成point 1 、2 、3、数据源
 - (void)makeUpPoint_1andpoint_2DataArray
 {
-    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",[OralDBFuncs getCurrentTopic]];
+    NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/info.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
+
     NSLog(@"%@",jsonPath);
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
@@ -144,13 +151,43 @@
         NSDictionary *point_3_dic = [point_3_question_array objectAtIndex:i];
         NSString *questionText = [point_3_dic objectForKey:@"question"];
         NSString *questionID = [point_3_dic objectForKey:@"id"];
-        NSString *answerAudioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/part%d-3-%d.wav",[OralDBFuncs getCurrentTopic],[OralDBFuncs getCurrentPart],i];
+        NSString *answerAudioPath = [NSString stringWithFormat:@"%@/part%d-3-%d.wav",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES],[OralDBFuncs getCurrentPart],i];
         // 此处获取时长
         float duration = [self getAudioDurationWithPath:answerAudioPath];
         NSDictionary *makeDic = @{@"question":questionText,@"questionid":questionID,@"answerPath":answerAudioPath,@"duration":[NSNumber numberWithFloat:duration]};
         [_point_3_text_Array addObject:makeDic];
     }
     
+}
+
+#pragma mark -- 合成point_3_footer 数据
+- (void)makeUpFooterView_point_3
+{
+    _point3_footer_array = [[NSMutableArray alloc]init];
+    for (int i = 0; i < _point_3_text_Array.count; i ++)
+    {
+        NSString *questionId = [[_point_3_text_Array objectAtIndex:i] objectForKey:@"questionid"];
+        
+        NSDictionary *selecDic = [self retrievalReviewDictWithQuestionID:questionId];
+        [_point3_footer_array addObject:[self create_point3_footer_view_Tag:i andReviewDict:selecDic]];
+    }
+}
+
+#pragma mark -- 根据问题id 查找问题的评价
+- (NSDictionary *)retrievalReviewDictWithQuestionID:(NSString *)questionid
+{
+    for (NSDictionary *subDic in _reviewArray)
+    {
+        if ([subDic objectForKey:@"questionid"])
+        {
+            NSString *questionID = [subDic objectForKey:@"questionid"];
+            if ([questionID isEqualToString:questionid])
+            {
+                return subDic;
+            }
+        }
+    }
+    return nil;
 }
 
 
@@ -241,14 +278,31 @@
     return sectionView;
 }
 
-#pragma mark - 请求已处理信息
+#pragma mark -- 创建未提交头视图
+- (void)createPoint_3TabHeadView
+{
+    _point3_tableHeaderView = [[[NSBundle mainBundle]loadNibNamed:@"TableView_headView" owner:self options:0] lastObject];
+    _point3_tableHeaderView.titleLabel.textColor = _backColor;
+    [_point3_tableHeaderView.commitButton setBackgroundColor:_backColor];
+    [_point3_tableHeaderView.commitButton addTarget:self action:@selector(commitAnswerToTeacher:) forControlEvents:UIControlEventTouchUpInside];
+}
+#pragma mark -- 提交按钮 part
+- (void)commitAnswerToTeacher:(UIButton *)btn
+{
+    // 提交给老师 从本地获取数据 压缩zip包 上传服务端
+    NSLog(@"提交给老师 从本地获取数据 压缩zip包 上传服务端");
+}
+
+
+
+#pragma mark - 网络
+#pragma mark -- 请求已处理信息
 - (void)requestLevel_3_watingInfo
 {
     NSString *urlSTr = [NSString stringWithFormat:@"%@%@?waitingid=%@",kBaseIPUrl,kReviewWatingEvent,[_watingDic objectForKey:@"waitingid"]];
     [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestLevel_3_watingInfoCallBack:) andRefresh:YES];
 }
 
-#pragma mark - 请求关卡3老师反馈
 #pragma mark -- 网络请求反馈
 - (void)requestLevel_3_watingInfoCallBack:(NSURLConnectionRequest *)request
 {
@@ -259,53 +313,145 @@
         {
             _requestReviewSuccess = YES;
             _reviewArray = [dict objectForKey:@"teacheranswerlist"];
+            
+            for (NSDictionary *subdic in _reviewArray)
+            {
+                
+                if (![[subdic objectForKey:@"questionid"] length])
+                {
+                    NSLog(@"%@",[subdic objectForKey:@"questionid"]);
+                    _review_sum_dict = subdic;
+                }
+            }
+            
             UITableView *tabV = (UITableView *)[self.view viewWithTag:kTableViewTag+2];
             [tabV reloadData];
         }
     }
 }
 
-#pragma mark -- 合成point_3_footer 数据
-- (void)makeUpFooterView_point_3
-{
-    _point3_footer_array = [[NSMutableArray alloc]init];
-    for (int i = 0; i < _point_3_text_Array.count; i ++)
-    {
-        NSString *questionId = [[_point_3_text_Array objectAtIndex:i] objectForKey:@"questionid"];
-        
-        NSDictionary *selecDic = [self retrievalReviewDictWithQuestionID:questionId];
-        [_point3_footer_array addObject:[self create_point3_footer_view_Tag:i andReviewDict:selecDic]];
-    }
-}
-
-#pragma mark -- 根据问题id 查找问题的评价
-- (NSDictionary *)retrievalReviewDictWithQuestionID:(NSString *)questionid
-{
-    for (NSDictionary *subDic in _reviewArray)
-    {
-        if ([subDic objectForKey:@"questionid"])
-        {
-            NSString *questionID = [subDic objectForKey:@"questionid"];
-            if ([questionID isEqualToString:questionid])
-            {
-                return subDic;
-            }
-        }
-    }
-    return nil;
-}
 
 #pragma mark -- 总评价 展开 -- 待完善
 - (void)openTeacherReview:(UIButton *)btn
 {
     // 展开 老师总评价
-    //    UITableView *point_3_tableV = (UITableView *)[self.view viewWithTag:kTableViewTag+2];
-    
+    NSLog(@"展开 老师总评价");
+    UITableView *point_3_tableV = (UITableView *)[self.view viewWithTag:kTableViewTag+2];
     if (_review_part)
     {
+        point_3_tableV.tableHeaderView = [self openedViewOfPoint_3_reviewedWithDict:_review_sum_dict];
+    }
+}
+
+static UIView *openView;
+- (UIView *)openedViewOfPoint_3_reviewedWithDict:(NSDictionary *)dic
+{
+    BOOL _review_text=NO;
+    NSInteger reviewWidth = 90;
+    NSInteger reviewHeight = 25;
+    NSInteger viewHeight = 130;
+    // 判断 是文字还是音频
+    if ([[dic objectForKey:@"teacherurl"] length])
+    {
+        // 音频
         
     }
+    else
+    {
+        _review_text = YES;
+        // 文字
+        NSString *reviewText = [dic objectForKey:@"teacherevaluate"];
+        // 计算文字大小
+        CGRect rect_1 = [NSString CalculateSizeOfString:reviewText Width:99999 Height:15 FontSize:kFontSize2];
+        // 两种情况 1、宽度小于1行 2、多行
+        if (rect_1.size.width>(kScreentWidth-90))
+        {
+            // 2 、 多行
+            CGRect rect_2 = [NSString CalculateSizeOfString:reviewText Width:(kScreentWidth-90) Height:99999 FontSize:kFontSize2];
+            reviewHeight = round(rect_2.size.height);
+            viewHeight = 130+reviewHeight-25;
+        }
+        else
+        {
+            // 1、1行
+            reviewWidth = round(rect_1.size.width);
+            reviewHeight = 25;
+            viewHeight = 130;
+        }
+    }
     
+    if (openView == nil)
+    {
+        openView = [[UIView alloc]init];
+    }
+
+    [openView setFrame:CGRectMake(0, 0, kScreentWidth, viewHeight)];
+    openView.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *desLab = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, kScreentWidth-105, 30)];
+    desLab.text = @"老师给你综合评价喽~快点开看看吧~~";
+    desLab.textColor = kPart_Button_Color;
+    desLab.font =[UIFont systemFontOfSize:kFontSize2];
+    [openView addSubview:desLab];
+    
+    UIButton *scoreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [scoreBtn setFrame:CGRectMake(kScreentWidth-75, 15, 60, 40)];
+    scoreBtn.layer.masksToBounds = YES;
+    scoreBtn.layer.cornerRadius = scoreBtn.frame.size.height/2;
+    scoreBtn.backgroundColor = kPart_Button_Color;
+    [scoreBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [scoreBtn setTitle:[NSString stringWithFormat:@"%f",[[_watingDic objectForKey:@"score"] floatValue]] forState:UIControlStateNormal];
+    scoreBtn.titleLabel.font =  [UIFont systemFontOfSize:kFontSize2];
+    [openView addSubview:scoreBtn];
+    
+    UIImageView *reviewImgV = [[UIImageView alloc]initWithFrame:CGRectMake(15, 50, 16, 14)];
+    [reviewImgV setImage:[UIImage imageNamed:@""]];
+    [openView addSubview:reviewImgV];
+    
+    
+    UIButton *teacherHeadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [teacherHeadBtn setFrame:CGRectMake(15, 75, 45, 45)];
+    [teacherHeadBtn setBackgroundImage:[UIImage imageNamed:@"class_teacher_head"] forState:UIControlStateNormal];
+    [teacherHeadBtn setImageWithURL:[NSURL URLWithString:[_watingDic objectForKey:@"teachericon"]] placeholderImage:[UIImage imageNamed:@"class_teacher_head"]];
+    
+    teacherHeadBtn.layer.masksToBounds = YES;
+    teacherHeadBtn.layer.cornerRadius = teacherHeadBtn.frame.size.height/2;
+    [openView addSubview:teacherHeadBtn];
+    
+    UIImageView *spotImgV = [[UIImageView alloc]initWithFrame:CGRectMake(65, 95, 5, 5)];
+    spotImgV.backgroundColor = kPart_Button_Color;
+    spotImgV.layer.masksToBounds = YES;
+    spotImgV.layer.cornerRadius = spotImgV.frame.size.height/2;
+    [openView addSubview:spotImgV];
+    
+    UIButton *reviewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [reviewBtn setFrame:CGRectMake(75, 85, reviewWidth, reviewHeight)];
+    reviewBtn.backgroundColor = kPart_Button_Color;
+    reviewBtn.layer.masksToBounds = YES;
+    float ratio = reviewHeight>25?5:reviewBtn.frame.size.height/2;
+    reviewBtn.layer.cornerRadius = ratio;
+    [openView addSubview:reviewBtn];
+    
+    if (_review_text)
+    {
+        // 文字
+        [reviewBtn setTitle:[dic objectForKey:@"teacherevaluate"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        int time = round([[dic objectForKey:@"teacherurllength"] floatValue]);
+        [reviewBtn setTitle:[NSString stringWithFormat:@"%d\"",time] forState:UIControlStateNormal];
+        [reviewBtn addTarget:self action:@selector(playSumReview:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return openView;
+}
+
+#pragma mark -- 播放总评
+- (void)playSumReview:(UIButton *)btn
+{
+    // 播放评价音频 -- 待完善
+    NSString *path = @"";//[NSString stringWithFormat:@"%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
+    [_audioPlayerManager playerPlayWithFilePath:path];
 }
 
 
@@ -336,11 +482,6 @@
     {
         [_point3_section_array addObject:[self create_point3_section_view_Tag:i andInfoDict:nil]];
     }
-    // 未提交时头视图
-    _point3_tableHeaderView = [[[NSBundle mainBundle]loadNibNamed:@"TableView_headView" owner:self options:0] lastObject];
-    // 已反馈头视图
-    _point3_TableHeaderView_commited = [[[NSBundle mainBundle]loadNibNamed:@"Score_Point3_TableHeaderView_commited" owner:self options:0] lastObject];
-
     
     // 判断是否练习过
     if ([OralDBFuncs getPartLevel3PracticeedwithTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]])
@@ -349,6 +490,32 @@
         _practiced_point_3 = YES;
         // 判断是否提交
         _commit_point_3 = [OralDBFuncs getPartLevel3CommitwithTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+        UITableView *point_3_tableV = (UITableView *)[self.view viewWithTag:kTableViewTag+2];
+        if (_review_part)
+        {
+            // 已反馈头视图
+            _point3_TableHeaderView_commited = [[[NSBundle mainBundle]loadNibNamed:@"Score_Point3_TableHeaderView_commited" owner:self options:0] lastObject];
+            [_point3_TableHeaderView_commited.backBtn addTarget:self action:@selector(openTeacherReview:) forControlEvents:UIControlEventTouchUpInside];
+            
+            point_3_tableV.tableHeaderView = _point3_TableHeaderView_commited;
+        }
+        else
+        {
+            point_3_tableV.tableHeaderView = _point3_tableHeaderView;
+            if (_commit_point_3)
+            {
+                // 已提交 显示待评价
+                [_point3_tableHeaderView.commitButton setTitle:@"已提交" forState:UIControlStateNormal];
+                _point3_tableHeaderView.titleLabel.text = @"已经提交给老师，等待老师评价~~~~";
+            }
+            else
+            {
+                // 未提交 显示提交
+                // 已提交 显示待评价
+                [_point3_tableHeaderView.commitButton setTitle:@"提交" forState:UIControlStateNormal];
+                _point3_tableHeaderView.titleLabel.text = @"提交给老师点评~~~~";
+            }
+        }
     }
     else
     {
@@ -360,38 +527,13 @@
         lab.font = [UIFont systemFontOfSize:kFontSize2];
         
         UITableView *point_3_tableV = (UITableView *)[self.view viewWithTag:kTableViewTag+2];
-        point_3_tableV.tableFooterView = lab;
+        point_3_tableV.tableHeaderView = lab;
     }
 
-    UITableView *point_3_tableV = (UITableView *)[self.view viewWithTag:kTableViewTag+2];
-    if (_review_part)
-    {
-        [_point3_TableHeaderView_commited.backBtn addTarget:self action:@selector(openTeacherReview:) forControlEvents:UIControlEventTouchUpInside];
-
-        point_3_tableV.tableHeaderView = _point3_TableHeaderView_commited;
-    }
-    else
-    {
-        point_3_tableV.tableHeaderView = _point3_tableHeaderView;
-        if (_commit_point_3)
-        {
-            // 已提交 显示待评价
-            [_point3_tableHeaderView.commitButton setTitle:@"已提交" forState:UIControlStateNormal];
-            _point3_tableHeaderView.titleLabel.text = @"已经提交给老师，等待老师评价~~~~";
-        }
-        else
-        {
-            // 未提交 显示提交
-            // 已提交 显示待评价
-            [_point3_tableHeaderView.commitButton setTitle:@"提交" forState:UIControlStateNormal];
-            _point3_tableHeaderView.titleLabel.text = @"提交给老师点评~~~~";
-        }
-    }
     
     // 请求老师反馈
     if (_review_part)
     {
-        //
         [self requestLevel_3_watingInfo];
     }
 }
@@ -634,7 +776,12 @@
             // 自己的回答信息
             
             NSDictionary *dict = [_point_3_text_Array objectAtIndex:indexPath.section];
-            cell.reviewLabel.text = [NSString stringWithFormat:@"%d\"",[[dict objectForKey:@"duration"] intValue]];
+            cell.reviewLabel.text = [NSString stringWithFormat:@"%f\"",round([[dict objectForKey:@"duration"] floatValue])];
+            
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(playMineAnswer:)];
+            [cell.reviewBackView addGestureRecognizer:tap];
+            
+            cell.reviewBackView.tag = indexPath.section + kReviewBackViewTag;
             
             if (_openIndex == indexPath.section && _open)
             {
@@ -652,6 +799,8 @@
     }
     return nil;
 }
+
+
 
 #pragma mark -- 区 尾部视图 -- View
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -700,25 +849,16 @@
     return 0.1;
 }
 
-#pragma mark - 选中cell
+#pragma mark -- 选中cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 选中播放音频
+    // point1、2 选中播放音频
 }
 
 
 
 
 #pragma mark - 播放器有关方法
-
-//#pragma mark - 播放自己的音频
-//- (void)playMyAnswer:(UIButton *)btn
-//{
-//    // 播放回答音频 此处暂时写死 --- 待完善
-//    NSString *audioPath = [[NSBundle mainBundle]pathForResource:@"Question_3224" ofType:@"mp3"];
-//    [_audioPlayerManager playerPlayWithFilePath:audioPath];
-//}
-
 #pragma mark -- 创建播放器
 - (void)createPlayer
 {
@@ -727,16 +867,31 @@
     _audioPlayerManager.action = @selector(playFinished:);
 }
 
+#pragma mark -- 播放自己回答录音
+- (void)playMineAnswer:(UITapGestureRecognizer*)tap
+{
+    NSLog(@"播放自己回答录音");
+    UIView *tapView = tap.view;
+    NSInteger index = tapView.tag - kReviewBackViewTag;
+    // 播放
+    NSDictionary *dic = [_point_3_text_Array objectAtIndex:index];
+    NSString *audioPath = [dic objectForKey:@"answerPath"];
+    [_audioPlayerManager playerPlayWithFilePath:audioPath];
+}
+
+#pragma mark -- 暂停
 - (void)pasePlayer
 {
     [_audioPlayerManager pausePlay];
 }
 
+#pragma mark -- 停止
 - (void)stopPlayer
 {
     [_audioPlayerManager stopPlay];
 }
 
+#pragma mark -- 播放回调
 - (void)playFinished:(AudioPlayer *)player
 {
     //
@@ -778,14 +933,8 @@
     [self changePointButtonSelected:count];
 }
 
-#pragma mark -- 创建未提交头视图
-- (void)createPoint_3TabHeadView
-{
-    _point3_tableHeaderView = [[[NSBundle mainBundle]loadNibNamed:@"TableView_headView" owner:self options:0] lastObject];
-    _point3_tableHeaderView.titleLabel.textColor = _backColor;
-    [_point3_tableHeaderView.commitButton setBackgroundColor:_backColor];
-    [_point3_tableHeaderView.commitButton addTarget:self action:@selector(commitToTeacher:) forControlEvents:UIControlEventTouchUpInside];
-}
+
+
 
 #pragma mark -- 去掉html标签
 -(NSString *)filterHTML:(NSString *)html
@@ -805,11 +954,7 @@
 }
 
 
-#pragma mark -- 提交按钮 part
-- (void)commitToTeacher:(UIButton *)btn
-{
-    // 提交给老师 从本地获取数据 压缩zip包 上传服务端
-}
+
 
 #pragma mark -- 展开选中的cell
 - (void)openSelectedCell:(UIButton *)btn

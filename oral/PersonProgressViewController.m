@@ -10,7 +10,7 @@
 #import "CheckScoreViewController.h"
 #import "NSURLConnectionRequest.h"
 #import "PointProgressView.h"
-
+#import "OralDBFuncs.h"
 
 @interface PersonProgressViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -157,7 +157,7 @@
     // 传参数  进入成绩单 区分topic ----> 待完善
     NSInteger index = btn.tag - kTopBtnBaseTag;
     NSDictionary *dic = [_notPassListArray objectAtIndex:index];
-    
+    [OralDBFuncs setCurrentTopic:[dic objectForKey:@"classtype"]];
     CheckScoreViewController *scoreMenuVC = [[CheckScoreViewController alloc]initWithNibName:@"CheckScoreViewController" bundle:nil];
     [self.navigationController pushViewController:scoreMenuVC animated:YES];
 }
@@ -168,7 +168,7 @@
     // 进入成绩单 区分topic ----> 待完善
     NSInteger index = btn.tag - kBottomBtnTag;
     NSDictionary *dic = [_passListArray objectAtIndex:index];
-
+    [OralDBFuncs setCurrentTopic:[dic objectForKey:@"classtype"]];
     CheckScoreViewController *scoreMenuVC = [[CheckScoreViewController alloc]initWithNibName:@"CheckScoreViewController" bundle:nil];
     [self.navigationController pushViewController:scoreMenuVC animated:YES];
 }

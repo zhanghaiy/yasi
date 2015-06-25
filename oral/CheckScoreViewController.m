@@ -59,7 +59,7 @@
 #pragma mark - 将问题音频 答案音频 文件名 组成一个数据 便于使用
 - (void)analysizeTestJson
 {
-    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/temp/mockinfo.json",[OralDBFuncs getCurrentTopic]];
+    NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/mockinfo.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
     if ([[NSFileManager defaultManager] fileExistsAtPath:jsonPath])
     {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:jsonPath] options:0 error:nil];
@@ -265,12 +265,10 @@
         {
             // 成功
             NSArray *waitingList = [dic objectForKey:@"waitingList"];
-            NSArray *joinclassinfo = [dic objectForKey:@"joinclassinfo"];
             // 此处需：遍历数组 找到 当前topic 当前的模考反馈信息 此处需和后台确认
-            
             if (waitingList.count)
             {
-                // 老师已反馈  从反馈中找到当前topic 的 反馈
+                // 老师已反馈  从反馈中找到当前topic 的 反馈 1、闯关反馈 2、模考反馈
                 for (NSDictionary *watingListDic in waitingList)
                 {
                     NSString *topicid = [watingListDic objectForKey:@"topicid"];
@@ -283,6 +281,7 @@
                             _wating_part = YES;
                             _watingDict_part = watingListDic;
                         }
+                        // 此处缺少查询模考反馈 --- 待完善
                     }
                 }
             }
@@ -291,11 +290,15 @@
                 // 没有反馈 
             }
             
+            //  班级信息
+//            NSArray *joinclassinfo = [dic objectForKey:@"joinclassinfo"];
+            
+
         }
     }
 }
 
-#pragma mark -- 请求当前topic的已处理事项
+#pragma mark -- 请求当前topic的模考已处理事项
 - (void)requestWithWatingId:(NSString *)waitingid
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?waitingid=%@",kBaseIPUrl,kReviewWatingEvent,waitingid];
@@ -311,7 +314,7 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
         if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
         {
-            // 查询成功
+            // 请求模考反馈成功 --- 待完善
             NSDictionary *reviewDic = [[dic objectForKey:@"teacheranswerlist"] lastObject];
         }
     }
@@ -319,7 +322,7 @@
 
 - (void)commitTestInfo
 {
-    NSString *testZipPath =  [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/modelpart.zip",[OralDBFuncs getCurrentTopic]];
+    NSString *testZipPath = [NSString stringWithFormat:@"%@/modelpart.zip",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
     NSData *zipData = [NSData dataWithContentsOfFile:testZipPath];
     
     // 网络提交 uploadfile
@@ -432,7 +435,7 @@
 - (void)playQuestion_test
 {
     NSString *questionName = [[_currentTestArray objectAtIndex:_markPlayCounts/2] objectForKey:@"quesUrl"];
-    NSString *questionPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/temp/%@",[OralDBFuncs getCurrentTopic],questionName];
+    NSString *questionPath = [NSString stringWithFormat:@"%@temp/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO],questionName];
     NSLog(@"%@",questionPath);
     [_playerManager playerPlayWithFilePath:questionPath];
 }
@@ -441,7 +444,7 @@
 - (void)playAnswer_test
 {
     NSString *answerName = [[_currentTestArray objectAtIndex:_markPlayCounts/2] objectForKey:@"answerUrl"];
-    NSString *answerPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/%@",[OralDBFuncs getCurrentTopic],answerName];
+    NSString *answerPath = [NSString stringWithFormat:@"%@/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO],answerName];
     NSLog(@"%@",answerPath);
     [_playerManager playerPlayWithFilePath:answerPath];
 }

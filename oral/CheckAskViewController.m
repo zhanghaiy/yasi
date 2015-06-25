@@ -68,7 +68,10 @@
 - (void)moNiDataFromLocal
 {
     // json文件路径
-    NSString *jsonPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/info.json",[OralDBFuncs getCurrentTopic]];
+
+    NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/info.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
+
+    
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     // 整个topic资源信息
@@ -351,7 +354,9 @@
 {
     // 获取音频路径
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
-    NSString *audioPath = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicResource/temp/%@",[OralDBFuncs getCurrentTopic],audiourl];
+    
+    NSString *audioPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES],audiourl];
+    
     [audioPlayer playerPlayWithFilePath:audioPath];
 }
 
@@ -432,7 +437,7 @@
 #pragma mark - 开始录音
 - (void)startRecord
 {
-    NSString *filePath = [NSString stringWithFormat:@"%@/Documents/%@/topicResource/Part%d-%d-%ld.wav",NSHomeDirectory(),[OralDBFuncs getCurrentTopic],[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint],_currentQuestionCounts+1];
+    NSString *filePath = [NSString stringWithFormat:@"%@/Part%d-%d-%ld.wav",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES],[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint],_currentQuestionCounts+1];
     [_recordPathArray addObject:filePath];
    [_recordManager prepareRecorderWithFilePath:filePath];
 }
@@ -522,8 +527,8 @@
     {
         // 现在提交 打包
         
-        //1、 标记 关卡3是否提交
-        [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+//        //1、 标记 关卡3是否提交
+//        [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
         // 2、判断是否有默认老师 无---跳转到选择老师界面  有----直接提交
         if ([OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]])
         {
@@ -563,24 +568,20 @@
                  
              }
          } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             
-             if (responseObject)
+             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
+             NSLog(@"%@",dic);
+             if ([[dic objectForKey:@"respCode"] intValue] == 1000)
              {
-                 NSDictionary *dicRes = responseObject;
-                 NSString *strState = [dicRes objectForKey:@"state"];
-                 if (strState && [strState isEqualToString:@"success"])
-                 {
-                     NSLog(@"upload success!");
-                     // 提交成功后回到topic详情页面
-                     [self backToTopicPage];
-                 } else
-                 {
-                     
-                 }
-             } else
-             {
-                 
+                 // 标记 关卡3已经提交
+                 [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+                 // 提交成功后回到topic详情页面
+                 [self backToTopicPage];
              }
+             else
+             {
+                 NSLog(@"提交失败");
+             }
+             
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"失败乃");
@@ -593,7 +594,7 @@
 #pragma mark - 压缩zip包
 - (NSData *)zipCurrentPartFile
 {
-    NSString *zipPath = [NSString stringWithFormat:@"%@/part.zip",[self basePath]];
+    NSString *zipPath = [NSString stringWithFormat:@"%@/part.zip",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
     ZipArchive *zip = [[ZipArchive alloc] init];
     BOOL ret = [zip CreateZipFile2:zipPath];
     if (ret)
@@ -603,19 +604,13 @@
             NSString *audioName = [[audioPath componentsSeparatedByString:@"/"] lastObject];
             [zip addFileToZip:audioPath newname:audioName];
         }
-        NSString *jsonPath = [NSString stringWithFormat:@"%@/part.json",[self basePath]];
+        NSString *jsonPath = [NSString stringWithFormat:@"%@/part.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
         [zip addFileToZip:jsonPath newname:@"part.json"];
     }
     NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
     return zipData;
 }
 
-#pragma mark - 基础路径
-- (NSString *)basePath
-{
-    NSString *basePath = [NSString stringWithFormat:@"%@/Documents/%@/topicResource",NSHomeDirectory(),[OralDBFuncs getCurrentTopic]];
-    return basePath;
-}
 
 #pragma mark - 合成json文件 保存本地
 - (BOOL)makeUpJsonFile
@@ -644,8 +639,7 @@
     NSError *parseError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:finalDict options:NSJSONWritingPrettyPrinted error:&parseError];
    
-    NSString *jsonFilePath = [NSString stringWithFormat:@"%@/part.json",[self basePath]];
-    NSLog(@"~~~~~~~json文件保存路径：%@~~~~~~~",jsonFilePath);
+    NSString *jsonFilePath = [NSString stringWithFormat:@"%@/part.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
     BOOL saveSuc = [jsonData writeToFile:jsonFilePath atomically:YES];
     return saveSuc;
 }
