@@ -901,7 +901,7 @@
              }
              else
              {
-                 NSLog(@"提交失败");
+                 NSLog(@"提交失败：%@",[dic objectForKey:@"remark"]);
              }
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"失败乃");
@@ -914,7 +914,7 @@
 #pragma mark - 合成json文件
 - (BOOL)makeUpLocalJsonFile_test
 {
-    NSDictionary *modelpartInfo = @{@"modelpartInfo":_jsonArray,@"teacherid":_teacherid,@"topic":[OralDBFuncs getCurrentTopic],@"useid":[OralDBFuncs getCurrentUserID]};
+    NSDictionary *modelpartInfo = @{@"modelpartInfo":_jsonArray,@"teacherid":_teacherid,@"topic":[OralDBFuncs getCurrentTopicID],@"useid":[OralDBFuncs getCurrentUserID]};
     NSError *parseError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:modelpartInfo options:NSJSONWritingPrettyPrinted error:&parseError];
     NSString *jsonFilePath = [NSString stringWithFormat:@"%@/modelpart.json",[self getRecordSavePath]];

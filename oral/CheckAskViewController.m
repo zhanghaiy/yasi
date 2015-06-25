@@ -629,7 +629,16 @@
         int currentPart = [OralDBFuncs getCurrentPart];
         int currentPoint = i+1;
         int score = [self getScoreWithPart:currentPart Point:currentPoint Record:record];
-        NSDictionary *subDic = @{@"ifsubmitteacher":@"否",@"level":level,@"levelid":levelid,@"score":[NSNumber numberWithInt:score],@"status":@"通关",@"topicid":topicid,@"userid":[OralDBFuncs getCurrentUserID]};
+        NSString *pass_mark;
+        if (i == 2)
+        {
+            pass_mark = @"未通关";
+        }
+        else
+        {
+            pass_mark = @"通关";
+        }
+        NSDictionary *subDic = @{@"ifsubmitteacher":@"否",@"level":level,@"levelid":levelid,@"score":[NSNumber numberWithInt:score],@"status":pass_mark,@"topicid":topicid,@"userid":[OralDBFuncs getCurrentUserID]};
         [checkPoint addObject:subDic];
     }
     

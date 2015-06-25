@@ -15,7 +15,7 @@
 {
     UITableView *_person_edit_tableV;
     NSArray *_edit_Menu_Array;
-    NSMutableArray *_edit_Info_Array;
+    NSArray *_edit_Info_Array;
 
     NSString *_sexString;
     
@@ -34,39 +34,92 @@
 #define kActionSheet_sex_Tag 66
 #define kActionSheet_headImage_Tag 67
 
-//- (void)makeUpDataArray
-//{
-//    
-
-//    _dataArray = [[NSMutableArray alloc]init];
-//    NSArray *titleArr = @[@"头像:",@"昵称:",@"性别:",@"生日:",@"星座:",@"兴趣爱好:",@"个性签名:"];
-//    NSString *icon = [_personInfoDict objectForKey:@"icon"];
-//    NSString *nickname = [_personInfoDict objectForKey:@"nickname"];
-//    NSString *sex = [_personInfoDict objectForKey:@"sex"];
-//    NSString *birthday = [_personInfoDict objectForKey:@"birthday"];
-//    NSString *constellation;
-//    if ([[_personInfoDict objectForKey:@"constellation"] length]<=2)
-//    {
-//        NSLog(@"~~~~~~~~~~~");
-//        NSArray *comArr = [birthday componentsSeparatedByString:@"-"];
-//        constellation = [ConstellationManager getAstroWithMonth:[[comArr objectAtIndex:1] integerValue] day:[[comArr objectAtIndex:2] integerValue]];
-//    }
-//    else
-//    {
-//        constellation = [_personInfoDict objectForKey:@"constellation"];
-//    }
-//    NSString *hobbies = [_personInfoDict objectForKey:@"hobbies"];
-//    NSString *signiture = [_personInfoDict objectForKey:@"signiture"];
-//    
-//    NSArray *infoArr = @[icon,nickname,sex,birthday,constellation,hobbies,signiture];
-//    for (int i = 0; i < 7; i ++)
-//    {
-//        NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
-//        [dict setObject:[titleArr objectAtIndex:i] forKey:@"title"];
-//        [dict setObject:[infoArr objectAtIndex:i] forKey:@"detailTitle"];
-//        [_dataArray addObject:dict];
-//    }
-//}
+- (void)makeUpDataArray
+{
+    _edit_Menu_Array = @[@"昵称：",@"性别：",@"出生日期：",@"星座：",@"兴趣爱好："];
+    NSString *icon;
+    if ([_personInfoDict objectForKey:@"icon"])
+    {
+        icon = [_personInfoDict objectForKey:@"icon"];
+    }
+    else
+    {
+        icon = @"未填写";
+    }
+    
+    NSString *nickname;
+    if ([_personInfoDict objectForKey:@"nickname"])
+    {
+        nickname = [_personInfoDict objectForKey:@"nickname"];
+    }
+    else
+    {
+        nickname = @"未填写";
+    }
+    NSString *sex;
+    if ([_personInfoDict objectForKey:@"sex"])
+    {
+        sex = [_personInfoDict objectForKey:@"sex"];
+    }
+    else
+    {
+        sex = @"未填写";
+    }
+    
+    
+    NSString *birthday;
+    if ([_personInfoDict objectForKey:@"birthday"])
+    {
+        birthday = [_personInfoDict objectForKey:@"birthday"];
+    }
+    else
+    {
+       birthday = @"未填写";
+    }
+    
+    NSString *constellation;
+    if ([[_personInfoDict objectForKey:@"constellation"] length]<=2)
+    {
+        NSLog(@"~~~~~~~~~~~");
+        if ([birthday length]>4)
+        {
+            NSArray *comArr = [birthday componentsSeparatedByString:@"."];
+            constellation = [ConstellationManager getAstroWithMonth:[[comArr objectAtIndex:1] intValue] day:[[comArr objectAtIndex:2] intValue]];
+        }
+        else
+        {
+           constellation = @"未填写";
+        }
+    }
+    else
+    {
+        constellation = [_personInfoDict objectForKey:@"constellation"];
+    }
+    
+    NSString *hobbies;
+    if ([_personInfoDict objectForKey:@"hobbies"])
+    {
+        hobbies = [_personInfoDict objectForKey:@"hobbies"];
+    }
+    else
+    {
+        hobbies = @"未填写";
+    }
+    
+    
+    NSString *signiture;
+    
+    if ([_personInfoDict objectForKey:@"signiture"])
+    {
+        signiture = [_personInfoDict objectForKey:@"signiture"];
+    }
+    else
+    {
+        signiture = @"未填写";
+    }
+    
+    _edit_Info_Array = @[nickname,sex,birthday,constellation,hobbies,signiture];
+}
 
 
 - (void)viewDidLoad {
@@ -74,11 +127,22 @@
     // Do any additional setup after loading the view from its nib.
     
     self.view.backgroundColor = _backgroundViewColor;
-    _edit_Menu_Array = @[@"昵称：",@"性别：",@"出生日期：",@"星座：",@"兴趣爱好："];
+    //    _edit_Menu_Array = @[@"昵称：",@"性别：",@"出生日期：",@"星座：",@"兴趣爱好："];
+    //    _edit_Info_Array = [[NSMutableArray alloc]initWithObjects:@"小花",@"女：",@"1998.12.05：",@"射手座",@"听音乐", nil];
+    
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"My Travel"];
-//    _edit_Info_Array = [[NSMutableArray alloc]initWithObjects:@"小花",@"女：",@"1998.12.05：",@"射手座",@"听音乐", nil];
+    [self makeUpDataArray];
+    
+    UIButton *finishBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [finishBtn setFrame:CGRectMake(kScreentWidth-60, 29, 50, 30)];
+    [finishBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [finishBtn setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
+    finishBtn.titleLabel.font = [UIFont systemFontOfSize:kTitleFontSize];
+    [finishBtn addTarget:self action:@selector(finishAlter:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navTopView addSubview:finishBtn];
+    
 
     UIView *_table_Header_View = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 80)];
     _table_Header_View.backgroundColor = [UIColor whiteColor];
@@ -103,6 +167,10 @@
     
 }
 
+- (void)finishAlter:(UIButton *)btn
+{
+    // 提交修改资料
+}
 
 
 #pragma mark - section个数
@@ -128,9 +196,7 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"PersonEditCell" owner:self options:0] lastObject];
     }
     cell.titleLabel.text = [_edit_Menu_Array objectAtIndex:indexPath.row];
-    // @[@"昵称：",@"性别：",@"出生日期：",@"星座：",@"兴趣爱好："];
-    
-//    cell.desTextField.text = [_edit_Info_Array objectAtIndex:indexPath.row];
+    cell.desTextField.text = [_edit_Info_Array objectAtIndex:indexPath.row];
     switch (indexPath.row)
     {
         case 0:

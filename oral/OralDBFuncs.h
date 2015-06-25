@@ -79,6 +79,11 @@
 +(void)setCurrentTopic:(NSString *)topicName;
 // 获取当前topic
 +(NSString *)getCurrentTopic;
+
++(void)setCurrentTopicID:(NSString *)topicID;
+// 获取当前topic
++(NSString *)getCurrentTopicID;
+
 // 标记当前关卡
 +(void)setCurrentPoint:(int)pointNum;
 // 获取当前关卡

@@ -14,7 +14,7 @@
 #import "NSURLConnectionRequest.h"
 #import "PersonInfoModel.h"
 #import "UIButton+WebCache.h"
-
+#import "OralDBFuncs.h"
 
 @interface TPCPersonCenterViewController ()
 {
@@ -108,7 +108,7 @@
     }
     else
     {
-        
+
     }
     
     if ([[_personInfoDic objectForKey:@"birthday"] length]>0)
@@ -119,7 +119,7 @@
     }
     else
     {
-        
+        _birthLabel.text = @"未填写";
     }
     
     if ([[_personInfoDic objectForKey:@"hobbies"] length]>0)
@@ -130,7 +130,7 @@
     }
     else
     {
-        
+        _loveLabel.text = @"未填写";
     }
 
     
@@ -142,7 +142,7 @@
     }
     else
     {
-        
+        [_ConstellationButton setTitle:@"星座" forState:UIControlStateNormal];
     }
     
     if ([[_personInfoDic objectForKey:@"sex"] length]>0)
@@ -153,7 +153,7 @@
     }
     else
     {
-        
+        [_sexButton setTitle:@"女" forState:UIControlStateNormal];
     }
     
     if ([[_personInfoDic objectForKey:@"nickname"] length]>0)
@@ -164,18 +164,18 @@
     }
     else
     {
-        
+        _nameLabel.text = [OralDBFuncs getCurrentUserName];
     }
     
     if ([[_personInfoDic objectForKey:@"signiture"] length]>0)
     {
         // 个性签名
-        NSString *signiture = [_personInfoDic objectForKey:@"signiture"];\
+        NSString *signiture = [_personInfoDic objectForKey:@"signiture"];
         _signatureLabel.text = signiture;
     }
     else
     {
-        
+        _signatureLabel.text = @"未填写";
     }
 }
 
@@ -222,6 +222,7 @@
 {
     // 编辑个人信息
     PersonEditViewController *editVC = [[PersonEditViewController alloc]initWithNibName:@"PersonEditViewController" bundle:nil];
+    editVC.personInfoDict = _personInfoDic;
     [self.navigationController pushViewController:editVC animated:YES];
 }
 @end

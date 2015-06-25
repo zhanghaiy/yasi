@@ -11,6 +11,8 @@
 #define KEY_CONTEXT_USERNAME    @"df_oral_username"
 #define KEY_CONTEXT_USERID      @"df_oral_userid"
 #define KEY_CONTEXT_TOPICNAME   @"df_oral_topicname"
+#define KEY_CONTEXT_TOPICID   @"df_oral_topicID"
+
 #define KEY_CONTEXT_CUR_LEVEL   @"df_oral_level"
 #define KEY_CONTEXT_CUR_PART    @"df_oral_part"
 #define KEY_CONTEXT_RECORDID    @"df_oral_recordid"
@@ -801,6 +803,17 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 {
     NSString *topicName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_CONTEXT_TOPICNAME];
     return topicName;
+}
+
++(void)setCurrentTopicID:(NSString *)topicID
+{
+    [[NSUserDefaults standardUserDefaults] setObject:topicID forKey:KEY_CONTEXT_TOPICID];
+}
+// 获取当前topic
++(NSString *)getCurrentTopicID
+{
+    NSString *topicID = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_CONTEXT_TOPICID];
+    return topicID;
 }
 
 +(void)setCurrentPoint:(int)pointNum
