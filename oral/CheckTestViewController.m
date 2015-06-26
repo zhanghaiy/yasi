@@ -17,7 +17,7 @@
 #import "AFHTTPRequestOperationManager.h"
 
 
-@interface CheckTestViewController ()<SelectTeacherDelegate>
+@interface CheckTestViewController ()<SelectTeacherDelegate,UIAlertViewDelegate>
 {
     CGRect _tea_head_big_frame;// 中心 放大后的
     CGRect _tea_head_small_frame;// 中心 缩小的
@@ -53,6 +53,8 @@
     BOOL _testFinished;
     
     float _markTime_PartAlone;
+    
+    BOOL _commitSuccess;
 }
 @end
 
@@ -264,6 +266,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    _commitSuccess = NO;
     _testFinished = NO;
     _aloneCounts = 0;
     _prepareTime_point2 = 30; //总时间为30秒 此处为了便于调试暂时用10秒
@@ -837,10 +840,18 @@
     {
         // 稍后提交
         //1、 标记 关卡3是否提交
-        [self makeUpLocalJsonFile_test];
-        [self zipCurrentTestFile];
-        [OralDBFuncs setTestCommit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
-        [self backToTopicPage];
+        // 合成json文件 打包zip  在后续成绩单界面 直接用zip
+        if ([self makeUpLocalJsonFile_test])
+        {
+            [self zipCurrentTestFile];
+            [OralDBFuncs setTestCommit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+            [self backToTopicPage];
+        }
+        else
+        {
+            NSLog(@"打包文件失败");
+            [self showAlertViewWithMessage:@"打包文件失败"];
+        }
     }
     else if (btn.tag == KRightCommitButtonTag)
     {
@@ -862,9 +873,25 @@
     }
 }
 
+- (void)showAlertViewWithMessage:(NSString *)message
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (_commitSuccess)
+    {
+        // 提交成功
+        [self backToTopicPage];
+    }
+}
+
 #pragma mark - 网络请求
 - (void)startRequst_test
 {
+    _loading_View.hidden = NO;
     // 合成json文件
     BOOL makeUpSuccess = [self makeUpLocalJsonFile_test];
     if (makeUpSuccess)
@@ -887,6 +914,7 @@
              }
          } success:^(AFHTTPRequestOperation *operation, id responseObject)
          {
+             _loading_View.hidden = YES;
              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
              NSLog(@"%@",dic);
 
@@ -897,19 +925,28 @@
                  // 提交成功后回到topic详情页面
                  [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
                  NSLog(@"模考提交老师成功");
-                 [self backToTopicPage];
+                 _commitSuccess = YES;
+                 [self showAlertViewWithMessage:@"提交成功"];
              }
              else
              {
                  NSLog(@"提交失败：%@",[dic objectForKey:@"remark"]);
+                 [self commitFailed_test];
              }
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             _loading_View.hidden = YES;
              NSLog(@"失败乃");
+             [self commitFailed_test];
          }];
 
     }
 }
 
+- (void)commitFailed_test
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"提交失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
 
 #pragma mark - 合成json文件
 - (BOOL)makeUpLocalJsonFile_test

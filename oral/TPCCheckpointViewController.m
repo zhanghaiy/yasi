@@ -23,7 +23,6 @@
 
 @interface TPCCheckpointViewController ()<UIScrollViewDelegate>
 {
-    UIView *_loadingView;
     int _markPart;
     BOOL _requestTest_zipUrl;
 }
@@ -40,7 +39,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self createLoadingView];
+    [self createLoadingViewWithTitle:@"正在加载资源文件,请稍后..."];
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     
@@ -74,44 +73,68 @@
 #pragma mark - UI调整
 - (void)uiConfig
 {
+    
+    // 手动调整frame
+    
+    NSInteger practice_Y = 120.0/667*kScreenHeight;
+    NSInteger practice_X = 90.0/375*kScreentWidth;
+    NSInteger practice_W = 48;
+    NSInteger practice_H = 51;
+    [_exerciseBookBtn setFrame:CGRectMake(practice_X, practice_Y, practice_W, practice_H)];
+    [_scoreButton setFrame:CGRectMake(kScreentWidth-practice_X-practice_W, practice_Y, practice_W, practice_H)];
+    
+    NSInteger practice_text_Y = 181.0/667.0*kScreenHeight;
+    [_exeLable setFrame:CGRectMake(practice_X, practice_text_Y, practice_W, 20)];
+    [_scoreLable setFrame:CGRectMake(kScreentWidth-practice_X-practice_W, practice_text_Y, practice_W, 20)];
+
     // 练习本  成绩单
     [_exerciseBookBtn setBackgroundImage:[UIImage imageNamed:@"exeBook"] forState:UIControlStateNormal];
     _exeLable.textColor = [UIColor colorWithRed:87/255.0 green:224/255.0 blue:192/255.0 alpha:1];
-
+    
     [_scoreButton setBackgroundImage:[UIImage imageNamed:@"scoreMenu"] forState:UIControlStateNormal];
     _scoreLable.textColor = [UIColor colorWithRed:87/255.0 green:224/255.0 blue:192/255.0 alpha:1];
-    
     [_exerciseBookBtn setAdjustsImageWhenHighlighted:NO];
     [_scoreButton setAdjustsImageWhenHighlighted:NO];
     
+    // 闯关按钮
+    NSInteger part_scrollView_Y = 250.0/667*kScreenHeight;
+    NSInteger part_scrollView_W = 245;
+    NSInteger part_scrollView_H = 100;
+    [_partScrollView setFrame:CGRectMake((kScreentWidth-part_scrollView_W)/2, part_scrollView_Y, part_scrollView_W, part_scrollView_H)];
+    _partScrollView.contentSize = CGSizeMake(part_scrollView_W*3, part_scrollView_H);
+    
     // part1-3 滚动视图 _partScrollView
-    _partScrollView.contentSize = CGSizeMake(_partScrollView.bounds.size.width*3, _partScrollView.bounds.size.height);
     _partScrollView.delegate = self;
     _partScrollView.pagingEnabled = YES;
     
     NSArray *partTitleArray = @[@"Part-one",@"Part-two",@"Part-three"];
     // part 按钮
-    CGRect partSrollViewRect = _partScrollView.frame;
+    CGRect partSrollViewRect = _partScrollView.bounds;
     partSrollViewRect.origin.y = 0;
     for (int i = 0; i < 3; i ++)
     {
         partSrollViewRect.origin.x = i*partSrollViewRect.size.width;
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:partSrollViewRect];
+        
         btn.backgroundColor = _pointColor;
         btn.tag = kPartButtonTag+i;
-        btn.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         btn.layer.cornerRadius = btn.frame.size.height/2;
         [btn setTitle:[partTitleArray objectAtIndex:i] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(startPart:) forControlEvents:UIControlEventTouchUpInside];
 //        btn.titleLabel.font = [UIFont systemFontOfSize:30];
         // @"HiraKakuProN-W3"
         btn.titleLabel.font = [UIFont fontWithName:@"MarkerFelt-thin" size:30];
-
         [_partScrollView addSubview:btn];
     }
     
     // 直接模考按钮
+    
+    NSInteger startTest_Y = 435.0/667*kScreenHeight;
+    NSInteger startTest_W = 120;
+    NSInteger startTest_H = 55;
+    [_startTestBtn setFrame:CGRectMake((kScreentWidth-startTest_W)/2, startTest_Y, startTest_W, startTest_H)];
+    
     _startTestBtn.layer.masksToBounds= YES;
     _startTestBtn.layer.cornerRadius = _startTestBtn.frame.size.height/2;
     _startTestBtn.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
@@ -119,6 +142,16 @@
     
     
     // 页码按钮
+    
+    NSInteger page_Y = 365.0/667*kScreenHeight;
+    NSInteger pageSpace = 12;
+    
+    [_middleMarkBtn setFrame:CGRectMake((kScreentWidth-15)/2, page_Y, 15, 15)];
+    
+    [_leftMarkBtn setFrame:CGRectMake(_middleMarkBtn.frame.origin.x-pageSpace-15, page_Y, 15, 15)];
+    [_rightMarkBtn setFrame:CGRectMake(_middleMarkBtn.frame.origin.x+pageSpace+15, page_Y, 15, 15)];
+
+    
     _leftMarkBtn.tag = kLeftMarkButtonTag;
     _middleMarkBtn.tag = kLeftMarkButtonTag+1;
     _rightMarkBtn.tag = kLeftMarkButtonTag+2;
@@ -127,8 +160,6 @@
     [self drawPageButton:_rightMarkBtn];
     
     [self makePagesAloneWithButtonTag:kLeftMarkButtonTag];
-    
-    
 }
 
 #pragma mark - 页码按钮设置为圆形
@@ -179,7 +210,7 @@
     else
     {
         // 不存在 缓存
-        _loadingView.hidden = NO;
+        _loading_View.hidden = NO;
         [self requestTopicZipResource];
     }
 }
@@ -189,7 +220,7 @@
 - (void)beginPointWithPointCounts:(int)pointCounts
 {
     [OralDBFuncs setCurrentPart:(pointCounts+1)];
-    _loadingView.hidden = YES;
+    _loading_View.hidden = YES;
     CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
     [self.navigationController pushViewController:followVC animated:YES];
 }
@@ -198,8 +229,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSInteger mark = (scrollView.contentOffset.x+10)/(scrollView.contentSize.width/3);
-    NSLog(@"~~~~scrollViewDidScroll~~~mark : %ld~~~~~~~~",mark);
-     NSLog(@"++++++++%f++++++++++",scrollView.contentOffset.x);
     [self makePagesAloneWithButtonTag:kLeftMarkButtonTag+mark];
 }
 
@@ -356,38 +385,38 @@
     return path;
 }
 
-- (void)createLoadingView
-{
-    _loadingView = [[UIView alloc]initWithFrame:self.view.bounds];
-    _loadingView.hidden = YES;
-    _loadingView.backgroundColor = [UIColor colorWithWhite:100/255.0 alpha:0.2];
-    
-    UIView *actionView = [[UIView alloc]initWithFrame:CGRectMake((kScreentWidth-200)/2, kScreenHeight/2-100, 200, 80)];
-    actionView.layer.masksToBounds = YES;
-    actionView.layer.cornerRadius = 5;
-    actionView.layer.borderWidth = 1;
-    actionView.layer.borderColor = _pointColor.CGColor;
-    
-    actionView.backgroundColor = [UIColor whiteColor];
-
-    UIActivityIndicatorView *action = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((actionView.frame.size.width-50)/2, 5, 50, 50)];
-    action.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [actionView addSubview:action];
-    [action startAnimating];
-//    [activity stopAnimating]
-    
-    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake((actionView.frame.size.width-150)/2, 60, 150, 15)];
-    lab.text = @"正在加载资源文件...";
-    lab.textAlignment = NSTextAlignmentCenter;
-    lab.textColor = _pointColor;
-    lab.font = [UIFont systemFontOfSize:kFontSize4];
-    [actionView addSubview:lab];
-    
-    actionView.center = _loadingView.center;
-    
-    [_loadingView addSubview:actionView];
-    [self.view addSubview:_loadingView];
-}
+//- (void)createLoadingView
+//{
+//    _loadingView = [[UIView alloc]initWithFrame:self.view.bounds];
+//    _loadingView.hidden = YES;
+//    _loadingView.backgroundColor = [UIColor colorWithWhite:100/255.0 alpha:0.2];
+//    
+//    UIView *actionView = [[UIView alloc]initWithFrame:CGRectMake((kScreentWidth-200)/2, kScreenHeight/2-100, 280, 200)];
+//    actionView.layer.masksToBounds = YES;
+//    actionView.layer.cornerRadius = 5;
+//    actionView.layer.borderWidth = 1;
+//    actionView.layer.borderColor = _pointColor.CGColor;
+//    
+//    actionView.backgroundColor = [UIColor whiteColor];
+//
+//    UIActivityIndicatorView *action = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((actionView.frame.size.width-50)/2, 5, 50, 50)];
+//    action.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+//    [actionView addSubview:action];
+//    [action startAnimating];
+////    [activity stopAnimating]
+//    
+//    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake((actionView.frame.size.width-150)/2, 60, 150, 15)];
+//    lab.text = @"正在加载资源文件...";
+//    lab.textAlignment = NSTextAlignmentCenter;
+//    lab.textColor = _pointColor;
+//    lab.font = [UIFont systemFontOfSize:kFontSize4];
+//    [actionView addSubview:lab];
+//    
+//    actionView.center = _loadingView.center;
+//    
+//    [_loadingView addSubview:actionView];
+//    [self.view addSubview:_loadingView];
+//}
 
 
 - (void)didReceiveMemoryWarning {
@@ -418,7 +447,7 @@
     }
     else
     {
-        _loadingView.hidden = NO;
+        _loading_View.hidden = NO;
         _requestTest_zipUrl = YES;
         [self requestTestZip];
     }
@@ -427,7 +456,7 @@
 
 - (void)startEnterTest
 {
-    _loadingView.hidden = YES;
+    _loading_View.hidden = YES;
     CheckTestViewController *testVC = [[CheckTestViewController alloc]initWithNibName:@"CheckTestViewController" bundle:nil];
     [self.navigationController pushViewController:testVC animated:YES];
 }

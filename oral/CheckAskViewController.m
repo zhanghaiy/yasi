@@ -17,7 +17,7 @@
 #import "ZipArchive.h"
 #import "AFNetworking/AFHTTPRequestOperationManager.h"
 
-@interface CheckAskViewController ()<SelectTeacherDelegate>
+@interface CheckAskViewController ()<SelectTeacherDelegate,UIAlertViewDelegate>
 {
     NSDictionary *_topicInfoDict;// 整个topic信息
     NSDictionary *_currentPartDict;// 当前part资源信息
@@ -43,6 +43,9 @@
     
     int _recordTime;// 累加的录音时间
     NSMutableArray *_partInfoArray;// 用于合成json文件 每个回答的进本信息 组成一个字典
+    
+    
+    BOOL _commitSuccess;
 }
 @end
 
@@ -94,6 +97,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    _commitSuccess = NO;
+    [self createLoadingViewWithTitle:@"正在提交给老师，请耐心等待..."];
     _partInfoArray = [[NSMutableArray alloc]init];
     _recordPathArray = [[NSMutableArray alloc]init];
 
@@ -518,18 +523,24 @@
     UIButton *btn = (UIButton *)sender;
     if (btn.tag == kCommitLeftButtonTag)
     {
-        // 稍后提交
-        [self backToTopicPage];
-        //1、 标记 关卡3是否提交
-        [OralDBFuncs setPartLevel3Commit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+        // 合成json文件 打包zip  在后续成绩单界面 直接用zip
+        if ([self makeUpJsonFile])
+        {
+            [self zipCurrentPartFile];
+            // 稍后提交
+            [self backToTopicPage];
+            //1、 标记 关卡3是否提交
+            [OralDBFuncs setPartLevel3Commit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+        }
+        else
+        {
+            NSLog(@"打包文件失败");
+        }
+        
     }
     else if (btn.tag == kCommitRightButtonTag)
     {
-        // 现在提交 打包
-        
-//        //1、 标记 关卡3是否提交
-//        [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
-        // 2、判断是否有默认老师 无---跳转到选择老师界面  有----直接提交
+        // 判断是否有默认老师 无---跳转到选择老师界面  有----直接提交
         if ([OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]])
         {
             _teacherId = [OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]];
@@ -549,15 +560,16 @@
 #pragma mark - 提交
 - (void)startRequst
 {
+    _loading_View.hidden = NO;
+    
     BOOL makeUpSuccess = [self makeUpJsonFile];
     if (makeUpSuccess)
     {
-        // 压缩zip包
         NSData *zipData = [self zipCurrentPartFile];
+        
         // 网络提交 uploadfile
         NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kPartCommitUrl];
         NSDictionary *dict = @{@"uploadfile":@"part"};
-        
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         [manager POST:urlStr parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
@@ -568,6 +580,8 @@
                  
              }
          } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             
+             _loading_View.hidden = YES;
              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
              NSLog(@"%@",dic);
              if ([[dic objectForKey:@"respCode"] intValue] == 1000)
@@ -575,20 +589,53 @@
                  // 标记 关卡3已经提交
                  [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
                  // 提交成功后回到topic详情页面
-                 [self backToTopicPage];
+                 _commitSuccess = YES;
+                 [self showAlertViewWithMessage:@"提交成功"];
              }
              else
              {
                  NSLog(@"提交失败");
+                 [self commitFailed];
              }
              
              
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             _loading_View.hidden = YES;
              NSLog(@"失败乃");
+             [self commitFailed];
          }];
-        
+
+    }
+    else
+    {
+        NSLog(@"合成json文件失败");
+    }
+
+    
+}
+
+- (void)commitFailed
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"提交失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
+
+- (void)showAlertViewWithMessage:(NSString *)message
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (_commitSuccess)
+    {
+        // 提交成功
+        [self backToTopicPage];
     }
 }
+
 
 
 #pragma mark - 压缩zip包

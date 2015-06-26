@@ -23,12 +23,8 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    
-//    NSString *key = [NSString stringWithFormat:@"ADD-PRACTICE-%@-%@",[OralDBFuncs getCurrentTopic],[OralDBFuncs getCurrentUserName]];
-//    NSLog(@"%@",key);
-//    [[NSUserDefaults standardUserDefaults]removeObjectForKey:key];
   
-    
+    NSLog(@"%@",[OralDBFuncs getCurrentUserName]);
     if ([OralDBFuncs getCurrentUserName])
     {
         [OralDBFuncs updateUserLastLoginTimeStamp:[OralDBFuncs getCurrentUserName]];

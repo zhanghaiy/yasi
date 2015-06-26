@@ -73,6 +73,8 @@
 // 查询用户信息 userId
 #define kUserInfoUrl @"/yasi/student/selectStudentByUserId.do"
 
+#define kAlterPersonInfo @"/yasi/student/insertStudentInfo.do"
+
 /*
  // 用户未加入的班级
  用户ID	userId	M

@@ -30,8 +30,7 @@
 #define kRightTableVIewTag 556
 #define kTopicButtonTag 566
 #define kNavBarHeight 66
-//#define kScreentWidth [UIScreen mainScreen].bounds.size.width
-//#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+
 #define kmainCellHeight ((kScreenHeight-kNavBarHeight)/3)
 #define kRightCellHeight ((kScreenHeight-kNavBarHeight-kmainCellHeight*2/3)/7)
 #define kRightTableY (kScreenHeight-(kRightCellHeight*7)-kNavBarHeight)/2
@@ -128,17 +127,9 @@
         }
         NSDictionary *dic = [_topicArray objectAtIndex:indexPath.row];
         [cell.topicButton setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"bgimgurl"]]];
+//        [cell.topicButton setBackgroundImage:[UIImage imageNamed:@"topic.png"] forState:UIControlStateNormal];
         cell.topicTitle.text = [dic objectForKey:@"classtype"];
         
-//        NSArray *colorArr = [[dic objectForKey:@"classcolor"] componentsSeparatedByString:@","];
-//        if (colorArr.count == 3)
-//        {
-//            NSInteger red = [[colorArr objectAtIndex:0] integerValue];
-//            NSInteger orange = [[colorArr objectAtIndex:1] integerValue];
-//            NSInteger blue = [[colorArr objectAtIndex:2] integerValue];
-//            cell.progressColor = [UIColor colorWithRed:red/255.0 green:orange/255.0 blue:blue/255.0 alpha:1];
-//            
-//        }
         cell.progressColor = kPart_Button_Color;
 
         // 暂时写死  此处是根据本地数据（自己存储的）来算出用户的进度

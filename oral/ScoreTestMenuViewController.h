@@ -10,4 +10,6 @@
 
 @interface ScoreTestMenuViewController : TopicParentsViewController
 
+@property (nonatomic,strong) NSDictionary *watingDict;
+
 @end

@@ -48,6 +48,7 @@
     _myClassTableV.dataSource = self;
     _myClassTableV.separatorStyle = UITableViewCellSeparatorStyleNone;
     _myClassTableV.backgroundColor = [UIColor clearColor];
+    _myClassTableV.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_myClassTableV];
     if ([_teacherId length])
     {

@@ -250,7 +250,7 @@
 - (void)requestTestWating
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kSelectNewWatingEvent,[OralDBFuncs getCurrentUserID]];
-    NSLog(@"%@",urlStr);
+    NSLog(@"请求老师已处理事项：%@~~~~~",urlStr);
     [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestWatingFinished:) andRefresh:YES];
 }
 
@@ -274,54 +274,44 @@
                     NSString *topicid = [watingListDic objectForKey:@"topicid"];
                     if ([topicid isEqualToString:_topicId])
                     {
-                        // 此处判断 是模考还是闯关 与后台确认
+                        // 关卡3
                         if ([[watingListDic objectForKey:@"part"] intValue] == 3)
                         {
                             // part3
                             _wating_part = YES;
                             _watingDict_part = watingListDic;
                         }
-                        // 此处缺少查询模考反馈 --- 待完善
+                        if ([[watingListDic objectForKey:@"part"]length]==0)
+                        {
+                            NSLog(@"~~~~~%@~~~~~~",[watingListDic objectForKey:@"part"]);
+                            // 此处为模考反馈 给用户提示可以查看评价
+                            _wating_test = YES;
+                            _watingDict_test = watingListDic;
+                            
+                            UIButton *commitButton_test = (UIButton *)[self.view viewWithTag:kTestCommitButtonTag];
+                            [commitButton_test setTitle:@"查看老师反馈" forState:UIControlStateNormal];
+                        }
+                        NSLog(@"~~~~~%@~~~~~~",[watingListDic objectForKey:@"part"]);
                     }
                 }
             }
             else
             {
-                // 没有反馈 
+                // 没有反馈
+                NSLog(@" 没有反馈");
             }
             
             //  班级信息
 //            NSArray *joinclassinfo = [dic objectForKey:@"joinclassinfo"];
-            
-
         }
     }
 }
 
-#pragma mark -- 请求当前topic的模考已处理事项
-- (void)requestWithWatingId:(NSString *)waitingid
-{
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@?waitingid=%@",kBaseIPUrl,kReviewWatingEvent,waitingid];
-    [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestWatingInfo:) andRefresh:YES];
-}
-
-#pragma mark -- 请求当前topic的已处理事项  回调
-- (void)requestWatingInfo:(NSURLConnectionRequest *)request
-{
-    if ([request.downloadData length])
-    {
-        //
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
-        {
-            // 请求模考反馈成功 --- 待完善
-            NSDictionary *reviewDic = [[dic objectForKey:@"teacheranswerlist"] lastObject];
-        }
-    }
-}
-
+#pragma mark - 提交模考
 - (void)commitTestInfo
 {
+    _loading_View.hidden = NO;
+
     NSString *testZipPath = [NSString stringWithFormat:@"%@/modelpart.zip",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
     NSData *zipData = [NSData dataWithContentsOfFile:testZipPath];
     
@@ -341,34 +331,29 @@
          }
      } success:^(AFHTTPRequestOperation *operation, id responseObject) {
          
-         if (responseObject)
+         _loading_View.hidden = YES;
+         if (operation.responseData)
          {
-             NSDictionary *dicRes = responseObject;
-             NSString *strState = [dicRes objectForKey:@"state"];
-             if (strState && [strState isEqualToString:@"success"])
+             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
+             if ([[dict objectForKey:@"respCode"] intValue] == 1000)
              {
-                 NSLog(@"upload success!");
-                 // 提交成功后回到topic详情页面
+                 // 提交成功
                  [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
                  NSLog(@"模考提交老师成功");
-                 //
-                 
+                 UIButton *commitBtn = (UIButton *)[self.view viewWithTag:kTestCommitButtonTag];
+                 [commitBtn setTitle:@"已提交" forState:UIControlStateNormal];
              }
              else
              {
-                 
+                 NSLog(@"提交失败：%@",[dict objectForKey:@"remark"]);
              }
          }
-         else
-         {
-             
-         }
-         
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     }
+      failure:^(AFHTTPRequestOperation *operation, NSError *error)
+    {
+        _loading_View.hidden = YES;
          NSLog(@"失败乃");
      }];
-    
-
 }
 
 
@@ -380,16 +365,18 @@
     if (![OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentUserID] andUserName:[OralDBFuncs getCurrentUserName]])
     {
         // 提交给老师
+        [self commitTestInfo];
     }
     
-    // 如果老师已反馈
-    BOOL review = NO;
-    if (review)
+    if (_wating_test)
     {
+        // 如果老师已反馈
         ScoreTestMenuViewController *testVC = [[ScoreTestMenuViewController alloc]init];
+        testVC.watingDict = _watingDict_test;
         [self.navigationController pushViewController:testVC animated:YES];
     }
 }
+
 #pragma mark - 模考播放
 #pragma mark -- 播放音频按钮点击事件
 - (void)playButtonClicked:(UIButton *)playButton
@@ -404,7 +391,6 @@
             [_playerManager stopPlay];
         }
     }
-
     // 调用播放器 进度条随着播放逐渐减少  ---- 待完善
     if (playButton.selected)
     {

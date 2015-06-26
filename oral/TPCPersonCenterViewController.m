@@ -108,7 +108,8 @@
     }
     else
     {
-
+       // 显示默认图片
+        [_personHeadButton setBackgroundImage:[UIImage imageNamed:@"person_head_image"] forState:UIControlStateNormal];
     }
     
     if ([[_personInfoDic objectForKey:@"birthday"] length]>0)
@@ -153,7 +154,7 @@
     }
     else
     {
-        [_sexButton setTitle:@"女" forState:UIControlStateNormal];
+        [_sexButton setTitle:@"未填写" forState:UIControlStateNormal];
     }
     
     if ([[_personInfoDic objectForKey:@"nickname"] length]>0)
@@ -164,7 +165,7 @@
     }
     else
     {
-        _nameLabel.text = [OralDBFuncs getCurrentUserName];
+        _nameLabel.text = @"未填写";// [OralDBFuncs getCurrentUserName];
     }
     
     if ([[_personInfoDic objectForKey:@"signiture"] length]>0)

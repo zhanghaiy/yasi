@@ -91,7 +91,10 @@
         // 存储默认老师
         [OralDBFuncs setDefaultTeacherID:_teacherId UserName:[OralDBFuncs getCurrentUserName]];
     }
-    [self.delegate selectTeacherId:_teacherId];
+    if (self.delegate)
+    {
+        [self.delegate selectTeacherId:_teacherId];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -12,14 +12,7 @@
 
 - (void)awakeFromNib
 {
-    // Initialization code
-//    CGRect rect = _topicProgressV.frame;
-//    NSLog(@"%f",rect.size.height);
-//    _topicProgressV = [[CustomProgressView alloc]initWithFrame:rect];
-//    _topicProgressV.progress = 0.5;
-//    _topicProgressV.color = [UIColor colorWithRed:86/255.0 green:223/255.0 blue:189/255.0 alpha:1];
-    [self.contentView addSubview:_topicProgressV];
-    
+    // Initialization code    
     _topicTitle.textColor = [UIColor colorWithWhite:149/255.0 alpha:1];
 }
 

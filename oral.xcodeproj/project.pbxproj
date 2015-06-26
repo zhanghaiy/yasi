@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD4366D11B3D2C6A000BE3CA /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4366D01B3D2C6A000BE3CA /* DeviceManager.m */; };
 		FD530E351B29612300E3EC26 /* aiengine.provision in Resources */ = {isa = PBXBuildFile; fileRef = FD530E331B29612300E3EC26 /* aiengine.provision */; };
 		FD530E361B29612300E3EC26 /* aiengine.resource.zip in Resources */ = {isa = PBXBuildFile; fileRef = FD530E341B29612300E3EC26 /* aiengine.resource.zip */; };
 		FD530E3B1B29619000E3EC26 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD530E3A1B29619000E3EC26 /* libz.1.1.3.dylib */; };
@@ -173,6 +174,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FD4366CF1B3D2C6A000BE3CA /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
+		FD4366D01B3D2C6A000BE3CA /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
 		FD530E331B29612300E3EC26 /* aiengine.provision */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aiengine.provision; sourceTree = "<group>"; };
 		FD530E341B29612300E3EC26 /* aiengine.resource.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = aiengine.resource.zip; sourceTree = "<group>"; };
 		FD530E391B29615B00E3EC26 /* DFAiengineSentObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFAiengineSentObject.h; sourceTree = "<group>"; };
@@ -450,6 +453,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FD4366CE1B3D2C4F000BE3CA /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				FD4366CF1B3D2C6A000BE3CA /* DeviceManager.h */,
+				FD4366D01B3D2C6A000BE3CA /* DeviceManager.m */,
+			);
+			name = Device;
+			sourceTree = "<group>";
+		};
 		FD5461351B1056D000409778 /* 模考 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1089,6 +1101,7 @@
 		FDD404101B0492F900DE2E84 /* oral */ = {
 			isa = PBXGroup;
 			children = (
+				FD4366CE1B3D2C4F000BE3CA /* Device */,
 				FD73CBAC1B3033EA00979B1A /* LoadingView */,
 				FD6AB7551B2AC88B004721A7 /* DB */,
 				FD6B80CE1B18434400F9562C /* Category */,
@@ -1374,6 +1387,7 @@
 				FDD4044C1B04972D00DE2E84 /* RightMainCell.m in Sources */,
 				FD5461541B10676700409778 /* TPCPersonCenterViewController.m in Sources */,
 				FD5E01D81B27001C00E3ED4B /* TeacherCell.m in Sources */,
+				FD4366D11B3D2C6A000BE3CA /* DeviceManager.m in Sources */,
 				FD5B4FAF1B2172DC00BE6F5B /* ClassSearchCell.m in Sources */,
 				FD99590E1B1328FB005892DB /* AFURLRequestSerialization.m in Sources */,
 				FD9957E01B12BC1E005892DB /* ClassIntroduceViewController.m in Sources */,

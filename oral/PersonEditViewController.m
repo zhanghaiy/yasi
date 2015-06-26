@@ -13,127 +13,118 @@
 
 @interface PersonEditViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
+    UIView *_picker_Back_view;
     UITableView *_person_edit_tableV;
     NSArray *_edit_Menu_Array;
-    NSArray *_edit_Info_Array;
 
-    NSString *_sexString;
+    NSString *_iconUrl;// 头像
+    UIImage *_selectIconImg;// 本地选取的
     
-    NSString *_birthStr;
-    NSString *_constellation;
-    
-    NSString *_nameStr;
-    
-    NSString *_signiture;
-    NSString *_hobbies;
+    NSString *_nameStr;// 昵称
+    NSString *_sexString;// 性别
+    NSString *_birthStr;// 生日
+    NSString *_constellation;// 星座
+    NSString *_signiture;// 个性签名
+    NSString *_hobbies;// 爱好
 }
 @end
 
 @implementation PersonEditViewController
 #define kHeadButtonTag 55
+#define kSignitureLabelTag 77
+#define kPickerBackViewTag 78
 #define kActionSheet_sex_Tag 66
 #define kActionSheet_headImage_Tag 67
 
+#define kPickerViewHeight 250
+
+#pragma mark - 配置个人信息
 - (void)makeUpDataArray
 {
     _edit_Menu_Array = @[@"昵称：",@"性别：",@"出生日期：",@"星座：",@"兴趣爱好："];
-    NSString *icon;
+    
     if ([_personInfoDict objectForKey:@"icon"])
     {
-        icon = [_personInfoDict objectForKey:@"icon"];
-    }
-    else
-    {
-        icon = @"未填写";
+        _iconUrl = [_personInfoDict objectForKey:@"icon"];
     }
     
-    NSString *nickname;
     if ([_personInfoDict objectForKey:@"nickname"])
     {
-        nickname = [_personInfoDict objectForKey:@"nickname"];
+        _nameStr = [_personInfoDict objectForKey:@"nickname"];
     }
     else
     {
-        nickname = @"未填写";
+        _nameStr = @"";
     }
-    NSString *sex;
+    
     if ([_personInfoDict objectForKey:@"sex"])
     {
-        sex = [_personInfoDict objectForKey:@"sex"];
+        _sexString = [_personInfoDict objectForKey:@"sex"];
     }
     else
     {
-        sex = @"未填写";
+        _sexString = @"";
     }
+
     
-    
-    NSString *birthday;
     if ([_personInfoDict objectForKey:@"birthday"])
     {
-        birthday = [_personInfoDict objectForKey:@"birthday"];
+        _birthStr = [_personInfoDict objectForKey:@"birthday"];
     }
     else
     {
-       birthday = @"未填写";
+       _birthStr = @"";
     }
     
-    NSString *constellation;
-    if ([[_personInfoDict objectForKey:@"constellation"] length]<=2)
+    if ([_personInfoDict objectForKey:@"constellation"])
     {
-        NSLog(@"~~~~~~~~~~~");
-        if ([birthday length]>4)
+        _constellation = [_personInfoDict objectForKey:@"constellation"];
+    }
+    else
+    {
+        if ([_personInfoDict objectForKey:@"birthday"])
         {
-            NSArray *comArr = [birthday componentsSeparatedByString:@"."];
-            constellation = [ConstellationManager getAstroWithMonth:[[comArr objectAtIndex:1] intValue] day:[[comArr objectAtIndex:2] intValue]];
+            NSArray *comArr = [_birthStr componentsSeparatedByString:@"."];
+            _constellation = [ConstellationManager getAstroWithMonth:[[comArr objectAtIndex:1] intValue] day:[[comArr objectAtIndex:2] intValue]];
         }
         else
         {
-           constellation = @"未填写";
+            _constellation = @"";
         }
     }
-    else
-    {
-        constellation = [_personInfoDict objectForKey:@"constellation"];
-    }
     
-    NSString *hobbies;
     if ([_personInfoDict objectForKey:@"hobbies"])
     {
-        hobbies = [_personInfoDict objectForKey:@"hobbies"];
+        _hobbies = [_personInfoDict objectForKey:@"hobbies"];
     }
     else
     {
-        hobbies = @"未填写";
+        _hobbies = @"";
     }
-    
-    
-    NSString *signiture;
     
     if ([_personInfoDict objectForKey:@"signiture"])
     {
-        signiture = [_personInfoDict objectForKey:@"signiture"];
+        _signiture = [_personInfoDict objectForKey:@"signiture"];
     }
     else
     {
-        signiture = @"未填写";
+        _signiture = @"";
     }
     
-    _edit_Info_Array = @[nickname,sex,birthday,constellation,hobbies,signiture];
 }
 
-
+#pragma mark - 加载视图
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
     self.view.backgroundColor = _backgroundViewColor;
-    //    _edit_Menu_Array = @[@"昵称：",@"性别：",@"出生日期：",@"星座：",@"兴趣爱好："];
-    //    _edit_Info_Array = [[NSMutableArray alloc]initWithObjects:@"小花",@"女：",@"1998.12.05：",@"射手座",@"听音乐", nil];
     
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"My Travel"];
     [self makeUpDataArray];
+    [self createPickerView];
     
     UIButton *finishBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [finishBtn setFrame:CGRectMake(kScreentWidth-60, 29, 50, 30)];
@@ -157,6 +148,29 @@
     _personImageButton.tag = kHeadButtonTag;
     [_table_Header_View addSubview:_personImageButton];
     
+    
+    UIView *_table_footer_view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 90)];
+    _table_footer_view.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *_footer_title_label = [[UILabel alloc]initWithFrame:CGRectMake(15, 10, 200, 20)];
+    _footer_title_label.text = @"个性签名:";
+    _footer_title_label.textAlignment = NSTextAlignmentLeft;
+    _footer_title_label.textColor = kText_Color;
+    _footer_title_label.font = [UIFont systemFontOfSize:kFontSize1];
+    [_table_footer_view addSubview:_footer_title_label];
+    
+    UILabel *lineLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 1)];
+    lineLab.backgroundColor = _backgroundViewColor;
+    [_table_footer_view addSubview:lineLab];
+    
+    UILabel *_footer_des_label = [[UILabel alloc]initWithFrame:CGRectMake(15, 30, kScreentWidth-30, 50)];
+    _footer_des_label.text = _signiture;
+    _footer_des_label.textAlignment = NSTextAlignmentLeft;
+    _footer_des_label.textColor = kText_Color;
+    _footer_des_label.font = [UIFont systemFontOfSize:kFontSize2];
+    _footer_des_label.tag = kSignitureLabelTag;
+    [_table_footer_view addSubview:_footer_des_label];
+    
     _person_edit_tableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 65, kScreentWidth, kScreenHeight-65) style:UITableViewStylePlain];
     _person_edit_tableV.dataSource = self;
     _person_edit_tableV.delegate = self;
@@ -164,29 +178,31 @@
     _person_edit_tableV.separatorColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1];
     [self.view addSubview:_person_edit_tableV];
     _person_edit_tableV.tableHeaderView = _table_Header_View;
+    _person_edit_tableV.tableFooterView = _table_footer_view;
     
 }
 
+#pragma mark - 完成修改
 - (void)finishAlter:(UIButton *)btn
 {
     // 提交修改资料
+    
 }
 
-
-#pragma mark - section个数
+#pragma mark - UITableViewDelegate
+#pragma mark -- section个数
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
 }
 
-#pragma mark - cell 个数
+#pragma mark -- cell 个数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _edit_Menu_Array.count;
 }
 
-
-#pragma mark - 绘制cell
+#pragma mark -- 绘制cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"PersonEditCell";
@@ -195,8 +211,10 @@
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"PersonEditCell" owner:self options:0] lastObject];
     }
+    cell.titleLabel.textColor = kText_Color;
+    cell.desTextField.textColor = kText_Color;
     cell.titleLabel.text = [_edit_Menu_Array objectAtIndex:indexPath.row];
-    cell.desTextField.text = [_edit_Info_Array objectAtIndex:indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     switch (indexPath.row)
     {
         case 0:
@@ -242,6 +260,7 @@
     return cell;
 }
 
+#pragma mark -- 选中cell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.row)
@@ -264,7 +283,10 @@
         case 2:
         {
             //出生日期
-            [self createPickerView];
+            [self.view bringSubviewToFront:_picker_Back_view];
+            [UIView animateWithDuration:1 animations:^{
+                [_picker_Back_view setFrame:CGRectMake(1, kScreenHeight-kPickerViewHeight, kScreentWidth-2, kPickerViewHeight)];
+            }];
         }
             break;
         case 3:
@@ -284,7 +306,8 @@
     }
 }
 
-
+#pragma mark - 修改头像
+#pragma mark -- 选取图片
 - (void)alterStuHeadImage:(UIButton *)btn
 {
     UIActionSheet *chooseImageSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从相册获取图片", nil];
@@ -292,7 +315,8 @@
     [chooseImageSheet showInView:self.view];
 }
 
-#pragma mark - UIActionSheetDelegate
+#pragma mark -- UIActionSheetDelegate 
+// 修改颜色 --- 不必须
 - (void)willPresentActionSheet:(UIActionSheet *)actionSheet
 {
     for (UIView *subViwe in actionSheet.subviews)
@@ -306,7 +330,7 @@
     }
 }
 
-#pragma mark UIActionSheetDelegate Method
+#pragma mark -- UIActionSheetDelegate Method
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     UIImagePickerController * picker = [[UIImagePickerController alloc] init];
@@ -329,8 +353,9 @@
     }
     else if (actionSheet.tag == kActionSheet_headImage_Tag)
     {
+        // 选取图片
         switch (buttonIndex) {
-            case 0://Take picture
+            case 0://Take picture 照相
             {
                 if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
                 {
@@ -343,7 +368,7 @@
                 [self presentViewController:picker animated:YES completion:nil];
                 break;
             }
-            case 1://From album
+            case 1://From album 相册
             {
                 picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
                 [self presentViewController:picker animated:YES completion:nil];
@@ -358,11 +383,10 @@
     }
 }
 
-#pragma 拍照选择照片协议方法
+#pragma mark - 选好图片
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
-//    [UIApplication sharedApplication].statusBarHidden = NO;
     
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     NSData *data;
@@ -388,10 +412,10 @@
         UIImage *image = [UIImage imageWithData:data];
         UIButton *btn = (UIButton *)[self.view viewWithTag:kHeadButtonTag];
         [btn setBackgroundImage:image forState:UIControlStateNormal];
-        
     }
 }
 
+#pragma mark -- 压缩图片
 -(UIImage *)scaleImage:(UIImage *)image toScale:(float)scaleSize
 {
     UIGraphicsBeginImageContext(CGSizeMake(image.size.width*scaleSize,image.size.height*scaleSize));
@@ -404,24 +428,27 @@
 
 
 #pragma mark - UIDatePickerView 日期选择
+#pragma mark -- 选取器View
 - (void)createPickerView
 {
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight-216, kScreentWidth, 216)];
-    view.tag = 66666;
-    view.backgroundColor = [UIColor colorWithWhite:1 alpha:0.8];
-    view.layer.cornerRadius = 2;
-    [self.view addSubview:view];
+    _picker_Back_view = [[UIView alloc]initWithFrame:CGRectMake(1, kScreenHeight, kScreentWidth-2, kPickerViewHeight)];
+    _picker_Back_view.tag = kPickerBackViewTag;
+    _picker_Back_view.backgroundColor = [UIColor colorWithWhite:245/255.0 alpha:0.7];
+    _picker_Back_view.layer.cornerRadius = 5;
+    [self.view addSubview:_picker_Back_view];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [btn setFrame:CGRectMake(kScreentWidth-50, 5, 40, 15)];
+    [btn setFrame:CGRectMake(kScreentWidth-70, 5, 50, 25)];
     [btn setTitle:@"完成" forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont systemFontOfSize:14];
     [btn setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
+    btn.backgroundColor = [UIColor whiteColor];
+    btn.layer.cornerRadius = btn.frame.size.height/2;
     [btn addTarget:self action:@selector(dateSelected:) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:btn];
+    [_picker_Back_view addSubview:btn];
     
     // 初始化UIDatePicker
-    UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 15, kScreentWidth, 216)];
+    UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, kPickerViewHeight-216, kScreentWidth, 216)];
     // 设置时区
     [datePicker setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
     // 设置当前显示时间
@@ -432,11 +459,11 @@
     [datePicker setDatePickerMode:UIDatePickerModeDate];
     // 当值发生改变的时候调用的方法
     [datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
-    [view addSubview:datePicker];
+    [_picker_Back_view addSubview:datePicker];
 }
 
 
-#pragma mark - PickerValueChanged
+#pragma mark -- PickerValueChanged
 - (void)datePickerValueChanged:(UIDatePicker *)picker
 {
     [picker setDate:[picker date] animated:YES];
@@ -444,12 +471,12 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-#pragma mark - 日期选择完毕
+#pragma mark -- 日期选择完毕
 - (void)dateSelected:(UIButton *)btn
 {
-    UIView *view = [self.view viewWithTag:66666];
-    [view removeFromSuperview];
-    
+    [UIView animateWithDuration:0.5 animations:^{
+        [_picker_Back_view setFrame:CGRectMake(1, kScreenHeight, kScreentWidth-2, kPickerViewHeight)];
+    }];
     // 选择的生日
     NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:@"PickerDate"];
     _birthStr = [ConstellationManager transformNSStringWithDate:date];

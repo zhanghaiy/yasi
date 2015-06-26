@@ -25,29 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "oral/PersonEditViewController.m"
-            timestampString = "456920834.533278"
+            filePath = "oral/CheckScoreViewController.m"
+            timestampString = "457004823.591921"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "-makeUpDataArray"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "oral/CheckTestViewController.m"
-            timestampString = "456922794.774888"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "891"
-            endingLineNumber = "891"
-            landmarkName = "-startRequst_test"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
+            landmarkName = "-requestWatingFinished:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

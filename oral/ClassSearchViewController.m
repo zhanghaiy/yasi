@@ -64,6 +64,7 @@
     _search_Table_View.dataSource = self;
     _search_Table_View.backgroundColor = _backgroundViewColor;
     _search_Table_View.separatorColor = _backgroundViewColor;
+    _search_Table_View.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_search_Table_View];
 }
 

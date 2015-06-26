@@ -106,6 +106,38 @@
 }
 
 
+- (void)createLoadingViewWithTitle:(NSString *)title
+{
+    _loading_View = [[UIView alloc]initWithFrame:self.view.bounds];
+    _loading_View.hidden = YES;
+    _loading_View.backgroundColor = [UIColor colorWithWhite:100/255.0 alpha:0.2];
+    
+    UIView *actionView = [[UIView alloc]initWithFrame:CGRectMake((kScreentWidth-200)/2, kScreenHeight/2-100, 280, 200)];
+    actionView.layer.masksToBounds = YES;
+    actionView.layer.cornerRadius = 5;
+    actionView.layer.borderWidth = 1;
+    actionView.layer.borderColor = _pointColor.CGColor;
+    
+    actionView.backgroundColor = [UIColor whiteColor];
+    
+    UIActivityIndicatorView *action = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((actionView.frame.size.width-50)/2, 45, 50, 50)];
+    action.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [actionView addSubview:action];
+    [action startAnimating];
+    
+    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake((actionView.frame.size.width-150)/2,actionView.frame.size.height-60, 150, 30)];
+    lab.text = title;
+    lab.textAlignment = NSTextAlignmentCenter;
+    lab.textColor = _pointColor;
+    lab.font = [UIFont systemFontOfSize:kFontSize1];
+    [actionView addSubview:lab];
+    
+    actionView.center = _loading_View.center;
+    
+    [_loading_View addSubview:actionView];
+    [self.view addSubview:_loading_View];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
