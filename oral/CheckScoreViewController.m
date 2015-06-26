@@ -129,69 +129,88 @@
     _backScrollV.contentSize = CGSizeMake(kScreentWidth*2, kScreenHeight-100);
     [self.view addSubview:_backScrollV];
     // 模考
-    for (int i = 0; i < 3; i ++)
+    
+    // 判断是否参加过模考
+    NSString *exitMokaoPath = [NSString stringWithFormat:@"%@/modelpart.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:exitMokaoPath])
     {
-        // 40 40
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 20+i*100, kScreentWidth-80, 30)];
-        label.text = [NSString stringWithFormat:@"Part%d",i+1];
-        label.textColor = _pointColor;
-        label.font = [UIFont systemFontOfSize:kFontSize1];
-        [_backScrollV addSubview:label];
+        // 参加过模考
+        for (int i = 0; i < 3; i ++)
+        {
+            // 40 40
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 20+i*100, kScreentWidth-80, 30)];
+            label.text = [NSString stringWithFormat:@"Part%d",i+1];
+            label.textColor = _pointColor;
+            label.font = [UIFont systemFontOfSize:kFontSize1];
+            [_backScrollV addSubview:label];
+            
+            UIView *testBAckView = [[UIView alloc]initWithFrame:CGRectMake(40, 60+i*100, kScreentWidth-80, 45)];
+            testBAckView.backgroundColor = _backgroundViewColor;
+            testBAckView.layer.masksToBounds = YES;
+            testBAckView.layer.cornerRadius = testBAckView.bounds.size.height/2;
+            [_backScrollV addSubview:testBAckView];
+            
+            UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [playButton setFrame:CGRectMake(5, 5, 35, 35)];
+            [playButton setBackgroundImage:[UIImage imageNamed:@"Prac_play_n"] forState:UIControlStateNormal];
+            [playButton setBackgroundImage:[UIImage imageNamed:@"Prac_play_s"] forState:UIControlStateSelected];
+            [playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+            playButton.tag = kPlayButtonTag +i;
+            [testBAckView addSubview:playButton];
+            
+            // 进度条
+            CustomProgressView *progressV = [[CustomProgressView alloc]initWithFrame:CGRectMake(50, 20, testBAckView.frame.size.width-70, 4)];
+            progressV.tag = kProgressViewTag+i;
+            progressV.backgroundColor = [UIColor whiteColor];
+            progressV.progress = 1;
+            progressV.progressView.backgroundColor = _pointColor;
+            [testBAckView addSubview:progressV];
+            NSLog(@"~~~~~~~~%ld",progressV.tag);
+            
+        }
         
-        UIView *testBAckView = [[UIView alloc]initWithFrame:CGRectMake(40, 60+i*100, kScreentWidth-80, 45)];
-        testBAckView.backgroundColor = _backgroundViewColor;
-        testBAckView.layer.masksToBounds = YES;
-        testBAckView.layer.cornerRadius = testBAckView.bounds.size.height/2;
-        [_backScrollV addSubview:testBAckView];
+        // 提交按钮
+        NSInteger yyy = kScreenHeight<500?(kScreenHeight-kTestCommitButtonHeight-10-100):380;
+        UIButton *commitTestButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [commitTestButton setFrame:CGRectMake((kScreentWidth-kTestCommitButtonWidth)/2, yyy, kTestCommitButtonWidth, kTestCommitButtonHeight)];
         
-        UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [playButton setFrame:CGRectMake(5, 5, 35, 35)];
-        [playButton setBackgroundImage:[UIImage imageNamed:@"Prac_play_n"] forState:UIControlStateNormal];
-        [playButton setBackgroundImage:[UIImage imageNamed:@"Prac_play_s"] forState:UIControlStateSelected];
-        [playButton addTarget:self action:@selector(playButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        playButton.tag = kPlayButtonTag +i;
-        [testBAckView addSubview:playButton];
+        // 一共三种状态 1：未提交 --》tijiao geilaoshi
         
-        // 进度条
-        CustomProgressView *progressV = [[CustomProgressView alloc]initWithFrame:CGRectMake(50, 20, testBAckView.frame.size.width-70, 4)];
-        progressV.tag = kProgressViewTag+i;
-        progressV.backgroundColor = [UIColor whiteColor];
-        progressV.progress = 1;
-        progressV.progressView.backgroundColor = _pointColor;
-        [testBAckView addSubview:progressV];
-        NSLog(@"~~~~~~~~%ld",progressV.tag);
+        [commitTestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
-    }
-    
-    // 提交按钮
-    NSInteger yyy = kScreenHeight<500?(kScreenHeight-kTestCommitButtonHeight-10-100):380;
-    UIButton *commitTestButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [commitTestButton setFrame:CGRectMake((kScreentWidth-kTestCommitButtonWidth)/2, yyy, kTestCommitButtonWidth, kTestCommitButtonHeight)];
-    
-    // 一共三种状态 1：未提交 --》tijiao geilaoshi
-    
-    [commitTestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    commitTestButton.layer.cornerRadius = kTestCommitButtonHeight/2;
-    commitTestButton.backgroundColor = _pointColor;
-    commitTestButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
-    [commitTestButton addTarget:self action:@selector(commitTest:) forControlEvents:UIControlEventTouchUpInside];
-    commitTestButton.tag = kTestCommitButtonTag;
-    [_backScrollV addSubview:commitTestButton];
-    
-    [commitTestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    // 判断是否莫考过 --- 未完待续
-    BOOL commited = [OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
-    if (commited)
-    {
-        // 已提交
-        [commitTestButton setTitle:@"等待老师评价" forState:UIControlStateNormal];
+        commitTestButton.layer.cornerRadius = kTestCommitButtonHeight/2;
+        commitTestButton.backgroundColor = _pointColor;
+        commitTestButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+        [commitTestButton addTarget:self action:@selector(commitTest:) forControlEvents:UIControlEventTouchUpInside];
+        commitTestButton.tag = kTestCommitButtonTag;
+        [_backScrollV addSubview:commitTestButton];
+        
+        [commitTestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        // 判断是否莫考过 --- 未完待续
+        BOOL commited = [OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+        if (commited)
+        {
+            // 已提交
+            [commitTestButton setTitle:@"等待老师评价" forState:UIControlStateNormal];
+        }
+        else
+        {
+            // 未提交
+            [commitTestButton setTitle:@"提交给老师" forState:UIControlStateNormal];
+        }
+
     }
     else
     {
-        // 未提交
-        [commitTestButton setTitle:@"提交给老师" forState:UIControlStateNormal];
+       // 未模考
+        UILabel *testTipLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 30, kScreentWidth, 80)];
+        testTipLabel.text = @"暂无模考信息";
+        testTipLabel.textColor = _pointColor;
+        testTipLabel.textAlignment = NSTextAlignmentCenter;
+        testTipLabel.font = [UIFont systemFontOfSize:kFontSize1];
+        [_backScrollV addSubview:testTipLabel];
     }
+    
     
     
     // 闯关
@@ -241,8 +260,10 @@
     _playerManager.action = @selector(playTestFinished:);
     _playerManager.target = self;
     
-    [self requestTestWating];
-    
+    if ([OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]])
+    {
+        [self requestTestWating];
+    }
 }
 
 #pragma mark - 网络

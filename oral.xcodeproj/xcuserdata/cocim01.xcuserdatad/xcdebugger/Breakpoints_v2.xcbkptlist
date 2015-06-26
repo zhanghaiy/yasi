@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "oral/CheckScoreViewController.m"
-            timestampString = "457004823.591921"
+            timestampString = "457010673.239571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "301"
-            endingLineNumber = "301"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
             landmarkName = "-requestWatingFinished:"
             landmarkType = "5">
          </BreakpointContent>
