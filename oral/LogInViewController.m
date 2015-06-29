@@ -126,6 +126,7 @@
         {
             // 登陆成功 保存个人信息
             NSString *userid = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"studentid"];
+            NSLog(@"%@",dict);
             NSString *userName = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"studentname"];
             [OralDBFuncs setCurrentUser:userName UserId:userid];
             [OralDBFuncs addUser:userName];

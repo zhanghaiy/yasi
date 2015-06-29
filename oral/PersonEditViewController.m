@@ -9,9 +9,12 @@
 #import "PersonEditViewController.h"
 #import "PersonEditCell.h"
 #import "ConstellationManager.h"
+#import "OralDBFuncs.h"
+#import "NSURLConnectionRequest.h"
 
 
-@interface PersonEditViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+
+@interface PersonEditViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UITextViewDelegate>
 {
     UIView *_picker_Back_view;
     UITableView *_person_edit_tableV;
@@ -26,17 +29,21 @@
     NSString *_constellation;// 星座
     NSString *_signiture;// 个性签名
     NSString *_hobbies;// 爱好
+    
+    UITextView *footerTextV;
 }
 @end
 
 @implementation PersonEditViewController
 #define kHeadButtonTag 55
-#define kSignitureLabelTag 77
+#define kSignitureTextViewTag 77
 #define kPickerBackViewTag 78
 #define kActionSheet_sex_Tag 66
 #define kActionSheet_headImage_Tag 67
 
 #define kPickerViewHeight 250
+
+#define kDesTextFieldTag 88
 
 #pragma mark - 配置个人信息
 - (void)makeUpDataArray
@@ -84,7 +91,7 @@
     {
         if ([_personInfoDict objectForKey:@"birthday"])
         {
-            NSArray *comArr = [_birthStr componentsSeparatedByString:@"."];
+            NSArray *comArr = [_birthStr componentsSeparatedByString:@"-"];
             _constellation = [ConstellationManager getAstroWithMonth:[[comArr objectAtIndex:1] intValue] day:[[comArr objectAtIndex:2] intValue]];
         }
         else
@@ -119,6 +126,7 @@
     // Do any additional setup after loading the view from its nib.
     
     self.view.backgroundColor = _backgroundViewColor;
+    
     
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
@@ -163,13 +171,16 @@
     lineLab.backgroundColor = _backgroundViewColor;
     [_table_footer_view addSubview:lineLab];
     
-    UILabel *_footer_des_label = [[UILabel alloc]initWithFrame:CGRectMake(15, 30, kScreentWidth-30, 50)];
-    _footer_des_label.text = _signiture;
-    _footer_des_label.textAlignment = NSTextAlignmentLeft;
-    _footer_des_label.textColor = kText_Color;
-    _footer_des_label.font = [UIFont systemFontOfSize:kFontSize2];
-    _footer_des_label.tag = kSignitureLabelTag;
-    [_table_footer_view addSubview:_footer_des_label];
+    
+    footerTextV = [[UITextView alloc]initWithFrame:CGRectMake(15, 30, kScreentWidth-30, 50)];
+    footerTextV.keyboardType = UIKeyboardTypeNamePhonePad;
+    footerTextV.delegate = self;
+    footerTextV.textColor = kText_Color;
+    footerTextV.font = [UIFont systemFontOfSize:kFontSize2];
+    footerTextV.tag = kSignitureTextViewTag;
+    footerTextV.text = _signiture;
+    [_table_footer_view addSubview:footerTextV];
+    
     
     _person_edit_tableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 65, kScreentWidth, kScreenHeight-65) style:UITableViewStylePlain];
     _person_edit_tableV.dataSource = self;
@@ -186,7 +197,31 @@
 - (void)finishAlter:(UIButton *)btn
 {
     // 提交修改资料
+    _signiture = footerTextV.text;
+    NSString *userID = [OralDBFuncs getCurrentUserID];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kAlterPersonInfo];
+    NSString *params = [NSString stringWithFormat:@"userId=%@&nickname=%@&sex=%@&constellation=%@&birthday=%@&hobbies=%@&signiture=%@",userID,_nameStr,_sexString,_constellation,_birthStr,_hobbies,_signiture];
+    NSLog(@"%@",urlStr);
+    NSLog(@"%@~~~~~",params);
+    [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:params target:self action:@selector(alterFinished:) andRefresh:YES];
     
+}
+
+- (void)alterFinished:(NSURLConnectionRequest *)request
+{
+    if (request.downloadData)
+    {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        if ([[dic objectForKey:@"respCode"] intValue] == 1000)
+        {
+            NSLog(@"成功");
+        }
+        NSLog(@"%@",[dic objectForKey:@"remark"]);
+    }
+    else
+    {
+        NSLog(@"失败");
+    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -213,6 +248,9 @@
     }
     cell.titleLabel.textColor = kText_Color;
     cell.desTextField.textColor = kText_Color;
+    cell.desTextField.delegate = self;
+    cell.desTextField.tag = indexPath.row + kDesTextFieldTag;
+
     cell.titleLabel.text = [_edit_Menu_Array objectAtIndex:indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     switch (indexPath.row)
@@ -482,13 +520,47 @@
     _birthStr = [ConstellationManager transformNSStringWithDate:date];
     
     // 转换的星座
-    NSArray *arr = [_birthStr componentsSeparatedByString:@"."];
+    NSArray *arr = [_birthStr componentsSeparatedByString:@"-"];
     int month = [[arr objectAtIndex:1] intValue];
     int day = [[arr lastObject] intValue];
     _constellation = [ConstellationManager getAstroWithMonth:month day:day];
     [_person_edit_tableV reloadData];
 }
 
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSLog(@"%@",textField.text);
+    NSLog(@"%ld",textField.tag);
+    switch (textField.tag)
+    {
+        case kDesTextFieldTag:
+        {
+            // 昵称
+            _nameStr = textField.text;
+        }
+            break;
+        case kDesTextFieldTag+4:
+        {
+            // 兴趣爱好
+            _hobbies = textField.text;
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    [textView resignFirstResponder];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

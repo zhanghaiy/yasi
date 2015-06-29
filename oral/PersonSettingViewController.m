@@ -10,6 +10,9 @@
 #import "MyTeacherViewController.h"
 #import "DeviceManager.h"
 
+#import "AboutMeViewController.h"
+
+
 @interface PersonSettingViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_settingTableV;
@@ -120,6 +123,8 @@
         case 4:
         {
             // 关于我们
+            AboutMeViewController *aboutMeVC = [[AboutMeViewController alloc]initWithNibName:@"AboutMeViewController" bundle:nil];
+            [self.navigationController pushViewController:aboutMeVC animated:YES];
         }
             break;
         case 5:

@@ -96,6 +96,9 @@
 // 学生退出本班
 #define kStuOutClassUrlString @"/yasi/class/deleteClassMemberByStudentId.do"
 
+// 查询班级最新公告信息 参数 ： classId
+#define kSelectClassNewNoticeUrl @"/yasi/classbulletin/selectClassNewBulletin.do"
+
 /*
  // 学生申请加班
  用户ID	userId	M

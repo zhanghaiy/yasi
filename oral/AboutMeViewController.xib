@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment version="1536" identifier="iOS"/>
+        <development version="6100" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AboutMeViewController">
+            <connections>
+                <outlet property="appNameLabel" destination="bHU-FF-9Bx" id="teO-gZ-fgD"/>
+                <outlet property="backImgV" destination="Zvr-sA-Qvq" id="CgC-Jq-aXX"/>
+                <outlet property="introduceLabel" destination="tTf-ZZ-hng" id="yf5-pl-tJq"/>
+                <outlet property="lineLabel" destination="oRG-fu-0Mv" id="6G3-1E-hP3"/>
+                <outlet property="logoIngV" destination="bFh-SU-h8f" id="dRk-9U-2Tm"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zvr-sA-Qvq">
+                    <rect key="frame" x="10" y="75" width="355" height="525"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oRG-fu-0Mv">
+                    <rect key="frame" x="30" y="200" width="315" height="1"/>
+                    <color key="backgroundColor" red="0.70981806520000001" green="0.42949861859999999" blue="0.81044975829999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="AcY-wC-Av6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="开口说雅思口语" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHU-FF-9Bx">
+                    <rect key="frame" x="30" y="210" width="315" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="oJ4-cn-ME7"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tTf-ZZ-hng">
+                    <rect key="frame" x="20" y="250" width="335" height="317"/>
+                    <string key="text">         截至2014年，雅思考试已获得全球135个国家逾9000所教育机构、雇主单位、专业协会和政府部门的认可；雅思考试作为全球留学及移民类英语测评的领导者，每年有超过200万人次的考生参加雅思考试。雅思考试（IELTS），外文名International English Language Testing System，由剑桥大学考试委员会外语考试部、英国文化协会及IDP教育集团共同管理，是一种针英语能力，为打算到使用英语的国家学习、工作或定居的人们设置的英语水平考试。</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_logo" translatesAutoresizingMaskIntoConstraints="NO" id="bFh-SU-h8f">
+                    <rect key="frame" x="137" y="90" width="100" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="KNp-jU-VI8"/>
+                        <constraint firstAttribute="width" constant="100" id="xDO-vy-qEi"/>
+                    </constraints>
+                </imageView>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h7G-4m-f1G">
+                    <rect key="frame" x="20" y="250" width="335" height="330"/>
+                    <state key="normal">
+                        <string key="title">         截至2014年，雅思考试已获得全球135个国家逾9000所教育机构、雇主单位、专业协会和政府部门的认可；雅思考试作为全球留学及移民类英语测评的领导者，每年有超过200万人次的考生参加雅思考试。雅思考试（IELTS），外文名International English Language Testing System，由剑桥大学考试委员会外语考试部、英国文化协会及IDP教育集团共同管理，是一种针英语能力，为打算到使用英语的国家学习、工作或定居的人们设置的英语水平考试。</string>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="oRG-fu-0Mv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="28G-r2-Nwm"/>
+                <constraint firstAttribute="trailing" secondItem="tTf-ZZ-hng" secondAttribute="trailing" constant="20" id="6gt-vU-jMG"/>
+                <constraint firstItem="tTf-ZZ-hng" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="99t-lk-Psw"/>
+                <constraint firstItem="bHU-FF-9Bx" firstAttribute="top" secondItem="oRG-fu-0Mv" secondAttribute="bottom" constant="9" id="BrN-f9-2PJ"/>
+                <constraint firstItem="oRG-fu-0Mv" firstAttribute="top" secondItem="bFh-SU-h8f" secondAttribute="bottom" constant="10" id="DCV-Je-w00"/>
+                <constraint firstAttribute="centerX" secondItem="bFh-SU-h8f" secondAttribute="centerX" id="HBx-8Y-cKb"/>
+                <constraint firstItem="Zvr-sA-Qvq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="HI3-x0-6Hy"/>
+                <constraint firstAttribute="trailing" secondItem="oRG-fu-0Mv" secondAttribute="trailing" constant="30" id="KWQ-WL-OIq"/>
+                <constraint firstAttribute="bottom" secondItem="tTf-ZZ-hng" secondAttribute="bottom" constant="100" id="Kg8-Gl-Owf"/>
+                <constraint firstItem="bFh-SU-h8f" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="90" id="WPN-A7-nsw"/>
+                <constraint firstItem="tTf-ZZ-hng" firstAttribute="top" secondItem="bHU-FF-9Bx" secondAttribute="bottom" constant="20" id="Y5o-ff-pCF"/>
+                <constraint firstItem="Zvr-sA-Qvq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="75" id="YjS-bk-FZK"/>
+                <constraint firstAttribute="bottom" secondItem="h7G-4m-f1G" secondAttribute="bottom" constant="87" id="bNj-VQ-ldm"/>
+                <constraint firstAttribute="bottom" secondItem="Zvr-sA-Qvq" secondAttribute="bottom" constant="67" id="cJ1-QT-7M0"/>
+                <constraint firstAttribute="trailing" secondItem="bHU-FF-9Bx" secondAttribute="trailing" constant="30" id="cev-a7-Z5d"/>
+                <constraint firstItem="h7G-4m-f1G" firstAttribute="top" secondItem="bHU-FF-9Bx" secondAttribute="bottom" constant="20" id="fl6-Wv-miB"/>
+                <constraint firstAttribute="trailing" secondItem="h7G-4m-f1G" secondAttribute="trailing" constant="20" id="iZu-kE-kfN"/>
+                <constraint firstItem="bHU-FF-9Bx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="j6f-Ec-mq7"/>
+                <constraint firstAttribute="trailing" secondItem="Zvr-sA-Qvq" secondAttribute="trailing" constant="10" id="pXI-cF-bD0"/>
+                <constraint firstItem="h7G-4m-f1G" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="r7a-Rv-E8Y"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="288.5" y="234.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="login_logo" width="169" height="170"/>
+    </resources>
+</document>

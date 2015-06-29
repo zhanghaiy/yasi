@@ -82,8 +82,9 @@
 #pragma mark - 网络请求
 - (void)requestPersonInfo
 {
-    _userId = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+    _userId = [OralDBFuncs getCurrentUserID];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kUserInfoUrl,_userId];
+    NSLog(@"%@",urlStr);
     [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestEnd:) andRefresh:YES];
 }
 
@@ -92,8 +93,19 @@
     if ([request.downloadData length])
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        _personInfoDic = [[dict objectForKey:@"studentInfos"] lastObject];
-        [self blankPersonInfo];
+        if ([[dict objectForKey:@"respCode"] intValue] == 1000)
+        {
+            _personInfoDic = [[dict objectForKey:@"studentInfos"] lastObject];
+            [self blankPersonInfo];
+        }
+        else
+        {
+        
+        }
+    }
+    else
+    {
+        
     }
 }
 
@@ -112,61 +124,22 @@
         [_personHeadButton setBackgroundImage:[UIImage imageNamed:@"person_head_image"] forState:UIControlStateNormal];
     }
     
-    if ([[_personInfoDic objectForKey:@"birthday"] length]>0)
-    {
-        // 生日
-        NSString *birthday = [_personInfoDic objectForKey:@"birthday"];
-        _birthLabel.text = birthday;
-    }
-    else
-    {
-        _birthLabel.text = @"未填写";
-    }
+    // 生日
+    NSString *birthday = [_personInfoDic objectForKey:@"birthday"];
+    _birthLabel.text = [NSString stringWithFormat:@"生日：%@",birthday];
     
-    if ([[_personInfoDic objectForKey:@"hobbies"] length]>0)
-    {
-        // 爱好
-        NSString *hobbies = [_personInfoDic objectForKey:@"hobbies"];
-        _loveLabel.text = hobbies;
-    }
-    else
-    {
-        _loveLabel.text = @"未填写";
-    }
-
+    // 爱好
+    NSString *hobbies = [_personInfoDic objectForKey:@"hobbies"];
+    _loveLabel.text = [NSString stringWithFormat:@"爱好：%@",hobbies];
     
-    if ([[_personInfoDic objectForKey:@"constellation"] length]>0)
-    {
-        // 星座
-        NSString *constellation = [_personInfoDic objectForKey:@"constellation"];
-        [_ConstellationButton setTitle:constellation forState:UIControlStateNormal];
-    }
-    else
-    {
-        [_ConstellationButton setTitle:@"星座" forState:UIControlStateNormal];
-    }
+    NSString *constellation = [NSString stringWithFormat:@"星座：%@",[_personInfoDic objectForKey:@"constellation"]];
+    [_ConstellationButton setTitle:constellation forState:UIControlStateNormal];
     
-    if ([[_personInfoDic objectForKey:@"sex"] length]>0)
-    {
-        // 性别
-        NSString *sex = [_personInfoDic objectForKey:@"sex"];
-        [_sexButton setTitle:sex forState:UIControlStateNormal];
-    }
-    else
-    {
-        [_sexButton setTitle:@"未填写" forState:UIControlStateNormal];
-    }
+    NSString *sex = [NSString stringWithFormat:@"星座：%@",[_personInfoDic objectForKey:@"sex"]];
+    [_sexButton setTitle:sex forState:UIControlStateNormal];
     
-    if ([[_personInfoDic objectForKey:@"nickname"] length]>0)
-    {
-        // 昵称
-        NSString *nickname = [_personInfoDic objectForKey:@"nickname"];
-        _nameLabel.text = nickname;
-    }
-    else
-    {
-        _nameLabel.text = @"未填写";// [OralDBFuncs getCurrentUserName];
-    }
+    NSString *nickname = [NSString stringWithFormat:@"星座：%@",[_personInfoDic objectForKey:@"nickname"]];
+    _nameLabel.text = nickname;
     
     if ([[_personInfoDic objectForKey:@"signiture"] length]>0)
     {
@@ -226,4 +199,7 @@
     editVC.personInfoDict = _personInfoDic;
     [self.navigationController pushViewController:editVC animated:YES];
 }
+
+
+
 @end

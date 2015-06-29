@@ -39,7 +39,7 @@
 +(NSString *)transformNSStringWithDate:(NSDate *)date
 {
     NSDateFormatter *dateFormatter= [[NSDateFormatter alloc]init];//格式化
-    [dateFormatter setDateFormat:@"yyyy.MM.dd"];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString *str = [dateFormatter stringFromDate:date];
     return str;
 }

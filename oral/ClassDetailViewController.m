@@ -24,7 +24,11 @@
 @implementation ClassDetailViewController
 #define kNoticeViewHeight 110
 #define kTeacherViewHeight 80
+#define kOutClassAlertViewTag 120
 
+
+
+#pragma mark - 配置UI
 - (void)uiConfig
 {
     _noticeDesLabel.textColor = _textColor;
@@ -39,6 +43,15 @@
     _teaHeadImageBtn.layer.borderColor = [UIColor colorWithWhite:235/255.0 alpha:1].CGColor;
     _teaHeadImageBtn.layer.borderWidth = 1;
     
+}
+
+#pragma mark - 警告框delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == kOutClassAlertViewTag)
+    {
+        //
+    }
 }
 
 #pragma mark - 退出班级
@@ -56,7 +69,7 @@
     if (buttonIndex==0)
     {
          //退出本班
-        [self outClass];
+        [self outClassRequest];
     }
 }
 
@@ -70,24 +83,95 @@
     [NSURLConnectionRequest requestWithUrlString:urlString target:self aciton:@selector(outClassFinished:) andRefresh:YES];
 }
 
+#pragma mark - 退出班级反馈
 - (void)outClassFinished:(NSURLConnectionRequest *)request
 {
     if ([request.downloadData length])
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        
-        UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:[dict objectForKey:@"remark"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        alertV.tag = 120;
-        [alertV show];
+        if ([[dict objectForKey:@"respCode"] intValue] == 1000)
+        {
+            UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:[dict objectForKey:@"remark"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            alertV.tag = kOutClassAlertViewTag;
+            [alertV show];
+        }
+        else
+        {
+            // 退出班级失败
+        }
+    }
+    else
+    {
+        // 失败
     }
     
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+
+#pragma mark - 请求班级详情信息
+- (void)requestClassInfo
 {
-   
+    NSString *url = [NSString stringWithFormat:@"%@%@?classId=%@&teacherId=%@",kBaseIPUrl,kSelectClassMemoUrl,_classId,_teacherId];
+    NSLog(@"%@",url);
+    [NSURLConnectionRequest requestWithUrlString:url target:self aciton:@selector(requestFinished:) andRefresh:YES];
 }
 
+#pragma mark - 请求班级详情信息反馈
+- (void)requestFinished:(NSURLConnectionRequest *)request
+{
+    if ([request.downloadData length]>0)
+    {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        NSLog(@"%@",dic);
+        _stu_Progress_Array = [dic objectForKey:@"studentlist"];
+        [_stu_Progress_TableView reloadData];
+        
+        _teaInfoDict = [[dic objectForKey:@"teacherlist"] lastObject];
+        
+        [_teaHeadImageBtn setImageWithURL:[NSURL URLWithString:[_teaInfoDict objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"class_teacher_head"]];
+        _teaDesLabel.text = [[[_teaInfoDict objectForKey:@"teacherinfo"] lastObject] objectForKey:@"content"];
+        _classNameLabel.text = [_teaInfoDict objectForKey:@"teachername"];
+    }
+}
+
+#pragma mark - 请求班级公告
+- (void)requestClassNotice
+{
+    NSString *classNoticeUrl = [NSString stringWithFormat:@"%@%@?classId=%@",kBaseIPUrl,kSelectClassNewNoticeUrl,_classId];
+    NSLog(@"请求班级公告: %@~~~",classNoticeUrl);
+    [NSURLConnectionRequest requestWithUrlString:classNoticeUrl target:self aciton:@selector(requestClassNoticeFinished:) andRefresh:YES];
+}
+
+- (void)requestClassNoticeFinished:(NSURLConnectionRequest *)request
+{
+    if ([request.downloadData length])
+    {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        if ([[dict objectForKey:@"respCode"] intValue] == 1000)
+        {
+            // 请求成功
+            if ([[dict objectForKey:@"noticelist"] count])
+            {
+                // 有公告
+                NSDictionary *newNoticeDic = [[dict objectForKey:@"noticelist"] lastObject];
+                _noticeDesLabel.text = [newNoticeDic objectForKey:@"content"];
+            }
+            else
+            {
+                // 暂无公告
+                NSLog(@"暂无公告");
+            }
+        }
+        else
+        {
+            NSString *remark = [dict objectForKey:@"remark"];
+            NSLog(@"%@",remark);
+        }
+    }
+}
+
+
+#pragma mark - 加载视图
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -122,31 +206,7 @@
     [self requestClassInfo];
 }
 
-- (void)requestClassInfo
-{
-    NSString *url = [NSString stringWithFormat:@"%@%@?classId=%@&teacherId=%@",kBaseIPUrl,kSelectClassMemoUrl,_classId,_teacherId];
-    NSLog(@"%@",url);
-    [NSURLConnectionRequest requestWithUrlString:url target:self aciton:@selector(requestFinished:) andRefresh:YES];
-}
-
-- (void)requestFinished:(NSURLConnectionRequest *)request
-{
-    if ([request.downloadData length]>0)
-    {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        NSLog(@"%@",dic);
-        _stu_Progress_Array = [dic objectForKey:@"studentlist"];
-        [_stu_Progress_TableView reloadData];
-       
-        _teaInfoDict = [[dic objectForKey:@"teacherlist"] lastObject];
-       
-        [_teaHeadImageBtn setImageWithURL:[NSURL URLWithString:[_teaInfoDict objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"class_teacher_head"]];
-        _teaDesLabel.text = [[[_teaInfoDict objectForKey:@"teacherinfo"] lastObject] objectForKey:@"content"];
-        _classNameLabel.text = [_teaInfoDict objectForKey:@"teachername"];
-    }
-}
-
-
+#pragma mark - tableView delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _stu_Progress_Array.count;
@@ -206,6 +266,7 @@
 }
 */
 
+#pragma mark - 进入老师个人中心
 - (IBAction)enter_tea_person_center:(id)sender
 {
     TeacherPersonCenterViewController *teaPersonCenterVC = [[TeacherPersonCenterViewController alloc]initWithNibName:@"TeacherPersonCenterViewController" bundle:nil];
@@ -214,6 +275,7 @@
     [self.navigationController pushViewController:teaPersonCenterVC animated:YES];
 }
 
+#pragma mark - 展开公告信息
 - (IBAction)openNotice:(id)sender
 {
     CGRect rect = _classBackView.frame;
@@ -239,6 +301,8 @@
     
     [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(moveNotOpen) userInfo:nil repeats:NO];
 }
+
+#pragma mark - 折叠公告
 - (IBAction)upOpenButtonClicked:(id)sender
 {
     CGRect rect = _classBackView.frame;
@@ -263,6 +327,7 @@
     [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(moveOpenButton) userInfo:nil repeats:NO];
 
 }
+
 
 - (void)moveNotOpen
 {
