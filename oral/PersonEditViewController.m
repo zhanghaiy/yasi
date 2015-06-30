@@ -14,7 +14,7 @@
 
 
 
-@interface PersonEditViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UITextViewDelegate>
+@interface PersonEditViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UITextViewDelegate,UIAlertViewDelegate>
 {
     UIView *_picker_Back_view;
     UITableView *_person_edit_tableV;
@@ -22,6 +22,7 @@
 
     NSString *_iconUrl;// 头像
     UIImage *_selectIconImg;// 本地选取的
+    NSData *_imgData;// 选取的图片data
     
     NSString *_nameStr;// 昵称
     NSString *_sexString;// 性别
@@ -197,14 +198,40 @@
 - (void)finishAlter:(UIButton *)btn
 {
     // 提交修改资料
+    
     _signiture = footerTextV.text;
     NSString *userID = [OralDBFuncs getCurrentUserID];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kAlterPersonInfo];
-    NSString *params = [NSString stringWithFormat:@"userId=%@&nickname=%@&sex=%@&constellation=%@&birthday=%@&hobbies=%@&signiture=%@",userID,_nameStr,_sexString,_constellation,_birthStr,_hobbies,_signiture];
+    NSString *params = [NSString stringWithFormat:@"userId=%@&nickname=%@&sex=%@&constellation=%@&birthday=%@&hobbies=%@&signiture=%@",userID,_nameStr,_sexString,_constellation,_birthStr,_hobbies,_signiture];;
     NSLog(@"%@",urlStr);
-    NSLog(@"%@~~~~~",params);
     [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:params target:self action:@selector(alterFinished:) andRefresh:YES];
+}
+
+- (void)loadLoadingView
+{
+
+}
+
+- (void)upLoadImage
+{
+    NSString *userID = [OralDBFuncs getCurrentUserID];
     
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kAlterPersonInfo];
+    NSString *params = [NSString stringWithFormat:@"userId=%@&icon=%@",userID,_imgData];
+    [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:params target:self action:@selector(uploadImageFinished:) andRefresh:YES];
+}
+
+- (void)uploadImageFinished:(NSURLConnectionRequest *)request
+{
+    if (request.downloadData)
+    {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        if ([[dic objectForKey:@"respCode"] intValue] == 1000)
+        {
+            // 成功
+            
+        }
+    }
 }
 
 - (void)alterFinished:(NSURLConnectionRequest *)request
@@ -214,15 +241,43 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
         if ([[dic objectForKey:@"respCode"] intValue] == 1000)
         {
-            NSLog(@"成功");
+//            if (_imgData)
+//            {
+//                // 上传头像
+//                [self upLoadImage];
+//            }
+//            else
+//            {
+//                
+//            }
+            [self  finishBack];
+            
         }
-        NSLog(@"%@",[dic objectForKey:@"remark"]);
+        else
+        {
+            [self createAlertView:[dic objectForKey:@"remark"]];
+        }
     }
     else
     {
         NSLog(@"失败");
+        [self createAlertView:@"保存失败\n请检查网络"];
     }
 }
+
+- (void)finishBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate editSuccess];
+}
+
+#pragma mark - 创建警告框
+- (void)createAlertView:(NSString *)message
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [alertV show];
+}
+
 
 #pragma mark - UITableViewDelegate
 #pragma mark -- section个数
@@ -446,6 +501,7 @@
             data = UIImagePNGRepresentation(scaleImage);
         }
         
+        _imgData = data;
         //将二进制数据生成UIImage
         UIImage *image = [UIImage imageWithData:data];
         UIButton *btn = (UIButton *)[self.view viewWithTag:kHeadButtonTag];

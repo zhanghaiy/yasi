@@ -44,6 +44,6 @@
 // 返回上一页
 - (void)backToPrePage;
 - (NSString *)getPathWithTopic:(NSString *)topicName IsPart:(BOOL)isPart;
-- (void)createLoadingViewWithTitle:(NSString *)title;
+- (void)changeLoadingViewTitle:(NSString *)title;
 
 @end

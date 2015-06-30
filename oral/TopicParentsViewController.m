@@ -12,7 +12,9 @@
 
 
 @interface TopicParentsViewController ()
-
+{
+    UILabel *_tipLabel;
+}
 @end
 
 @implementation TopicParentsViewController
@@ -43,6 +45,7 @@
     _badColor = [UIColor colorWithRed:255/255.0 green:63/255.0 blue:37/255.0 alpha:1];
     _perfColor = [UIColor colorWithRed:0 green:231/255.0 blue:136/255.0 alpha:1];
     _goodColor = [UIColor colorWithRed:250/255.0 green:220/255.0 blue:18/255.0 alpha:1];
+    [self createLoadingView];
 }
 
 // 返回按钮
@@ -106,7 +109,12 @@
 }
 
 
-- (void)createLoadingViewWithTitle:(NSString *)title
+- (void)changeLoadingViewTitle:(NSString *)title
+{
+    _tipLabel.text = title;
+}
+
+- (void)createLoadingView
 {
     _loading_View = [[UIView alloc]initWithFrame:self.view.bounds];
     _loading_View.hidden = YES;
@@ -120,17 +128,16 @@
     
     actionView.backgroundColor = [UIColor whiteColor];
     
-    UIActivityIndicatorView *action = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((actionView.frame.size.width-50)/2, 45, 50, 50)];
+    UIActivityIndicatorView *action = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((actionView.frame.size.width-100)/2, 25, 100, 100)];
     action.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
     [actionView addSubview:action];
     [action startAnimating];
     
-    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake((actionView.frame.size.width-150)/2,actionView.frame.size.height-60, 150, 30)];
-    lab.text = title;
-    lab.textAlignment = NSTextAlignmentCenter;
-    lab.textColor = _pointColor;
-    lab.font = [UIFont systemFontOfSize:kFontSize1];
-    [actionView addSubview:lab];
+     _tipLabel= [[UILabel alloc]initWithFrame:CGRectMake((actionView.frame.size.width-150)/2,actionView.frame.size.height-60, 150, 30)];
+    _tipLabel.textAlignment = NSTextAlignmentCenter;
+    _tipLabel.textColor = _pointColor;
+    _tipLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    [actionView addSubview:_tipLabel];
     
     actionView.center = _loading_View.center;
     

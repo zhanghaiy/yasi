@@ -16,7 +16,7 @@
 #import "UIButton+WebCache.h"
 #import "OralDBFuncs.h"
 
-@interface TPCPersonCenterViewController ()
+@interface TPCPersonCenterViewController ()<EditDelegate>
 {
     NSDictionary *_personInfoDic;
     NSString *_userId;
@@ -132,13 +132,13 @@
     NSString *hobbies = [_personInfoDic objectForKey:@"hobbies"];
     _loveLabel.text = [NSString stringWithFormat:@"爱好：%@",hobbies];
     
-    NSString *constellation = [NSString stringWithFormat:@"星座：%@",[_personInfoDic objectForKey:@"constellation"]];
+    NSString *constellation = [_personInfoDic objectForKey:@"constellation"];
     [_ConstellationButton setTitle:constellation forState:UIControlStateNormal];
     
-    NSString *sex = [NSString stringWithFormat:@"星座：%@",[_personInfoDic objectForKey:@"sex"]];
+    NSString *sex = [NSString stringWithFormat:@"%@",[_personInfoDic objectForKey:@"sex"]];
     [_sexButton setTitle:sex forState:UIControlStateNormal];
     
-    NSString *nickname = [NSString stringWithFormat:@"星座：%@",[_personInfoDic objectForKey:@"nickname"]];
+    NSString *nickname = [NSString stringWithFormat:@"昵称：%@",[_personInfoDic objectForKey:@"nickname"]];
     _nameLabel.text = nickname;
     
     if ([[_personInfoDic objectForKey:@"signiture"] length]>0)
@@ -149,7 +149,7 @@
     }
     else
     {
-        _signatureLabel.text = @"未填写";
+        _signatureLabel.text = @"个性签名：未填写";
     }
 }
 
@@ -197,9 +197,15 @@
     // 编辑个人信息
     PersonEditViewController *editVC = [[PersonEditViewController alloc]initWithNibName:@"PersonEditViewController" bundle:nil];
     editVC.personInfoDict = _personInfoDic;
+    editVC.delegate = self;
     [self.navigationController pushViewController:editVC animated:YES];
 }
 
+
+- (void)editSuccess
+{
+    [self requestPersonInfo];
+}
 
 
 @end

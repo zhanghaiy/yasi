@@ -71,10 +71,13 @@
 
 // 标记当前用户 用户名 昵称
 +(void)setCurrentUser:(NSString *)userName UserId:(NSString *)userid;
+// 删除记录
++(void)removeCurrentUserNameAndUserID;
 // 获取用户名
 +(NSString *)getCurrentUserName;
 // 获取用户id
 +(NSString *)getCurrentUserID;
+
 // 标记当前topic
 +(void)setCurrentTopic:(NSString *)topicName;
 // 获取当前topic
@@ -97,6 +100,8 @@
 + (void)setAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName AnswerId:(NSString *)answerid AnswerText:(NSString *)answerText;
 + (NSArray *)getAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName;
 + (void)deleteAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName AnswerId:(NSString *)answerid;
+
+
 
 
 // 标记关卡3是否提交

@@ -11,7 +11,9 @@
 #import "DeviceManager.h"
 
 #import "AboutMeViewController.h"
-
+#import "MyAccountViewController.h"
+#import "SystemSettingViewController.h"
+#import "NSURLConnectionRequest.h"
 
 @interface PersonSettingViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -29,7 +31,7 @@
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"设置"];
     self.view.backgroundColor = _backgroundViewColor;
-    _textArray = @[@"我的账户",@"账户充值",@"网络设置",@"版本更新",@"关于我们",@"默认老师"];
+    _textArray = @[@"我的账号",@"账户充值",@"网络设置",@"版本更新",@"关于我们",@"默认老师"];
     _imageArray = @[@"",@"Recharge",@"netSetting",@"VersionUpdate",@"AboutMe",@"defaultTeacher"];
     
     _settingTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight+10, kScreentWidth, kScreenHeight-KNavTopViewHeight-10) style:UITableViewStylePlain];
@@ -82,6 +84,7 @@
     cell.textLabel.textColor = kText_Color;
     [cell.imageView setImage:[UIImage imageNamed:[_imageArray objectAtIndex:indexPath.row]]];
     cell.textLabel.text = [_textArray objectAtIndex:indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -103,6 +106,8 @@
         case 0:
         {
             // 我的账户
+            MyAccountViewController *myAccountVC = [[MyAccountViewController alloc]init];
+            [self.navigationController pushViewController:myAccountVC animated:YES];
         }
             break;
         case 1:
@@ -113,11 +118,14 @@
         case 2:
         {
             // 网络设置
+            SystemSettingViewController *systemSetVC = [[SystemSettingViewController alloc]init];
+            [self.navigationController pushViewController:systemSetVC animated:YES];
         }
             break;
         case 3:
         {
             // 版本更新
+//            [self systemUpdate];
         }
             break;
         case 4:
@@ -136,6 +144,33 @@
             break;
         default:
             break;
+    }
+}
+
+#pragma mark - 版本更新
+- (void)systemUpdate
+{
+    /*
+     1 根据 app 的 id 来查找：http://itunes.apple.com/lookup?id=你的应用程序的ID  你的应用程序的ID 是 itunes connect里的 Apple ID
+     获取最新的版本信息 然后 和当前版本信息对比 若不一样 跳转界面 AppStore
+     */
+    NSString *appleId = @"";
+    NSString *urlStr = @"http://itunes.apple.com/lookup";
+    NSString *params = [NSString stringWithFormat:@"id=%@",appleId];
+    NSLog(@"版本更新 获取版本信息：%@",params);
+    [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:params target:self action:@selector(requestVersionFinished:) andRefresh:YES];
+}
+
+- (void)requestVersionFinished:(NSURLConnectionRequest *)request
+{
+    if (request.downloadData)
+    {
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        NSLog(@"%@",dic);
+    }
+    else
+    {
+        NSLog(@"失败");
     }
 }
 

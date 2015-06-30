@@ -98,7 +98,7 @@
     // Do any additional setup after loading the view from its nib.
     
     _commitSuccess = NO;
-    [self createLoadingViewWithTitle:@"正在提交给老师，请耐心等待..."];
+    [self changeLoadingViewTitle:@"正在提交给老师，请耐心等待..."];
     _partInfoArray = [[NSMutableArray alloc]init];
     _recordPathArray = [[NSMutableArray alloc]init];
 
@@ -677,14 +677,7 @@
         int currentPoint = i+1;
         int score = [self getScoreWithPart:currentPart Point:currentPoint Record:record];
         NSString *pass_mark;
-        if (i == 2)
-        {
-            pass_mark = @"未通关";
-        }
-        else
-        {
-            pass_mark = @"通关";
-        }
+        pass_mark = @"未通关";
         NSDictionary *subDic = @{@"ifsubmitteacher":@"否",@"level":level,@"levelid":levelid,@"score":[NSNumber numberWithInt:score],@"status":pass_mark,@"topicid":topicid,@"userid":[OralDBFuncs getCurrentUserID]};
         [checkPoint addObject:subDic];
     }

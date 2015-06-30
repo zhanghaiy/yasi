@@ -39,7 +39,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self createLoadingViewWithTitle:@"正在加载资源文件,请稍后..."];
+    [self changeLoadingViewTitle:@"正在加载资源文件,请稍后..."];
+
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     

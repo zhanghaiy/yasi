@@ -8,8 +8,18 @@
 
 #import "TopicParentsViewController.h"
 
+
+@protocol EditDelegate <NSObject>
+
+- (void)editSuccess;
+
+@end
+
 @interface PersonEditViewController : TopicParentsViewController
 
 @property (nonatomic,strong) NSDictionary *personInfoDict;
+
+@property (nonatomic,assign) id<EditDelegate> delegate;
+
 
 @end

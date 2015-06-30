@@ -782,6 +782,12 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
++(void)removeCurrentUserNameAndUserID
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:KEY_CONTEXT_USERNAME];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:KEY_CONTEXT_USERID];
+}
+
 +(NSString *)getCurrentUserName
 {
     NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_CONTEXT_USERNAME];

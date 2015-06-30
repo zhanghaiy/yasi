@@ -13,6 +13,5 @@
 @property (strong, nonatomic) IBOutlet UIImageView *logoIngV;
 @property (strong, nonatomic) IBOutlet UILabel *lineLabel;
 @property (strong, nonatomic) IBOutlet UILabel *appNameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *introduceLabel;
 
 @end

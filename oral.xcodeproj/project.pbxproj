@@ -119,6 +119,10 @@
 		FD99590E1B1328FB005892DB /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9959031B1328FB005892DB /* AFURLRequestSerialization.m */; };
 		FD99590F1B1328FB005892DB /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9959051B1328FB005892DB /* AFURLResponseSerialization.m */; };
 		FD9959101B1328FB005892DB /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9959071B1328FB005892DB /* AFURLSessionManager.m */; };
+		FD9B9DCA1B422CB200DBD58B /* MyAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9B9DC81B422CB200DBD58B /* MyAccountViewController.m */; };
+		FD9B9DCB1B422CB200DBD58B /* MyAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD9B9DC91B422CB200DBD58B /* MyAccountViewController.xib */; };
+		FD9B9DCF1B427D9200DBD58B /* SystemSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9B9DCD1B427D9200DBD58B /* SystemSettingViewController.m */; };
+		FD9B9DD01B427D9200DBD58B /* SystemSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD9B9DCE1B427D9200DBD58B /* SystemSettingViewController.xib */; };
 		FDA0C2511B1412AA00900F49 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FDA0C23D1B1412AA00900F49 /* LICENSE */; };
 		FDA0C2521B1412AA00900F49 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = FDA0C23E1B1412AA00900F49 /* README.md */; };
 		FDA0C2531B1412AA00900F49 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA0C2401B1412AA00900F49 /* SDImageCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -358,6 +362,12 @@
 		FD9959051B1328FB005892DB /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		FD9959061B1328FB005892DB /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		FD9959071B1328FB005892DB /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		FD9B9DC71B422CB200DBD58B /* MyAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountViewController.h; sourceTree = "<group>"; };
+		FD9B9DC81B422CB200DBD58B /* MyAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountViewController.m; sourceTree = "<group>"; };
+		FD9B9DC91B422CB200DBD58B /* MyAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAccountViewController.xib; sourceTree = "<group>"; };
+		FD9B9DCC1B427D9200DBD58B /* SystemSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemSettingViewController.h; sourceTree = "<group>"; };
+		FD9B9DCD1B427D9200DBD58B /* SystemSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemSettingViewController.m; sourceTree = "<group>"; };
+		FD9B9DCE1B427D9200DBD58B /* SystemSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SystemSettingViewController.xib; sourceTree = "<group>"; };
 		FDA0C23D1B1412AA00900F49 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		FDA0C23E1B1412AA00900F49 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		FDA0C23F1B1412AA00900F49 /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
@@ -585,6 +595,12 @@
 				FD66D14D1B4142D100194C9A /* AboutMeViewController.h */,
 				FD66D14E1B4142D100194C9A /* AboutMeViewController.m */,
 				FD66D14F1B4142D100194C9A /* AboutMeViewController.xib */,
+				FD9B9DC71B422CB200DBD58B /* MyAccountViewController.h */,
+				FD9B9DC81B422CB200DBD58B /* MyAccountViewController.m */,
+				FD9B9DC91B422CB200DBD58B /* MyAccountViewController.xib */,
+				FD9B9DCC1B427D9200DBD58B /* SystemSettingViewController.h */,
+				FD9B9DCD1B427D9200DBD58B /* SystemSettingViewController.m */,
+				FD9B9DCE1B427D9200DBD58B /* SystemSettingViewController.xib */,
 			);
 			name = "设置";
 			sourceTree = "<group>";
@@ -1261,6 +1277,7 @@
 				FD73CBB11B30340E00979B1A /* LoadingView.xib in Resources */,
 				FDD404221B0492F900DE2E84 /* LaunchScreen.xib in Resources */,
 				FD530E361B29612300E3EC26 /* aiengine.resource.zip in Resources */,
+				FD9B9DCB1B422CB200DBD58B /* MyAccountViewController.xib in Resources */,
 				FD9957DC1B12BC02005892DB /* ClassDetailViewController.xib in Resources */,
 				FDD4044D1B04972D00DE2E84 /* RightMainCell.xib in Resources */,
 				FD8C40E71B0C6D8200948B6C /* CheckSuccessViewController.xib in Resources */,
@@ -1301,6 +1318,7 @@
 				FDD404561B049B5B00DE2E84 /* topic2.png in Resources */,
 				FD5FEC3A1B25A33E005B99AF /* PersonEditViewController.xib in Resources */,
 				FDD404541B049B5B00DE2E84 /* topic.png in Resources */,
+				FD9B9DD01B427D9200DBD58B /* SystemSettingViewController.xib in Resources */,
 				FD54613F1B10580A00409778 /* MyTeacherViewController.xib in Resources */,
 				FD97AFB51B17020800C45A2C /* PractiseCell.xib in Resources */,
 				FDA0C2511B1412AA00900F49 /* LICENSE in Resources */,
@@ -1365,12 +1383,14 @@
 				FD9958E51B131794005892DB /* ioapi.c in Sources */,
 				FD78FDE81B326E6900BB4AF6 /* PracticeFollowButton.m in Sources */,
 				FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */,
+				FD9B9DCF1B427D9200DBD58B /* SystemSettingViewController.m in Sources */,
 				FD99590D1B1328FB005892DB /* AFURLConnectionOperation.m in Sources */,
 				FD97AFAA1B16E11A00C45A2C /* TestReviewCell.m in Sources */,
 				FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */,
 				FD5FEC391B25A33E005B99AF /* PersonEditViewController.m in Sources */,
 				FD5E01A31B26865000E3ED4B /* ConstellationManager.m in Sources */,
 				FD6FC7601B3109BC00CE143F /* SaveRecordTime.m in Sources */,
+				FD9B9DCA1B422CB200DBD58B /* MyAccountViewController.m in Sources */,
 				FD8C40F01B0C6FAB00948B6C /* CheckAskViewController.m in Sources */,
 				FD9958E61B131794005892DB /* mztools.c in Sources */,
 				FD5FEC3E1B25A607005B99AF /* PersonEditCell.m in Sources */,
