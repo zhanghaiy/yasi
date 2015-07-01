@@ -15,8 +15,6 @@
 
 @interface CheckSuccessViewController ()<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate>
 {
-    UIColor *_oraColor;
-    UIColor *_blueColor;
     NSMutableArray *_scoreMenuArray;
 }
 
@@ -27,37 +25,61 @@
 
 - (void)uiConfig
 {
-    _topBackView.backgroundColor = _oraColor;
-    _middleBackView.backgroundColor = [UIColor whiteColor];
-    _bottomBackView.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
+    // 修改frame
+    float topView_H = 350.0/667*kScreenHeight;
+    float shareBtn_W = 100.0/375*kScreentWidth;
+    float shareBtn_H = 55.0/667*kScreenHeight;
+    float tipLabel_H = 30;
+    float space_share_toBottom = 15.0/667*kScreenHeight;
+    float score_H = 180.0/667*kScreenHeight;
+    float score_Y = topView_H-5-space_share_toBottom-shareBtn_H-tipLabel_H-score_H;
+    [_topBackView setFrame:CGRectMake(0, 0, kScreentWidth, topView_H)];
+    [_topScoreLabel setFrame:CGRectMake(0, score_Y, kScreentWidth, score_H)];
+    [_topShareButton setFrame:CGRectMake((kScreentWidth-shareBtn_W)/2, topView_H-space_share_toBottom-shareBtn_H, shareBtn_W, shareBtn_H)];
+    [_topDesLabel setFrame:CGRectMake(0, topView_H-space_share_toBottom-shareBtn_H-tipLabel_H-5, kScreentWidth, tipLabel_H)];
+    
+    
+    float bottom_btn_W = 110.0/375*kScreentWidth;
+    float bottom_btn_H = 50.0/667*kScreenHeight;
+    
+    [_backButton setFrame:CGRectMake((kScreentWidth/2-bottom_btn_W)/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
+    
+    [_continueButton setFrame:CGRectMake(kScreentWidth*3/4-bottom_btn_W/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
+    
+    float menu_label_H = 40.0/667*kScreenHeight;
+    float menu_label_Y = topView_H;
+    
+    [_midTitleLabel setFrame:CGRectMake(0, menu_label_Y, kScreentWidth, menu_label_H)];
+    
+    [_midTableView setFrame:CGRectMake(0, menu_label_Y+menu_label_H, kScreentWidth, kScreenHeight-menu_label_Y-menu_label_H-bottom_btn_H-10)];
+    
+    
     _topScoreLabel.backgroundColor = [UIColor clearColor];
-    
-    
     _topShareButton.backgroundColor = [UIColor whiteColor];
-    [_topShareButton setTitleColor:_oraColor forState:UIControlStateNormal];
     _topShareButton.layer.masksToBounds = YES;
     _topShareButton.layer.cornerRadius = _topShareButton.frame.size.height/2;
     
+    
+    // 修改属性
+    // 底部按钮 椭圆形 背景色 文字色
     _backButton.backgroundColor = _backColor;
     [_backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _backButton.layer.masksToBounds = YES;
     _backButton.layer.cornerRadius = _backButton.frame.size.height/2;
-    
     _continueButton.backgroundColor = _backColor;
     [_continueButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _continueButton.layer.masksToBounds = YES;
     _continueButton.layer.cornerRadius = _continueButton.frame.size.height/2;
-    
+    // 闯关成绩单文字颜色
     _midTitleLabel.textColor = _backColor;
     _midTitleLabel.textAlignment = NSTextAlignmentCenter;
-    
+    // 描述 分数  文字颜色
     _topScoreLabel.textColor = [UIColor whiteColor];
     _topDesLabel.textColor = [UIColor whiteColor];
     
     _midTableView.delegate = self;
     _midTableView.dataSource = self;
     _midTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
 }
 
 #pragma mark - 获取总分
@@ -105,19 +127,34 @@
     
     // 根据分数设置颜色
     int score = [_topScoreLabel.text intValue];
-    NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
-    int index = score>=80?0:(score>=60?1:2);
-    _topBackView.backgroundColor = [colorArray objectAtIndex:index];
-    [_topShareButton setTitleColor:[colorArray objectAtIndex:index] forState:UIControlStateNormal];
+    
+    
+    // 3种颜色 同闯关
+//    NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
+//    int index = score>=80?0:(score>=60?1:2);
+//    _topBackView.backgroundColor = [colorArray objectAtIndex:index];
+//    [_topShareButton setTitleColor:[colorArray objectAtIndex:index] forState:UIControlStateNormal];
+
+    
+    // 2中颜色
+    UIColor *color_fail = [UIColor colorWithRed:249/255.0 green:220/255.0 blue:18/255.0 alpha:1];
+    UIColor *color_sucess = [UIColor colorWithRed:1/255.0 green:196/255.0 blue:255/255.0 alpha:1];
+    
+    NSArray *color_array = @[color_fail,color_sucess];
+    int index = score>=60?1:0;
+
+    _topBackView.backgroundColor = [color_array objectAtIndex:index];
+    [_topShareButton setTitleColor:[color_array objectAtIndex:index] forState:UIControlStateNormal];
+
     // 根据分数 设置标题
     NSArray *textArray = @[@"成绩不错呦~超过了%62的小伙伴!",@"成绩不错呦~超过了%62的小伙伴!",@"没及格~需要加强联系呦~努力努力！！！！"];
     _topDesLabel.text = [textArray objectAtIndex:index];
-    if (index==2)
+    
+    if (!index)
     {
         // 不及格 不可以继续闯关
 //        _continueButton.enabled = NO;
     }
-
 }
 
 
@@ -126,10 +163,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     // 分数显示top区域有两种颜色 1：黄色 2： 蓝色
-    _oraColor = [UIColor colorWithRed:242/255.0 green:222/255.0 blue:44/255.0 alpha:1];
-    _blueColor = [UIColor blueColor];// 暂时 后续补上
     self.lineLab.hidden = YES;
     self.navTopView.hidden = YES;
+    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
     [self uiConfig];
     
     // 获取总分 此处由于时间问题 一直崩溃 暂不获取
@@ -191,7 +227,6 @@
     }
     NSString *answerId = [[_scoreMenuArray objectAtIndex:indexPath.row] objectForKey:@"id"];
    PracticeBookRecord *scoreInfoRecord = [OralDBFuncs getLastRecordFor:[OralDBFuncs getCurrentUserName] topicName:[OralDBFuncs getCurrentTopic] answerId:answerId partNum:[OralDBFuncs getCurrentPart] andLevelNum:[OralDBFuncs getCurrentPoint]];
-    NSLog(@"~~~~~%@~~~~~~~~",scoreInfoRecord.lastText);
     [cell.htmlWebView loadHTMLString:scoreInfoRecord.lastText baseURL:nil];
     cell.htmlWebView.delegate = self;
     

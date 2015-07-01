@@ -9,8 +9,8 @@
 #ifndef oral_HeadFile_h
 #define oral_HeadFile_h
 
-#define kScreentWidth [UIScreen mainScreen].bounds.size.width
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+#define kScreentWidth ([UIScreen mainScreen].bounds.size.width)
+#define kScreenHeight ([UIScreen mainScreen].bounds.size.height)
 
 #define KOneFontSize 15
 #define KSecondFontSize 14

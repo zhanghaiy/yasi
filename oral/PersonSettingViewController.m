@@ -125,6 +125,7 @@
         case 3:
         {
             // 版本更新
+            NSLog(@"版本更新");
 //            [self systemUpdate];
         }
             break;
@@ -167,6 +168,7 @@
     {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
         NSLog(@"%@",dic);
+        // 对比当前版本和最新版本
     }
     else
     {

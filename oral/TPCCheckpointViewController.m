@@ -44,10 +44,12 @@
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     
-    NSString *topicName = [_topicDict objectForKey:@"classtype"];
-    [self addTitleLabelWithTitleWithTitle:topicName];
+    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
     // 界面元素
     [self uiConfig];
+    
+    NSString *topicName = [_topicDict objectForKey:@"classtype"];
+    [self addTitleLabelWithTitleWithTitle:topicName];
     
     NSDate *date = [NSDate date];
     NSString *dateStr = [ConstellationManager transformNSStringWithDate:date];
@@ -70,6 +72,37 @@
     
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    TopicRecord *record = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[_topicDict objectForKey:@"classtype"]];
+    int complete = record.completion/3;
+    [self configPartBtnWithCompletion:complete];
+    
+    [UIView animateWithDuration:1 animations:^{
+        _partScrollView.contentOffset = CGPointMake(_partScrollView.frame.size.width*complete, 0);
+    }];
+}
+
+- (void)configPartBtnWithCompletion:(int)completion
+{
+    for (int i= 0; i < 3; i ++)
+    {
+        UIButton *partBtn = (UIButton *)[self.view viewWithTag:kPartButtonTag+i];
+        if (i<=completion)
+        {
+            [partBtn setBackgroundColor:kPart_Button_Color];
+        }
+        else
+        {
+            UIColor *color = [UIColor colorWithWhite:200/255.0 alpha:1];
+            [partBtn setBackgroundColor:color];
+            partBtn.enabled = NO;
+            
+        }
+    }
+}
 
 #pragma mark - UI调整
 - (void)uiConfig
@@ -77,13 +110,14 @@
     
     // 手动调整frame
     
-    NSInteger practice_Y = 120.0/667*kScreenHeight;
-    NSInteger practice_X = 90.0/375*kScreentWidth;
-    NSInteger practice_W = 48;
-    NSInteger practice_H = 51;
+    float practice_Y = 120.0/667*kScreenHeight;
+    float practice_X = 90.0/375.0*kScreentWidth;
+    NSLog(@"%f",practice_X);
+    
+    float practice_W = 48;
+    float practice_H = 51;
     [_exerciseBookBtn setFrame:CGRectMake(practice_X, practice_Y, practice_W, practice_H)];
     [_scoreButton setFrame:CGRectMake(kScreentWidth-practice_X-practice_W, practice_Y, practice_W, practice_H)];
-    
     NSInteger practice_text_Y = 181.0/667.0*kScreenHeight;
     [_exeLable setFrame:CGRectMake(practice_X, practice_text_Y, practice_W, 20)];
     [_scoreLable setFrame:CGRectMake(kScreentWidth-practice_X-practice_W, practice_text_Y, practice_W, 20)];
@@ -99,8 +133,8 @@
     
     // 闯关按钮
     NSInteger part_scrollView_Y = 250.0/667*kScreenHeight;
-    NSInteger part_scrollView_W = 245;
-    NSInteger part_scrollView_H = 100;
+    NSInteger part_scrollView_W = 245.0/375.0*kScreentWidth;
+    NSInteger part_scrollView_H = 100.0/667*kScreenHeight;
     [_partScrollView setFrame:CGRectMake((kScreentWidth-part_scrollView_W)/2, part_scrollView_Y, part_scrollView_W, part_scrollView_H)];
     _partScrollView.contentSize = CGSizeMake(part_scrollView_W*3, part_scrollView_H);
     
@@ -171,6 +205,8 @@
     btn.layer.borderColor = _pointColor.CGColor;
     btn.layer.borderWidth = 1;
 }
+
+
 
 #pragma mark - 显示当前的关卡数
 - (void)makePagesAloneWithButtonTag:(NSInteger)btnTag

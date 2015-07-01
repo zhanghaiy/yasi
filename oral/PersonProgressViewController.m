@@ -11,6 +11,8 @@
 #import "NSURLConnectionRequest.h"
 #import "PointProgressView.h"
 #import "OralDBFuncs.h"
+#import "TopicInfoManager.h"
+#import "UIButton+WebCache.h"
 
 @interface PersonProgressViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -22,6 +24,7 @@
     
     NSArray *_notPassListArray;
     NSArray *_passListArray;
+    TopicInfoManager *_topicManager;
 }
 @end
 
@@ -55,6 +58,8 @@
     _topScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, _cellHeigth_alone+20)];
     _topScrollV.delegate = self;
     _topScrollV.pagingEnabled = YES;
+    _topScrollV.showsHorizontalScrollIndicator = NO;
+    _topScrollV.showsVerticalScrollIndicator = NO;
     
     NSInteger topicCount = _notPassListArray.count;// 模拟topic个数
     if (topicCount==0)
@@ -81,16 +86,32 @@
                 if (mark_topic_count<topicCount)
                 {
                     mark_topic_count ++;
+                    NSLog(@"%ld",mark_topic_count);
+                    NSString *topicID = [[_notPassListArray objectAtIndex:mark_topic_count-1] objectForKey:@"classtypeid"];
+                    NSDictionary *topicDetailDic = [_topicManager getTopicDetailInfoWithTopicID:topicID];
+                    NSString *topicImgUrl = [topicDetailDic objectForKey:@"bgimgurl"];
+                    NSLog(@"正在练习的:%@",topicImgUrl);
+
                     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                     [btn setFrame:CGRectMake(i*kScreentWidth+btn_space+j*(btnWith+btn_space), 12, btnWith, btnWith)];
                     btn.tag = kTopBtnBaseTag + mark_topic_count;
-                    [btn setBackgroundImage:[UIImage imageNamed:@"topic_moni"] forState:UIControlStateNormal];
+                    [btn setImageWithURL:[NSURL URLWithString:topicImgUrl] placeholderImage:[UIImage imageNamed:@"33.jpg"]];
+
                     [btn addTarget:self action:@selector(topicButton_topButton_Clicked:) forControlEvents:UIControlEventTouchUpInside];
+                    
+                    btn.layer.masksToBounds = YES;
+                    btn.layer.cornerRadius = btn.frame.size.height/2;
+                    btn.layer.borderWidth = 1;
+                    btn.layer.borderColor = [UIColor clearColor].CGColor;
+                    
+                    
                     [_topScrollV addSubview:btn];
                     
+                    TopicRecord *record = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[[_notPassListArray objectAtIndex:mark_topic_count-1] objectForKey:@"classtype"]];
+                    float progress = record.completion/9.0;
                     CustomProgressView *proV = [[CustomProgressView alloc]initWithFrame:CGRectMake(i*kScreentWidth+btn_space+j*(btnWith+btn_space), 25+btnWith, btnWith, 8)];
                     proV.color = kPart_Button_Color;
-                    proV.progress = 0.3;
+                    proV.progress = progress;
                     proV.tag = kTopProBaseTag + mark_topic_count;
                     [_topScrollV addSubview:proV];
                 }
@@ -106,6 +127,8 @@
     _bottomScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, _cellHeigth_alone*3 )];
     _bottomScrollV.delegate = self;
     _bottomScrollV.pagingEnabled = YES;
+    _bottomScrollV.showsVerticalScrollIndicator = NO;
+    _bottomScrollV.showsHorizontalScrollIndicator = NO;
     
     NSInteger topicCount = _passListArray.count;// 模拟topic个数
     if (topicCount==0)
@@ -134,13 +157,24 @@
                 {
                     if (mark_topic_count<topicCount)
                     {
+                        // 通过单例获取topic的图标URL
+                        NSString *topicID = [[_passListArray objectAtIndex:mark_topic_count] objectForKey:@"classtypeid"];
+                        NSDictionary *topicDetailDic = [_topicManager getTopicDetailInfoWithTopicID:topicID];
+                        NSString *topicImgUrl = [topicDetailDic objectForKey:@"bgimgurl"];
+                        NSLog(@"%@",topicImgUrl);
+                        
                         mark_topic_count ++;
                         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                         [btn setFrame:CGRectMake(i*kScreentWidth+btn_space+k*(btnWith+btn_space), 12 + j*_cellHeigth_alone, btnWith, btnWith)];
                         btn.tag = kBottomBtnTag + mark_topic_count;
-                        [btn setBackgroundImage:[UIImage imageNamed:@"topic_moni"] forState:UIControlStateNormal];
-                        
+                        [btn setImageWithURL:[NSURL URLWithString:topicImgUrl] placeholderImage:[UIImage imageNamed:@"topic_moni"]];
                         [btn addTarget:self action:@selector(topicButton_bottomButton_Clicked:) forControlEvents:UIControlEventTouchUpInside];
+                        
+                        btn.layer.masksToBounds = YES;
+                        btn.layer.cornerRadius = btn.frame.size.height/2;
+                        btn.layer.borderWidth = 1;
+                        btn.layer.borderColor = [UIColor clearColor].CGColor;
+                        
                         [_bottomScrollV addSubview:btn];
                     }
                 }
@@ -183,6 +217,9 @@
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"闯关进度"];
     [self uiConfig];
+    
+    _topicManager = [TopicInfoManager getTopicInfoManager];
+    
     [self requestTopicProgress];
 }
 
@@ -204,7 +241,10 @@
         _passListArray = [infoDic objectForKey:@"passList"];
         [self createPractisedTopicScrollView];
         [self createPractisingTopicScrollView];
-        _proV_tableHeaderV.timeLAbel.text = [NSString stringWithFormat:@"%d\"",[[infoDic objectForKey:@"totallength"] intValue]];
+        
+        //
+        int timeDuration = round([[infoDic objectForKey:@"totallength"] doubleValue]/1000.0);
+        _proV_tableHeaderV.timeLAbel.text = [NSString stringWithFormat:@"%d\"",timeDuration];
         _proV_tableHeaderV.progressV.progress = [[infoDic objectForKey:@"countpassclasstype"] floatValue]/[[dict objectForKey:@"countclasstype"] floatValue];
         _proV_tableHeaderV.progressV.color = kPart_Button_Color;
         _proV_tableHeaderV.progressLabel.text = [NSString stringWithFormat:@"%d/%d",[[infoDic objectForKey:@"countpassclasstype"]intValue],[[infoDic objectForKey:@"countclasstype"] intValue]];

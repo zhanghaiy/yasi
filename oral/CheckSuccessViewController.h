@@ -17,12 +17,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *topScoreLabel;
 
 
-@property (weak, nonatomic) IBOutlet UIView *middleBackView;
 @property (weak, nonatomic) IBOutlet UILabel *midTitleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *midTableView;
 
 
-@property (weak, nonatomic) IBOutlet UIView *bottomBackView;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 - (IBAction)backToLastPage:(id)sender;
 

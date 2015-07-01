@@ -31,11 +31,6 @@
     [self.view sendSubviewToBack:_backV];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-}
 
 - (void)uiConfig
 {

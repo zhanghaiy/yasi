@@ -14,6 +14,8 @@
 #import "TPCPersonCenterViewController.h"
 #import "NetManager.h"
 #import "UIButton+WebCache.h"
+#import "OralDBFuncs.h"
+#import "TopicInfoManager.h"
 
 @interface TopicMainViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -83,6 +85,8 @@
         {
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
             _topicArray = [dict objectForKey:@"etctlist"];
+            // 单例存储topic信息
+            [self saveTopicInfo];
             [_topicTableView reloadData];
             [_rightTableView reloadData];
         }
@@ -91,6 +95,16 @@
     {
         // 失败
         NSLog(@"网络错误");
+    }
+}
+
+- (void)saveTopicInfo
+{
+    TopicInfoManager *topicManager = [TopicInfoManager getTopicInfoManager];
+    for (NSDictionary *subDic in _topicArray)
+    {
+        NSString *topicID = [subDic objectForKey:@"id"];
+        [topicManager setTopicDetailInfo:subDic TopicID:topicID];
     }
 }
 
@@ -127,13 +141,17 @@
         }
         NSDictionary *dic = [_topicArray objectAtIndex:indexPath.row];
         [cell.topicButton setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"bgimgurl"]]];
-//        [cell.topicButton setBackgroundImage:[UIImage imageNamed:@"topic.png"] forState:UIControlStateNormal];
         cell.topicTitle.text = [dic objectForKey:@"classtype"];
+        
         
         cell.progressColor = kPart_Button_Color;
 
         // 暂时写死  此处是根据本地数据（自己存储的）来算出用户的进度
-        cell.topicProgressV.progress = 0.8;
+        
+        TopicRecord *currentRecord = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[dic objectForKey:@"classtype"]];
+        float progress = currentRecord.completion/9.0;
+        
+        cell.topicProgressV.progress = progress;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.topicButton.tag = indexPath.row+kTopicButtonTag;
         [cell.topicButton addTarget:self action:@selector(startPass:) forControlEvents:UIControlEventTouchUpInside];
