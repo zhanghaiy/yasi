@@ -95,6 +95,7 @@
     
     self.view.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
     [self moNiDataFromLocal];
+    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
     [self uiConfig];
     [self createTipLabel];
     
@@ -112,7 +113,7 @@
     tipLab.backgroundColor = [UIColor clearColor];
     tipLab.textAlignment = NSTextAlignmentCenter;
     tipLab.textColor = _pointColor;
-    tipLab.font = [UIFont systemFontOfSize:KFourFontSize];
+    tipLab.font = [UIFont systemFontOfSize:kFontSize_12];
     tipLab.layer.masksToBounds = YES;
     tipLab.layer.cornerRadius = 3;
     tipLab.layer.borderColor = _pointColor.CGColor;
@@ -123,24 +124,27 @@
 #pragma mark - UI配置
 - (void)uiConfig
 {
-    // 顶部 问题是个数显示区域
-    // 背景颜色 去掉
-    _topQuestionCountView.backgroundColor = [UIColor clearColor];
-    // 计算出按钮高度  不同尺寸屏幕 高度不同
-    NSInteger partCountViewHeight = _topQuestionCountView.frame.size.height;
-    NSInteger btnWid = 30;
+    // 确定 frame 适配
+    // 1--->问题总数View topview
+    float question_CountButton_Back_Y = 65;
+    float question_CountButton_Back_Height = 45.0/667*kScreenHeight;
+    float question_CountButton_H = 30.0/667*kScreenHeight;
+    
+    [_topQuestionCountView setFrame:CGRectMake(0, question_CountButton_Back_Y, kScreentWidth, question_CountButton_H)];
+    _topQuestionCountView.backgroundColor = _backgroundViewColor;
+
     // 根据总问题数创建按钮
     for (int i = 0; i < _sumQuestionCounts; i ++)
     {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setFrame:CGRectMake(20+i*(btnWid+10), (partCountViewHeight-btnWid)/2, btnWid, btnWid)];
+        [btn setFrame:CGRectMake(20+i*(question_CountButton_H+10), (question_CountButton_Back_Height-question_CountButton_H)/2, question_CountButton_H, question_CountButton_H)];
         [btn setTitle:[NSString stringWithFormat:@"%d",i+1] forState:UIControlStateNormal];
         [btn setBackgroundImage:[UIImage imageNamed:@"questionCount-white"] forState:UIControlStateNormal];
         // 选中
         [btn setBackgroundImage:[UIImage imageNamed:@"questionCount-blue"] forState:UIControlStateSelected];
         [btn setTitleColor:_backColor forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        btn.titleLabel.font = [UIFont systemFontOfSize:KThidFontSize];
+        btn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
         btn.tag = kTopQueCountButtonTag+i;
         if (i == 0)
         {
@@ -149,9 +153,17 @@
         [_topQuestionCountView addSubview:btn];
     }
     
+    // 2--->老师部分控件
     
-    // 老师部分控件
-    _teacherView.backgroundColor = [UIColor clearColor];
+    float tea_space_toTop = 15.0/667*kScreenHeight;
+    float teacher_Y = question_CountButton_Back_Y+question_CountButton_Back_Height+tea_space_toTop;
+    float teacher_Head_W = 65.0/667*kScreenHeight;
+    float teacher_X = 20.0/375*kScreentWidth;
+    
+    [_teaHeadImgView setFrame:CGRectMake(teacher_X, teacher_Y, teacher_Head_W, teacher_Head_W)];
+    [_teaQuestionBackImgV setFrame:CGRectMake(teacher_X+teacher_Head_W+10, teacher_Y, kScreentWidth-teacher_X*2-teacher_Head_W-10, teacher_Head_W)];
+    [_teaQuestionLabel setFrame:CGRectMake(teacher_X+teacher_Head_W+10, teacher_Y, kScreentWidth-teacher_X*2-teacher_Head_W-10, teacher_Head_W)];
+
     // 老师头像 --- 设置圆角半径 layer
     _teaHeadImgView.layer.masksToBounds = YES;
     _teaHeadImgView.layer.cornerRadius = _teaHeadImgView.bounds.size.height/2;
@@ -168,38 +180,88 @@
     _teaQuestionLabel.textAlignment = NSTextAlignmentCenter;
     _teaQuestionLabel.numberOfLines = 0;
     _teaQuestionLabel.backgroundColor = [UIColor clearColor];
-    
-    _teaQuestionBackView.layer.masksToBounds = YES;
-    _teaQuestionBackView.layer.cornerRadius = _teaQuestionLabel.frame.size.height/2;
-    _teaQuestionBackView.backgroundColor = [UIColor whiteColor];
+    [_teaQuestionLabel setBackgroundColor:[UIColor clearColor]];
+    [_teaQuestionBackImgV setBackgroundColor:[UIColor whiteColor]];
 
+
+    // 3-->底部控件
+    
+    float follow_Button_H = 65.0/667*kScreenHeight;
+    float follow_space_bottom = 30.0/667*kScreenHeight;
+    float next_button_H = 50.0/667*kScreenHeight;
+    float next_button_W = 120.0/375*kScreentWidth;
+    
+    [_followAnswerButton setFrame:CGRectMake((kScreentWidth-follow_Button_H)/2, kScreenHeight-follow_space_bottom-follow_Button_H, follow_Button_H, follow_Button_H)];
+    [_continueButton setFrame:CGRectMake((kScreentWidth-next_button_W)/2, kScreenHeight-follow_space_bottom-next_button_H, next_button_W, next_button_H)];
+
+    // 下一题
+    [_continueButton setTitleColor:_pointColor forState:UIControlStateNormal];
+    [_continueButton setAdjustsImageWhenHighlighted:NO];
+    _continueButton.layer.masksToBounds = YES;
+    _continueButton.layer.cornerRadius = _continueButton.frame.size.height/2;
+    [_continueButton setBackgroundColor:[UIColor whiteColor]];
+    _continueButton.hidden = YES;
+    [_continueButton setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
     
     // 学生部分控件
-//    UIColor *stuColor = _backColor;
+    
+    // 4-->学生部分控件
+    float stu_answer_back_Y = 30.0/667*kScreenHeight+teacher_Y+teacher_Head_W;
+    float stu_answer_back_H = 280.0/667*kScreenHeight;
+    
+    [_studentView setFrame:CGRectMake(teacher_X, stu_answer_back_Y, kScreentWidth-teacher_X*2, stu_answer_back_H)];
+    // 顶部
+    [_stuFollowLabel setFrame:CGRectMake(10, 5, 150, 25)];
+    [_stuCountLabel setFrame:CGRectMake(_studentView.frame.size.width-100, 5, 90, 25)];
+    [_stuLineLabel setFrame:CGRectMake(0, 34, _studentView.frame.size.width, 1)];
+    
+    // 底部
+    // 学生头像
+    float stu_head_H = 55.0/667*kScreenHeight;
+    float stu_head_space_bottom = 10.0/667*kScreenHeight;
+    float stu_head_space_right = 10;
+    
+    float stu_head_X = _studentView.frame.size.width - stu_head_space_right-stu_head_H;
+    float stu_head_Y = _studentView.frame.size.height-stu_head_space_bottom-stu_head_H;
+    
+    [_stuHeadImgView setFrame:CGRectMake(stu_head_X, stu_head_Y, stu_head_H, stu_head_H)];
+    
+    // 进度条
+    float stu_Progress_W = _studentView.frame.size.width-stu_head_space_right*3-stu_head_H;
+    [_stuTimeProgressLabel setFrame:CGRectMake(10, stu_head_Y+stu_head_H/2, stu_Progress_W, 2)];
+    
+    // 分数按钮
+    
+    float score_W = 100.0/667*kScreenHeight;
+    float score_H = 50.0/375*kScreentWidth;
+    float score_Y = _studentView.frame.size.height-5-score_H;
+    float score_X = (_studentView.frame.size.width-score_W)/2;
+    [_stuScoreButton setFrame:CGRectMake(score_X, score_Y, score_W, score_H)];
+    
+    // webview
+    float webview_x = 10;
+    float webView_y = 40;
+    float webView_w = _studentView.frame.size.width-webview_x*2;
+    float webView_H = _studentView.frame.size.height-stu_head_space_bottom-stu_head_H-10-webView_y;
+    [_StuAnswerWebView setFrame:CGRectMake(webview_x, webView_y, webView_w, webView_H)];
+    _StuAnswerWebView.hidden = NO;
+    _StuAnswerWebView.delegate =self;
+    
     _studentView.backgroundColor = [UIColor whiteColor];
     _stuFollowLabel.textColor = _backColor;//跟读颜色
     _stuFollowLabel.text = @"";//起始为空
     [self changeAnswerProgress];//当前回答数：1
     _stuCountLabel.textColor = _backColor;
     
-//    _stuAnswerLabel.text = @"";//起始为空
-//    _stuAnswerLabel.textColor = _textColor;
     
     _StuAnswerWebView.delegate = self;
     _stuLineLabel.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
     // 时间进度条
     _stuTimeProgressLabel.backgroundColor = _backColor;
     
-    
-    _studentView.frame = CGRectMake(15, 215, kScreentWidth-30,  kScreenHeight-215-160);
-    
     // 标记时间进度条原始frame
-    CGRect rect = _stuTimeProgressLabel.frame;
-    rect.size.width = kScreentWidth-130;
-    rect.origin.x = 8;
-    rect.origin.y = _studentView.frame.size.height-36;
-    _stuTimeProgressLabel.frame = rect;
-    _timeProgressRect = rect;
+    _timeProgressRect = _stuTimeProgressLabel.frame;
+    
     // 学生头像
     _stuHeadImgView.layer.masksToBounds = YES;
     _stuHeadImgView.layer.cornerRadius = _stuHeadImgView.frame.size.height/2;
@@ -209,26 +271,18 @@
     // 分数按钮
     _stuScoreButton.layer.cornerRadius = _stuScoreButton.frame.size.height/2;
     [_stuScoreButton setBackgroundColor:_backColor];
+    
     //隐藏跟读按钮
     _followAnswerButton.hidden = YES;
     [_followAnswerButton setBackgroundImage:[UIImage imageNamed:@"answerButton-sele"] forState:UIControlStateNormal];
     [_followAnswerButton setBackgroundImage:[UIImage imageNamed:@"answerButton-sele"] forState:UIControlStateSelected];
     
-    // 下一题
-    [_continueButton setTitleColor:_pointColor forState:UIControlStateNormal];
-    [_continueButton setAdjustsImageWhenHighlighted:NO];
-    _continueButton.layer.masksToBounds = YES;
-    _continueButton.layer.cornerRadius = _continueButton.frame.size.height/2;
-    [_continueButton setBackgroundColor:[UIColor whiteColor]];
     
-    _continueButton.hidden = YES;
-    [_continueButton setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
     
     // 起始状态：老师头像暗 学生头像 暗 文本不显示
     _teaHeadImgView.alpha = 0.3;
     _stuHeadImgView.alpha = 0.3;
     _teaQuestionLabel.text = @"";
-//    _stuAnswerLabel.text = @"";
     
     _stuFollowLabel.tag = kFollowLabelTag;
     _teaQuestionLabel.tag = kQuestionTextLabelTag;
@@ -308,12 +362,11 @@
 #pragma mark - - 播放问题准备
 - (void)prepareQuestion
 {
-//    _teaQuestionLabel.font = [UIFont systemFontOfSize:0];
     [self showCurrentQuestionText];
     [self textAnimationInView:_teaQuestionLabel];
     
     [UIView animateWithDuration:2 animations:^{
-        _teaQuestionLabel.font = [UIFont systemFontOfSize:KThidFontSize];
+        _teaQuestionLabel.font = [UIFont systemFontOfSize:kFontSize_14];
         _teaHeadImgView.alpha = 1;
         _stuHeadImgView.alpha = 0.3;
     }];

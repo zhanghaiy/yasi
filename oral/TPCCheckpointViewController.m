@@ -99,7 +99,6 @@
             UIColor *color = [UIColor colorWithWhite:200/255.0 alpha:1];
             [partBtn setBackgroundColor:color];
             partBtn.enabled = NO;
-            
         }
     }
 }
@@ -118,7 +117,8 @@
     float practice_H = 51;
     [_exerciseBookBtn setFrame:CGRectMake(practice_X, practice_Y, practice_W, practice_H)];
     [_scoreButton setFrame:CGRectMake(kScreentWidth-practice_X-practice_W, practice_Y, practice_W, practice_H)];
-    NSInteger practice_text_Y = 181.0/667.0*kScreenHeight;
+    
+    NSInteger practice_text_Y = practice_Y+practice_H+10;
     [_exeLable setFrame:CGRectMake(practice_X, practice_text_Y, practice_W, 20)];
     [_scoreLable setFrame:CGRectMake(kScreentWidth-practice_X-practice_W, practice_text_Y, practice_W, 20)];
 
@@ -234,7 +234,7 @@
         zip包路径 topicResource/topicName
      */
     // 1 判断
-    NSString *topicResourcePath = [NSString stringWithFormat:@"%@/temp/info.json",[_topicDict objectForKey:@"classtype"]];
+    NSString *topicResourcePath = [NSString stringWithFormat:@"%@/temp/info.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
     NSLog(@"%@",topicResourcePath);
     _markPart = (int)(btn.tag - kPartButtonTag);
     BOOL ret = [[NSFileManager defaultManager] fileExistsAtPath:topicResourcePath];

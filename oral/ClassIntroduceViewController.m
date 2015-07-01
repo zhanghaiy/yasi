@@ -103,7 +103,7 @@
 {
 //    NSString *text = @"雅思一班是由王老师一手创办的，主要是将大体的一些技巧或者如何很好地学习，通过考试,雅思一班是由王老师一手创办的，主要是将大体的一些技巧或者如何很好地学习，通过考试";
     _classDesLabel.text = text;
-    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-30 Height:9999 FontSize:kFontSize2];
+    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-30 Height:9999 FontSize:kFontSize_12];
     if (rect.size.height>40)
     {
         CGRect desRect = _classDesLabel.frame;

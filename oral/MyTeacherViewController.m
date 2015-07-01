@@ -29,10 +29,11 @@
 #define kFooterViewHeight 60
 #define kSelectedButonTag 99
 
+#pragma mark - 网络
 - (void)startRequest
 {
     // 选择老师 userId teacherName change
-    NSString *str = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kChooseTeacherUrl,[OralDBFuncs getCurrentUserID]];
+    NSString *str = [NSString stringWithFormat:@"%@%@?userId=%@change=1",kBaseIPUrl,kChooseTeacherUrl,[OralDBFuncs getCurrentUserID]];
     NSLog(@"~~~~~~选择老师：%@~~~~~~",str);
     [NSURLConnectionRequest requestWithUrlString:str target:self aciton:@selector(requestFinished:) andRefresh:YES];
 }
@@ -42,12 +43,12 @@
     if ([request.downloadData length])
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        NSLog(@"选择老师反馈结果：%@",dict);
         _teacherArray = [dict objectForKey:@"teacherinfolist"];
         [_myTeaTableV reloadData];
     }
 }
 
+#pragma mark - 视图加载
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -64,18 +65,21 @@
     rightButton.backgroundColor = [UIColor clearColor];
     [rightButton setTitle:@"完成" forState:UIControlStateNormal];
     [rightButton setTitleColor:_backColor forState:UIControlStateNormal];
-    rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     [rightButton addTarget:self action:@selector(finishButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
     [self.navTopView addSubview:rightButton];
     
     _footerView = [[[NSBundle mainBundle]loadNibNamed:@"FooterView" owner:self options:0] lastObject];
     _footerView.backgroundColor = [UIColor clearColor];
     [_footerView.selectedButton addTarget:self action:@selector(settingDefaultTeacher:) forControlEvents:UIControlEventTouchUpInside];
-    
+    _footerView.titleLabel.textColor = _backColor;
+
     _myTeaTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight+2, kScreentWidth, kScreenHeight-50) style:UITableViewStylePlain];
     _myTeaTableV.delegate = self;
     _myTeaTableV.dataSource = self;
     _myTeaTableV.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    _myTeaTableV.tableFooterView = _footerView;
     [self.view addSubview:_myTeaTableV];
     _myTeaTableV.backgroundColor = [UIColor clearColor];
     
@@ -171,13 +175,24 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return kFooterViewHeight;
+    return 30;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    _footerView.titleLabel.textColor = _backColor;
-    return _footerView;
+    UIButton *changBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [changBtn setFrame:CGRectMake(0, 0, kScreentWidth, 30)];
+    [changBtn setTitle:@"点击换一批老师" forState:UIControlStateNormal];
+    [changBtn setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
+    changBtn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
+    [changBtn setBackgroundColor:[UIColor whiteColor]];
+    [changBtn addTarget:self action:@selector(changeTeacher) forControlEvents:UIControlEventTouchUpInside];
+    return changBtn;
+}
+
+- (void)changeTeacher
+{
+    [self startRequest];
 }
 
 - (void)didReceiveMemoryWarning {

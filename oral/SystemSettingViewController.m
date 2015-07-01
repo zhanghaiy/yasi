@@ -75,7 +75,7 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.textColor = kPart_Button_Color;
-    cell.textLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    cell.textLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     cell.backgroundColor = [UIColor whiteColor];
     cell.textLabel.text = [_systemArray objectAtIndex:indexPath.row];
     return cell;

@@ -12,16 +12,15 @@
 #define kScreentWidth ([UIScreen mainScreen].bounds.size.width)
 #define kScreenHeight ([UIScreen mainScreen].bounds.size.height)
 
-#define KOneFontSize 15
-#define KSecondFontSize 14
-#define KThidFontSize 13
-#define KFourFontSize 12
 
-#define kTitleFontSize 16
-#define kFontSize1 14
-#define kFontSize2 12
-#define kFontSize3 10
-#define kFontSize4 8
+
+#define kTitleFontSize_17 (kScreenHeight<600?15:17)
+#define kFontSize_14 (kScreenHeight<600?12:14)
+#define kFontSize_13 (kScreenHeight<600?11:13)
+#define kFontSize_12 (kScreenHeight<600?10:12)
+#define kFontSize_11 (kScreenHeight<600?9:11)
+#define kFontSize_10 (kScreenHeight<600?8:10)
+#define kFontSize_8 (kScreenHeight<600?6:8)
 
 // 练习簿界面
 #define kPract_Listen_self_Button_Tag 4000

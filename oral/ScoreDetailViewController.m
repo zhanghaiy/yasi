@@ -24,6 +24,9 @@
 #import "UIButton+WebCache.h"
 #import "UIImageView+WebCache.h"
 
+#import "ZipManager.h"
+
+
 @interface ScoreDetailViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
     UIView *_topBackV; //背景
@@ -73,6 +76,7 @@
 #define kPoint3_Section_BackBtn_Tag 500
 #define kReviewBackViewTag 550
 
+#define kReview_Audio_Tag 5000
 
 #pragma mark - 获取本地音频时长
 - (float)getAudioDurationWithPath:(NSString *)audioPath
@@ -85,6 +89,20 @@
     float audioDurationSeconds =CMTimeGetSeconds(audioDuration);
     NSLog(@"%f",audioDurationSeconds);
     return audioDurationSeconds;
+}
+
+#pragma mark - 获取本地路径
+- (NSString *)getPoint3ReviewBasePath
+{
+    NSString *path = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),[OralDBFuncs getCurrentTopic]];
+    return path;
+}
+
+#pragma mark - 获取解压后路径
+- (NSString *)getPoint3UnZipPath
+{
+    NSString *path = [NSString stringWithFormat:@"%@/PartReview",[self getPoint3ReviewBasePath]];
+    return path;
 }
 
 #pragma mark - 手动合成所需数据
@@ -151,7 +169,8 @@
         NSDictionary *point_3_dic = [point_3_question_array objectAtIndex:i];
         NSString *questionText = [point_3_dic objectForKey:@"question"];
         NSString *questionID = [point_3_dic objectForKey:@"id"];
-        NSString *answerAudioPath = [NSString stringWithFormat:@"%@/part%d-3-%d.wav",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES],[OralDBFuncs getCurrentPart],i];
+        NSString *answerAudioPath = [NSString stringWithFormat:@"%@/part%d-3-%d.wav",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES],[OralDBFuncs getCurrentPart],i+1];
+        NSLog(@"%@",answerAudioPath);
         // 此处获取时长
         float duration = [self getAudioDurationWithPath:answerAudioPath];
         NSDictionary *makeDic = @{@"question":questionText,@"questionid":questionID,@"answerPath":answerAudioPath,@"duration":[NSNumber numberWithFloat:duration]};
@@ -247,22 +266,26 @@
          */
         if ([[review_dic objectForKey:@"teacherurl"] length])
         {
-            // 语音评价
+            // 语音评价 可播放
             sectionView.reviewLabel.text = [NSString stringWithFormat:@"%d\"",[[review_dic objectForKey:@"teacherurllength"] intValue]/1000];
             [sectionView.headImgV setImage:[UIImage imageNamed:@"touxiang.png"]];
+            sectionView.reviewLabel.userInteractionEnabled = YES;
+            sectionView.reviewLabel.tag = kReview_Audio_Tag+viewTag;
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(playerPlayReview_alone:)];
+            [sectionView.reviewLabel addGestureRecognizer:tap];
         }
         else
         {
             NSString *reviewText = [review_dic objectForKey:@"teacherevaluate"];
             sectionView.reviewLabel.text = reviewText;
             // 计算文字大小
-            CGRect rect_1 = [NSString CalculateSizeOfString:reviewText Width:99999 Height:15 FontSize:kFontSize2];
+            CGRect rect_1 = [NSString CalculateSizeOfString:reviewText Width:99999 Height:15 FontSize:kFontSize_12];
             
             // 两种情况 1、宽度小于1行 2、多行
             if (rect_1.size.width>(kScreentWidth-90))
             {
                 // 2 、 多行
-                CGRect rect_2 = [NSString CalculateSizeOfString:reviewText Width:(kScreentWidth-90) Height:99999 FontSize:kFontSize2];
+                CGRect rect_2 = [NSString CalculateSizeOfString:reviewText Width:(kScreentWidth-90) Height:99999 FontSize:kFontSize_12];
                 [sectionView setFrame:CGRectMake(0, 0, kScreentWidth, 70+(rect_2.size.height-25))];
                 [sectionView.reviewLabel setFrame:CGRectMake(12, 13, kScreentWidth-90, rect_2.size.height)];
                 sectionView.layer.cornerRadius = 5;
@@ -291,6 +314,7 @@
 {
     // 提交给老师 从本地获取数据 压缩zip包 上传服务端
     NSLog(@"提交给老师 从本地获取数据 压缩zip包 上传服务端");
+    
 }
 
 
@@ -300,6 +324,7 @@
 - (void)requestLevel_3_watingInfo
 {
     NSString *urlSTr = [NSString stringWithFormat:@"%@%@?waitingid=%@",kBaseIPUrl,kReviewWatingEvent,[_watingDic objectForKey:@"waitingid"]];
+    NSLog(@"%@",urlSTr);
     [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestLevel_3_watingInfoCallBack:) andRefresh:YES];
 }
 
@@ -311,27 +336,89 @@
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
         if ([[dict objectForKey:@"respCode"] intValue] == 1000)
         {
+            
+            // 请求闯关反馈成功 --- 待完善
+            NSString *zipUrl = [dict objectForKey:@"zipfileurl"];
+            [NSURLConnectionRequest requestWithUrlString:zipUrl target:self aciton:@selector(requestPartZip:) andRefresh:YES];
+        }
+    }
+}
+
+#pragma mark -- 请求zip回调
+- (void)requestPartZip:(NSURLConnectionRequest *)request
+{
+    if (request.downloadData)
+    {
+        BOOL unzip = [self unZipReviewData:request.downloadData];
+        if (unzip)
+        {
+            // 解压成功 刷新界面
+            NSLog(@"解压成功 刷新界面");
             _requestReviewSuccess = YES;
-            _reviewArray = [dict objectForKey:@"teacheranswerlist"];
-            
-            for (NSDictionary *subdic in _reviewArray)
-            {
-                
-                if (![[subdic objectForKey:@"questionid"] length])
-                {
-                    NSLog(@"%@",[subdic objectForKey:@"questionid"]);
-                    _review_sum_dict = subdic;
-                }
-            }
-            
+            [self analysizePartJson];
             UITableView *tabV = (UITableView *)[self.view viewWithTag:kTableViewTag+2];
             [tabV reloadData];
+        }
+        else
+        {
+            NSLog(@"失败");
+        }
+    }
+}
+
+#pragma mark -- 解压zip包
+- (BOOL)unZipReviewData:(NSData*)zipData
+{
+    // 存储zip包路径
+    NSString *zipSavePath = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),[OralDBFuncs getCurrentTopic]];
+    NSLog(@"存储zip包路径:%@",zipSavePath);
+    if (![[NSFileManager defaultManager]fileExistsAtPath:zipSavePath])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:zipSavePath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    BOOL zipSaveSuccess = [zipData writeToFile:[NSString stringWithFormat:@"%@/PartReview.zip",zipSavePath] atomically:YES];
+    
+    if (zipSaveSuccess)
+    {
+        // 保存zip包成功 解压zip路径
+        NSString *zipToPath = [NSString stringWithFormat:@"%@/Documents/%@/PartReview",NSHomeDirectory(),[OralDBFuncs getCurrentTopic]];
+        if (![[NSFileManager defaultManager] fileExistsAtPath:zipToPath])
+        {
+            [[NSFileManager defaultManager] createDirectoryAtPath:zipToPath withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        NSLog(@"~~~~~%@~~~~~~~",zipToPath);
+        [ZipManager unzipFileFromPath:[NSString stringWithFormat:@"%@/PartReview.zip",zipSavePath] ToPath:zipToPath];
+        return YES;
+    }
+    else
+    {
+        // 保存失败
+        return NO;
+    }
+}
+
+#pragma mark -- 解析本地json
+- (void)analysizePartJson
+{
+    NSString *partReviewPath = [NSString stringWithFormat:@"%@/Documents/%@/PartReview/temp/waitinginfo.json",NSHomeDirectory(),[OralDBFuncs getCurrentTopic]];
+    NSData *data = [NSData dataWithContentsOfFile:partReviewPath];
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    _reviewArray = [dict objectForKey:@"teacheranswerlist"];
+    [self makeUpFooterView_point_3];
+    
+    for (NSDictionary *subdic in _reviewArray)
+    {
+        if (![[subdic objectForKey:@"questionid"] length])
+        {
+            NSLog(@"%@",[subdic objectForKey:@"questionid"]);
+            _review_sum_dict = subdic;
         }
     }
 }
 
 
-#pragma mark -- 总评价 展开 -- 待完善
+
+#pragma mark - 总评价
 - (void)openTeacherReview:(UIButton *)btn
 {
     // 展开 老师总评价
@@ -362,12 +449,12 @@ static UIView *openView;
         // 文字
         NSString *reviewText = [dic objectForKey:@"teacherevaluate"];
         // 计算文字大小
-        CGRect rect_1 = [NSString CalculateSizeOfString:reviewText Width:99999 Height:15 FontSize:kFontSize2];
+        CGRect rect_1 = [NSString CalculateSizeOfString:reviewText Width:99999 Height:15 FontSize:kFontSize_12];
         // 两种情况 1、宽度小于1行 2、多行
         if (rect_1.size.width>(kScreentWidth-90))
         {
             // 2 、 多行
-            CGRect rect_2 = [NSString CalculateSizeOfString:reviewText Width:(kScreentWidth-90) Height:99999 FontSize:kFontSize2];
+            CGRect rect_2 = [NSString CalculateSizeOfString:reviewText Width:(kScreentWidth-90) Height:99999 FontSize:kFontSize_12];
             reviewHeight = round(rect_2.size.height);
             viewHeight = 130+reviewHeight-25;
         }
@@ -391,7 +478,7 @@ static UIView *openView;
     UILabel *desLab = [[UILabel alloc]initWithFrame:CGRectMake(15, 15, kScreentWidth-105, 30)];
     desLab.text = @"老师给你综合评价喽~快点开看看吧~~";
     desLab.textColor = kPart_Button_Color;
-    desLab.font =[UIFont systemFontOfSize:kFontSize2];
+    desLab.font =[UIFont systemFontOfSize:kFontSize_12];
     [openView addSubview:desLab];
     
     UIButton *scoreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -400,8 +487,9 @@ static UIView *openView;
     scoreBtn.layer.cornerRadius = scoreBtn.frame.size.height/2;
     scoreBtn.backgroundColor = kPart_Button_Color;
     [scoreBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [scoreBtn setTitle:[NSString stringWithFormat:@"%f",[[_watingDic objectForKey:@"score"] floatValue]] forState:UIControlStateNormal];
-    scoreBtn.titleLabel.font =  [UIFont systemFontOfSize:kFontSize2];
+//    float duration = round([[_watingDic objectForKey:@"score"] floatValue]);
+    [scoreBtn setTitle:[NSString stringWithFormat:@"%1f",[[_watingDic objectForKey:@"score"] floatValue]] forState:UIControlStateNormal];
+    scoreBtn.titleLabel.font =  [UIFont systemFontOfSize:kFontSize_12];
     [openView addSubview:scoreBtn];
     
     UIImageView *reviewImgV = [[UIImageView alloc]initWithFrame:CGRectMake(15, 50, 16, 14)];
@@ -439,7 +527,7 @@ static UIView *openView;
     }
     else
     {
-        int time = round([[dic objectForKey:@"teacherurllength"] floatValue]);
+        int time = round([[dic objectForKey:@"teacherurllength"] floatValue]/1000);
         [reviewBtn setTitle:[NSString stringWithFormat:@"%d\"",time] forState:UIControlStateNormal];
         [reviewBtn addTarget:self action:@selector(playSumReview:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -450,8 +538,10 @@ static UIView *openView;
 - (void)playSumReview:(UIButton *)btn
 {
     // 播放评价音频 -- 待完善
-    NSString *path = @"";//[NSString stringWithFormat:@"%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
-    [_audioPlayerManager playerPlayWithFilePath:path];
+    NSString *reviewUrl = [_review_sum_dict objectForKey:@"teacherurl"];
+    NSString *reviewPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPoint3UnZipPath],reviewUrl];
+    NSLog(@"老师评价的音频路径：%@。。。。。\n",reviewPath);
+    [_audioPlayerManager playerPlayWithFilePath:reviewPath];
 }
 
 
@@ -524,7 +614,7 @@ static UIView *openView;
         lab.text = @"暂无成绩";
         lab.textAlignment = NSTextAlignmentCenter;
         lab.textColor = kPart_Button_Color;
-        lab.font = [UIFont systemFontOfSize:kFontSize2];
+        lab.font = [UIFont systemFontOfSize:kFontSize_12];
         
         UITableView *point_3_tableV = (UITableView *)[self.view viewWithTag:kTableViewTag+2];
         point_3_tableV.tableHeaderView = lab;
@@ -557,7 +647,7 @@ static UIView *openView;
          [pointButton setTitleColor:_textColor forState:UIControlStateNormal];
         
         pointButton.tag = kPointButtonTag + i;
-        pointButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize2];
+        pointButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_12];
         [pointButton addTarget:self action:@selector(pointButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_topBackV addSubview:pointButton];
         if (i == 0)
@@ -595,7 +685,7 @@ static UIView *openView;
                 UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
                 lab.textAlignment = NSTextAlignmentCenter;
                 lab.textColor = kPart_Button_Color;
-                lab.font = [UIFont systemFontOfSize:kFontSize2];
+                lab.font = [UIFont systemFontOfSize:kFontSize_12];
                 lab.text = @"暂无成绩";
                 tableView.tableHeaderView = lab;
             }
@@ -607,7 +697,7 @@ static UIView *openView;
                 UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
                 lab.textAlignment = NSTextAlignmentCenter;
                 lab.textColor = kPart_Button_Color;
-                lab.font = [UIFont systemFontOfSize:kFontSize2];
+                lab.font = [UIFont systemFontOfSize:kFontSize_12];
                 lab.text = @"暂无成绩";
                 tableView.tableHeaderView = lab;
             }
@@ -876,7 +966,19 @@ static UIView *openView;
     // 播放
     NSDictionary *dic = [_point_3_text_Array objectAtIndex:index];
     NSString *audioPath = [dic objectForKey:@"answerPath"];
+    NSLog(@"%@",audioPath);
     [_audioPlayerManager playerPlayWithFilePath:audioPath];
+}
+
+#pragma mark -- 播放老师小问题评价音频
+- (void)playerPlayReview_alone:(UITapGestureRecognizer *)tap
+{
+    NSInteger index = tap.view.tag - kReview_Audio_Tag;
+    NSString *questionId = [[_point_3_text_Array objectAtIndex:index] objectForKey:@"questionid"];
+    NSDictionary *selecDic = [self retrievalReviewDictWithQuestionID:questionId];
+    NSString *reviewUrl = [selecDic objectForKey:@"teacherurl"];
+    NSString *reviewPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPoint3UnZipPath],reviewUrl];
+    NSLog(@"老师评价的音频路径：%@。。。。。\n",reviewPath);
 }
 
 #pragma mark -- 暂停

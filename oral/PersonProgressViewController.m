@@ -68,7 +68,7 @@
         label.text = @"亲，最近没有练习呦，赶快去学习吧~~~~~~~~";
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = kPart_Button_Color;
-        label.font = [UIFont systemFontOfSize:kFontSize1];
+        label.font = [UIFont systemFontOfSize:kFontSize_14];
         [_topScrollV addSubview:label];
     }
     else
@@ -138,7 +138,7 @@
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = kPart_Button_Color;
         label.numberOfLines = 0;
-        label.font = [UIFont systemFontOfSize:kFontSize1];
+        label.font = [UIFont systemFontOfSize:kFontSize_14];
         [_bottomScrollV addSubview:label];
     }
     else
@@ -309,7 +309,7 @@
     label.text = [textArr objectAtIndex:section];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = kText_Color;
-    label.font = [UIFont systemFontOfSize:kFontSize2];
+    label.font = [UIFont systemFontOfSize:kFontSize_12];
     return label;
 }
 

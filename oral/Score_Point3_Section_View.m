@@ -14,13 +14,13 @@
 {
     _titleLAbel.numberOfLines = 0;
     _titleLAbel.textAlignment = NSTextAlignmentLeft;
-    _titleLAbel.font = [UIFont systemFontOfSize:kFontSize2];
+    _titleLAbel.font = [UIFont systemFontOfSize:kFontSize_12];
     _titleLAbel.textColor = [UIColor colorWithWhite:135/255.0 alpha:1];
     
     _desLabel.text = @"点击查看自己对此问题的回答如何吧";
     _desLabel.textAlignment = NSTextAlignmentLeft;
     _desLabel.textColor = [UIColor colorWithWhite:135/255.0 alpha:1];
-    _desLabel.font = [UIFont systemFontOfSize:kFontSize2];
+    _desLabel.font = [UIFont systemFontOfSize:kFontSize_12];
     
     _lineLabel.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
 }

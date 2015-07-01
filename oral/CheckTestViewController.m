@@ -132,7 +132,7 @@
         [btn setTitleColor:[UIColor colorWithRed:1/255.0 green:196/255.0 blue:1 alpha:1] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
         btn.tag = kPartButtonTag + i * 100;
-        btn.titleLabel.font = [UIFont systemFontOfSize:kFontSize2];
+        btn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_12];
         [_topBackView addSubview:btn];
         
         org_x += btn_big_Height+10;
@@ -145,7 +145,7 @@
             [btn_spot setBackgroundImage:[UIImage imageNamed:@"Test_Top_blue"] forState:UIControlStateSelected];
             [btn_spot setBackgroundImage:[UIImage imageNamed:@"Test_Top_white"] forState:UIControlStateNormal];
             btn_spot.tag = (j+1)+i*100+kPartButtonTag;
-            btn_spot.titleLabel.font = [UIFont systemFontOfSize:kFontSize1+1];
+            btn_spot.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
             [_topBackView addSubview:btn_spot];
         }
         org_x += questionArray.count*(btn_small_height+10);
@@ -897,7 +897,7 @@
     if (makeUpSuccess)
     {
         // 压缩zip包
-        NSData *zipData = [self zipCurrentTestFile];
+        NSData *zipData = [NSData dataWithContentsOfFile:[self zipCurrentTestFile]];
         // 网络提交 uploadfile
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
         [parameters setObject:@"modelpart" forKey:@"uploadfile"];
@@ -961,7 +961,7 @@
 }
 
 #pragma mark - 压缩zip包
-- (NSData *)zipCurrentTestFile
+- (NSString *)zipCurrentTestFile
 {
     NSString *zipPath = [NSString stringWithFormat:@"%@/modelpart.zip",[self getRecordSavePath]];
     ZipArchive *zip = [[ZipArchive alloc] init];
@@ -976,8 +976,8 @@
         NSString *jsonPath = [NSString stringWithFormat:@"%@/modelpart.json",[self getRecordSavePath]];
         [zip addFileToZip:jsonPath newname:@"modelpart.json"];
     }
-    NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
-    return zipData;
+//    NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
+    return zipPath;
 }
 
 #pragma mark - 选择老师回调

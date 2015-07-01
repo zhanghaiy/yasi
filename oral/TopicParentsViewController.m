@@ -68,7 +68,7 @@
 {
     _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(60, 26, kScreentWidth-60*2, 40)];
     _titleLab.textColor = _titleTextColor;
-    _titleLab.font = [UIFont systemFontOfSize:kTitleFontSize];
+    _titleLab.font = [UIFont systemFontOfSize:kTitleFontSize_17];
     _titleLab.textAlignment = NSTextAlignmentCenter;
     _titleLab.text = title;
     [self.navTopView addSubview:_titleLab];
@@ -150,7 +150,7 @@
     _tipLabel= [[UILabel alloc]initWithFrame:CGRectMake(0,action_W+loadingImgV.frame.origin.y, actionView.frame.size.width, tipLabel_H)];
     _tipLabel.textAlignment = NSTextAlignmentCenter;
     _tipLabel.textColor = kPart_Button_Color;
-    _tipLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    _tipLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     _tipLabel.numberOfLines = 0;
     [actionView addSubview:_tipLabel];
     

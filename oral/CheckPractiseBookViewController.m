@@ -109,7 +109,7 @@
      */
     PracticeBookRecord *record = [_practiceArray objectAtIndex:indexPath.row];
     NSString *text = [_answerTextDict objectForKey:record.answerId];
-    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:99999 FontSize:kFontSize1];
+    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:99999 FontSize:kFontSize_14];
     if (rect.size.height>70)
     {
         return kCellHeight+rect.size.height-70;

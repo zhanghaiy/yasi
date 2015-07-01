@@ -48,7 +48,7 @@
     outBtn.layer.cornerRadius = 15;
     [outBtn addTarget:self action:@selector(outBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     [outBtn setTitle:@"退出当前账号" forState:UIControlStateNormal];
-    outBtn.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    outBtn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     [outBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_footerV addSubview:outBtn];
     
@@ -99,7 +99,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textLabel.text = [_settingArray objectAtIndex:indexPath.row];
     cell.textLabel.textColor = kText_Color;
-    cell.textLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    cell.textLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     cell.backgroundColor = [UIColor whiteColor];
     return cell;
 }

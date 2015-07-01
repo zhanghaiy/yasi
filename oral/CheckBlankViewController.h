@@ -13,11 +13,10 @@
 @interface CheckBlankViewController : TopicParentsViewController
 @property (strong, nonatomic) IBOutlet UIView *topQuestionCountView;
 
-@property (strong, nonatomic) IBOutlet UIView *teacherView;
 @property (strong, nonatomic) IBOutlet UIImageView *teaHeadImgView;
 
-@property (strong, nonatomic) IBOutlet UIView *teaQuestionBackView;
 @property (strong, nonatomic) IBOutlet UILabel *teaQuestionLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *teaQuestionBackImgV;
 
 
 @property (strong, nonatomic) IBOutlet UIView *studentView;

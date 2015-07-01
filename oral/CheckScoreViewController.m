@@ -141,7 +141,7 @@
             UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(40, 20+i*100, kScreentWidth-80, 30)];
             label.text = [NSString stringWithFormat:@"Part%d",i+1];
             label.textColor = _pointColor;
-            label.font = [UIFont systemFontOfSize:kFontSize1];
+            label.font = [UIFont systemFontOfSize:kFontSize_14];
             [_backScrollV addSubview:label];
             
             UIView *testBAckView = [[UIView alloc]initWithFrame:CGRectMake(40, 60+i*100, kScreentWidth-80, 45)];
@@ -180,7 +180,7 @@
         
         commitTestButton.layer.cornerRadius = kTestCommitButtonHeight/2;
         commitTestButton.backgroundColor = _pointColor;
-        commitTestButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+        commitTestButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
         [commitTestButton addTarget:self action:@selector(commitTest:) forControlEvents:UIControlEventTouchUpInside];
         commitTestButton.tag = kTestCommitButtonTag;
         [_backScrollV addSubview:commitTestButton];
@@ -207,7 +207,7 @@
         testTipLabel.text = @"暂无模考信息";
         testTipLabel.textColor = _pointColor;
         testTipLabel.textAlignment = NSTextAlignmentCenter;
-        testTipLabel.font = [UIFont systemFontOfSize:kFontSize1];
+        testTipLabel.font = [UIFont systemFontOfSize:kFontSize_14];
         [_backScrollV addSubview:testTipLabel];
     }
     
@@ -260,10 +260,7 @@
     _playerManager.action = @selector(playTestFinished:);
     _playerManager.target = self;
     
-    if ([OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]])
-    {
-        [self requestTestWating];
-    }
+    [self requestTestWating];
 }
 
 #pragma mark - 网络
@@ -272,6 +269,7 @@
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kSelectNewWatingEvent,[OralDBFuncs getCurrentUserID]];
     NSLog(@"请求老师已处理事项：%@~~~~~",urlStr);
+    
     [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestWatingFinished:) andRefresh:YES];
 }
 
@@ -296,7 +294,7 @@
                     if ([topicid isEqualToString:_topicId])
                     {
                         // 关卡3
-                        if ([[watingListDic objectForKey:@"part"] intValue] == 3)
+                        if ([[watingListDic objectForKey:@"part"] intValue])
                         {
                             // part3
                             _wating_part = YES;
@@ -519,6 +517,7 @@
     [OralDBFuncs setCurrentPart:(int)(btn.tag-kPartButtonTag+1)];
     ScoreDetailViewController *scoreVC = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil];
     scoreVC.review_part = _wating_part;
+    NSLog(@"%d",_wating_part);
     if (_wating_part)
     {
         scoreVC.watingDic = _watingDict_part;

@@ -11,26 +11,25 @@
    point1 --> 跟读界面
  */
 @interface CheckFollowViewController : TopicParentsViewController
-@property (weak, nonatomic) IBOutlet UIView *questionCountsView;
-@property (weak, nonatomic) IBOutlet UIView *teacherView;
-@property (weak, nonatomic) IBOutlet UIImageView *teacherHeadImgView;
-@property (weak, nonatomic) IBOutlet UIView *teacherQueationBackView;
-@property (weak, nonatomic) IBOutlet UILabel *questionTextLabel;
+@property (strong, nonatomic) IBOutlet UIView *questionCountsView;
+@property (strong, nonatomic) IBOutlet UIImageView *teacherHeadImgView;
+@property (strong, nonatomic) IBOutlet UILabel *questionTextLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *questionTextBackImgV;
 
 
-@property (weak, nonatomic) IBOutlet UIView *studentView;
-@property (weak, nonatomic) IBOutlet UILabel *stuTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *stuAnswerCountsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *lineLabel;
+@property (strong, nonatomic) IBOutlet UIView *studentView;
+@property (strong, nonatomic) IBOutlet UILabel *stuTitleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *stuAnswerCountsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *lineLabel;
 
 @property (strong, nonatomic) IBOutlet UIWebView *answerTextWebView;
-@property (weak, nonatomic) IBOutlet UILabel *timeProgressLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *stuImageView;
-@property (weak, nonatomic) IBOutlet UIButton *scoreButton;
+@property (strong, nonatomic) IBOutlet UILabel *timeProgressLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *stuImageView;
+@property (strong, nonatomic) IBOutlet UIButton *scoreButton;
 
-@property (weak, nonatomic) IBOutlet UIButton *answerButton;
-@property (weak, nonatomic) IBOutlet UIButton *addPracticeButton;
-@property (weak, nonatomic) IBOutlet UIButton *nextButton;
+@property (strong, nonatomic) IBOutlet UIButton *answerButton;
+@property (strong, nonatomic) IBOutlet UIButton *addPracticeButton;
+@property (strong, nonatomic) IBOutlet UIButton *nextButton;
 
 - (IBAction)answerButtonClicked:(id)sender;
 

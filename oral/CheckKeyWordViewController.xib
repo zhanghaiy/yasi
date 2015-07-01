@@ -26,7 +26,7 @@
                         <constraint firstAttribute="height" constant="30" id="9DL-np-e6Z"/>
                         <constraint firstAttribute="width" constant="45" id="mRk-XU-4a6"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="跳过">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
@@ -47,7 +47,7 @@
                         <constraint firstAttribute="height" constant="50" id="F5w-pn-HHF"/>
                         <constraint firstAttribute="width" constant="110" id="sfE-d7-wCN"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <state key="normal" title="开始闯关">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

@@ -79,7 +79,7 @@
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = kPart_Button_Color;
-    label.font = [UIFont systemFontOfSize:kFontSize1];
+    label.font = [UIFont systemFontOfSize:kFontSize_14];
     label.backgroundColor = _backgroundViewColor;
     
     if (_searchListArray.count == 0)

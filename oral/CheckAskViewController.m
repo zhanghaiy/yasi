@@ -146,7 +146,7 @@
         [btn setBackgroundImage:[UIImage imageNamed:@"questionCount-blue"] forState:UIControlStateSelected];
         [btn setTitleColor:_backColor forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        btn.titleLabel.font = [UIFont systemFontOfSize:KThidFontSize];
+        btn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_10];
         
         [btn addTarget:self action:@selector(questionCountChanged_ask) forControlEvents:UIControlEventTouchUpInside];
         
@@ -297,7 +297,7 @@
 #pragma mark - 切换问题变换文本
 - (void)showCurrentQuestionText
 {
-    _teaQuestionLabel.font = [UIFont systemFontOfSize:KOneFontSize];
+    _teaQuestionLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     _teaQuestionLabel.text = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"question"];
 //    _teaQuestionLabel.frame = _questionNomalRect;
 }
@@ -565,19 +565,19 @@
     BOOL makeUpSuccess = [self makeUpJsonFile];
     if (makeUpSuccess)
     {
-        NSData *zipData = [self zipCurrentPartFile];
+        NSData *zipData = [NSData dataWithContentsOfFile:[self zipCurrentPartFile]];
         
         // 网络提交 uploadfile
         NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kPartCommitUrl];
-        NSDictionary *dict = @{@"uploadfile":@"part"};
+        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+        [parameters setObject:@"part" forKey:@"uploadfile"];
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
-        [manager POST:urlStr parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+        [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
          {
              if (zipData)
              {
-                 [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"modelpart.zip" mimeType:@"application/zip"];
-                 
+                 [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"part.zip" mimeType:@"application/zip"];
              }
          } success:^(AFHTTPRequestOperation *operation, id responseObject) {
              
@@ -595,6 +595,7 @@
              else
              {
                  NSLog(@"提交失败");
+                 NSLog(@"%@",[dic objectForKey:@"remark"]);
                  [self commitFailed];
              }
              
@@ -610,9 +611,7 @@
     else
     {
         NSLog(@"合成json文件失败");
-    }
-
-    
+    }    
 }
 
 - (void)commitFailed
@@ -639,7 +638,7 @@
 
 
 #pragma mark - 压缩zip包
-- (NSData *)zipCurrentPartFile
+- (NSString *)zipCurrentPartFile
 {
     NSString *zipPath = [NSString stringWithFormat:@"%@/part.zip",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
     ZipArchive *zip = [[ZipArchive alloc] init];
@@ -654,8 +653,9 @@
         NSString *jsonPath = [NSString stringWithFormat:@"%@/part.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
         [zip addFileToZip:jsonPath newname:@"part.json"];
     }
+    NSLog(@"%@",zipPath);
     NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
-    return zipData;
+    return zipPath;
 }
 
 
@@ -677,7 +677,14 @@
         int currentPoint = i+1;
         int score = [self getScoreWithPart:currentPart Point:currentPoint Record:record];
         NSString *pass_mark;
-        pass_mark = @"未通关";
+        if (i < 2)
+        {
+            pass_mark = @"通关";
+        }
+        else
+        {
+            pass_mark = @"未通关";
+        }
         NSDictionary *subDic = @{@"ifsubmitteacher":@"否",@"level":level,@"levelid":levelid,@"score":[NSNumber numberWithInt:score],@"status":pass_mark,@"topicid":topicid,@"userid":[OralDBFuncs getCurrentUserID]};
         [checkPoint addObject:subDic];
     }

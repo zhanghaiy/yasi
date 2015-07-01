@@ -38,7 +38,7 @@
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setFrame:CGRectMake(kScreentWidth-40, 24+(KNavTopViewHeight-24-25)/2, 25, 25)];
     [rightButton setBackgroundImage:[UIImage imageNamed:@"class_search"] forState:UIControlStateNormal];
-    rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     [rightButton addTarget:self action:@selector(searchClass) forControlEvents:UIControlEventTouchUpInside];
     [self.navTopView addSubview:rightButton];
     
@@ -125,7 +125,7 @@
         }
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = kPart_Button_Color;
-        label.font = [UIFont systemFontOfSize:kFontSize1];
+        label.font = [UIFont systemFontOfSize:kFontSize_14];
         return label;
     }
     return nil;

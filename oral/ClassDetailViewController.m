@@ -185,7 +185,7 @@
         UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [rightButton setFrame:CGRectMake(kScreentWidth-40, (self.navTopView.frame.size.height-24-20)/2+24, 20, 20)];
         [rightButton setBackgroundImage:[UIImage imageNamed:@"class_rigthButton"] forState:UIControlStateNormal];
-        rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize1];
+        rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
         
         [rightButton addTarget:self action:@selector(outClass) forControlEvents:UIControlEventTouchUpInside];
         

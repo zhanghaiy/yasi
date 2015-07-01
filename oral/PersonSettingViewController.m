@@ -25,6 +25,8 @@
 
 @implementation PersonSettingViewController
 
+
+#pragma mark - 加载视图
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -52,6 +54,7 @@
     
 }
 
+#pragma mark - tableview 分割线
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -67,6 +70,7 @@
     }
 }
 
+#pragma mark - delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 6;
@@ -80,7 +84,7 @@
     {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
-    cell.textLabel.font = [UIFont systemFontOfSize:kFontSize1];
+    cell.textLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     cell.textLabel.textColor = kText_Color;
     [cell.imageView setImage:[UIImage imageNamed:[_imageArray objectAtIndex:indexPath.row]]];
     cell.textLabel.text = [_textArray objectAtIndex:indexPath.row];
@@ -126,6 +130,8 @@
         {
             // 版本更新
             NSLog(@"版本更新");
+            [self getLocalVersion];
+            
 //            [self systemUpdate];
         }
             break;
@@ -149,6 +155,21 @@
 }
 
 #pragma mark - 版本更新
+#pragma mark -- 获取本地版本号
+- (void)getLocalVersion
+{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    // app名称
+    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+    // app版本
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    // app build版本
+    NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
+    
+    NSLog(@"\napp名称:%@\napp版本:%@\napp build版本:%@\n",app_Name,app_Version,app_build);
+}
+
+#pragma mark -- 获取网络最新版本信息
 - (void)systemUpdate
 {
     /*
@@ -162,6 +183,7 @@
     [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:params target:self action:@selector(requestVersionFinished:) andRefresh:YES];
 }
 
+#pragma mark -- 获取网络最新版本信息反馈
 - (void)requestVersionFinished:(NSURLConnectionRequest *)request
 {
     if (request.downloadData)
@@ -175,6 +197,7 @@
         NSLog(@"失败");
     }
 }
+
 
 - (void)didReceiveMemoryWarning
 {

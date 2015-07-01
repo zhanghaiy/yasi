@@ -139,7 +139,7 @@
     [finishBtn setFrame:CGRectMake(kScreentWidth-60, 29, 50, 30)];
     [finishBtn setTitle:@"完成" forState:UIControlStateNormal];
     [finishBtn setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
-    finishBtn.titleLabel.font = [UIFont systemFontOfSize:kTitleFontSize];
+    finishBtn.titleLabel.font = [UIFont systemFontOfSize:kTitleFontSize_17];
     [finishBtn addTarget:self action:@selector(finishAlter:) forControlEvents:UIControlEventTouchUpInside];
     [self.navTopView addSubview:finishBtn];
     
@@ -165,7 +165,7 @@
     _footer_title_label.text = @"个性签名:";
     _footer_title_label.textAlignment = NSTextAlignmentLeft;
     _footer_title_label.textColor = kText_Color;
-    _footer_title_label.font = [UIFont systemFontOfSize:kFontSize1];
+    _footer_title_label.font = [UIFont systemFontOfSize:kFontSize_14];
     [_table_footer_view addSubview:_footer_title_label];
     
     UILabel *lineLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 1)];
@@ -177,7 +177,7 @@
     footerTextV.keyboardType = UIKeyboardTypeNamePhonePad;
     footerTextV.delegate = self;
     footerTextV.textColor = kText_Color;
-    footerTextV.font = [UIFont systemFontOfSize:kFontSize2];
+    footerTextV.font = [UIFont systemFontOfSize:kFontSize_12];
     footerTextV.tag = kSignitureTextViewTag;
     footerTextV.text = _signiture;
     [_table_footer_view addSubview:footerTextV];

@@ -23,6 +23,10 @@
         {
             NSLog(@"UnzipOpenFailed");
         }
+        else
+        {
+            NSLog(@"成功解压");
+        }
         [zip UnzipCloseFile];
     }
     // 解压之后将zip文件删除

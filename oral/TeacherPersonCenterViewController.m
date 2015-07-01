@@ -122,7 +122,7 @@
 //    但是问题又出来，此时文字会紧贴到做边框，我们可以设置
     btn.contentEdgeInsets = UIEdgeInsetsMake(0,15, 0, 0);
 //    使文字距离做边框保持10个像素的距离。
-    btn.titleLabel.font =  [UIFont systemFontOfSize:kFontSize1];
+    btn.titleLabel.font =  [UIFont systemFontOfSize:kFontSize_14];
     [btn addTarget:self action:@selector(enterTeaClassList) forControlEvents:UIControlEventTouchUpInside];
     return btn;
 }
