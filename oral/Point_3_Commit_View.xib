@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="Point_3_Commit_View">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8M-Z5-lM0">
+                    <rect key="frame" x="300" y="7" width="60" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="36" id="I93-nF-NcI"/>
+                        <constraint firstAttribute="width" constant="60" id="ew9-eT-Rwq"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="Button">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6F-2Y-oN4">
+                    <rect key="frame" x="15" y="5" width="277" height="40"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="g8M-Z5-lM0" firstAttribute="leading" secondItem="f6F-2Y-oN4" secondAttribute="trailing" constant="8" id="2dt-wX-08t"/>
+                <constraint firstItem="f6F-2Y-oN4" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="C2P-eL-2yo"/>
+                <constraint firstAttribute="centerY" secondItem="g8M-Z5-lM0" secondAttribute="centerY" id="Q3R-6H-lNB"/>
+                <constraint firstAttribute="trailing" secondItem="g8M-Z5-lM0" secondAttribute="trailing" constant="15" id="WQ6-a0-B2n"/>
+                <constraint firstAttribute="bottom" secondItem="f6F-2Y-oN4" secondAttribute="bottom" constant="5" id="g9U-E3-ptv"/>
+                <constraint firstItem="f6F-2Y-oN4" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="z6K-iC-mdD"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="commit_Button" destination="g8M-Z5-lM0" id="tvf-ET-6hs"/>
+                <outlet property="commit_des_Label" destination="f6F-2Y-oN4" id="idJ-rZ-qp0"/>
+            </connections>
+            <point key="canvasLocation" x="242.5" y="278"/>
+        </view>
+    </objects>
+</document>

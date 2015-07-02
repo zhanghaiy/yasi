@@ -7,7 +7,6 @@
 //
 
 #import "CheckScoreViewController.h"
-#import "ScoreDetailViewController.h"
 #import "ScoreMenuTestView.h"
 #import "CustomProgressView.h"// 进度条
 #import "ScoreTestMenuViewController.h"
@@ -15,6 +14,8 @@
 #import "AudioPlayer.h"
 #import "NSURLConnectionRequest.h"
 #import "AFNetworking/AFHTTPRequestOperationManager.h"
+
+#import "SCOPartMenuViewController.h"
 
 @interface CheckScoreViewController ()<UIScrollViewDelegate>
 {
@@ -514,13 +515,32 @@
 - (void)partButtonClicked:(UIButton *)btn
 {
      // part1 -- 3
-    [OralDBFuncs setCurrentPart:(int)(btn.tag-kPartButtonTag+1)];
-    ScoreDetailViewController *scoreVC = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil];
-    scoreVC.review_part = _wating_part;
-    NSLog(@"%d",_wating_part);
+    
+//    [OralDBFuncs setCurrentPart:(int)(btn.tag-kPartButtonTag+1)];
+//    ScoreDetailViewController *scoreVC = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil];
+//    scoreVC.review_part = _wating_part;
+//    NSLog(@"%d",_wating_part);
+//    if (_wating_part)
+//    {
+//        scoreVC.watingDic = _watingDict_part;
+//    }
+//    [self.navigationController pushViewController:scoreVC animated:YES];
+    
+    int _enterCurrentPart = (int)(btn.tag-kPartButtonTag+1);
+    [OralDBFuncs setCurrentPart:_enterCurrentPart];
+
+    SCOPartMenuViewController *scoreVC = [[SCOPartMenuViewController alloc]initWithNibName:@"SCOPartMenuViewController" bundle:nil];
     if (_wating_part)
     {
-        scoreVC.watingDic = _watingDict_part;
+        if ([[_watingDict_part objectForKey:@"part"] intValue] == _enterCurrentPart)
+        {
+            scoreVC.review_point_3 = YES;
+            scoreVC.review_dict_point_3 = _watingDict_part;
+        }
+        else
+        {
+            scoreVC.review_point_3 = NO;
+        }
     }
     [self.navigationController pushViewController:scoreVC animated:YES];
 }

@@ -654,7 +654,6 @@
         [zip addFileToZip:jsonPath newname:@"part.json"];
     }
     NSLog(@"%@",zipPath);
-    NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
     return zipPath;
 }
 

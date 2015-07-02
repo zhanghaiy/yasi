@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="Point_3_Review_Head_View">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XoN-sJ-VJP">
+                    <rect key="frame" x="15" y="14" width="270" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="Q1N-8O-0G5"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Text_review" translatesAutoresizingMaskIntoConstraints="NO" id="QlT-nv-JV2">
+                    <rect key="frame" x="15" y="35" width="20" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="VWw-Xa-H7X"/>
+                        <constraint firstAttribute="width" constant="20" id="sM8-wo-xZ3"/>
+                    </constraints>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fHo-no-va3">
+                    <rect key="frame" x="305" y="15" width="55" height="35"/>
+                    <color key="backgroundColor" red="0.0" green="0.66990064540000005" blue="0.6258930345" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="55" id="MIN-nG-d9k"/>
+                        <constraint firstAttribute="height" constant="35" id="Nz7-s2-Nbf"/>
+                    </constraints>
+                    <state key="normal" title="6.5">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="fHo-no-va3" secondAttribute="trailing" constant="15" id="4FI-t5-eQj"/>
+                <constraint firstItem="QlT-nv-JV2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="8Iy-Qe-PpE"/>
+                <constraint firstItem="XoN-sJ-VJP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="Elh-kQ-ay5"/>
+                <constraint firstAttribute="bottom" secondItem="fHo-no-va3" secondAttribute="bottom" constant="15" id="Fg6-Gs-Qfg"/>
+                <constraint firstItem="fHo-no-va3" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="GzX-Jd-bDX"/>
+                <constraint firstItem="fHo-no-va3" firstAttribute="leading" secondItem="XoN-sJ-VJP" secondAttribute="trailing" constant="20" id="WGY-Hy-DcM"/>
+                <constraint firstAttribute="bottom" secondItem="QlT-nv-JV2" secondAttribute="bottom" constant="15" id="Yzy-xs-oHC"/>
+                <constraint firstItem="XoN-sJ-VJP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="14" id="wOD-Hc-2ab"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="review_Tip_ImgV" destination="QlT-nv-JV2" id="Lpj-S6-RcG"/>
+                <outlet property="review_desLabel" destination="XoN-sJ-VJP" id="6CO-fN-lhR"/>
+                <outlet property="review_score_button" destination="fHo-no-va3" id="3ji-54-Dls"/>
+            </connections>
+            <point key="canvasLocation" x="262.5" y="207.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Text_review" width="23" height="16"/>
+    </resources>
+</document>

@@ -15,6 +15,10 @@
 
 
 #define kTitleFontSize_17 (kScreenHeight<600?15:17)
+#define kFontSize_17 (kScreenHeight<600?15:17)
+#define kFontSize_16 (kScreenHeight<600?14:16)
+
+#define kFontSize_15 (kScreenHeight<600?13:15)
 #define kFontSize_14 (kScreenHeight<600?12:14)
 #define kFontSize_13 (kScreenHeight<600?11:13)
 #define kFontSize_12 (kScreenHeight<600?10:12)

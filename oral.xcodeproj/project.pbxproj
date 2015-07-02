@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		FD4366D11B3D2C6A000BE3CA /* DeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD4366D01B3D2C6A000BE3CA /* DeviceManager.m */; };
+		FD471D461B44E67400A1EA71 /* Point_3_Section_Head_View.m in Sources */ = {isa = PBXBuildFile; fileRef = FD471D451B44E67400A1EA71 /* Point_3_Section_Head_View.m */; };
+		FD471D481B44E68200A1EA71 /* Point_3_Section_Head_View.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD471D471B44E68200A1EA71 /* Point_3_Section_Head_View.xib */; };
+		FD471D4C1B4508F100A1EA71 /* Point_3_Review_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD471D4A1B4508F100A1EA71 /* Point_3_Review_Cell.m */; };
+		FD471D4D1B4508F100A1EA71 /* Point_3_Review_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD471D4B1B4508F100A1EA71 /* Point_3_Review_Cell.xib */; };
+		FD471D511B450C2000A1EA71 /* Point_3_Commit_cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FD471D4F1B450C2000A1EA71 /* Point_3_Commit_cell.m */; };
+		FD471D521B450C2000A1EA71 /* Point_3_Commit_cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD471D501B450C2000A1EA71 /* Point_3_Commit_cell.xib */; };
+		FD471D5B1B450EC200A1EA71 /* SCOPartMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD471D591B450EC200A1EA71 /* SCOPartMenuViewController.m */; };
+		FD471D5C1B450EC200A1EA71 /* SCOPartMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD471D5A1B450EC200A1EA71 /* SCOPartMenuViewController.xib */; };
 		FD530E351B29612300E3EC26 /* aiengine.provision in Resources */ = {isa = PBXBuildFile; fileRef = FD530E331B29612300E3EC26 /* aiengine.provision */; };
 		FD530E361B29612300E3EC26 /* aiengine.resource.zip in Resources */ = {isa = PBXBuildFile; fileRef = FD530E341B29612300E3EC26 /* aiengine.resource.zip */; };
 		FD530E3B1B29619000E3EC26 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FD530E3A1B29619000E3EC26 /* libz.1.1.3.dylib */; };
@@ -62,7 +70,6 @@
 		FD5FEC3F1B25A607005B99AF /* PersonEditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD5FEC3D1B25A607005B99AF /* PersonEditCell.xib */; };
 		FD605B5F1B2823020045BDCD /* ApplyClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD605B5D1B2823020045BDCD /* ApplyClassViewController.m */; };
 		FD605B601B2823020045BDCD /* ApplyClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD605B5E1B2823020045BDCD /* ApplyClassViewController.xib */; };
-		FD62449F1B0584780037836E /* touxiang.png in Resources */ = {isa = PBXBuildFile; fileRef = FD62449E1B0584780037836E /* touxiang.png */; };
 		FD6244A31B0585450037836E /* TPCCheckpointViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6244A11B0585450037836E /* TPCCheckpointViewController.m */; };
 		FD6244A41B0585450037836E /* TPCCheckpointViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A21B0585450037836E /* TPCCheckpointViewController.xib */; };
 		FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6244A61B0585820037836E /* CheckFollowViewController.m */; };
@@ -79,8 +86,6 @@
 		FD78FDE81B326E6900BB4AF6 /* PracticeFollowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FD78FDE71B326E6900BB4AF6 /* PracticeFollowButton.m */; };
 		FD8453A31B155D2B00B1E84B /* ScoreMenuTestView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */; };
 		FD8453A51B155D3A00B1E84B /* ScoreMenuTestView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */; };
-		FD8453B21B15A01E00B1E84B /* TableView_headView.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8453B11B15A01E00B1E84B /* TableView_headView.m */; };
-		FD8453B41B15A02E00B1E84B /* TableView_headView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8453B31B15A02E00B1E84B /* TableView_headView.xib */; };
 		FD8C40E61B0C6D8200948B6C /* CheckSuccessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8C40E41B0C6D8200948B6C /* CheckSuccessViewController.m */; };
 		FD8C40E71B0C6D8200948B6C /* CheckSuccessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8C40E51B0C6D8200948B6C /* CheckSuccessViewController.xib */; };
 		FD8C40EB1B0C6F3A00948B6C /* CheckBlankViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8C40E91B0C6F3A00948B6C /* CheckBlankViewController.m */; };
@@ -118,6 +123,10 @@
 		FD99590E1B1328FB005892DB /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9959031B1328FB005892DB /* AFURLRequestSerialization.m */; };
 		FD99590F1B1328FB005892DB /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9959051B1328FB005892DB /* AFURLResponseSerialization.m */; };
 		FD9959101B1328FB005892DB /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9959071B1328FB005892DB /* AFURLSessionManager.m */; };
+		FD9B42C51B44E2FC00370043 /* Point_3_Review_Head_View.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9B42C41B44E2FC00370043 /* Point_3_Review_Head_View.m */; };
+		FD9B42C71B44E30E00370043 /* Point_3_Review_Head_View.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD9B42C61B44E30E00370043 /* Point_3_Review_Head_View.xib */; };
+		FD9B42CA1B44E32E00370043 /* Point_3_Commit_View.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9B42C91B44E32E00370043 /* Point_3_Commit_View.m */; };
+		FD9B42CC1B44E33C00370043 /* Point_3_Commit_View.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD9B42CB1B44E33C00370043 /* Point_3_Commit_View.xib */; };
 		FD9B9DCA1B422CB200DBD58B /* MyAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9B9DC81B422CB200DBD58B /* MyAccountViewController.m */; };
 		FD9B9DCB1B422CB200DBD58B /* MyAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD9B9DC91B422CB200DBD58B /* MyAccountViewController.xib */; };
 		FD9B9DCF1B427D9200DBD58B /* SystemSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD9B9DCD1B427D9200DBD58B /* SystemSettingViewController.m */; };
@@ -133,8 +142,6 @@
 		FDA0C2591B1412AA00900F49 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA0C2501B1412AA00900F49 /* UIImageView+WebCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FDA0C25F1B14568900900F49 /* CheckScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA0C25D1B14568900900F49 /* CheckScoreViewController.m */; };
 		FDA0C2601B14568900900F49 /* CheckScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA0C25E1B14568900900F49 /* CheckScoreViewController.xib */; };
-		FDA0C2641B1463C000900F49 /* ScoreDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA0C2621B1463C000900F49 /* ScoreDetailViewController.m */; };
-		FDA0C2651B1463C000900F49 /* ScoreDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA0C2631B1463C000900F49 /* ScoreDetailViewController.xib */; };
 		FDA0C2691B14719A00900F49 /* ScoreMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA0C2671B14719A00900F49 /* ScoreMenuCell.m */; };
 		FDA0C26A1B14719A00900F49 /* ScoreMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA0C2681B14719A00900F49 /* ScoreMenuCell.xib */; };
 		FDA25E161B0DC31900F35545 /* CheckKeyWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA25E141B0DC31900F35545 /* CheckKeyWordViewController.m */; };
@@ -144,14 +151,6 @@
 		FDAFE0FB1B4379D2002D7EEE /* libDFAiengineSentObject2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDAFE0FA1B4379D2002D7EEE /* libDFAiengineSentObject2.a */; };
 		FDAFE0FF1B43861F002D7EEE /* LoadingViews.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAFE0FE1B43861F002D7EEE /* LoadingViews.m */; };
 		FDAFE1031B43B848002D7EEE /* TopicInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAFE1021B43B848002D7EEE /* TopicInfoManager.m */; };
-		FDBA32EB1B1C389200C02BF8 /* Score_Point3_Section_View.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBA32EA1B1C389200C02BF8 /* Score_Point3_Section_View.m */; };
-		FDBA32ED1B1C38A000C02BF8 /* Score_Point3_Section_View.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDBA32EC1B1C38A000C02BF8 /* Score_Point3_Section_View.xib */; };
-		FDBA32F11B1C38E600C02BF8 /* Score_Point3_Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBA32EF1B1C38E600C02BF8 /* Score_Point3_Cell.m */; };
-		FDBA32F21B1C38E600C02BF8 /* Score_Point3_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDBA32F01B1C38E600C02BF8 /* Score_Point3_Cell.xib */; };
-		FDBA32F51B1C390800C02BF8 /* Score_Point3_Footer_View.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBA32F41B1C390800C02BF8 /* Score_Point3_Footer_View.m */; };
-		FDBA32F71B1C391200C02BF8 /* Score_Point3_Footer_View.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDBA32F61B1C391200C02BF8 /* Score_Point3_Footer_View.xib */; };
-		FDBA32FA1B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.m in Sources */ = {isa = PBXBuildFile; fileRef = FDBA32F91B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.m */; };
-		FDBA32FC1B1C559200C02BF8 /* Score_Point3_TableHeaderView_commited.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDBA32FB1B1C559200C02BF8 /* Score_Point3_TableHeaderView_commited.xib */; };
 		FDD404141B0492F900DE2E84 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404131B0492F900DE2E84 /* main.m */; };
 		FDD404171B0492F900DE2E84 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404161B0492F900DE2E84 /* AppDelegate.m */; };
 		FDD4041A1B0492F900DE2E84 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404191B0492F900DE2E84 /* ViewController.m */; };
@@ -165,11 +164,6 @@
 		FDD4044D1B04972D00DE2E84 /* RightMainCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDD404471B04972D00DE2E84 /* RightMainCell.xib */; };
 		FDD4044E1B04972D00DE2E84 /* TopicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404491B04972D00DE2E84 /* TopicCell.m */; };
 		FDD4044F1B04972D00DE2E84 /* TopicCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDD4044A1B04972D00DE2E84 /* TopicCell.xib */; };
-		FDD404541B049B5B00DE2E84 /* topic.png in Resources */ = {isa = PBXBuildFile; fileRef = FDD404511B049B5B00DE2E84 /* topic.png */; };
-		FDD404551B049B5B00DE2E84 /* topic1.png in Resources */ = {isa = PBXBuildFile; fileRef = FDD404521B049B5B00DE2E84 /* topic1.png */; };
-		FDD404561B049B5B00DE2E84 /* topic2.png in Resources */ = {isa = PBXBuildFile; fileRef = FDD404531B049B5B00DE2E84 /* topic2.png */; };
-		FDD404591B049B8400DE2E84 /* topic_small.png in Resources */ = {isa = PBXBuildFile; fileRef = FDD404571B049B8400DE2E84 /* topic_small.png */; };
-		FDD4045A1B049B8400DE2E84 /* topic1_small.png in Resources */ = {isa = PBXBuildFile; fileRef = FDD404581B049B8400DE2E84 /* topic1_small.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,6 +179,18 @@
 /* Begin PBXFileReference section */
 		FD4366CF1B3D2C6A000BE3CA /* DeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceManager.h; sourceTree = "<group>"; };
 		FD4366D01B3D2C6A000BE3CA /* DeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceManager.m; sourceTree = "<group>"; };
+		FD471D441B44E67400A1EA71 /* Point_3_Section_Head_View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point_3_Section_Head_View.h; sourceTree = "<group>"; };
+		FD471D451B44E67400A1EA71 /* Point_3_Section_Head_View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Point_3_Section_Head_View.m; sourceTree = "<group>"; };
+		FD471D471B44E68200A1EA71 /* Point_3_Section_Head_View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Point_3_Section_Head_View.xib; sourceTree = "<group>"; };
+		FD471D491B4508F100A1EA71 /* Point_3_Review_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point_3_Review_Cell.h; sourceTree = "<group>"; };
+		FD471D4A1B4508F100A1EA71 /* Point_3_Review_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Point_3_Review_Cell.m; sourceTree = "<group>"; };
+		FD471D4B1B4508F100A1EA71 /* Point_3_Review_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Point_3_Review_Cell.xib; sourceTree = "<group>"; };
+		FD471D4E1B450C2000A1EA71 /* Point_3_Commit_cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point_3_Commit_cell.h; sourceTree = "<group>"; };
+		FD471D4F1B450C2000A1EA71 /* Point_3_Commit_cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Point_3_Commit_cell.m; sourceTree = "<group>"; };
+		FD471D501B450C2000A1EA71 /* Point_3_Commit_cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Point_3_Commit_cell.xib; sourceTree = "<group>"; };
+		FD471D581B450EC200A1EA71 /* SCOPartMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCOPartMenuViewController.h; sourceTree = "<group>"; };
+		FD471D591B450EC200A1EA71 /* SCOPartMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCOPartMenuViewController.m; sourceTree = "<group>"; };
+		FD471D5A1B450EC200A1EA71 /* SCOPartMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SCOPartMenuViewController.xib; sourceTree = "<group>"; };
 		FD530E331B29612300E3EC26 /* aiengine.provision */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aiengine.provision; sourceTree = "<group>"; };
 		FD530E341B29612300E3EC26 /* aiengine.resource.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = aiengine.resource.zip; sourceTree = "<group>"; };
 		FD530E391B29615B00E3EC26 /* DFAiengineSentObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DFAiengineSentObject.h; sourceTree = "<group>"; };
@@ -268,7 +274,6 @@
 		FD605B5C1B2823020045BDCD /* ApplyClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplyClassViewController.h; sourceTree = "<group>"; };
 		FD605B5D1B2823020045BDCD /* ApplyClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplyClassViewController.m; sourceTree = "<group>"; };
 		FD605B5E1B2823020045BDCD /* ApplyClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApplyClassViewController.xib; sourceTree = "<group>"; };
-		FD62449E1B0584780037836E /* touxiang.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = touxiang.png; sourceTree = "<group>"; };
 		FD6244A01B0585450037836E /* TPCCheckpointViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPCCheckpointViewController.h; sourceTree = "<group>"; };
 		FD6244A11B0585450037836E /* TPCCheckpointViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPCCheckpointViewController.m; sourceTree = "<group>"; };
 		FD6244A21B0585450037836E /* TPCCheckpointViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TPCCheckpointViewController.xib; sourceTree = "<group>"; };
@@ -293,9 +298,6 @@
 		FD8453A11B155D2B00B1E84B /* ScoreMenuTestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreMenuTestView.h; sourceTree = "<group>"; };
 		FD8453A21B155D2B00B1E84B /* ScoreMenuTestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreMenuTestView.m; sourceTree = "<group>"; };
 		FD8453A41B155D3A00B1E84B /* ScoreMenuTestView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreMenuTestView.xib; sourceTree = "<group>"; };
-		FD8453B01B15A01E00B1E84B /* TableView_headView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableView_headView.h; sourceTree = "<group>"; };
-		FD8453B11B15A01E00B1E84B /* TableView_headView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableView_headView.m; sourceTree = "<group>"; };
-		FD8453B31B15A02E00B1E84B /* TableView_headView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableView_headView.xib; sourceTree = "<group>"; };
 		FD8C40E31B0C6D8200948B6C /* CheckSuccessViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckSuccessViewController.h; sourceTree = "<group>"; };
 		FD8C40E41B0C6D8200948B6C /* CheckSuccessViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckSuccessViewController.m; sourceTree = "<group>"; };
 		FD8C40E51B0C6D8200948B6C /* CheckSuccessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckSuccessViewController.xib; sourceTree = "<group>"; };
@@ -364,6 +366,12 @@
 		FD9959051B1328FB005892DB /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		FD9959061B1328FB005892DB /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		FD9959071B1328FB005892DB /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		FD9B42C31B44E2FC00370043 /* Point_3_Review_Head_View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point_3_Review_Head_View.h; sourceTree = "<group>"; };
+		FD9B42C41B44E2FC00370043 /* Point_3_Review_Head_View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Point_3_Review_Head_View.m; sourceTree = "<group>"; };
+		FD9B42C61B44E30E00370043 /* Point_3_Review_Head_View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Point_3_Review_Head_View.xib; sourceTree = "<group>"; };
+		FD9B42C81B44E32E00370043 /* Point_3_Commit_View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Point_3_Commit_View.h; sourceTree = "<group>"; };
+		FD9B42C91B44E32E00370043 /* Point_3_Commit_View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Point_3_Commit_View.m; sourceTree = "<group>"; };
+		FD9B42CB1B44E33C00370043 /* Point_3_Commit_View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Point_3_Commit_View.xib; sourceTree = "<group>"; };
 		FD9B9DC71B422CB200DBD58B /* MyAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyAccountViewController.h; sourceTree = "<group>"; };
 		FD9B9DC81B422CB200DBD58B /* MyAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyAccountViewController.m; sourceTree = "<group>"; };
 		FD9B9DC91B422CB200DBD58B /* MyAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyAccountViewController.xib; sourceTree = "<group>"; };
@@ -393,9 +401,6 @@
 		FDA0C25C1B14568900900F49 /* CheckScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckScoreViewController.h; sourceTree = "<group>"; };
 		FDA0C25D1B14568900900F49 /* CheckScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckScoreViewController.m; sourceTree = "<group>"; };
 		FDA0C25E1B14568900900F49 /* CheckScoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckScoreViewController.xib; sourceTree = "<group>"; };
-		FDA0C2611B1463C000900F49 /* ScoreDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreDetailViewController.h; sourceTree = "<group>"; };
-		FDA0C2621B1463C000900F49 /* ScoreDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreDetailViewController.m; sourceTree = "<group>"; };
-		FDA0C2631B1463C000900F49 /* ScoreDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreDetailViewController.xib; sourceTree = "<group>"; };
 		FDA0C2661B14719A00900F49 /* ScoreMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreMenuCell.h; sourceTree = "<group>"; };
 		FDA0C2671B14719A00900F49 /* ScoreMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreMenuCell.m; sourceTree = "<group>"; };
 		FDA0C2681B14719A00900F49 /* ScoreMenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreMenuCell.xib; sourceTree = "<group>"; };
@@ -410,18 +415,6 @@
 		FDAFE0FE1B43861F002D7EEE /* LoadingViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViews.m; sourceTree = "<group>"; };
 		FDAFE1011B43B848002D7EEE /* TopicInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicInfoManager.h; sourceTree = "<group>"; };
 		FDAFE1021B43B848002D7EEE /* TopicInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicInfoManager.m; sourceTree = "<group>"; };
-		FDBA32E91B1C389200C02BF8 /* Score_Point3_Section_View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score_Point3_Section_View.h; sourceTree = "<group>"; };
-		FDBA32EA1B1C389200C02BF8 /* Score_Point3_Section_View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Score_Point3_Section_View.m; sourceTree = "<group>"; };
-		FDBA32EC1B1C38A000C02BF8 /* Score_Point3_Section_View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Score_Point3_Section_View.xib; sourceTree = "<group>"; };
-		FDBA32EE1B1C38E600C02BF8 /* Score_Point3_Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score_Point3_Cell.h; sourceTree = "<group>"; };
-		FDBA32EF1B1C38E600C02BF8 /* Score_Point3_Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Score_Point3_Cell.m; sourceTree = "<group>"; };
-		FDBA32F01B1C38E600C02BF8 /* Score_Point3_Cell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Score_Point3_Cell.xib; sourceTree = "<group>"; };
-		FDBA32F31B1C390800C02BF8 /* Score_Point3_Footer_View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score_Point3_Footer_View.h; sourceTree = "<group>"; };
-		FDBA32F41B1C390800C02BF8 /* Score_Point3_Footer_View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Score_Point3_Footer_View.m; sourceTree = "<group>"; };
-		FDBA32F61B1C391200C02BF8 /* Score_Point3_Footer_View.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Score_Point3_Footer_View.xib; sourceTree = "<group>"; };
-		FDBA32F81B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Score_Point3_TableHeaderView_commited.h; sourceTree = "<group>"; };
-		FDBA32F91B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Score_Point3_TableHeaderView_commited.m; sourceTree = "<group>"; };
-		FDBA32FB1B1C559200C02BF8 /* Score_Point3_TableHeaderView_commited.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Score_Point3_TableHeaderView_commited.xib; sourceTree = "<group>"; };
 		FDD4040E1B0492F900DE2E84 /* oral.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = oral.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDD404121B0492F900DE2E84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FDD404131B0492F900DE2E84 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -446,11 +439,6 @@
 		FDD404481B04972D00DE2E84 /* TopicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicCell.h; sourceTree = "<group>"; };
 		FDD404491B04972D00DE2E84 /* TopicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicCell.m; sourceTree = "<group>"; };
 		FDD4044A1B04972D00DE2E84 /* TopicCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopicCell.xib; sourceTree = "<group>"; };
-		FDD404511B049B5B00DE2E84 /* topic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topic.png; sourceTree = "<group>"; };
-		FDD404521B049B5B00DE2E84 /* topic1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topic1.png; sourceTree = "<group>"; };
-		FDD404531B049B5B00DE2E84 /* topic2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topic2.png; sourceTree = "<group>"; };
-		FDD404571B049B8400DE2E84 /* topic_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topic_small.png; sourceTree = "<group>"; };
-		FDD404581B049B8400DE2E84 /* topic1_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = topic1_small.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -791,12 +779,8 @@
 		FD8453A61B15933C00B1E84B /* 闯关成绩单 */ = {
 			isa = PBXGroup;
 			children = (
-				FDBA32E81B1C37DC00C02BF8 /* 关卡3相关View */,
-				FDA0C2611B1463C000900F49 /* ScoreDetailViewController.h */,
-				FDA0C2621B1463C000900F49 /* ScoreDetailViewController.m */,
-				FDA0C2631B1463C000900F49 /* ScoreDetailViewController.xib */,
+				FD9B42C21B44E2A700370043 /* 重新搭建关卡3有关View */,
 				FD8453AE1B159FBD00B1E84B /* point1.2_cell  */,
-				FD8453AF1B159FDB00B1E84B /* point3_headView */,
 			);
 			name = "闯关成绩单";
 			sourceTree = "<group>";
@@ -825,16 +809,6 @@
 				FDA0C2681B14719A00900F49 /* ScoreMenuCell.xib */,
 			);
 			name = "point1.2_cell ";
-			sourceTree = "<group>";
-		};
-		FD8453AF1B159FDB00B1E84B /* point3_headView */ = {
-			isa = PBXGroup;
-			children = (
-				FD8453B01B15A01E00B1E84B /* TableView_headView.h */,
-				FD8453B11B15A01E00B1E84B /* TableView_headView.m */,
-				FD8453B31B15A02E00B1E84B /* TableView_headView.xib */,
-			);
-			name = point3_headView;
 			sourceTree = "<group>";
 		};
 		FD92C5C51B0ACA6A00B7BE43 /* 播放器 */ = {
@@ -951,6 +925,31 @@
 				FD9959071B1328FB005892DB /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		FD9B42C21B44E2A700370043 /* 重新搭建关卡3有关View */ = {
+			isa = PBXGroup;
+			children = (
+				FD9B42C31B44E2FC00370043 /* Point_3_Review_Head_View.h */,
+				FD9B42C41B44E2FC00370043 /* Point_3_Review_Head_View.m */,
+				FD9B42C61B44E30E00370043 /* Point_3_Review_Head_View.xib */,
+				FD9B42C81B44E32E00370043 /* Point_3_Commit_View.h */,
+				FD9B42C91B44E32E00370043 /* Point_3_Commit_View.m */,
+				FD9B42CB1B44E33C00370043 /* Point_3_Commit_View.xib */,
+				FD471D441B44E67400A1EA71 /* Point_3_Section_Head_View.h */,
+				FD471D451B44E67400A1EA71 /* Point_3_Section_Head_View.m */,
+				FD471D471B44E68200A1EA71 /* Point_3_Section_Head_View.xib */,
+				FD471D491B4508F100A1EA71 /* Point_3_Review_Cell.h */,
+				FD471D4A1B4508F100A1EA71 /* Point_3_Review_Cell.m */,
+				FD471D4B1B4508F100A1EA71 /* Point_3_Review_Cell.xib */,
+				FD471D4E1B450C2000A1EA71 /* Point_3_Commit_cell.h */,
+				FD471D4F1B450C2000A1EA71 /* Point_3_Commit_cell.m */,
+				FD471D501B450C2000A1EA71 /* Point_3_Commit_cell.xib */,
+				FD471D581B450EC200A1EA71 /* SCOPartMenuViewController.h */,
+				FD471D591B450EC200A1EA71 /* SCOPartMenuViewController.m */,
+				FD471D5A1B450EC200A1EA71 /* SCOPartMenuViewController.xib */,
+			);
+			name = "重新搭建关卡3有关View";
 			sourceTree = "<group>";
 		};
 		FDA0C23C1B1412AA00900F49 /* SDWebImage */ = {
@@ -1103,25 +1102,6 @@
 			name = Topic;
 			sourceTree = "<group>";
 		};
-		FDBA32E81B1C37DC00C02BF8 /* 关卡3相关View */ = {
-			isa = PBXGroup;
-			children = (
-				FDBA32E91B1C389200C02BF8 /* Score_Point3_Section_View.h */,
-				FDBA32EA1B1C389200C02BF8 /* Score_Point3_Section_View.m */,
-				FDBA32EC1B1C38A000C02BF8 /* Score_Point3_Section_View.xib */,
-				FDBA32EE1B1C38E600C02BF8 /* Score_Point3_Cell.h */,
-				FDBA32EF1B1C38E600C02BF8 /* Score_Point3_Cell.m */,
-				FDBA32F01B1C38E600C02BF8 /* Score_Point3_Cell.xib */,
-				FDBA32F31B1C390800C02BF8 /* Score_Point3_Footer_View.h */,
-				FDBA32F41B1C390800C02BF8 /* Score_Point3_Footer_View.m */,
-				FDBA32F61B1C391200C02BF8 /* Score_Point3_Footer_View.xib */,
-				FDBA32F81B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.h */,
-				FDBA32F91B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.m */,
-				FDBA32FB1B1C559200C02BF8 /* Score_Point3_TableHeaderView_commited.xib */,
-			);
-			name = "关卡3相关View";
-			sourceTree = "<group>";
-		};
 		FDD404051B0492F900DE2E84 = {
 			isa = PBXGroup;
 			children = (
@@ -1205,12 +1185,6 @@
 			isa = PBXGroup;
 			children = (
 				FD9957E21B12C47B005892DB /* 33.jpg */,
-				FD62449E1B0584780037836E /* touxiang.png */,
-				FDD404571B049B8400DE2E84 /* topic_small.png */,
-				FDD404581B049B8400DE2E84 /* topic1_small.png */,
-				FDD404511B049B5B00DE2E84 /* topic.png */,
-				FDD404521B049B5B00DE2E84 /* topic1.png */,
-				FDD404531B049B5B00DE2E84 /* topic2.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -1297,11 +1271,11 @@
 			files = (
 				FD605B601B2823020045BDCD /* ApplyClassViewController.xib in Resources */,
 				FD5E01D41B26F75500E3ED4B /* PointProgressView.xib in Resources */,
-				FD8453B41B15A02E00B1E84B /* TableView_headView.xib in Resources */,
+				FD471D4D1B4508F100A1EA71 /* Point_3_Review_Cell.xib in Resources */,
 				FDA0C2601B14568900900F49 /* CheckScoreViewController.xib in Resources */,
 				FD54614A1B105FF400409778 /* MyTeacherCell.xib in Resources */,
+				FD9B42C71B44E30E00370043 /* Point_3_Review_Head_View.xib in Resources */,
 				FDD4041D1B0492F900DE2E84 /* Main.storyboard in Resources */,
-				FDBA32F71B1C391200C02BF8 /* Score_Point3_Footer_View.xib in Resources */,
 				FD97AFAB1B16E11A00C45A2C /* TestReviewCell.xib in Resources */,
 				FD5B4FA51B21538600BE6F5B /* ClassDetailCell.xib in Resources */,
 				FD73CBB11B30340E00979B1A /* LoadingView.xib in Resources */,
@@ -1314,30 +1288,27 @@
 				FDA0C26A1B14719A00900F49 /* ScoreMenuCell.xib in Resources */,
 				FD5FEC3F1B25A607005B99AF /* PersonEditCell.xib in Resources */,
 				FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */,
+				FD9B42CC1B44E33C00370043 /* Point_3_Commit_View.xib in Resources */,
 				FDA25E171B0DC31900F35545 /* CheckKeyWordViewController.xib in Resources */,
 				FD5B4FB61B2181CA00BE6F5B /* PersonSettingViewController.xib in Resources */,
 				FDD4044F1B04972D00DE2E84 /* TopicCell.xib in Resources */,
+				FD471D5C1B450EC200A1EA71 /* SCOPartMenuViewController.xib in Resources */,
 				FD5E01A91B26889900E3ED4B /* LogInViewController.xib in Resources */,
 				FD5461451B105D7700409778 /* FooterView.xib in Resources */,
-				FDBA32F21B1C38E600C02BF8 /* Score_Point3_Cell.xib in Resources */,
 				FD5461551B10676700409778 /* TPCPersonCenterViewController.xib in Resources */,
-				FDD404591B049B8400DE2E84 /* topic_small.png in Resources */,
 				FD9957E31B12C47B005892DB /* 33.jpg in Resources */,
 				FD5E01D91B27001C00E3ED4B /* TeacherCell.xib in Resources */,
 				FD5B4FBC1B21899300BE6F5B /* PersonProgressViewController.xib in Resources */,
 				FD8C40EC1B0C6F3A00948B6C /* CheckBlankViewController.xib in Resources */,
-				FDBA32ED1B1C38A000C02BF8 /* Score_Point3_Section_View.xib in Resources */,
-				FDA0C2651B1463C000900F49 /* ScoreDetailViewController.xib in Resources */,
+				FD471D481B44E68200A1EA71 /* Point_3_Section_Head_View.xib in Resources */,
+				FD471D521B450C2000A1EA71 /* Point_3_Commit_cell.xib in Resources */,
 				FD5E01AE1B2688AD00E3ED4B /* RegisterViewController.xib in Resources */,
 				FD530E351B29612300E3EC26 /* aiengine.provision in Resources */,
 				FD5FEC341B2533EE005B99AF /* TeacherPersonCenterViewController.xib in Resources */,
-				FD62449F1B0584780037836E /* touxiang.png in Resources */,
 				FD97AFB01B16FD2400C45A2C /* CheckPractiseBookViewController.xib in Resources */,
 				FD54615A1B10748600409778 /* PersonClassViewController.xib in Resources */,
-				FDBA32FC1B1C559200C02BF8 /* Score_Point3_TableHeaderView_commited.xib in Resources */,
 				FD5B4FB01B2172DC00BE6F5B /* ClassSearchCell.xib in Resources */,
 				FD9957E11B12BC1E005892DB /* ClassIntroduceViewController.xib in Resources */,
-				FDD404551B049B5B00DE2E84 /* topic1.png in Resources */,
 				FD8C40F11B0C6FAB00948B6C /* CheckAskViewController.xib in Resources */,
 				FD596D8C1B09E0D400D6DE7B /* Images.xcassets in Resources */,
 				FD6AB7511B2AB6AC004721A7 /* df_oral.db in Resources */,
@@ -1345,9 +1316,7 @@
 				FD5E01DE1B2701A300E3ED4B /* TeacherHeadView.xib in Resources */,
 				FD5461601B10761C00409778 /* ClassCell.xib in Resources */,
 				FD5B4FAB1B216E0300BE6F5B /* ClassSearchViewController.xib in Resources */,
-				FDD404561B049B5B00DE2E84 /* topic2.png in Resources */,
 				FD5FEC3A1B25A33E005B99AF /* PersonEditViewController.xib in Resources */,
-				FDD404541B049B5B00DE2E84 /* topic.png in Resources */,
 				FD9B9DD01B427D9200DBD58B /* SystemSettingViewController.xib in Resources */,
 				FD54613F1B10580A00409778 /* MyTeacherViewController.xib in Resources */,
 				FD97AFB51B17020800C45A2C /* PractiseCell.xib in Resources */,
@@ -1357,7 +1326,6 @@
 				FD97AFA61B16BB8A00C45A2C /* ScoreTestMenuViewController.xib in Resources */,
 				FD5461341B1045B800409778 /* SuccessCell.xib in Resources */,
 				FD6244A41B0585450037836E /* TPCCheckpointViewController.xib in Resources */,
-				FDD4045A1B049B8400DE2E84 /* topic1_small.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1379,21 +1347,22 @@
 				FD73CBAF1B30340200979B1A /* LoadingView.m in Sources */,
 				FDA0C2581B1412AA00900F49 /* UIButton+WebCache.m in Sources */,
 				FD99590B1B1328FB005892DB /* AFNetworkReachabilityManager.m in Sources */,
-				FDBA32FA1B1C558600C02BF8 /* Score_Point3_TableHeaderView_commited.m in Sources */,
 				FD99590A1B1328FB005892DB /* AFHTTPSessionManager.m in Sources */,
+				FD9B42CA1B44E32E00370043 /* Point_3_Commit_View.m in Sources */,
 				FD54615F1B10761C00409778 /* ClassCell.m in Sources */,
 				FD9958E71B131794005892DB /* unzip.c in Sources */,
 				FD8C40EB1B0C6F3A00948B6C /* CheckBlankViewController.m in Sources */,
+				FD471D5B1B450EC200A1EA71 /* SCOPartMenuViewController.m in Sources */,
 				FD54613E1B10580A00409778 /* MyTeacherViewController.m in Sources */,
 				FD6244A81B0585820037836E /* CheckFollowViewController.m in Sources */,
 				FD9957DB1B12BC02005892DB /* ClassDetailViewController.m in Sources */,
 				FD5E01AD1B2688AD00E3ED4B /* RegisterViewController.m in Sources */,
 				FD99590F1B1328FB005892DB /* AFURLResponseSerialization.m in Sources */,
 				FD8C40E61B0C6D8200948B6C /* CheckSuccessViewController.m in Sources */,
-				FDA0C2641B1463C000900F49 /* ScoreDetailViewController.m in Sources */,
+				FD471D461B44E67400A1EA71 /* Point_3_Section_Head_View.m in Sources */,
 				FDA0C2541B1412AA00900F49 /* SDWebImageDecoder.m in Sources */,
-				FDBA32F51B1C390800C02BF8 /* Score_Point3_Footer_View.m in Sources */,
 				FDD4044B1B04972D00DE2E84 /* CustomProgressView.m in Sources */,
+				FD471D511B450C2000A1EA71 /* Point_3_Commit_cell.m in Sources */,
 				FD5FEC331B2533EE005B99AF /* TeacherPersonCenterViewController.m in Sources */,
 				FDA0C2591B1412AA00900F49 /* UIImageView+WebCache.m in Sources */,
 				FDA25E1B1B0DD98D00F35545 /* RecordManager.m in Sources */,
@@ -1401,9 +1370,9 @@
 				FD605B5F1B2823020045BDCD /* ApplyClassViewController.m in Sources */,
 				FD5B4FB51B2181CA00BE6F5B /* PersonSettingViewController.m in Sources */,
 				FD9958E81B131794005892DB /* zip.c in Sources */,
+				FD471D4C1B4508F100A1EA71 /* Point_3_Review_Cell.m in Sources */,
 				FD5E01D21B26F74B00E3ED4B /* PointProgressView.m in Sources */,
 				FDD4041A1B0492F900DE2E84 /* ViewController.m in Sources */,
-				FD8453B21B15A01E00B1E84B /* TableView_headView.m in Sources */,
 				FDAFE0FF1B43861F002D7EEE /* LoadingViews.m in Sources */,
 				FD97AFA51B16BB8A00C45A2C /* ScoreTestMenuViewController.m in Sources */,
 				FD9958F31B1328CB005892DB /* NetManager.m in Sources */,
@@ -1427,7 +1396,6 @@
 				FD5FEC3E1B25A607005B99AF /* PersonEditCell.m in Sources */,
 				FDA25E161B0DC31900F35545 /* CheckKeyWordViewController.m in Sources */,
 				FDD404401B04952400DE2E84 /* TopicMainViewController.m in Sources */,
-				FDBA32F11B1C38E600C02BF8 /* Score_Point3_Cell.m in Sources */,
 				FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */,
 				FD5E01DC1B27019B00E3ED4B /* TeacherHeadView.m in Sources */,
 				FD5B4FBB1B21899300BE6F5B /* PersonProgressViewController.m in Sources */,
@@ -1452,7 +1420,6 @@
 				FD5B4FAF1B2172DC00BE6F5B /* ClassSearchCell.m in Sources */,
 				FD99590E1B1328FB005892DB /* AFURLRequestSerialization.m in Sources */,
 				FD9957E01B12BC1E005892DB /* ClassIntroduceViewController.m in Sources */,
-				FDBA32EB1B1C389200C02BF8 /* Score_Point3_Section_View.m in Sources */,
 				FD9959091B1328FB005892DB /* AFHTTPRequestOperationManager.m in Sources */,
 				FD9959101B1328FB005892DB /* AFURLSessionManager.m in Sources */,
 				FD5B4FAA1B216E0300BE6F5B /* ClassSearchViewController.m in Sources */,
@@ -1468,6 +1435,7 @@
 				FDD404141B0492F900DE2E84 /* main.m in Sources */,
 				FD66D1501B4142D100194C9A /* AboutMeViewController.m in Sources */,
 				FD6AB7541B2ABDBC004721A7 /* OralDBFuncs.m in Sources */,
+				FD9B42C51B44E2FC00370043 /* Point_3_Review_Head_View.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
