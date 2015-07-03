@@ -11,7 +11,7 @@
 
 #define kScreentWidth ([UIScreen mainScreen].bounds.size.width)
 #define kScreenHeight ([UIScreen mainScreen].bounds.size.height)
-
+#define kCurrentNetStatus ([DetectionNetWorkState netStatus])
 
 
 #define kTitleFontSize_17 (kScreenHeight<600?15:17)

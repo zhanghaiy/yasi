@@ -20,11 +20,13 @@
 #import "CheckTestViewController.h"
 #import "OralDBFuncs.h"
 #import "ConstellationManager.h"
+#import "DetectionNetWorkState.h"
 
-@interface TPCCheckpointViewController ()<UIScrollViewDelegate>
+@interface TPCCheckpointViewController ()<UIScrollViewDelegate,UIAlertViewDelegate>
 {
     int _markPart;
     BOOL _requestTest_zipUrl;
+    BOOL _request_part;// 请求闯关资源 和请求模考资源区分
 }
 @end
 
@@ -246,9 +248,75 @@
     }
     else
     {
-        // 不存在 缓存
-        _loading_View.hidden = NO;
+        /*
+            不存在 缓存
+            判断网络限制
+         */
+        [self jugeNetStateWithSection:YES];
+    }
+}
+
+#pragma mark - 检测网络状态 参数：yes 请求part资源信息  no test资源信息
+- (void)jugeNetStateWithSection:(BOOL)part
+{
+    _request_part = part;
+    BOOL net_wifi = [OralDBFuncs getNet_WiFi_Download];
+    BOOL net_2g3g4g = [OralDBFuncs getNet_2g3g4g_Download];
+    
+    switch ([DetectionNetWorkState netStatus])
+    {
+        case NotReachable:
+        {
+            // 无网络状态
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络链接" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alertView show];
+        }
+            break;
+        case ReachableViaWiFi:
+        {
+            // wifi
+            [self requestZipResourceOFPart:part];
+        }
+            break;
+        case ReachableViaWWAN:
+        {
+            // 2g3g4g
+            if (net_2g3g4g)
+            {
+                [self requestZipResourceOFPart:part];
+            }
+            else
+            {
+                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前网络为2g/3g/4g网络，是否继续？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"继续",nil];
+                [alertView show];
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - 警告框 delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"%ld",buttonIndex);
+    if (buttonIndex == 1)
+    {
+        [self requestZipResourceOFPart:_request_part];
+    }
+}
+
+#pragma mark - 请求zip资源
+- (void)requestZipResourceOFPart:(BOOL)part
+{
+    if (part)
+    {
         [self requestTopicZipResource];
+    }
+    else
+    {
+        [self requestTestZip];
     }
 }
 
@@ -276,6 +344,7 @@
 #pragma mark - 下载闯关资源
 - (void)requestTopicZipResource
 {
+    _loading_View.hidden = NO;
     NSString *zipfileurl = [_topicDict objectForKey:@"zipfileurl"];
     NSLog(@"%@",zipfileurl);
     [self startRequestURL:zipfileurl andCallBackAction:@selector(requestPartZipFinished:)];
@@ -422,40 +491,6 @@
     return path;
 }
 
-//- (void)createLoadingView
-//{
-//    _loadingView = [[UIView alloc]initWithFrame:self.view.bounds];
-//    _loadingView.hidden = YES;
-//    _loadingView.backgroundColor = [UIColor colorWithWhite:100/255.0 alpha:0.2];
-//    
-//    UIView *actionView = [[UIView alloc]initWithFrame:CGRectMake((kScreentWidth-200)/2, kScreenHeight/2-100, 280, 200)];
-//    actionView.layer.masksToBounds = YES;
-//    actionView.layer.cornerRadius = 5;
-//    actionView.layer.borderWidth = 1;
-//    actionView.layer.borderColor = _pointColor.CGColor;
-//    
-//    actionView.backgroundColor = [UIColor whiteColor];
-//
-//    UIActivityIndicatorView *action = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((actionView.frame.size.width-50)/2, 5, 50, 50)];
-//    action.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-//    [actionView addSubview:action];
-//    [action startAnimating];
-////    [activity stopAnimating]
-//    
-//    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake((actionView.frame.size.width-150)/2, 60, 150, 15)];
-//    lab.text = @"正在加载资源文件...";
-//    lab.textAlignment = NSTextAlignmentCenter;
-//    lab.textColor = _pointColor;
-//    lab.font = [UIFont systemFontOfSize:kFontSize4];
-//    [actionView addSubview:lab];
-//    
-//    actionView.center = _loadingView.center;
-//    
-//    [_loadingView addSubview:actionView];
-//    [self.view addSubview:_loadingView];
-//}
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -484,11 +519,10 @@
     }
     else
     {
-        _loading_View.hidden = NO;
         _requestTest_zipUrl = YES;
-        [self requestTestZip];
+        [self jugeNetStateWithSection:NO];
+
     }
-    
 }
 
 - (void)startEnterTest

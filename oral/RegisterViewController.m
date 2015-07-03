@@ -125,7 +125,7 @@
         {
             NSString *userid = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"id"];
             NSString *userName = _nameTextField.text;
-            [OralDBFuncs setCurrentUser:userName UserId:userid];
+            [OralDBFuncs setCurrentUser:userName UserId:userid UserIconUrl:[dict objectForKey:@"icon"]];
             [OralDBFuncs addUser:userName];
             [self enterTopicPage];
         }

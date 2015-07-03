@@ -69,7 +69,7 @@
     /*
         删除当前用户的用户名 用户id
      */
-    [OralDBFuncs removeCurrentUserNameAndUserID];
+    [OralDBFuncs removeCurrentUserInfo];
     
     LogInViewController *logInVC = [[LogInViewController alloc]initWithNibName:@"LogInViewController" bundle:nil];
     [self presentViewController:logInVC animated:YES completion:nil];

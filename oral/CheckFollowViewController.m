@@ -111,7 +111,7 @@
         [btn setBackgroundImage:[UIImage imageNamed:@"questionCount-blue"] forState:UIControlStateSelected];
         [btn setTitleColor:_backColor forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        btn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
+        btn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_12];
         btn.tag = kTopQueCountButtonTag+i;
         if (i == 0)
         {
@@ -145,6 +145,10 @@
     _questionTextLabel.numberOfLines = 0;
     [_questionTextLabel setBackgroundColor:[UIColor clearColor]];
     [_questionTextBackImgV setBackgroundColor:[UIColor whiteColor]];
+    
+    _questionTextBackImgV.layer.masksToBounds = YES;
+    _questionTextBackImgV.layer.cornerRadius = _questionTextBackImgV.frame.size.height/2.0;
+    
     // 3-->底部控件
     
     float follow_Button_H = 65.0/667*kScreenHeight;
@@ -358,11 +362,10 @@
 #pragma mark - 播放之前动画
 - (void)prepareQuestion
 {
-    _questionTextLabel.font = [UIFont systemFontOfSize:0];
+    _questionTextLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     [self showCurrentQuestionText];
     [self textAnimationInView:_questionTextLabel];
     [UIView animateWithDuration:0.5 animations:^{
-        _questionTextLabel.font = [UIFont systemFontOfSize:kFontSize_14];
         _teacherHeadImgView.alpha = 1;
         _stuImageView.alpha = 0.3;
     }];

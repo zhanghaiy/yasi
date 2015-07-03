@@ -7,6 +7,9 @@
 //
 
 #import "SystemSettingViewController.h"
+#import "OralDBFuncs.h"
+
+
 
 @interface SystemSettingViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -30,7 +33,7 @@
     
     self.view.backgroundColor = _backgroundViewColor;
     
-    _systemArray = @[@"消息提示开关",@"WiFi环境下载",@"清除缓存"];
+    _systemArray = @[@"2g/3g/4g网络下下载",@"WiFi网络下下载",@"清除缓存"];
     
     _tableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 75, kScreentWidth, kScreenHeight-75) style:UITableViewStylePlain];
     _tableV.delegate = self;
@@ -64,7 +67,16 @@
     if (indexPath.row<_systemArray.count-1)
     {
         UISwitch *swt = [[UISwitch alloc]initWithFrame:CGRectMake(kScreentWidth-80, 7, 50, 25)];
-        swt.on = YES;
+        if (indexPath.row == 0)
+        {
+            // 2g3g4g
+            swt.on = [OralDBFuncs getNet_2g3g4g_Download];
+        }
+        else
+        {
+            // wifi
+            swt.on = [OralDBFuncs getNet_WiFi_Download];
+        }
         [swt addTarget:self action:@selector(switchMethod:) forControlEvents:UIControlEventValueChanged];
         
         swt.onTintColor = kPart_Button_Color;
@@ -95,26 +107,26 @@
     //    开关状态
     if (swith.tag == kSwithBaseTag)
     {
-        // 消息提示开关
+        // 2g/3g/4g网络下下载
         if(swith.on==YES)
         {
-            
+            [OralDBFuncs setNet_2g3g4g_Download:YES];
         }
         else
         {
-            
+            [OralDBFuncs setNet_2g3g4g_Download:NO];
         }
     }
     else if (swith.tag == kSwithBaseTag+1)
     {
-       // WiFi环境下下载
+       // WiFi网络下下载
         if(swith.on==YES)
         {
-            
+            [OralDBFuncs setNet_WiFi_Download:YES];
         }
         else
         {
-            
+            [OralDBFuncs setNet_WiFi_Download:NO];
         }
     }
 }

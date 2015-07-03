@@ -131,22 +131,22 @@
     
     actionView.backgroundColor = [UIColor whiteColor];
     
-    NSInteger action_W = 80;
+    NSInteger action_W = 60;
     NSInteger tipLabel_H = 40;
     float load_Y = (action_View_H-action_W-tipLabel_H)/2;
     float tip_Y = action_W+load_Y;
     
-    UIActivityIndicatorView *action = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((action_View_W-action_W)/2, load_Y, action_W, action_W)];
-    action.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [actionView addSubview:action];
-    [action startAnimating];
+//    UIActivityIndicatorView *action = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((action_View_W-action_W)/2, load_Y, action_W, action_W)];
+//    action.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+//    [actionView addSubview:action];
+//    [action startAnimating];
     
-//    UIImageView *loadingImgV = [[UIImageView alloc]initWithFrame:CGRectMake((action_View_W-action_W)/2, (action_View_H-action_W-tipLabel_H)/2, action_W, action_W)];
-//    loadingImgV.animationDuration = 2;
-//    loadingImgV.animationImages = @[[UIImage imageNamed:@"Loading_1"],[UIImage imageNamed:@"Loading_2"],[UIImage imageNamed:@"Loading_3"],[UIImage imageNamed:@"Loading_4"],[UIImage imageNamed:@"Loading_5"],[UIImage imageNamed:@"Loading_6"],[UIImage imageNamed:@"Loading_7"],[UIImage imageNamed:@"Loading_8"]];
-//    loadingImgV.animationRepeatCount = -1;
-//    [actionView addSubview:loadingImgV];
-//    [loadingImgV startAnimating];
+    UIImageView *loadingImgV = [[UIImageView alloc]initWithFrame:CGRectMake((action_View_W-action_W)/2, (action_View_H-action_W-tipLabel_H)/2, action_W, action_W)];
+    loadingImgV.animationDuration = 2;
+    loadingImgV.animationImages = @[[UIImage imageNamed:@"Loading_1"],[UIImage imageNamed:@"Loading_2"],[UIImage imageNamed:@"Loading_3"],[UIImage imageNamed:@"Loading_4"],[UIImage imageNamed:@"Loading_5"],[UIImage imageNamed:@"Loading_6"],[UIImage imageNamed:@"Loading_7"],[UIImage imageNamed:@"Loading_8"]];
+    loadingImgV.animationRepeatCount = -1;
+    [actionView addSubview:loadingImgV];
+    [loadingImgV startAnimating];
     
     _tipLabel= [[UILabel alloc]initWithFrame:CGRectMake(0,tip_Y, actionView.frame.size.width, tipLabel_H)];
     _tipLabel.textAlignment = NSTextAlignmentCenter;

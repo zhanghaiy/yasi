@@ -183,6 +183,8 @@
     [_teaQuestionLabel setBackgroundColor:[UIColor clearColor]];
     [_teaQuestionBackImgV setBackgroundColor:[UIColor whiteColor]];
 
+    _teaQuestionBackImgV.layer.masksToBounds = YES;
+    _teaQuestionBackImgV.layer.cornerRadius = _teaQuestionBackImgV.frame.size.height/2.0;
 
     // 3-->底部控件
     

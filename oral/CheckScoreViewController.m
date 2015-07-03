@@ -193,13 +193,13 @@
         {
             // 已提交
             [commitTestButton setTitle:@"等待老师评价" forState:UIControlStateNormal];
+            commitTestButton.enabled = NO;
         }
         else
         {
             // 未提交
             [commitTestButton setTitle:@"提交给老师" forState:UIControlStateNormal];
         }
-
     }
     else
     {
@@ -441,9 +441,18 @@
 - (void)playQuestion_test
 {
     NSString *questionName = [[_currentTestArray objectAtIndex:_markPlayCounts/2] objectForKey:@"quesUrl"];
-    NSString *questionPath = [NSString stringWithFormat:@"%@temp/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO],questionName];
+    NSString *questionPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO],questionName];
     NSLog(@"%@",questionPath);
-    [_playerManager playerPlayWithFilePath:questionPath];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:questionPath])
+    {
+        [_playerManager playerPlayWithFilePath:questionPath];
+    }
+    else
+    {
+       // 找不到音频路径
+        UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前路径下找不到音频" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertV show];
+    }
 }
 
 #pragma mark -- 播放回答
@@ -452,7 +461,16 @@
     NSString *answerName = [[_currentTestArray objectAtIndex:_markPlayCounts/2] objectForKey:@"answerUrl"];
     NSString *answerPath = [NSString stringWithFormat:@"%@/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO],answerName];
     NSLog(@"%@",answerPath);
-    [_playerManager playerPlayWithFilePath:answerPath];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:answerPath])
+    {
+        [_playerManager playerPlayWithFilePath:answerPath];
+    }
+    else
+    {
+        // 找不到音频路径
+        UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前路径下找不到音频" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertV show];
+    }
 }
 
 #pragma mark -- 播放结束

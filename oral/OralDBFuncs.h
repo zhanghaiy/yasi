@@ -66,13 +66,20 @@
 
 @interface OralDBFuncs : NSObject
 
-//+(void)setCurrentUser:(NSString *)userName;
-//+(NSString *)getCurrentUser;
+
+// 标记网络限制
++ (void)setNet_WiFi_Download:(BOOL)downLoad;
++ (void)setNet_2g3g4g_Download:(BOOL)downLoad;
++ (BOOL)getNet_WiFi_Download;
++ (BOOL)getNet_2g3g4g_Download;
+
 
 // 标记当前用户 用户名 昵称
-+(void)setCurrentUser:(NSString *)userName UserId:(NSString *)userid;
++(void)setCurrentUser:(NSString *)userName UserId:(NSString *)userid UserIconUrl:(NSString *)iconUrl;
 // 删除记录
-+(void)removeCurrentUserNameAndUserID;
++(void)removeCurrentUserInfo;
+// 获取用户头像
++(NSString *)getCurrentUserIconUrl;
 // 获取用户名
 +(NSString *)getCurrentUserName;
 // 获取用户id
@@ -87,8 +94,6 @@
 // 获取当前topic
 +(NSString *)getCurrentTopicID;
 
-
-
 // 标记当前关卡
 +(void)setCurrentPoint:(int)pointNum;
 // 获取当前关卡
@@ -102,9 +107,6 @@
 + (void)setAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName AnswerId:(NSString *)answerid AnswerText:(NSString *)answerText;
 + (NSArray *)getAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName;
 + (void)deleteAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName AnswerId:(NSString *)answerid;
-
-
-
 
 // 标记关卡3是否提交
 +(void)setPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum;

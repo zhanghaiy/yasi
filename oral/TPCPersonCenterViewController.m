@@ -41,7 +41,7 @@
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [rightButton setFrame:CGRectMake(kScreentWidth-40, (self.navTopView.frame.size.height-24-20)/2+24, 20, 20)];
     [rightButton setBackgroundImage:[UIImage imageNamed:@"person_setting"] forState:UIControlStateNormal];
-    rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_15];
     
     [rightButton addTarget:self action:@selector(personSetting) forControlEvents:UIControlEventTouchUpInside];
     
@@ -85,7 +85,7 @@
     _userId = [OralDBFuncs getCurrentUserID];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kUserInfoUrl,_userId];
     NSLog(@"%@",urlStr);
-    [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestEnd:) andRefresh:YES];
+    [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestEnd:) andRefresh:kCurrentNetStatus];
 }
 
 - (void)requestEnd:(NSURLConnectionRequest *)request

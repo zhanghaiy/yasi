@@ -92,6 +92,8 @@
 		FD8C40EC1B0C6F3A00948B6C /* CheckBlankViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8C40EA1B0C6F3A00948B6C /* CheckBlankViewController.xib */; };
 		FD8C40F01B0C6FAB00948B6C /* CheckAskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8C40EE1B0C6FAB00948B6C /* CheckAskViewController.m */; };
 		FD8C40F11B0C6FAB00948B6C /* CheckAskViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */; };
+		FD8FE8281B46617B00B0445D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8FE8271B46617B00B0445D /* Reachability.m */; };
+		FD8FE82C1B46627600B0445D /* DetectionNetWorkState.m in Sources */ = {isa = PBXBuildFile; fileRef = FD8FE82B1B46627600B0445D /* DetectionNetWorkState.m */; };
 		FD92C5C81B0ACA8D00B7BE43 /* AudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FD92C5C71B0ACA8D00B7BE43 /* AudioPlayer.m */; };
 		FD97AFA51B16BB8A00C45A2C /* ScoreTestMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD97AFA31B16BB8A00C45A2C /* ScoreTestMenuViewController.m */; };
 		FD97AFA61B16BB8A00C45A2C /* ScoreTestMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD97AFA41B16BB8A00C45A2C /* ScoreTestMenuViewController.xib */; };
@@ -307,6 +309,10 @@
 		FD8C40ED1B0C6FAB00948B6C /* CheckAskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckAskViewController.h; sourceTree = "<group>"; };
 		FD8C40EE1B0C6FAB00948B6C /* CheckAskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckAskViewController.m; sourceTree = "<group>"; };
 		FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckAskViewController.xib; sourceTree = "<group>"; };
+		FD8FE8261B46617B00B0445D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		FD8FE8271B46617B00B0445D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		FD8FE82A1B46627600B0445D /* DetectionNetWorkState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetectionNetWorkState.h; sourceTree = "<group>"; };
+		FD8FE82B1B46627600B0445D /* DetectionNetWorkState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetectionNetWorkState.m; sourceTree = "<group>"; };
 		FD92C5C61B0ACA8D00B7BE43 /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
 		FD92C5C71B0ACA8D00B7BE43 /* AudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioPlayer.m; sourceTree = "<group>"; };
 		FD97AFA21B16BB8A00C45A2C /* ScoreTestMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreTestMenuViewController.h; sourceTree = "<group>"; };
@@ -640,6 +646,8 @@
 		FD5E01C01B26B75400E3ED4B /* NSURLConnection_Request */ = {
 			isa = PBXGroup;
 			children = (
+				FD9958F11B1328CB005892DB /* NetManager.h */,
+				FD9958F21B1328CB005892DB /* NetManager.m */,
 				FD5E01C71B26B87500E3ED4B /* NSURLConnectionRequest.h */,
 				FD5E01C81B26B87500E3ED4B /* NSURLConnectionRequest.m */,
 			);
@@ -811,6 +819,17 @@
 			name = "point1.2_cell ";
 			sourceTree = "<group>";
 		};
+		FD8FE8251B46616200B0445D /* 检测当前网络状态 */ = {
+			isa = PBXGroup;
+			children = (
+				FD8FE8261B46617B00B0445D /* Reachability.h */,
+				FD8FE8271B46617B00B0445D /* Reachability.m */,
+				FD8FE82A1B46627600B0445D /* DetectionNetWorkState.h */,
+				FD8FE82B1B46627600B0445D /* DetectionNetWorkState.m */,
+			);
+			name = "检测当前网络状态";
+			sourceTree = "<group>";
+		};
 		FD92C5C51B0ACA6A00B7BE43 /* 播放器 */ = {
 			isa = PBXGroup;
 			children = (
@@ -892,11 +911,10 @@
 		FD9958F01B1328B7005892DB /* Net */ = {
 			isa = PBXGroup;
 			children = (
+				FD8FE8251B46616200B0445D /* 检测当前网络状态 */,
 				FD5E01C01B26B75400E3ED4B /* NSURLConnection_Request */,
 				FDA0C23C1B1412AA00900F49 /* SDWebImage */,
 				FD9958F41B1328FB005892DB /* AFNetworking */,
-				FD9958F11B1328CB005892DB /* NetManager.h */,
-				FD9958F21B1328CB005892DB /* NetManager.m */,
 			);
 			name = Net;
 			sourceTree = "<group>";
@@ -1399,6 +1417,7 @@
 				FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */,
 				FD5E01DC1B27019B00E3ED4B /* TeacherHeadView.m in Sources */,
 				FD5B4FBB1B21899300BE6F5B /* PersonProgressViewController.m in Sources */,
+				FD8FE8281B46617B00B0445D /* Reachability.m in Sources */,
 				FD97AFB41B17020800C45A2C /* PractiseCell.m in Sources */,
 				FDA0C2531B1412AA00900F49 /* SDImageCache.m in Sources */,
 				FD5E01CF1B26CBFA00E3ED4B /* PersonInfoModel.m in Sources */,
@@ -1419,6 +1438,7 @@
 				FDAFE1031B43B848002D7EEE /* TopicInfoManager.m in Sources */,
 				FD5B4FAF1B2172DC00BE6F5B /* ClassSearchCell.m in Sources */,
 				FD99590E1B1328FB005892DB /* AFURLRequestSerialization.m in Sources */,
+				FD8FE82C1B46627600B0445D /* DetectionNetWorkState.m in Sources */,
 				FD9957E01B12BC1E005892DB /* ClassIntroduceViewController.m in Sources */,
 				FD9959091B1328FB005892DB /* AFHTTPRequestOperationManager.m in Sources */,
 				FD9959101B1328FB005892DB /* AFURLSessionManager.m in Sources */,

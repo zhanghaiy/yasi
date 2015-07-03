@@ -892,6 +892,7 @@
 - (void)startRequst_test
 {
     _loading_View.hidden = NO;
+    [self changeLoadingViewTitle:@"正在提交，请稍后...."];
     // 合成json文件
     BOOL makeUpSuccess = [self makeUpLocalJsonFile_test];
     if (makeUpSuccess)

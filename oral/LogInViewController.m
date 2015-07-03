@@ -123,7 +123,7 @@
             NSString *userid = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"studentid"];
             NSLog(@"%@",dict);
             NSString *userName = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"studentname"];
-            [OralDBFuncs setCurrentUser:userName UserId:userid];
+            [OralDBFuncs setCurrentUser:userName UserId:userid UserIconUrl:[dict objectForKey:@"icon"]];
             [OralDBFuncs addUser:userName];
             //更新登录时间 (待殷总确定 此处是否需要)
             [OralDBFuncs updateUserLastLoginTimeStamp:userName];

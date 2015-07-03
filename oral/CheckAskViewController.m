@@ -146,7 +146,7 @@
         [btn setBackgroundImage:[UIImage imageNamed:@"questionCount-blue"] forState:UIControlStateSelected];
         [btn setTitleColor:_backColor forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-        btn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_10];
+        btn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_12];
         
         [btn addTarget:self action:@selector(questionCountChanged_ask) forControlEvents:UIControlEventTouchUpInside];
         
@@ -299,7 +299,6 @@
 {
     _teaQuestionLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     _teaQuestionLabel.text = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"question"];
-//    _teaQuestionLabel.frame = _questionNomalRect;
 }
 
 #pragma mark - 视图已经出现
@@ -540,20 +539,28 @@
     }
     else if (btn.tag == kCommitRightButtonTag)
     {
-        // 判断是否有默认老师 无---跳转到选择老师界面  有----直接提交
-        if ([OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]])
+        if (kCurrentNetStatus)
         {
-            _teacherId = [OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]];
-            // 有默认老师
-            [self startRequst];
+            // 判断是否有默认老师 无---跳转到选择老师界面  有----直接提交
+            if ([OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]])
+            {
+                _teacherId = [OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]];
+                // 有默认老师
+                [self startRequst];
+            }
+            else
+            {
+                MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
+                myTeacherVC.delegate = self;
+                [self.navigationController pushViewController:myTeacherVC animated:YES];
+            }
         }
         else
         {
-            MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
-            myTeacherVC.delegate = self;
-            [self.navigationController pushViewController:myTeacherVC animated:YES];
+            // 当前无网络链接
+            UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络连接" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertV show];
         }
-         
     }
 }
 
@@ -571,6 +578,7 @@
         NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kPartCommitUrl];
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
         [parameters setObject:@"part" forKey:@"uploadfile"];
+        
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
@@ -594,6 +602,7 @@
              }
              else
              {
+                 _commitSuccess = NO;
                  NSLog(@"提交失败");
                  NSLog(@"%@",[dic objectForKey:@"remark"]);
                  [self commitFailed];
@@ -602,6 +611,7 @@
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error)
          {
+             _commitSuccess = NO;
              _loading_View.hidden = YES;
              NSLog(@"失败乃");
              [self commitFailed];

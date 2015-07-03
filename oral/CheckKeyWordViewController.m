@@ -49,7 +49,7 @@
     _currentPage = 0;
     [self changButtonBack];
     
-    _jumpButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_10];
+    _jumpButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_12];
     _jumpButton.layer.masksToBounds = YES;
     _jumpButton.layer.cornerRadius = _jumpButton.frame.size.height/2;
     _jumpButton.layer.borderWidth = 1;

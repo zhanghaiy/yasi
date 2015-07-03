@@ -58,7 +58,7 @@
 #define kSectionHeadPoint3Tag 30
 #define kPoint3_Section_BackBtn_Tag 100
 #define kTeacherReviewButtonTAg 200
-
+#define kPlaySelfButtonTag 300
 
 #pragma mark - 获取本地路径
 - (NSString *)getPoint3ReviewBasePath
@@ -414,9 +414,24 @@ static UIView *openView;
     // 播放评价音频 -- 待完善
     NSString *reviewUrl = [_review_sum_dict objectForKey:@"teacherurl"];
     NSString *reviewPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPoint3UnZipPath],reviewUrl];
+//    NSString *reviewPath = [NSString stringWithFormat:@"%@/temp/5017.wav",[self getPoint3UnZipPath]];
+
     NSLog(@"老师评价的音频路径：%@。。。。。\n",reviewPath);
     [_audioPlayerManager playerPlayWithFilePath:reviewPath];
 }
+
+#pragma mark -- 播放自己回答录音
+- (void)playerSelfAnswer:(UIButton*)btn
+{
+    NSLog(@"播放自己回答录音");
+    NSInteger index = btn.tag - kPlaySelfButtonTag;
+    // 播放
+    NSDictionary *dic = [_text_array_point_3 objectAtIndex:index];
+    NSString *audioPath = [dic objectForKey:@"answerPath"];
+    NSLog(@"%@",audioPath);
+    [_audioPlayerManager playerPlayWithFilePath:audioPath];
+}
+
 
 - (void)playerCallBack:(AudioPlayer *)audioPlayer
 {
@@ -852,6 +867,10 @@ static UIView *openView;
                 // 用户自己的头像
                 [cell.stu_head_imgV setImage:[UIImage imageNamed:@"person_head_image"]];
                 
+                cell.player_button.tag = indexPath.section + kPlaySelfButtonTag;
+                [cell.player_button addTarget:self action:@selector(playerSelfAnswer:) forControlEvents:UIControlEventTouchUpInside];
+                
+                
                 // 老师反馈
                 NSDictionary *reviewDic = [_score_array_point_3 objectAtIndex:indexPath.section];
                 // 老师头像
@@ -920,6 +939,9 @@ static UIView *openView;
                 
                 NSDictionary *userAnswerDic = [_text_array_point_3 objectAtIndex:indexPath.section];
                 [cell.playerButton setTitle:[NSString stringWithFormat:@"%f\"",round([[userAnswerDic objectForKey:@"duration"] floatValue]) ] forState:UIControlStateNormal];
+                cell.playerButton.tag = indexPath.section + kPlaySelfButtonTag;
+                [cell.playerButton addTarget:self action:@selector(playerSelfAnswer:) forControlEvents:UIControlEventTouchUpInside];
+
                 // 用户自己的头像
                 [cell.stu_head_imgV setImage:[UIImage imageNamed:@"person_head_image"]];
                 return cell;

@@ -12,12 +12,12 @@
 #import "RightMainCell.h"
 #import "TPCCheckpointViewController.h"
 #import "TPCPersonCenterViewController.h"
-#import "NetManager.h"
 #import "UIButton+WebCache.h"
 #import "OralDBFuncs.h"
 #import "TopicInfoManager.h"
+#import "NSURLConnectionRequest.h"
 
-@interface TopicMainViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface TopicMainViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     UITableView *_topicTableView;
     UITableView *_rightTableView;
@@ -36,6 +36,10 @@
 #define kmainCellHeight ((kScreenHeight-kNavBarHeight)/3)
 #define kRightCellHeight ((kScreenHeight-kNavBarHeight-kmainCellHeight*2/3)/7)
 #define kRightTableY (kScreenHeight-(kRightCellHeight*7)-kNavBarHeight)/2
+
+
+
+#pragma mark - 视图加载
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -66,38 +70,58 @@
     _rightTableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_rightTableView];
     
-    [self requestTopicInfo];
+    NSString *urlSTr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTopicListUrl];
+    [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestFinished:) andRefresh:kCurrentNetStatus];
+
+//    if ([DetectionNetWorkState netStatus] == NotReachable)
+//    {
+//        // 当前无网络
+//        [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestFinished:) andRefresh:NO];
+//    }
+//    else
+//    {
+//        [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestFinished:) andRefresh:YES];
+//    }
 }
 
-- (void)requestTopicInfo
+#pragma mark - 网络反馈
+- (void)requestFinished:(NSURLConnectionRequest *)request
 {
-    NetManager *netManager = [[NetManager alloc]init];
-    netManager.target = self;
-    netManager.action = @selector(requestFinished:);
-    [netManager netGetUrl:[NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTopicListUrl]];
-}
-
-- (void)requestFinished:(NetManager *)netManager
-{
-    if (netManager.success)
+    if (request.downloadData)
     {
-        if (netManager.downLoadData)
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        if ([[dic objectForKey:@"respCode"] intValue] == 1000)
         {
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netManager.downLoadData options:0 error:nil];
-            _topicArray = [dict objectForKey:@"etctlist"];
+            _topicArray = [dic objectForKey:@"etctlist"];
             // 单例存储topic信息
             [self saveTopicInfo];
             [_topicTableView reloadData];
             [_rightTableView reloadData];
         }
+        else
+        {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:[dic objectForKey:@"remark"] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }
     }
     else
     {
-        // 失败
-        NSLog(@"网络错误");
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"请求topic信息失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"重新请求", nil];
+        [alertView show];
     }
 }
 
+#pragma mark - UIAlertView delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        NSString *urlSTr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTopicListUrl];
+        [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestFinished:) andRefresh:YES];
+    }
+}
+
+#pragma mark - 存储topic信息 后续界面会用到
 - (void)saveTopicInfo
 {
     TopicInfoManager *topicManager = [TopicInfoManager getTopicInfoManager];
@@ -108,14 +132,14 @@
     }
 }
 
-
-#pragma mark - 数量
+#pragma mark - UItableView delegate
+#pragma mark - - 数量
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _topicArray.count;
 }
 
-#pragma mark - 高度
+#pragma mark - - 高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == kTopicMainTableViewTag)
@@ -129,7 +153,7 @@
     return 0;
 }
 
-#pragma mark - 绘制cell
+#pragma mark - - 绘制cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (tableView.tag == kTopicMainTableViewTag)

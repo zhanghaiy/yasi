@@ -39,9 +39,38 @@
     request.requestUrlString = urlStr;
     request.target = target;
     request.aciton = action;
-    //发起请求
-    [request postRequest:paramStr];
     
+    // 增加缓存
+    NSString *requestPath = [NSString stringWithFormat:@"%@/%@",[request getLoadPath],urlStr];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:requestPath]&&(refresh==NO))
+    {
+        NSData *data = [NSData dataWithContentsOfFile:requestPath];
+        [request.downloadData setLength:0];
+        [request.downloadData appendData:data];
+        //让target执行action,同时传出request
+        if ([request.target respondsToSelector:request.aciton])
+        {
+            //告知编译器 performSelector 没有问题
+            [request.target performSelector:request.aciton withObject:request afterDelay:NO];
+        }
+    }
+    else
+    {
+        //发起请求
+        [request postRequest:paramStr];
+    }
+}
+
+
+- (NSString *)getLoadPath
+{
+    NSString *path = [NSString stringWithFormat:@"%@/Documents/NetData",NSHomeDirectory()];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:path])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return path;
 }
 
 - (void)postRequest:(NSString *)paramStr
@@ -85,6 +114,11 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection{
     //接收完成
+    // 存储数据
+    NSString *dataPath = [NSString stringWithFormat:@"%@/%@",[self getLoadPath],self.requestUrlString];
+    NSLog(@"存储数据:%@",dataPath);
+    [_downloadData writeToFile:dataPath atomically:NO];
+    
     if ([_target respondsToSelector:_aciton]) {
         //告知编译器 performSelector 没有问题
 #pragma clang diagnostic push
@@ -100,8 +134,7 @@
 {
     NSLog(@"~~~~~~~%@",error.localizedDescription);
     NSLog(@"!!!!!!!!!!%@~~~~~~~~~~~~~~~",error.localizedFailureReason);
-
-    NSLog(@"error!!");
+    NSLog(@"网络不好，或者请求失败时：error!!");
 }
 
 

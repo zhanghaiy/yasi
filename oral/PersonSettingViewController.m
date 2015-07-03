@@ -33,8 +33,10 @@
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"设置"];
     self.view.backgroundColor = _backgroundViewColor;
-    _textArray = @[@"我的账号",@"账户充值",@"网络设置",@"版本更新",@"关于我们",@"默认老师"];
-    _imageArray = @[@"",@"Recharge",@"netSetting",@"VersionUpdate",@"AboutMe",@"defaultTeacher"];
+//    _imageArray = @[@"",@"Recharge",@"netSetting",@"VersionUpdate",@"AboutMe",@"defaultTeacher"];
+//    _textArray = @[@"我的账号",@"账户充值",@"网络设置",@"版本更新",@"关于我们",@"默认老师"];
+    _textArray = @[@"我的账号",@"网络设置",@"关于我们",@"默认老师"];
+    _imageArray = @[@"",@"netSetting",@"AboutMe",@"defaultTeacher"];
     
     _settingTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight+10, kScreentWidth, kScreenHeight-KNavTopViewHeight-10) style:UITableViewStylePlain];
     _settingTableV.delegate = self;
@@ -73,7 +75,7 @@
 #pragma mark - delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return _textArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,33 +118,19 @@
             break;
         case 1:
         {
-            // 账户充值
-        }
-            break;
-        case 2:
-        {
             // 网络设置
             SystemSettingViewController *systemSetVC = [[SystemSettingViewController alloc]init];
             [self.navigationController pushViewController:systemSetVC animated:YES];
         }
             break;
-        case 3:
-        {
-            // 版本更新
-            NSLog(@"版本更新");
-            [self getLocalVersion];
-            
-//            [self systemUpdate];
-        }
-            break;
-        case 4:
+        case 2:
         {
             // 关于我们
             AboutMeViewController *aboutMeVC = [[AboutMeViewController alloc]initWithNibName:@"AboutMeViewController" bundle:nil];
             [self.navigationController pushViewController:aboutMeVC animated:YES];
         }
             break;
-        case 5:
+        case 3:
         {
             // 默认老师
             MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]init];
@@ -154,49 +142,7 @@
     }
 }
 
-#pragma mark - 版本更新
-#pragma mark -- 获取本地版本号
-- (void)getLocalVersion
-{
-    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    // app名称
-    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleDisplayName"];
-    // app版本
-    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    // app build版本
-    NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
-    
-    NSLog(@"\napp名称:%@\napp版本:%@\napp build版本:%@\n",app_Name,app_Version,app_build);
-}
 
-#pragma mark -- 获取网络最新版本信息
-- (void)systemUpdate
-{
-    /*
-     1 根据 app 的 id 来查找：http://itunes.apple.com/lookup?id=你的应用程序的ID  你的应用程序的ID 是 itunes connect里的 Apple ID
-     获取最新的版本信息 然后 和当前版本信息对比 若不一样 跳转界面 AppStore
-     */
-    NSString *appleId = @"";
-    NSString *urlStr = @"http://itunes.apple.com/lookup";
-    NSString *params = [NSString stringWithFormat:@"id=%@",appleId];
-    NSLog(@"版本更新 获取版本信息：%@",params);
-    [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:params target:self action:@selector(requestVersionFinished:) andRefresh:YES];
-}
-
-#pragma mark -- 获取网络最新版本信息反馈
-- (void)requestVersionFinished:(NSURLConnectionRequest *)request
-{
-    if (request.downloadData)
-    {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        NSLog(@"%@",dic);
-        // 对比当前版本和最新版本
-    }
-    else
-    {
-        NSLog(@"失败");
-    }
-}
 
 
 - (void)didReceiveMemoryWarning

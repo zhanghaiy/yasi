@@ -10,6 +10,7 @@
 
 #define KEY_CONTEXT_USERNAME    @"df_oral_username"
 #define KEY_CONTEXT_USERID      @"df_oral_userid"
+#define KEY_CONTEXT_USERICON      @"df_oral_usericon"
 #define KEY_CONTEXT_TOPICNAME   @"df_oral_topicname"
 #define KEY_CONTEXT_TOPICID   @"df_oral_topicID"
 
@@ -775,17 +776,46 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 
 #pragma mark -- Global application context
 
-+(void)setCurrentUser:(NSString *)userName UserId:(NSString *)userid
+// 标记网络限制
++ (void)setNet_WiFi_Download:(BOOL)downLoad
+{
+    NSString *key = @"net_WiFi";
+    [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithBool:downLoad] forKey:key];
+}
++ (void)setNet_2g3g4g_Download:(BOOL)downLoad
+{
+    NSString *key = @"net_2g3g4g";
+    [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithBool:downLoad] forKey:key];
+}
++ (BOOL)getNet_WiFi_Download
+{
+    NSString *key = @"net_WiFi";
+    return [[NSUserDefaults standardUserDefaults]objectForKey:key];
+}
++ (BOOL)getNet_2g3g4g_Download
+{
+    NSString *key = @"net_2g3g4g";
+    return [[NSUserDefaults standardUserDefaults]objectForKey:key];
+}
+
++(void)setCurrentUser:(NSString *)userName UserId:(NSString *)userid UserIconUrl:(NSString *)iconUrl
 {
     [[NSUserDefaults standardUserDefaults] setObject:userName forKey:KEY_CONTEXT_USERNAME];
     [[NSUserDefaults standardUserDefaults] setObject:userid forKey:KEY_CONTEXT_USERID];
+    [[NSUserDefaults standardUserDefaults] setObject:userName forKey:KEY_CONTEXT_USERICON];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-+(void)removeCurrentUserNameAndUserID
++(void)removeCurrentUserInfo
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:KEY_CONTEXT_USERNAME];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:KEY_CONTEXT_USERID];
+}
+
++(NSString *)getCurrentUserIconUrl
+{
+    NSString *iconUrl = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_CONTEXT_USERICON];
+    return iconUrl;
 }
 
 +(NSString *)getCurrentUserName
