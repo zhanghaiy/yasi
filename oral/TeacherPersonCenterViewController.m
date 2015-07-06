@@ -22,11 +22,14 @@
     NSInteger _currentImageIndex;
     
     UITableView *_tableV;
+    UIScrollView *_topScrollV;
 }
 @end
 
 @implementation TeacherPersonCenterViewController
 #define kPageBtnBaseTag 200
+#define kTopScrViewHH (180.0/667.0*kScreenHeight)
+
 
 
 - (void)viewDidLoad
@@ -35,21 +38,22 @@
     // Do any additional setup after loading the view from its nib.
     
     // 返回按钮
+    
+    NSString *title = [NSString stringWithFormat:@"%@老师",[_teacherDic objectForKey:@"teachername"]];
+    
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"某某老师"];
+    [self addTitleLabelWithTitleWithTitle:title];
     
     self.navTopView.backgroundColor  = _backgroundViewColor;
     
-    CGRect rec = _topScrollV.frame;
-    rec.size.width = kScreentWidth;
-    _topScrollV.frame = rec;
-    
+    _topScrollV = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 65, kScreentWidth, kTopScrViewHH)];
     _topScrollV.delegate = self;
     _topScrollV.pagingEnabled = YES;
     _topScrollV.backgroundColor = _backgroundViewColor;
+    [self.view addSubview:_topScrollV];
     [self requestTeacherInfo];
     
-    _tableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 65+_topScrollV.frame.size.height+2, kScreentWidth, kScreenHeight-_topScrollV.frame.size.height-67) style:UITableViewStylePlain];
+    _tableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 67+kTopScrViewHH, kScreentWidth, kScreenHeight-kTopScrViewHH-67) style:UITableViewStylePlain];
     _tableV.delegate = self;
     _tableV.dataSource = self;
     _tableV.backgroundColor = _backgroundViewColor;
@@ -156,39 +160,51 @@
 #pragma mark - 根据数据创建图片View
 - (void)createShowImageView
 {
-    _topScrollV.contentSize = CGSizeMake(kScreentWidth*_pictureArray.count, _topScrollV.frame.size.height);
     CGRect rect = _topScrollV.frame;
-
     NSInteger _pageControl_H = 20;
     NSInteger _pageControl_Y = rect.size.height+65 - _pageControl_H;
     NSInteger _pageControl_X = (kScreentWidth-20*_pictureArray.count-10)/2;
-    for (int i = 0; i < _pictureArray.count; i ++)
-    {
-        UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(i*kScreentWidth, 0, kScreentWidth, _topScrollV.frame.size.height)];
-        [imgV setImageWithURL:[NSURL URLWithString:[[_pictureArray objectAtIndex:i] objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"teacher_Back"]];
-        [_topScrollV addSubview:imgV];
-        
-        UIButton *pageButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [pageButton setFrame:CGRectMake(_pageControl_X+i*20, _pageControl_Y, 10, 10)];
-        pageButton.layer.masksToBounds = YES;
-        pageButton.layer.cornerRadius = 5;
-        pageButton.layer.borderWidth = 1;
-        pageButton.layer.borderColor = kPart_Button_Color.CGColor;
-        pageButton.tag = kPageBtnBaseTag+i;
-        [pageButton addTarget:self action:@selector(pageButtonChanged:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:pageButton];
-        if (i == 0)
-        {
-            [pageButton setBackgroundColor:kPart_Button_Color];
-        }
-        [self.view bringSubviewToFront:pageButton];
-    }
-    if (_picShowTimer==nil)
-    {
-        _currentImageIndex = 0;
-        _picShowTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(changPicture) userInfo:nil repeats:YES];
-    }
     
+    if (_pictureArray.count == 0)
+    {
+        _topScrollV.contentSize = CGSizeMake(kScreentWidth, kTopScrViewHH);
+        UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, kTopScrViewHH)];
+        [imgV setImage:[UIImage imageNamed:@"teacher_Back"]];
+        imgV.backgroundColor = [UIColor purpleColor];
+        [_topScrollV addSubview:imgV];
+    }
+    else
+    {
+        _topScrollV.contentSize = CGSizeMake(kScreentWidth*_pictureArray.count, kTopScrViewHH);
+
+        for (int i = 0; i < _pictureArray.count; i ++)
+        {
+            UIImageView *imgV = [[UIImageView alloc]initWithFrame:CGRectMake(i*kScreentWidth, 0, kScreentWidth,kTopScrViewHH)];
+            [imgV setImageWithURL:[NSURL URLWithString:[[_pictureArray objectAtIndex:i] objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"teacher_Back"]];
+            [_topScrollV addSubview:imgV];
+            
+            UIButton *pageButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [pageButton setFrame:CGRectMake(_pageControl_X+i*20, _pageControl_Y, 10, 10)];
+            pageButton.layer.masksToBounds = YES;
+            pageButton.layer.cornerRadius = 5;
+            pageButton.layer.borderWidth = 1;
+            pageButton.layer.borderColor = kPart_Button_Color.CGColor;
+            pageButton.tag = kPageBtnBaseTag+i;
+            [pageButton addTarget:self action:@selector(pageButtonChanged:) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:pageButton];
+            if (i == 0)
+            {
+                [pageButton setBackgroundColor:kPart_Button_Color];
+            }
+            [self.view bringSubviewToFront:pageButton];
+        }
+
+        if (_picShowTimer==nil)
+        {
+            _currentImageIndex = 0;
+            _picShowTimer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(changPicture) userInfo:nil repeats:YES];
+        }
+    }
 }
 
 #pragma mark -切换图片

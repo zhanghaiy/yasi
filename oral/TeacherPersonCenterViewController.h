@@ -9,7 +9,6 @@
 #import "TopicParentsViewController.h"
 
 @interface TeacherPersonCenterViewController : TopicParentsViewController
-@property (strong, nonatomic) IBOutlet UIScrollView *topScrollV;
 
 
 

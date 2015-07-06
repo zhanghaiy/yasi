@@ -79,25 +79,27 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    [UIView animateWithDuration:1 animations:^{
+        self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
+        
+    }];
     [textField resignFirstResponder];
     return YES;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag == kCodeTextTag)
+    if (textField.tag == kCodeTextTag)// 有码申请
     {
         [UIView animateWithDuration:1 animations:^{
-            [_codeView setFrame:_upRect];
-            [_infoView setFrame:_downRect];
+            self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
+
         }];
     }
-    else
+    else// 无码申请
     {
         [UIView animateWithDuration:1 animations:^{
-            [_infoView setFrame:_upRect];
-            [_codeView setFrame:_downRect];
-
+            self.view.frame = CGRectMake(0, -216, kScreentWidth, kScreenHeight);
             NSLog(@"%f",_upRect.origin.y);
         }];
     }
