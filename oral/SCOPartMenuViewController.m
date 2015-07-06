@@ -20,6 +20,8 @@
 #import "ZipManager.h"
 #import "UIButton+WebCache.h"
 #import "UIImageView+WebCache.h"
+#import "AFNetworking/AFHTTPRequestOperationManager.h"
+
 
 @interface SCOPartMenuViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
 {
@@ -60,13 +62,14 @@
 #define kTeacherReviewButtonTAg 200
 #define kPlaySelfButtonTag 300
 
-#pragma mark - 获取本地路径
+#pragma mark  - 路径有关
+#pragma mark -- 获取本地路径
 - (NSString *)getPoint3ReviewBasePath
 {
     NSString *path = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),[OralDBFuncs getCurrentTopic]];
     return path;
 }
-#pragma mark - 获取解压后路径
+#pragma mark -- 获取解压后路径
 - (NSString *)getPoint3UnZipPath
 {
     NSString *path = [NSString stringWithFormat:@"%@/PartReview",[self getPoint3ReviewBasePath]];
@@ -74,11 +77,17 @@
 }
 
 
-#pragma mark - 合成数据源
-- (void)makeUpDataArray
+#pragma mark -- 合成数据源
+- (BOOL)makeUpDataArray
 {
     // 本地json文件 用于查找问题文本 等信息
+    
     NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/info.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:jsonPath])
+    {
+        return NO;
+    }
+    
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *jsonDict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     // 整个topic资源信息
@@ -143,10 +152,10 @@
         NSDictionary *makeDic = @{@"question":questionText,@"questionid":questionID,@"answerPath":answerAudioPath,@"duration":[NSNumber numberWithFloat:duration]};
         [_text_array_point_3 addObject:makeDic];
     }
-    
+    return YES;
 }
 
-#pragma mark - 获取本地音频时长
+#pragma mark -- 获取本地音频时长
 - (float)getAudioDurationWithPath:(NSString *)audioPath
 {
     NSLog(@"%@",audioPath);
@@ -159,8 +168,8 @@
     return audioDurationSeconds;
 }
 
-
-#pragma mark - 创建关卡切换按钮
+#pragma mark - UIConfig
+#pragma mark -- 创建关卡切换按钮
 - (void)createBaseControls
 {
     UIView *topPointBUttonView = [[UIView alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight+1, kScreentWidth, kTopViewHeight)];
@@ -208,36 +217,10 @@
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         tableView.showsVerticalScrollIndicator = NO;
         [_point_scroll_View addSubview:tableView];
-        
-        
-        if (i == 0)
-        {
-            if (_score_array_point_1.count==0)
-            {
-                UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
-                lab.textAlignment = NSTextAlignmentCenter;
-                lab.textColor = kPart_Button_Color;
-                lab.font = [UIFont systemFontOfSize:kFontSize_12];
-                lab.text = @"暂无成绩";
-                tableView.tableHeaderView = lab;
-            }
-        }
-        else if (i == 1)
-        {
-            if (_score_array_point_2.count==0)
-            {
-                UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
-                lab.textAlignment = NSTextAlignmentCenter;
-                lab.textColor = kPart_Button_Color;
-                lab.font = [UIFont systemFontOfSize:kFontSize_12];
-                lab.text = @"暂无成绩";
-                tableView.tableHeaderView = lab;
-            }
-        }
     }
 }
 
-#pragma mark - 关卡按钮被点击
+#pragma mark -- 关卡按钮被点击
 - (void)pointButtonClicked:(UIButton *)btn
 {
     [self changePointButtonSelected:btn.tag-kPointButtonTag];
@@ -262,8 +245,6 @@
         }
     }
 }
-
-#pragma mark - SubViews
 #pragma mark -- 创建区头视图
 - (Point_3_Section_Head_View *)create_point3_section_view_Tag:(NSInteger)viewTag andInfoDict:(NSDictionary *)dict
 {
@@ -287,15 +268,65 @@
     return sec_head_View;
 }
 
+#pragma mark -- 判断point1、2是否有成绩
+- (void)notHaveScoreMenu
+{
+    UITableView *tableV_point_1 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag];
+    UITableView *tableV_point_2 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+1];
+    if (_score_array_point_1.count==0)
+    {
+        UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
+        lab.textAlignment = NSTextAlignmentCenter;
+        lab.textColor = kPart_Button_Color;
+        lab.font = [UIFont systemFontOfSize:kFontSize_12];
+        lab.text = @"暂无成绩";
+        tableV_point_1.tableHeaderView = lab;
+    }
+    
+    if (_score_array_point_2.count==0)
+    {
+        UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
+        lab.textAlignment = NSTextAlignmentCenter;
+        lab.textColor = kPart_Button_Color;
+        lab.font = [UIFont systemFontOfSize:kFontSize_12];
+        lab.text = @"暂无成绩";
+        tableV_point_2.tableHeaderView = lab;
+    }
+}
+
+#pragma mark -- 关卡3 无成绩头视图
+- (void)setPoint_3_table_head_view_notPracticed
+{
+    UITableView *tableV_point_3 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
+    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
+    lab.text = @"暂无成绩";
+    lab.textAlignment = NSTextAlignmentCenter;
+    lab.textColor = kPart_Button_Color;
+    lab.font = [UIFont systemFontOfSize:kFontSize_12];
+    tableV_point_3.tableHeaderView = lab;
+}
+#pragma mark -- 关卡3 已提交头视图
+- (void)setPoint_3_commited_head_view
+{
+    UITableView *tableV_point_3 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
+    [_commit_Head_View.commit_Button setTitle:@"已提交" forState:UIControlStateNormal];
+    _commit_Head_View.commit_Button.enabled = NO;
+    _commit_Head_View.commit_des_Label.text = @"已提交给老师，请耐心等待老师反馈~~~~";
+    tableV_point_3.tableHeaderView = _commit_Head_View;
+}
+
+
+#pragma mark - 展开
+#pragma mark -- 展开cell
 - (void)openPoint_3_SelectedCell:(UIButton *)btn
 {
-    NSLog(@"```````````````");
     _open = YES;
     _openIndex = (int)(btn.tag - kPoint3_Section_BackBtn_Tag);
     UITableView *tabV = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
     [tabV reloadData];
 }
 
+#pragma mark -- 展开老师总评
 - (void)openTeacherSumReview:(UITapGestureRecognizer *)tap
 {
     UITableView *point_3_tableV = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
@@ -304,7 +335,7 @@
         point_3_tableV.tableHeaderView = [self openedViewOfPoint_3_reviewedWithDict:_review_sum_dict];
     }
 }
-
+#pragma mark -- 展开后总评价 界面
 static UIView *openView;
 - (UIView *)openedViewOfPoint_3_reviewedWithDict:(NSDictionary *)dic
 {
@@ -409,13 +440,13 @@ static UIView *openView;
     return openView;
 }
 
+#pragma mark - 播放
+#pragma mark -- 播放总评
 - (void)playSumReview:(UIButton *)btn
 {
     // 播放评价音频 -- 待完善
     NSString *reviewUrl = [_review_sum_dict objectForKey:@"teacherurl"];
     NSString *reviewPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPoint3UnZipPath],reviewUrl];
-//    NSString *reviewPath = [NSString stringWithFormat:@"%@/temp/5017.wav",[self getPoint3UnZipPath]];
-
     NSLog(@"老师评价的音频路径：%@。。。。。\n",reviewPath);
     [_audioPlayerManager playerPlayWithFilePath:reviewPath];
 }
@@ -431,100 +462,161 @@ static UIView *openView;
     NSLog(@"%@",audioPath);
     [_audioPlayerManager playerPlayWithFilePath:audioPath];
 }
+#pragma mark -- 播放老师评价
+- (void)playReviewAudio:(UIButton *)btn
+{
+    NSInteger index = btn.tag - kTeacherReviewButtonTAg;
+    NSString *questionId = [[_text_array_point_3 objectAtIndex:index] objectForKey:@"questionid"];
+    NSDictionary *selecDic = [self retrievalReviewDictWithQuestionID:questionId];
+    NSString *reviewUrl = [selecDic objectForKey:@"teacherurl"];
+    NSString *reviewPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPoint3UnZipPath],reviewUrl];
+    NSLog(@"老师评价的音频路径：%@。。。。。\n",reviewPath);
+}
 
-
+#pragma mark -- 播放完成回调
 - (void)playerCallBack:(AudioPlayer *)audioPlayer
 {
     NSLog(@"playfinished");
 }
 
 
+#pragma mark - 加载View
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
     // 返回按钮
+    [self addBackButtonWithImageName:@"back-Blue"];
+    [self addTitleLabelWithTitleWithTitle:[OralDBFuncs getCurrentTopic]];
     
+    // 音频播放器
     _audioPlayerManager = [AudioPlayer getAudioManager];
     _audioPlayerManager.target = self;
     _audioPlayerManager.action = @selector(playerCallBack:);
     
-    
-    [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:[OralDBFuncs getCurrentTopic]];
-    [self makeUpDataArray];
+    // 创建滚动列表控件 等等
     [self createBaseControls];
+    BOOL analysizeSucess = [self makeUpDataArray];
+    [self notHaveScoreMenu];
     
-    _review_Head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Review_Head_View" owner:self options:0] lastObject];
-    
-    UITapGestureRecognizer *tap_review = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openTeacherSumReview:)];
-    [_review_Head_View addGestureRecognizer:tap_review];
-    
-    
-    _commit_Head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Commit_View" owner:self options:0] lastObject];
-
-    _exit_point_3 = [OralDBFuncs getPartLevel3PracticeedwithTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
-    UITableView *tableV_point_3 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
-
-    // 循环创建头视图 加入数组
-    _section_array_point_3 = [[NSMutableArray alloc]init];
-    for (int i = 0; i < _text_array_point_3.count; i ++)
+    if (analysizeSucess)
     {
-        [_section_array_point_3 addObject:[self create_point3_section_view_Tag:i andInfoDict:nil]];
-    }
-
-    
-    if (_exit_point_3)
-    {
-        // 练习过关卡3
+        // 解析成功
+        // 是否练习过 关卡3
+        _exit_point_3 = [OralDBFuncs getPartLevel3PracticeedwithTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+        // 是否提交
         _commited = [OralDBFuncs getPartLevel3CommitwithTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
-        if (_commited)
+        
+        // 关卡3 列表控件
+        UITableView *tableV_point_3 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
+        
+        if (_exit_point_3)// 练习过关卡3
         {
-            // 已提交
-            if (_review_point_3)
+            // 反馈头视图
+            _review_Head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Review_Head_View" owner:self options:0] lastObject];
+            // 反馈头视图点击事件
+            UITapGestureRecognizer *tap_review = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openTeacherSumReview:)];
+            [_review_Head_View addGestureRecognizer:tap_review];
+            
+            // 提交头视图
+            _commit_Head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Commit_View" owner:self options:0] lastObject];
+            
+            // 循环创建区头视图 加入数组
+            _section_array_point_3 = [[NSMutableArray alloc]init];
+            for (int i = 0; i < _text_array_point_3.count; i ++)
             {
-                // 已反馈
-                tableV_point_3.tableHeaderView = _review_Head_View;
+                [_section_array_point_3 addObject:[self create_point3_section_view_Tag:i andInfoDict:nil]];
+            }
+            
+            if (_commited)// 已提交
+            {
+                if (_review_point_3)// 已反馈
+                {
+                    
+                    tableV_point_3.tableHeaderView = _review_Head_View;
+                    if (_review_point_3&&_commited)
+                    {
+                        // 网络请求
+                        [self requestLevel_3_watingInfo];
+                    }
+                }
+                else // 未反馈
+                {
+                    
+                }
             }
             else
             {
-                [_commit_Head_View.commit_Button setTitle:@"已提交" forState:UIControlStateNormal];
-//                _commit_Head_View.commit_Button.enabled = NO;
-                _commit_Head_View.commit_des_Label.text = @"已提交给老师，请耐心等待老师反馈~~~~";
-                tableV_point_3.tableHeaderView = _commit_Head_View;
+                // 未提交 可查看自己的回答音频等信息
+                [_commit_Head_View.commit_Button setTitle:@"提交" forState:UIControlStateNormal];
+                [_commit_Head_View.commit_Button addTarget:self action:@selector(commitCurrentPart:) forControlEvents:UIControlEventTouchUpInside];
             }
         }
-        else
+        else // 未练习过
         {
-           // 未提交
-            [_commit_Head_View.commit_Button setTitle:@"提交" forState:UIControlStateNormal];
-            [_commit_Head_View.commit_Button addTarget:self action:@selector(commitCurrentPart:) forControlEvents:UIControlEventTouchUpInside];
+            // 未练习过
+            [self setPoint_3_table_head_view_notPracticed];
         }
+        
     }
     else
     {
-        // 未练习过
-        // 未练习
-        UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
-        lab.text = @"暂无成绩";
-        lab.textAlignment = NSTextAlignmentCenter;
-        lab.textColor = kPart_Button_Color;
-        lab.font = [UIFont systemFontOfSize:kFontSize_12];
-        
-        tableV_point_3.tableHeaderView = lab;
-    }
-    
-    if (_review_point_3)
-    {
-        // 网络请求
-        [self requestLevel_3_watingInfo];
+        // 本地文件不存在 没有成绩单
+        NSLog(@"本地文件不存在 没有成绩单");
+        [self setPoint_3_table_head_view_notPracticed];
     }
 }
 
+#pragma mark - 提交关卡3给老师
 - (void)commitCurrentPart:(UIButton *)btn
 {
     // 提交给老师
+    NSString *zipPath = [NSString stringWithFormat:@"%@/part.zip",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
+    NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
+    
+    // 网络提交 uploadfile
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kPartCommitUrl];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:@"part" forKey:@"uploadfile"];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+     {
+         if (zipData)
+         {
+             [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"part.zip" mimeType:@"application/zip"];
+         }
+     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         
+         _loading_View.hidden = YES;
+         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
+         NSLog(@"%@",dic);
+         if ([[dic objectForKey:@"respCode"] intValue] == 1000)
+         {
+             // 标记 关卡3已经提交
+             [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+             _commited = YES;
+         }
+         else
+         {
+             NSLog(@"提交失败");
+             NSLog(@"%@",[dic objectForKey:@"remark"]);
+             [self commitFail_point_3];
+         }
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         _loading_View.hidden = YES;
+         [self commitFail_point_3];
+         NSLog(@"失败乃");
+     }];
+}
+
+- (void)commitFail_point_3
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"提交失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
 }
 
 #pragma mark - 网络
@@ -800,23 +892,6 @@ static UIView *openView;
     return 0;
 }
 
-#pragma mark -- 去掉html标签
--(NSString *)filterHTML:(NSString *)html
-{
-    NSScanner * scanner = [NSScanner scannerWithString:html];
-    NSString * text = nil;
-    while([scanner isAtEnd]==NO)
-    {
-        //找到标签的起始位置
-        [scanner scanUpToString:@"<" intoString:nil];
-        //找到标签的结束位置
-        [scanner scanUpToString:@">" intoString:&text];
-        //替换字符
-        html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
-    }
-    return html;
-}
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -956,19 +1031,27 @@ static UIView *openView;
     return nil;
 }
 
-
-- (void)playReviewAudio:(UIButton *)btn
+#pragma mark - 去掉html标签
+-(NSString *)filterHTML:(NSString *)html
 {
-    NSInteger index = btn.tag - kTeacherReviewButtonTAg;
-    NSString *questionId = [[_text_array_point_3 objectAtIndex:index] objectForKey:@"questionid"];
-    NSDictionary *selecDic = [self retrievalReviewDictWithQuestionID:questionId];
-    NSString *reviewUrl = [selecDic objectForKey:@"teacherurl"];
-    NSString *reviewPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPoint3UnZipPath],reviewUrl];
-    NSLog(@"老师评价的音频路径：%@。。。。。\n",reviewPath);
+    NSScanner * scanner = [NSScanner scannerWithString:html];
+    NSString * text = nil;
+    while([scanner isAtEnd]==NO)
+    {
+        //找到标签的起始位置
+        [scanner scanUpToString:@"<" intoString:nil];
+        //找到标签的结束位置
+        [scanner scanUpToString:@">" intoString:&text];
+        //替换字符
+        html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
+    }
+    return html;
 }
 
 
-#pragma mark -- 根据问题id 查找问题的评价
+
+
+#pragma mark - 根据问题id 查找问题的评价
 - (NSDictionary *)retrievalReviewDictWithQuestionID:(NSString *)questionid
 {
     for (NSDictionary *subDic in _score_array_point_3)

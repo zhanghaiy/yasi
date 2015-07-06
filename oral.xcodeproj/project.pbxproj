@@ -309,6 +309,8 @@
 		FD8C40ED1B0C6FAB00948B6C /* CheckAskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckAskViewController.h; sourceTree = "<group>"; };
 		FD8C40EE1B0C6FAB00948B6C /* CheckAskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckAskViewController.m; sourceTree = "<group>"; };
 		FD8C40EF1B0C6FAB00948B6C /* CheckAskViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckAskViewController.xib; sourceTree = "<group>"; };
+		FD8FCD6D1B4A2C8A00D31A76 /* PCHNewFile.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCHNewFile.pch; sourceTree = "<group>"; };
+		FD8FCD6E1B4A2D8300D31A76 /* MyPch.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPch.pch; sourceTree = "<group>"; };
 		FD8FE8261B46617B00B0445D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		FD8FE8271B46617B00B0445D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		FD8FE82A1B46627600B0445D /* DetectionNetWorkState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetectionNetWorkState.h; sourceTree = "<group>"; };
@@ -787,6 +789,9 @@
 		FD8453A61B15933C00B1E84B /* 闯关成绩单 */ = {
 			isa = PBXGroup;
 			children = (
+				FD471D581B450EC200A1EA71 /* SCOPartMenuViewController.h */,
+				FD471D591B450EC200A1EA71 /* SCOPartMenuViewController.m */,
+				FD471D5A1B450EC200A1EA71 /* SCOPartMenuViewController.xib */,
 				FD9B42C21B44E2A700370043 /* 重新搭建关卡3有关View */,
 				FD8453AE1B159FBD00B1E84B /* point1.2_cell  */,
 			);
@@ -963,9 +968,6 @@
 				FD471D4E1B450C2000A1EA71 /* Point_3_Commit_cell.h */,
 				FD471D4F1B450C2000A1EA71 /* Point_3_Commit_cell.m */,
 				FD471D501B450C2000A1EA71 /* Point_3_Commit_cell.xib */,
-				FD471D581B450EC200A1EA71 /* SCOPartMenuViewController.h */,
-				FD471D591B450EC200A1EA71 /* SCOPartMenuViewController.m */,
-				FD471D5A1B450EC200A1EA71 /* SCOPartMenuViewController.xib */,
 			);
 			name = "重新搭建关卡3有关View";
 			sourceTree = "<group>";
@@ -1135,6 +1137,8 @@
 				FD99586B1B1313B6005892DB /* libz.dylib */,
 				FD596D841B097F5400D6DE7B /* HeadFile */,
 				FD596D831B097E7000D6DE7B /* PchFile.pch */,
+				FD8FCD6D1B4A2C8A00D31A76 /* PCHNewFile.pch */,
+				FD8FCD6E1B4A2D8300D31A76 /* MyPch.pch */,
 				FDD404101B0492F900DE2E84 /* oral */,
 				FDD4042A1B0492F900DE2E84 /* oralTests */,
 				FDD4040F1B0492F900DE2E84 /* Products */,
@@ -1583,7 +1587,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/PchFile.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/MyPch.pch";
 				INFOPLIST_FILE = oral/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -1598,7 +1603,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/PchFile.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/MyPch.pch";
 				INFOPLIST_FILE = oral/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (

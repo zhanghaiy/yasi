@@ -48,7 +48,8 @@
     _selectFromRight = NO;
     UIButton *personBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [personBtn setFrame:CGRectMake((kScreentWidth-35)/2, 24+(kNavBarHeight-24-35)/2, 35, 35)];
-    [personBtn setBackgroundImage:[UIImage imageNamed:@"touxiang.png"] forState:UIControlStateNormal];
+    [personBtn setBackgroundImage:[UIImage imageNamed:@"person_head_image"] forState:UIControlStateNormal];
+//    personBtn.backgroundColor = [UIColor purpleColor];
     [personBtn addTarget:self action:@selector(toPersonCenter) forControlEvents:UIControlEventTouchUpInside];
     [self.navTopView addSubview:personBtn];
     
