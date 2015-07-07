@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckBlankViewController">
             <connections>
-                <outlet property="StuAnswerWebView" destination="4g7-YO-wbc" id="ggt-F8-GRg"/>
                 <outlet property="continueButton" destination="CSm-n7-XRw" id="msu-Cc-NaO"/>
                 <outlet property="followAnswerButton" destination="vWq-JQ-Ca2" id="Vux-8h-kpZ"/>
                 <outlet property="stuCountLabel" destination="h09-uF-ggS" id="kKm-2F-nbZ"/>
@@ -60,7 +59,7 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touxiang.png" id="EKS-Ck-apu">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person_head_image" id="EKS-Ck-apu">
                             <rect key="frame" x="270" y="220" width="50" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
@@ -72,11 +71,6 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <webView contentMode="scaleToFill" id="4g7-YO-wbc">
-                            <rect key="frame" x="10" y="49" width="315" height="160"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </webView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="02o-nv-jb7">
                             <rect key="frame" x="8" y="244" width="245" height="2"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -111,7 +105,7 @@
                         <action selector="followAnswerButtonClicked:" destination="-1" eventType="touchUpInside" id="dFf-rM-IDj"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touxiang.png" id="ghs-m7-QiM">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="teacher_normal" id="ghs-m7-QiM">
                     <rect key="frame" x="20" y="125" width="65" height="65"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
@@ -134,7 +128,8 @@
     </objects>
     <resources>
         <image name="answerButton-sele" width="67" height="67"/>
-        <image name="touxiang.png" width="70" height="70"/>
+        <image name="person_head_image" width="68" height="68"/>
+        <image name="teacher_normal" width="60" height="60"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

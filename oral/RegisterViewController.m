@@ -24,10 +24,12 @@
     // 确定frame
     
     self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
-    
+    [self uiconfig];
+}
+
+- (void)uiconfig
+{
     _backImgV.frame = self.view.bounds;
-    
-    
     float backButton_Y = 40.0/667.0*kScreenHeight;
     [_backButton setFrame:CGRectMake(30, backButton_Y, 30, 30)];
     _backButton.layer.masksToBounds = YES;
@@ -45,7 +47,7 @@
     _registerImgV.alpha = 0.5;
     _registerImgV.backgroundColor = [UIColor whiteColor];
     
-    float upLine_Y = 153.0/667.0*kScreenHeight;
+    float upLine_Y = 121.0/667.0*kScreenHeight;
     float upLine_x = 65.0/375.0*kScreentWidth;
     [_upLineLabel setFrame:CGRectMake(upLine_x, upLine_Y, kScreentWidth-2*upLine_x, 1)];
     [_upLineLabel setBackgroundColor:kPart_Button_Color];
@@ -66,14 +68,13 @@
     
     _passwordTextField.tintColor = kPart_Button_Color;
     
-    float regButton_Y = 310/667*kScreenHeight;
+    float regButton_Y = 310.0/667*kScreenHeight;
     [_registerButton setFrame:CGRectMake((kScreentWidth-85)/2, regButton_Y, 85, 40)];
     
     _registerButton.backgroundColor = kPart_Button_Color;
     [_registerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _registerButton.layer.masksToBounds = YES;
     _registerButton.layer.cornerRadius = _registerButton.frame.size.height/2;
-    
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

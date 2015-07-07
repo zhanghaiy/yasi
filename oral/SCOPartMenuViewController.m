@@ -568,8 +568,66 @@ static UIView *openView;
     }
 }
 
-#pragma mark - 提交关卡3给老师
+#pragma mark - 检测网络状态 参数：yes 请求part资源信息  no test资源信息
+- (void)jugeNetState
+{
+    BOOL net_wifi = [OralDBFuncs getNet_WiFi_Download];
+    BOOL net_2g3g4g = [OralDBFuncs getNet_2g3g4g_Download];
+    
+    switch ([DetectionNetWorkState netStatus])
+    {
+        case NotReachable:
+        {
+            // 无网络状态
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络链接" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alertView show];
+        }
+            break;
+        case ReachableViaWiFi:
+        {
+            // wifi
+            [self starCommitToTeacher_point_3];
+        }
+            break;
+        case ReachableViaWWAN:
+        {
+            // 2g3g4g
+            if (net_2g3g4g)
+            {
+                [self starCommitToTeacher_point_3];
+            }
+            else
+            {
+                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前网络为2g/3g/4g网络，是否继续？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"继续",nil];
+                [alertView show];
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - 警告框 delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"%ld",buttonIndex);
+    if (buttonIndex == 1)
+    {
+        [self starCommitToTeacher_point_3];
+    }
+}
+
+#pragma mark - 提交
+#pragma mark -- 提交按钮被点击
+
 - (void)commitCurrentPart:(UIButton *)btn
+{
+    [self jugeNetState];
+}
+
+#pragma mark -- 开始提交
+- (void)starCommitToTeacher_point_3
 {
     // 提交给老师
     NSString *zipPath = [NSString stringWithFormat:@"%@/part.zip",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
@@ -613,6 +671,7 @@ static UIView *openView;
      }];
 }
 
+#pragma mark -- 提交失败警告框
 - (void)commitFail_point_3
 {
     UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"提交失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];

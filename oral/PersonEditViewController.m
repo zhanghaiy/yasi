@@ -11,7 +11,7 @@
 #import "ConstellationManager.h"
 #import "OralDBFuncs.h"
 #import "NSURLConnectionRequest.h"
-
+#import "AFNetworking/AFHTTPRequestOperationManager.h"
 
 
 @interface PersonEditViewController ()<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UITextViewDelegate,UIAlertViewDelegate>
@@ -128,7 +128,6 @@
     
     self.view.backgroundColor = _backgroundViewColor;
     
-    
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"My Travel"];
@@ -198,39 +197,92 @@
 - (void)finishAlter:(UIButton *)btn
 {
     // 提交修改资料
-    
     _signiture = footerTextV.text;
     NSString *userID = [OralDBFuncs getCurrentUserID];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kAlterPersonInfo];
     NSString *params = [NSString stringWithFormat:@"userId=%@&nickname=%@&sex=%@&constellation=%@&birthday=%@&hobbies=%@&signiture=%@",userID,_nameStr,_sexString,_constellation,_birthStr,_hobbies,_signiture];;
     NSLog(@"%@",urlStr);
+    _loading_View.hidden = NO;
+    [self.view bringSubviewToFront:_loading_View];
+    [self changeLoadingViewTitle:@"正在提交资料，请稍后~~~~"];
     [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:params target:self action:@selector(alterFinished:) andRefresh:YES];
-}
-
-- (void)loadLoadingView
-{
-
 }
 
 - (void)upLoadImage
 {
+//    [self upImage_post];
+    _loading_View.hidden = NO;
+    [self.view bringSubviewToFront:_loading_View];
+    [self changeLoadingViewTitle:@"正在上传头像~~~~~"];
     NSString *userID = [OralDBFuncs getCurrentUserID];
-    
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kAlterPersonInfo];
-    NSString *params = [NSString stringWithFormat:@"userId=%@&icon=%@",userID,_imgData];
+    
+    NSString *imgPath = [NSString stringWithFormat:@"%@/Documents/img.png",NSHomeDirectory()];
+    [_imgData writeToFile:imgPath atomically:NO];
+    NSData *newImgData = [NSData dataWithContentsOfFile:imgPath];
+    
+    NSString *params = [NSString stringWithFormat:@"userId=%@&icon=%@",userID,newImgData];
     [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:params target:self action:@selector(uploadImageFinished:) andRefresh:YES];
+}
+
+- (void)upImage_post
+{
+    // 提交给老师
+    NSString *userID = [OralDBFuncs getCurrentUserID];
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kAlterPersonInfo];
+    
+    NSString *imgPath = [NSString stringWithFormat:@"%@/Documents/img.png",NSHomeDirectory()];
+    [_imgData writeToFile:imgPath atomically:NO];
+    NSData *newImgData = [NSData dataWithContentsOfFile:imgPath];
+    // 网络提交 uploadfile
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    [parameters setObject:@"img" forKey:@"icon"];
+    [parameters setObject:userID forKey:@"userId"];
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+     {
+         if (newImgData)
+         {
+             [formData appendPartWithFileData:newImgData name:@"icon" fileName:@"img.png" mimeType:@"image/png"];
+         }
+     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+         
+         _loading_View.hidden = YES;
+         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
+         NSLog(@"%@",dic);
+         if ([[dic objectForKey:@"respCode"] intValue] == 1000)
+         {
+             // 标记 关卡3已经提交
+         }
+         else
+         {
+             NSLog(@"提交失败");
+             NSLog(@"%@",[dic objectForKey:@"remark"]);
+         }
+     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         _loading_View.hidden = YES;
+         NSLog(@"%@",error.localizedFailureReason);
+         NSLog(@"失败乃");
+     }];
+
 }
 
 - (void)uploadImageFinished:(NSURLConnectionRequest *)request
 {
+    _loading_View.hidden = YES;
     if (request.downloadData)
     {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
         if ([[dic objectForKey:@"respCode"] intValue] == 1000)
         {
             // 成功
-            
+            NSLog(@"%@",[dic objectForKey:@"remark"]);
+            [self  finishBack];
         }
+        NSLog(@"%@",[dic objectForKey:@"remark"]);
     }
 }
 
@@ -248,18 +300,21 @@
 //            }
 //            else
 //            {
-//                
+//                _loading_View.hidden = YES;
+//               [self  finishBack];
 //            }
+            _loading_View.hidden = YES;
             [self  finishBack];
-            
         }
         else
         {
+            _loading_View.hidden = YES;
             [self createAlertView:[dic objectForKey:@"remark"]];
         }
     }
     else
     {
+        _loading_View.hidden = YES;
         NSLog(@"失败");
         [self createAlertView:@"保存失败\n请检查网络"];
     }
@@ -403,7 +458,7 @@
 #pragma mark -- 选取图片
 - (void)alterStuHeadImage:(UIButton *)btn
 {
-    UIActionSheet *chooseImageSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从相册获取图片", nil];
+    UIActionSheet *chooseImageSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从相册获取图片", nil];
     chooseImageSheet.tag = kActionSheet_headImage_Tag;
     [chooseImageSheet showInView:self.view];
 }
@@ -448,20 +503,20 @@
     {
         // 选取图片
         switch (buttonIndex) {
-            case 0://Take picture 照相
-            {
-                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-                {
-                    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-                }
-                else
-                {
-                    
-                }
-                [self presentViewController:picker animated:YES completion:nil];
-                break;
-            }
-            case 1://From album 相册
+//            case 0://Take picture 照相
+//            {
+//                if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+//                {
+//                    picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+//                }
+//                else
+//                {
+//                    
+//                }
+//                [self presentViewController:picker animated:YES completion:nil];
+//                break;
+//            }
+            case 0://From album 相册
             {
                 picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
                 [self presentViewController:picker animated:YES completion:nil];

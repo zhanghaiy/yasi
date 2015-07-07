@@ -52,6 +52,8 @@
     int _sumCounts;
     
     NSMutableArray *_saveAnswerIdArray;
+    UIWebView *_answerTextWebV;// 代码创建 为了去掉黑线
+
 }
 @end
 
@@ -169,7 +171,7 @@
     _teaHeadImgView.layer.cornerRadius = _teaHeadImgView.bounds.size.height/2;
     _teaHeadImgView.layer.borderColor = _backColor.CGColor;
     _teaHeadImgView.layer.borderWidth = 2;
-    [_teaHeadImgView setImage:[UIImage imageNamed:@"touxiang"]];
+    [_teaHeadImgView setImage:[UIImage imageNamed:@"Teacher_normal"]];
     
     // 问题背景----layer
     _teaQuestionLabel.layer.masksToBounds = YES;
@@ -245,9 +247,9 @@
     float webView_y = 40;
     float webView_w = _studentView.frame.size.width-webview_x*2;
     float webView_H = _studentView.frame.size.height-stu_head_space_bottom-stu_head_H-10-webView_y;
-    [_StuAnswerWebView setFrame:CGRectMake(webview_x, webView_y, webView_w, webView_H)];
-    _StuAnswerWebView.hidden = NO;
-    _StuAnswerWebView.delegate =self;
+    _answerTextWebV = [[UIWebView alloc]initWithFrame:CGRectMake(webview_x, webView_y, webView_w, webView_H)];
+    _answerTextWebV.hidden = NO;
+    _answerTextWebV.delegate =self;
     
     _studentView.backgroundColor = [UIColor whiteColor];
     _stuFollowLabel.textColor = _backColor;//跟读颜色
@@ -255,15 +257,12 @@
     [self changeAnswerProgress];//当前回答数：1
     _stuCountLabel.textColor = _backColor;
     
-    
-    _StuAnswerWebView.delegate = self;
+    _answerTextWebV.delegate = self;
     _stuLineLabel.backgroundColor = [UIColor colorWithWhite:248/255.0 alpha:1];
     // 时间进度条
     _stuTimeProgressLabel.backgroundColor = _backColor;
-    
     // 标记时间进度条原始frame
     _timeProgressRect = _stuTimeProgressLabel.frame;
-    
     // 学生头像
     _stuHeadImgView.layer.masksToBounds = YES;
     _stuHeadImgView.layer.cornerRadius = _stuHeadImgView.frame.size.height/2;
@@ -473,7 +472,7 @@
 {
     _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
     NSString *answerTextBlank = [self makeUpBlankStringWithDict:[_currentAnswerListArray objectAtIndex:_currentAnswerCounts]];
-    [_StuAnswerWebView loadHTMLString:answerTextBlank baseURL:nil];
+    [_answerTextWebV loadHTMLString:answerTextBlank baseURL:nil];
 }
 
 #pragma mark - 去掉html标签 (改用webView 此方法已不需要 暂时保留 2015.06.11)
@@ -574,7 +573,7 @@
     
     _currentAnswerHtml = [_dfEngine getRichResultString:result.details];
     // 展示每个单词发音情况
-    [_StuAnswerWebView loadHTMLString:_currentAnswerHtml baseURL:nil];
+    [_answerTextWebV loadHTMLString:_currentAnswerHtml baseURL:nil];
     
     
     
@@ -780,4 +779,19 @@
         _dfEngine = nil;
     }
 }
+
+#pragma mark - webView 文字居中
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSString *bodyStyleVertical = @"document.getElementsByTagName('body')[0].style.verticalAlign = 'middle';";
+    NSString *bodyStyleHorizontal = @"document.getElementsByTagName('body')[0].style.textAlign = 'center';";
+    NSString *mapStyle = @"document.getElementById('mapid').style.margin = 'auto';";
+    
+    [webView stringByEvaluatingJavaScriptFromString:bodyStyleVertical];
+    [webView stringByEvaluatingJavaScriptFromString:bodyStyleHorizontal];
+    [webView stringByEvaluatingJavaScriptFromString:mapStyle];
+}
+
+
+
 @end

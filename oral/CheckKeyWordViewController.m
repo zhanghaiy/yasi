@@ -175,6 +175,7 @@
             if (_currentPage>0)
             {
                 _currentPage --;
+                [self changeKeyWord];
             }
         }
             break;
@@ -183,6 +184,7 @@
             if (_currentPage<keyWordArray.count)
             {
                 _currentPage++;
+                [self changeKeyWord];
             }
         }
             break;
@@ -195,7 +197,7 @@
             break;
     }
     
-    [self changeKeyWord];
+    
 }
 
 - (void)enterNext

@@ -244,7 +244,7 @@
     
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"My Travel"];
+    [self addTitleLabelWithTitleWithTitle:[OralDBFuncs getCurrentTopic]];
     [self uiConfig];
     [self analysizeTestJson];
 

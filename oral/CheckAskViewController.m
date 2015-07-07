@@ -546,7 +546,7 @@
             {
                 _teacherId = [OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]];
                 // 有默认老师
-                [self startRequst];
+                [self jugeNetState];
             }
             else
             {
@@ -564,11 +564,69 @@
     }
 }
 
+#pragma mark - 检测网络状态 参数：yes 请求part资源信息  no test资源信息
+- (void)jugeNetState
+{
+    BOOL net_wifi = [OralDBFuncs getNet_WiFi_Download];
+    BOOL net_2g3g4g = [OralDBFuncs getNet_2g3g4g_Download];
+    
+    switch ([DetectionNetWorkState netStatus])
+    {
+        case NotReachable:
+        {
+            // 无网络状态
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络链接" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alertView show];
+        }
+            break;
+        case ReachableViaWiFi:
+        {
+            // wifi
+            [self startRequst];
+        }
+            break;
+        case ReachableViaWWAN:
+        {
+            // 2g3g4g
+            if (net_2g3g4g)
+            {
+                [self startRequst];
+            }
+            else
+            {
+                UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前网络为2g/3g/4g网络，是否继续？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"继续",nil];
+                [alertView show];
+            }
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - 警告框 delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"%ld",buttonIndex);
+    if (buttonIndex == 1)
+    {
+        [self startRequst];
+    }
+    
+    if (_commitSuccess)
+    {
+        // 提交成功
+        [self backToTopicPage];
+    }
+}
+
+
 #pragma mark - 提交
 - (void)startRequst
 {
     _loading_View.hidden = NO;
-    
+    [self changeLoadingViewTitle:@"正在提交给老师，请稍后..."];
+    [self.view bringSubviewToFront:_loading_View];
     BOOL makeUpSuccess = [self makeUpJsonFile];
     if (makeUpSuccess)
     {
@@ -588,7 +646,6 @@
                  [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"part.zip" mimeType:@"application/zip"];
              }
          } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             
              _loading_View.hidden = YES;
              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
              NSLog(@"%@",dic);
@@ -636,14 +693,7 @@
     [alertV show];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (_commitSuccess)
-    {
-        // 提交成功
-        [self backToTopicPage];
-    }
-}
+
 
 
 
@@ -827,8 +877,8 @@
 {
     _teacherId = teacherID;
     NSLog(@"选取老师后回调---老师id:%@",_teacherId);
-    // 此处需给用户提示正在提交给老师 ----> 待完善
-    [self startRequst];
+
+    [self jugeNetState];
 }
 
 @end

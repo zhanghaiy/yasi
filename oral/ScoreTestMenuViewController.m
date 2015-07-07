@@ -141,22 +141,32 @@
 {
     NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/mockinfo.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
     NSLog(@"%@",jsonPath);
-    NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
-    NSDictionary *testDic = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
-    NSArray *QuestionList = [[testDic objectForKey:@"mockquestion"] objectForKey:@"questionlist"];
-    for (NSDictionary *subDic in QuestionList)
+    
+    NSFileManager *manager = [NSFileManager defaultManager];
+    if ([manager fileExistsAtPath:jsonPath])
     {
-        NSArray *questionArray = [subDic objectForKey:@"question"];
-        for (NSDictionary *subsubDic in questionArray)
+        // 有文件
+        NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
+        NSDictionary *testDic = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+        NSArray *QuestionList = [[testDic objectForKey:@"mockquestion"] objectForKey:@"questionlist"];
+        for (NSDictionary *subDic in QuestionList)
         {
-            NSString *questionId = [subsubDic objectForKey:@"id"];
-            if ([questionID isEqualToString:questionId])
+            NSArray *questionArray = [subDic objectForKey:@"question"];
+            for (NSDictionary *subsubDic in questionArray)
             {
-                return [subsubDic objectForKey:@"question"];
+                NSString *questionId = [subsubDic objectForKey:@"id"];
+                if ([questionID isEqualToString:questionId])
+                {
+                    return [subsubDic objectForKey:@"question"];
+                }
             }
         }
+        return @"找不到匹配的问题!";
     }
-    return @"找不到匹配的问题!";
+    else
+    {
+        return @"本地文件损坏或不存在，找不到问题资源";
+    }
 }
 
 #pragma mark - 视图加载
@@ -167,11 +177,9 @@
     
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"My Travel"];
+    [self addTitleLabelWithTitleWithTitle:[OralDBFuncs getCurrentTopic]];
     
     self.view.backgroundColor = _backgroundViewColor;
-    
-//    _textArray = @[@"还不错呦，继续努力！！！",@"还不错，部分单词发音不够标准~~，有待加强~目前可以继续往下进行还不错，   部分单词发音不够标准~~，有待加强~目前可以继续往下进行还不错，部分单词发音不够标准~~，有待加强~目前可以继续往下进行",@"成绩不太理想，发音不够标准，流畅，需加强练习，重复练习，不易往下进行，加油~~~"];
     
     _reviewTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, 65, kScreentWidth, kScreenHeight-65) style:UITableViewStylePlain];
     _reviewTableV.delegate = self;

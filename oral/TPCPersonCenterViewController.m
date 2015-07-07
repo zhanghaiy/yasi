@@ -112,6 +112,7 @@
 
 - (void)blankPersonInfo
 {
+    NSLog(@"%@",_personInfoDic);
     // 头像
     if ([[_personInfoDic objectForKey:@"icon"] length]>0)
     {

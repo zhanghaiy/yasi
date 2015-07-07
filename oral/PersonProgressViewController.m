@@ -24,6 +24,7 @@
     
     NSArray *_notPassListArray;
     NSArray *_passListArray;
+    NSMutableArray *_practicingArray;
     TopicInfoManager *_topicManager;
 }
 @end
@@ -61,7 +62,7 @@
     _topScrollV.showsHorizontalScrollIndicator = NO;
     _topScrollV.showsVerticalScrollIndicator = NO;
     
-    NSInteger topicCount = _notPassListArray.count;// 模拟topic个数
+    NSInteger topicCount = _practicingArray.count;// 模拟topic个数
     if (topicCount==0)
     {
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, _cellHeigth_alone)];
@@ -87,7 +88,7 @@
                 {
                     mark_topic_count ++;
                     NSLog(@"%ld",mark_topic_count);
-                    NSString *topicID = [[_notPassListArray objectAtIndex:mark_topic_count-1] objectForKey:@"classtypeid"];
+                    NSString *topicID = [[_practicingArray objectAtIndex:mark_topic_count-1] objectForKey:@"classtypeid"];
                     NSDictionary *topicDetailDic = [_topicManager getTopicDetailInfoWithTopicID:topicID];
                     NSString *topicImgUrl = [topicDetailDic objectForKey:@"bgimgurl"];
                     NSLog(@"正在练习的:%@",topicImgUrl);
@@ -107,7 +108,7 @@
                     
                     [_topScrollV addSubview:btn];
                     
-                    TopicRecord *record = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[[_notPassListArray objectAtIndex:mark_topic_count-1] objectForKey:@"classtype"]];
+                    TopicRecord *record = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[[_practicingArray objectAtIndex:mark_topic_count-1] objectForKey:@"classtype"]];
                     float progress = record.completion/9.0;
                     CustomProgressView *proV = [[CustomProgressView alloc]initWithFrame:CGRectMake(i*kScreentWidth+btn_space+j*(btnWith+btn_space), 25+btnWith, btnWith, 8)];
                     proV.color = kPart_Button_Color;
@@ -238,6 +239,7 @@
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
         NSDictionary *infoDic = [[dict objectForKey:@"studentInfos"] lastObject];
         _notPassListArray = [infoDic objectForKey:@"notPassList"];
+        [self makeUpCurrentPracticeArray];
         _passListArray = [infoDic objectForKey:@"passList"];
         [self createPractisedTopicScrollView];
         [self createPractisingTopicScrollView];
@@ -253,7 +255,18 @@
     }
 }
 
-
+- (void)makeUpCurrentPracticeArray
+{
+    _practicingArray = [[NSMutableArray alloc]init];
+    for (NSDictionary *subDic in _notPassListArray)
+    {
+        NSString *topicName = [subDic objectForKey:@"classtype"];
+        if ([OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:topicName])
+        {
+            [_practicingArray addObject:subDic];
+        }
+    }
+}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

@@ -14,7 +14,7 @@
 #import "NSString+CalculateStringSize.h"
 
 
-@interface CheckPractiseBookViewController ()<UITableViewDataSource,UITableViewDelegate,DFAiengineSentProtocol>
+@interface CheckPractiseBookViewController ()<UITableViewDataSource,UITableViewDelegate,DFAiengineSentProtocol,UIWebViewDelegate>
 {
     UITableView *_practiseTableV;
     AudioPlayer *_playerManager;
@@ -109,7 +109,7 @@
      */
     PracticeBookRecord *record = [_practiceArray objectAtIndex:indexPath.row];
     NSString *text = [_answerTextDict objectForKey:record.answerId];
-    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:99999 FontSize:kFontSize_14];
+    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:99999 FontSize:kFontSize_15];
     if (rect.size.height>70)
     {
         return kCellHeight+rect.size.height-70;
@@ -130,8 +130,6 @@
     cell.cellIndex = indexPath.row;
     cell.delegate = self;
     cell.action = @selector(pracCellCallBack:);
-    cell.partLabel.textColor = _pointColor;
-    
     PracticeBookRecord *record = [_practiceArray objectAtIndex:indexPath.row];
     [cell.textWebView loadHTMLString:record.lastText baseURL:nil];
     [cell.scoreButton setTitle:[NSString stringWithFormat:@"%d",record.lastScore] forState:UIControlStateNormal];
@@ -291,7 +289,7 @@
     // 参考文本
     NSLog(@"%@",text);
     if(_dfAiengine)
-        [_dfAiengine startEngineFor:text];
+        [_dfAiengine startEngineFor:[self filterHTML:text]];
 }
 #pragma mark - 结束思必驰引擎
 - (void)stopSBCAiengine
@@ -347,6 +345,18 @@
     
     [self makeUpPracticeBookDataArray];
     [_practiseTableV reloadData];
+}
+
+#pragma mark - webViewDelegate
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    NSString *bodyStyleVertical = @"document.getElementsByTagName('body')[0].style.verticalAlign = 'middle';";
+    NSString *bodyStyleHorizontal = @"document.getElementsByTagName('body')[0].style.textAlign = 'center';";
+    NSString *mapStyle = @"document.getElementById('mapid').style.margin = 'auto';";
+    
+    [webView stringByEvaluatingJavaScriptFromString:bodyStyleVertical];
+    [webView stringByEvaluatingJavaScriptFromString:bodyStyleHorizontal];
+    [webView stringByEvaluatingJavaScriptFromString:mapStyle];
 }
 
 

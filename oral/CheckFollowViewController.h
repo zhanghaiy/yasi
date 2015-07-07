@@ -22,7 +22,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *stuAnswerCountsLabel;
 @property (strong, nonatomic) IBOutlet UILabel *lineLabel;
 
-@property (strong, nonatomic) IBOutlet UIWebView *answerTextWebView;
 @property (strong, nonatomic) IBOutlet UILabel *timeProgressLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *stuImageView;
 @property (strong, nonatomic) IBOutlet UIButton *scoreButton;

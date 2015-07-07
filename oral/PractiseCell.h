@@ -10,7 +10,7 @@
 #import "PracticeFollowButton.h"
 
 @interface PractiseCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *partLabel;
+//@property (weak, nonatomic) IBOutlet UILabel *partLabel;
 @property (weak, nonatomic) IBOutlet UIWebView *textWebView;
 @property (weak, nonatomic) IBOutlet UIButton *scoreButton;
 @property (weak, nonatomic) IBOutlet UIButton *play_self_Button;

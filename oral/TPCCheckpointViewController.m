@@ -21,6 +21,9 @@
 #import "OralDBFuncs.h"
 #import "ConstellationManager.h"
 #import "DetectionNetWorkState.h"
+#import "NSURLConnectionRequest.h"
+
+
 
 @interface TPCCheckpointViewController ()<UIScrollViewDelegate,UIAlertViewDelegate>
 {
@@ -345,9 +348,12 @@
 - (void)requestTopicZipResource
 {
     _loading_View.hidden = NO;
+    [self changeLoadingViewTitle:@"正在请求资源西你想，请稍后...."];
+    [self.view bringSubviewToFront:_loading_View];
     NSString *zipfileurl = [_topicDict objectForKey:@"zipfileurl"];
     NSLog(@"%@",zipfileurl);
-    [self startRequestURL:zipfileurl andCallBackAction:@selector(requestPartZipFinished:)];
+    
+    [NSURLConnectionRequest requestWithUrlString:zipfileurl target:self aciton:@selector(requestPartZipFinished:) andRefresh:YES];
 }
 
 #pragma mark - 下载模考资源
@@ -355,7 +361,7 @@
 {
     NSString *testZipUrl = [NSString stringWithFormat:@"%@%@?topid=%@",kBaseIPUrl,kTestUrl,[_topicDict objectForKey:@"id"]];
     NSLog(@"%@",testZipUrl);
-    [self startRequestURL:testZipUrl andCallBackAction:@selector(requestTestZipFinished:)];
+    [NSURLConnectionRequest requestWithUrlString:testZipUrl target:self aciton:@selector(requestTestZipFinished:) andRefresh:YES];
 }
 
 
@@ -370,27 +376,24 @@
 }
 
 #pragma mark - 缓存闯关资源
-- (void)requestPartZipFinished:(NetManager *)netManager
+- (void)requestPartZipFinished:(NSURLConnectionRequest *)request
 {
-    if (netManager.success)
+    //zip请求成功
+    if (request.downloadData)
     {
-        //zip请求成功
-        if (netManager.downLoadData)
+        // zip保存本地
+        NSString *zipPath = [NSString stringWithFormat:@"%@/reqource.zip",[self getLocalSavePath]];
+        BOOL success =  [self unZipToLocalData:request.downloadData WithPath:zipPath andFolder:@"topicResource"];
+        if (success)
         {
-            // zip保存本地
-            NSString *zipPath = [NSString stringWithFormat:@"%@/reqource.zip",[self getLocalSavePath]];
-           BOOL success =  [self unZipToLocalData:netManager.downLoadData WithPath:zipPath andFolder:@"topicResource"];
-            if (success)
-            {
-                BOOL addSuccess = [OralDBFuncs addTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[_topicDict objectForKey:@"classtype"]];
-                NSLog(@"~~~~~~~增加topic successs : %d~~~~~~",addSuccess);
-                // 跳转页面 进入闯关
-                [self beginPointWithPointCounts:_markPart];
-            }
-            else
-            {
-                // 保存失败 重新获取
-            }
+            BOOL addSuccess = [OralDBFuncs addTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[_topicDict objectForKey:@"classtype"]];
+            NSLog(@"~~~~~~~增加topic successs : %d~~~~~~",addSuccess);
+            // 跳转页面 进入闯关
+            [self beginPointWithPointCounts:_markPart];
+        }
+        else
+        {
+            // 保存失败 重新获取
         }
     }
     else
@@ -423,17 +426,16 @@
     }
 }
 #pragma mark - 请求 test zip资源
-- (void)requestTestZipFinished:(NetManager *)netRequest
+- (void)requestTestZipFinished:(NSURLConnectionRequest *)request
 {
     if (_requestTest_zipUrl)
     {
         // 请求zip路径
         _requestTest_zipUrl = NO;
-        
-        if (netRequest.success)
+        if (request.downloadData)
         {
             // 成功 ---> zip
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:netRequest.downLoadData options:0 error:nil];
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
             NSString *zipUrl = [dict objectForKey:@"zipfileurl"];
             [self startRequestURL:zipUrl andCallBackAction:@selector(requestTestZipFinished:)];
         }
@@ -446,11 +448,11 @@
     else
     {
        // 请求zip包
-        if (netRequest.success)
+        if (request.downloadData)
         {
             // zip包下载成功
             NSString *testZip = [NSString stringWithFormat:@"%@/test.zip",[self getLocalSavePath]];
-            BOOL success = [self unZipToLocalData:netRequest.downLoadData WithPath:testZip andFolder:@"topicTest"];
+            BOOL success = [self unZipToLocalData:request.downloadData WithPath:testZip andFolder:@"topicTest"];
             if (success)
             {
                 // 进入模考

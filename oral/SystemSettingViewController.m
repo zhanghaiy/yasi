@@ -98,9 +98,17 @@
     if (indexPath.row == _systemArray.count-1)
     {
         // 清除缓存
-        
+        [self showAlertView:@"清除缓存成功"];
     }
 }
+
+- (void)showAlertView:(NSString *)message
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
+
+
 
 - (void)switchMethod:(UISwitch *)swith
 {

@@ -34,7 +34,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="07e-3a-2C7">
                     <rect key="frame" x="0.0" y="111" width="375" height="85"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IAp-9e-g6O">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="teacher_normal" translatesAutoresizingMaskIntoConstraints="NO" id="IAp-9e-g6O">
                             <rect key="frame" x="20" y="10" width="65" height="65"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="65" id="A3y-hY-Ywh"/>
@@ -75,7 +75,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kJM-hQ-IFC">
                     <rect key="frame" x="0.0" y="194" width="375" height="336"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touxiang.png" translatesAutoresizingMaskIntoConstraints="NO" id="OK0-tR-PlT">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person_head_image" translatesAutoresizingMaskIntoConstraints="NO" id="OK0-tR-PlT">
                             <rect key="frame" x="162" y="143" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="Chh-lo-sjb"/>
@@ -161,6 +161,7 @@
     </objects>
     <resources>
         <image name="answerButton-sele" width="67" height="67"/>
-        <image name="touxiang.png" width="70" height="70"/>
+        <image name="person_head_image" width="68" height="68"/>
+        <image name="teacher_normal" width="60" height="60"/>
     </resources>
 </document>

@@ -8,7 +8,6 @@
             <connections>
                 <outlet property="addPracticeButton" destination="KBJ-pI-83K" id="jpJ-bs-OAA"/>
                 <outlet property="answerButton" destination="icL-bV-wfE" id="zcC-ui-lWV"/>
-                <outlet property="answerTextWebView" destination="4Im-QI-ARw" id="83E-HP-gT3"/>
                 <outlet property="lineLabel" destination="gWF-5t-PD8" id="U9O-B9-02R"/>
                 <outlet property="nextButton" destination="lrh-uL-cp6" id="FN7-wy-I03"/>
                 <outlet property="questionCountsView" destination="N7j-VH-R1s" id="RdZ-LF-Ydg"/>
@@ -69,7 +68,7 @@
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touxiang.png" id="fsk-5k-WS9">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person_head_image" id="fsk-5k-WS9">
                             <rect key="frame" x="270" y="224" width="50" height="50"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
@@ -83,11 +82,6 @@
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
-                        <webView contentMode="scaleToFill" id="4Im-QI-ARw">
-                            <rect key="frame" x="10" y="50" width="315" height="161"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </webView>
                     </subviews>
                     <color key="backgroundColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
@@ -125,7 +119,7 @@
                         <action selector="answerButtonClicked:" destination="-1" eventType="touchUpInside" id="upn-NV-BWc"/>
                     </connections>
                 </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touxiang.png" id="0lZ-TF-rqf">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="teacher_normal" id="0lZ-TF-rqf">
                     <rect key="frame" x="20" y="125" width="66" height="66"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
@@ -148,7 +142,8 @@
     </objects>
     <resources>
         <image name="answerButton-sele" width="67" height="67"/>
-        <image name="touxiang.png" width="70" height="70"/>
+        <image name="person_head_image" width="68" height="68"/>
+        <image name="teacher_normal" width="60" height="60"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

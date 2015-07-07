@@ -12,16 +12,19 @@
 #import "CheckAskViewController.h"
 #import "SuccessCell.h"
 #import "OralDBFuncs.h"
+#import "NSString+CalculateStringSize.h"
 
 @interface CheckSuccessViewController ()<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate>
 {
     NSMutableArray *_scoreMenuArray;
+    NSMutableArray *_answer_Cintent_Array;
+    NSMutableDictionary *_answer_DB_Dictionary;
 }
 
 @end
 
 @implementation CheckSuccessViewController
-
+#define kCellHeght 70
 
 - (void)uiConfig
 {
@@ -37,8 +40,6 @@
     [_topScoreLabel setFrame:CGRectMake(0, score_Y, kScreentWidth, score_H)];
     [_topShareButton setFrame:CGRectMake((kScreentWidth-shareBtn_W)/2, topView_H-space_share_toBottom-shareBtn_H, shareBtn_W, shareBtn_H)];
     [_topDesLabel setFrame:CGRectMake(0, topView_H-space_share_toBottom-shareBtn_H-tipLabel_H-5, kScreentWidth, tipLabel_H)];
-    
-    
     float bottom_btn_W = 110.0/375*kScreentWidth;
     float bottom_btn_H = 50.0/667*kScreenHeight;
     
@@ -147,7 +148,7 @@
     [_topShareButton setTitleColor:[color_array objectAtIndex:index] forState:UIControlStateNormal];
 
     // 根据分数 设置标题
-    NSArray *textArray = @[@"成绩不错呦~超过了%62的小伙伴!",@"成绩不错呦~超过了%62的小伙伴!",@"没及格~需要加强联系呦~努力努力！！！！"];
+    NSArray *textArray = @[@"成绩不错呦~超过了62%的小伙伴!",@"成绩不错呦~超过了62%的小伙伴!",@"没及格~需要加强联系呦~努力努力！！！！"];
     _topDesLabel.text = [textArray objectAtIndex:index];
     
     if (!index)
@@ -197,24 +198,35 @@
     // 当前part资源信息
     NSDictionary *subDict = [[dict objectForKey:@"partlist"] objectAtIndex:[OralDBFuncs getCurrentPart]-1];
     NSArray *questionList = [[[subDict objectForKey:@"levellist"] objectAtIndex:[OralDBFuncs getCurrentPoint]-1] objectForKey:@"questionlist"];
+    _answer_Cintent_Array = [[NSMutableArray alloc]init];
+    _answer_DB_Dictionary = [[NSMutableDictionary alloc]init];
     for (NSDictionary *subSubdict in questionList)
     {
         NSArray *answerArray = [subSubdict objectForKey:@"answerlist"];
         for (NSDictionary *subSubSubDic in answerArray)
         {
-            [_scoreMenuArray addObject:subSubSubDic];
+            NSString *answerID = [subSubSubDic objectForKey:@"id"];
+            [_answer_Cintent_Array addObject:subSubSubDic];
+            PracticeBookRecord *scoreInfoRecord = [OralDBFuncs getLastRecordFor:[OralDBFuncs getCurrentUserName] topicName:[OralDBFuncs getCurrentTopic] answerId:answerID partNum:[OralDBFuncs getCurrentPart] andLevelNum:[OralDBFuncs getCurrentPoint]];
+            [_answer_DB_Dictionary setObject:scoreInfoRecord forKey:answerID];
         }
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70;
+    NSString *text = [[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"answer"];
+    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:99999 FontSize:kFontSize_14];
+    if (rect.size.height>kCellHeght-20)
+    {
+        return kCellHeght+rect.size.height-60;
+    }
+    return kCellHeght;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _scoreMenuArray.count;
+    return _answer_Cintent_Array.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -225,22 +237,21 @@
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"SuccessCell" owner:self options:0] lastObject];
     }
-    NSString *answerId = [[_scoreMenuArray objectAtIndex:indexPath.row] objectForKey:@"id"];
-   PracticeBookRecord *scoreInfoRecord = [OralDBFuncs getLastRecordFor:[OralDBFuncs getCurrentUserName] topicName:[OralDBFuncs getCurrentTopic] answerId:answerId partNum:[OralDBFuncs getCurrentPart] andLevelNum:[OralDBFuncs getCurrentPoint]];
-    [cell.htmlWebView loadHTMLString:scoreInfoRecord.lastText baseURL:nil];
+    
+    NSString *answerId = [[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"id"];
+    PracticeBookRecord *record = [_answer_DB_Dictionary objectForKey:answerId];
+    [cell.htmlWebView loadHTMLString:record.lastText baseURL:nil];
     cell.htmlWebView.delegate = self;
     
     NSArray *colorArr = @[_perfColor,_goodColor,_badColor];
-    int scoreCun = scoreInfoRecord.lastScore>=80?0:(scoreInfoRecord.lastScore>=60?1:2);
+    int scoreCun = record.lastScore>=80?0:(record.lastScore>=60?1:2);
     [cell.scoreButton setBackgroundColor:[colorArr objectAtIndex:scoreCun]];
-    [cell.scoreButton setTitle:[NSString stringWithFormat:@"%d",scoreInfoRecord.lastScore] forState:UIControlStateNormal];
-
-    
+    [cell.scoreButton setTitle:[NSString stringWithFormat:@"%d",record.lastScore] forState:UIControlStateNormal];
     return cell;
 }
 
-
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

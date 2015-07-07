@@ -154,12 +154,20 @@
             {
                 // 有公告
                 NSDictionary *newNoticeDic = [[dict objectForKey:@"noticelist"] lastObject];
-                _noticeDesLabel.text = [newNoticeDic objectForKey:@"content"];
+                if ([[newNoticeDic objectForKey:@"content"] length])
+                {
+                    _noticeDesLabel.text = [newNoticeDic objectForKey:@"content"];
+                }
+                else
+                {
+                    _noticeDesLabel.text = @"暂无公告";
+                }
             }
             else
             {
                 // 暂无公告
                 NSLog(@"暂无公告");
+                _noticeDesLabel.text = @"暂无公告";
             }
         }
         else
@@ -204,6 +212,7 @@
     [self.view addSubview:_stu_Progress_TableView];
     
     [self requestClassInfo];
+    [self requestClassNotice];
 }
 
 #pragma mark - tableView delegate

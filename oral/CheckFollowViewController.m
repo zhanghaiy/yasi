@@ -51,6 +51,7 @@
     float _sumScore;
     int _sumCounts;
     NSMutableArray *_markAllAnswerIdArray;
+    UIWebView *_answerTextWebV;// 代码创建 为了去掉黑线
 }
 
 
@@ -121,7 +122,6 @@
     }
 
     // 2--->老师部分控件
-    
     float tea_space_toTop = 15.0/667*kScreenHeight;
     float teacher_Y = question_CountButton_Back_Y+question_CountButton_Back_Height+tea_space_toTop;
     float teacher_Head_W = 65.0/667*kScreenHeight;
@@ -136,7 +136,7 @@
     _teacherHeadImgView.layer.cornerRadius = _teacherHeadImgView.bounds.size.height/2;
     _teacherHeadImgView.layer.borderColor = _backColor.CGColor;
     _teacherHeadImgView.layer.borderWidth = 2;
-    [_teacherHeadImgView setImage:[UIImage imageNamed:@"touxiang"]];
+    [_teacherHeadImgView setImage:[UIImage imageNamed:@"teacher_normal"]];
     
     // 问题文本 多行显示
     _questionTextLabel.text = @"";//起始为空
@@ -201,6 +201,7 @@
     float stu_head_Y = _studentView.frame.size.height-stu_head_space_bottom-stu_head_H;
     
     [_stuImageView setFrame:CGRectMake(stu_head_X, stu_head_Y, stu_head_H, stu_head_H)];
+    [_stuImageView setImage:[UIImage imageNamed:@"person_head_image"]];
 
     // 进度条
     float stu_Progress_W = _studentView.frame.size.width-stu_head_space_right*3-stu_head_H;
@@ -219,11 +220,12 @@
     float webView_y = 40;
     float webView_w = _studentView.frame.size.width-webview_x*2;
     float webView_H = _studentView.frame.size.height-stu_head_space_bottom-stu_head_H-10-webView_y;
-    [_answerTextWebView setFrame:CGRectMake(webview_x, webView_y, webView_w, webView_H)];
+    _answerTextWebV = [[UIWebView alloc]initWithFrame:CGRectMake(webview_x, webView_y, webView_w, webView_H)];
     // webView
-    _answerTextWebView.hidden = NO;
-    _answerTextWebView.delegate =self;
-   
+    _answerTextWebV.hidden = NO;
+    _answerTextWebV.delegate =self;
+    _answerTextWebV.backgroundColor =  [UIColor whiteColor];
+    [_studentView addSubview:_answerTextWebV];
     // 其他属性
     _studentView.backgroundColor = [UIColor whiteColor];
     _stuTitleLabel.textColor = _backColor;//跟读颜色
@@ -370,11 +372,11 @@
         _stuImageView.alpha = 0.3;
     }];
     
-   [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(playQuestion) userInfo:nil repeats:NO];
+   [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(playQuestion_point_1) userInfo:nil repeats:NO];
 }
 
 #pragma mark -- 播放问题音频
-- (void)playQuestion
+- (void)playQuestion_point_1
 {
     // 获取音频路径
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
@@ -482,7 +484,7 @@
 {
     _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
     NSString *str = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"] ;
-    [_answerTextWebView loadHTMLString:str baseURL:nil];
+    [_answerTextWebV loadHTMLString:str baseURL:nil];
 }
 
 #pragma mark - webViewDelegate
@@ -577,7 +579,7 @@
     // 存储的字段赋值
     NSString *msg1 = [_dfEngine getRichResultString:result.details];
     _currentAnswerHtml = msg1;
-    [_answerTextWebView loadHTMLString:_currentAnswerHtml baseURL:nil];
+    [_answerTextWebV loadHTMLString:_currentAnswerHtml baseURL:nil];
     _currentAnswerScore = result.overall;
     _currentAnswerIntegrity = result.integrity;
     _currentAnswerFluency = [[result.fluency objectForKey:@"overall"] intValue];
@@ -592,7 +594,7 @@
     
     // 存储一条记录 到数据库
     BOOL saveSuccess = [OralDBFuncs replaceLastRecordFor:[OralDBFuncs getCurrentUserName] TopicName:[OralDBFuncs getCurrentTopic] answerId:_currentAnswerId partNum:[OralDBFuncs getCurrentPart] levelNum:[OralDBFuncs getCurrentPoint] withRecordId:[OralDBFuncs getCurrentRecordId] lastText:_currentAnswerHtml lastScore:_currentAnswerScore lastPron:_currentAnswerPron lastIntegrity:_currentAnswerIntegrity lastFluency:_currentAnswerFluency lastAudioName:_currentAnswerAudioName];
-    NSLog(@"saveSuccess:%d",saveSuccess);
+    NSLog(@"\n\n\n~~~~~~~~~~~~~~saveSuccess:%d\n\n\n",saveSuccess);
     
     _timeProgressLabel.hidden = YES;// 隐藏时间进度条
     _timeProgressLabel.frame = _timeProgressRect;//回复时间进度条 以便下次使用
@@ -830,18 +832,21 @@
 
 
 
-#pragma mark - 界面将要消失
-- (void)viewWillDisappear:(BOOL)animated
+#pragma mark - 界面已经消失
+- (void)viewDidDisappear:(BOOL)animated
 {
-    [super viewWillDisappear:animated];
-    NSLog(@"viewWillDisappear");
+    [super viewDidDisappear:animated];
+    NSLog(@"viewDidDisappear");
     audioPlayer.target = nil;
     if (_reduceTimer != nil)
     {
         [self stopReduceTimer];
         
     }
-     _dfEngine = nil;
+    if (_dfEngine)
+    {
+        _dfEngine = nil;
+    }
 }
 
 - (void)backToPrePage
