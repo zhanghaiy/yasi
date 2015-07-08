@@ -39,7 +39,7 @@
     [self addTitleLabelWithTitleWithTitle:@"我的后院"];
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightButton setFrame:CGRectMake(kScreentWidth-40, (self.navTopView.frame.size.height-24-20)/2+24, 20, 20)];
+    [rightButton setFrame:CGRectMake(kScreentWidth-40, (self.navTopView.frame.size.height-24-20)/2+27, 20, 20)];
     [rightButton setBackgroundImage:[UIImage imageNamed:@"person_setting"] forState:UIControlStateNormal];
     rightButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_15];
     

@@ -88,7 +88,7 @@
                                 <action selector="showQuestionText:" destination="-1" eventType="touchUpInside" id="PNo-ey-QeS"/>
                             </connections>
                         </button>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="touxiang.png" translatesAutoresizingMaskIntoConstraints="NO" id="p84-fB-fJd">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="teacher_normal" translatesAutoresizingMaskIntoConstraints="NO" id="p84-fB-fJd">
                             <rect key="frame" x="165" y="62" width="45" height="45"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="45" id="Q0P-iw-ULK"/>
@@ -215,6 +215,6 @@
     <resources>
         <image name="33.jpg" width="400" height="400"/>
         <image name="answerButton-sele" width="67" height="67"/>
-        <image name="touxiang.png" width="70" height="70"/>
+        <image name="teacher_normal" width="60" height="60"/>
     </resources>
 </document>

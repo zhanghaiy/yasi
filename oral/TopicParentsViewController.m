@@ -79,7 +79,7 @@
 {
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [backButton setFrame:CGRectMake(kScreentWidth-45, 7, 35, 35)];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"touxiang.png"] forState:UIControlStateNormal];
+    [backButton setBackgroundImage:[UIImage imageNamed:@"teacher_normal"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(personCenter) forControlEvents:UIControlEventTouchUpInside];
     [self.navTopView addSubview:backButton];
 }

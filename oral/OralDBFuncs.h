@@ -122,6 +122,15 @@
 +(void)setTestCommit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName;
 +(BOOL)getTestCommitTopic:(NSString *)topicName andUserName:(NSString *)userName;
 
+// 标记模考/闯关合成json文件所需的数组
++(void)setTopicAnswerJsonArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;;
++(NSArray *)getTopicAnswerJsonArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;
+
+
+// 标记模考/闯关合成zip文件所需的数组
++(void)setTopicAnswerZipArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;;
++(NSArray *)getTopicAnswerZipArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;;
+
 // 标记 默认老师
 + (void)setDefaultTeacherID:(NSString *)teacherId UserName:(NSString *)userName;
 + (NSString *)getDefaultTeacherIDForUserName:(NSString *)userName;

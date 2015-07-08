@@ -515,26 +515,34 @@
     }
 }
 
-#pragma mark - 提交按钮
+#pragma mark - 提交
+#pragma mark -- 提交按钮被点击
 - (IBAction)commitButtonClicked:(id)sender
 {
     _pointFinished = YES;
     UIButton *btn = (UIButton *)sender;
     if (btn.tag == kCommitLeftButtonTag)
     {
-        // 合成json文件 打包zip  在后续成绩单界面 直接用zip
-        if ([self makeUpJsonFile])
-        {
-            [self zipCurrentPartFile];
-            // 稍后提交
-            [self backToTopicPage];
-            //1、 标记 关卡3是否提交
-            [OralDBFuncs setPartLevel3Commit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
-        }
-        else
-        {
-            NSLog(@"打包文件失败");
-        }
+        
+        // 稍后提交
+        [OralDBFuncs setPartLevel3Commit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+        [OralDBFuncs setTopicAnswerJsonArray:_partInfoArray Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:YES];
+        [OralDBFuncs setTopicAnswerZipArray:_recordPathArray Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:YES];
+        [self backToTopicPage];
+        
+        // 合成json文件 打包zip  在后续成绩单界面 直接用zip  ---- 错误
+//        if ([self makeUpJsonFile])
+//        {
+//            [self zipCurrentPartFile];
+//            // 稍后提交
+//            [self backToTopicPage];
+//            //1、 标记 关卡3是否提交
+//            [OralDBFuncs setPartLevel3Commit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+//        }
+//        else
+//        {
+//            NSLog(@"打包文件失败");
+//        }
         
     }
     else if (btn.tag == kCommitRightButtonTag)

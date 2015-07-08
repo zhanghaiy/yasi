@@ -49,7 +49,6 @@
     UIButton *personBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [personBtn setFrame:CGRectMake((kScreentWidth-35)/2, 24+(kNavBarHeight-24-35)/2, 35, 35)];
     [personBtn setBackgroundImage:[UIImage imageNamed:@"person_head_image"] forState:UIControlStateNormal];
-//    personBtn.backgroundColor = [UIColor purpleColor];
     [personBtn addTarget:self action:@selector(toPersonCenter) forControlEvents:UIControlEventTouchUpInside];
     [self.navTopView addSubview:personBtn];
     
@@ -72,6 +71,7 @@
     [self.view addSubview:_rightTableView];
     
     NSString *urlSTr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTopicListUrl];
+    NSLog(@"%d",kCurrentNetStatus);
     [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestFinished:) andRefresh:kCurrentNetStatus];
 
 //    if ([DetectionNetWorkState netStatus] == NotReachable)
@@ -88,6 +88,7 @@
 #pragma mark - 网络反馈
 - (void)requestFinished:(NSURLConnectionRequest *)request
 {
+    _loading_View.hidden = YES;
     if (request.downloadData)
     {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];

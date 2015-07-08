@@ -218,8 +218,8 @@
     // webview
     float webview_x = 10;
     float webView_y = 40;
-    float webView_w = _studentView.frame.size.width-webview_x*2;
-    float webView_H = _studentView.frame.size.height-stu_head_space_bottom-stu_head_H-10-webView_y;
+    NSInteger webView_w = _studentView.frame.size.width-webview_x*2;
+    NSInteger webView_H = _studentView.frame.size.height-stu_head_space_bottom-stu_head_H-10-webView_y;
     _answerTextWebV = [[UIWebView alloc]initWithFrame:CGRectMake(webview_x, webView_y, webView_w, webView_H)];
     // webView
     _answerTextWebV.hidden = NO;

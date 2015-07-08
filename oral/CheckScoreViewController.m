@@ -17,7 +17,11 @@
 
 #import "SCOPartMenuViewController.h"
 
-@interface CheckScoreViewController ()<UIScrollViewDelegate>
+#import "MyTeacherViewController.h"
+#import "ZipManager.h"
+#import "ZipArchive/ZipArchive.h"
+
+@interface CheckScoreViewController ()<UIScrollViewDelegate,SelectTeacherDelegate>
 {
     UIScrollView *_backScrollV;
     UISegmentedControl *_segment;
@@ -40,6 +44,7 @@
     
     NSDictionary *_watingDict_part;
     NSDictionary *_watingDict_test;
+    NSString *_defaultTeacherID;
 }
 @end
 
@@ -320,72 +325,21 @@
                 // 没有反馈
                 NSLog(@" 没有反馈");
             }
-            
-            //  班级信息
-//            NSArray *joinclassinfo = [dic objectForKey:@"joinclassinfo"];
         }
     }
 }
 
-#pragma mark - 提交模考
-- (void)commitTestInfo
-{
-    _loading_View.hidden = NO;
-
-    NSString *testZipPath = [NSString stringWithFormat:@"%@/modelpart.zip",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
-    NSData *zipData = [NSData dataWithContentsOfFile:testZipPath];
-    
-    // 网络提交 uploadfile
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setObject:@"modelpart" forKey:@"uploadfile"];
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTestCommitUrl];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
-     {
-         if (zipData)
-         {
-             [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"modelpart.zip" mimeType:@"application/zip"];
-             
-         }
-     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-         
-         _loading_View.hidden = YES;
-         if (operation.responseData)
-         {
-             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
-             if ([[dict objectForKey:@"respCode"] intValue] == 1000)
-             {
-                 // 提交成功
-                 [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
-                 NSLog(@"模考提交老师成功");
-                 UIButton *commitBtn = (UIButton *)[self.view viewWithTag:kTestCommitButtonTag];
-                 [commitBtn setTitle:@"已提交" forState:UIControlStateNormal];
-             }
-             else
-             {
-                 NSLog(@"提交失败：%@",[dict objectForKey:@"remark"]);
-             }
-         }
-     }
-      failure:^(AFHTTPRequestOperation *operation, NSError *error)
-    {
-        _loading_View.hidden = YES;
-         NSLog(@"失败乃");
-     }];
-}
 
 
 #pragma mark - 模考
-#pragma mark -- 提交模考
+#pragma mark -- 模考提交按钮被点击
 - (void)commitTest:(UIButton *)commitButton
 {
     // 1：未提交给老师 提交老师  2：已经提交 但是未反馈 3：老师已反馈
     if (![OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentUserID] andUserName:[OralDBFuncs getCurrentUserName]])
     {
-        // 提交给老师
-        [self commitTestInfo];
+        // 提交给老师 先判断是否可以提交
+        [self jugeCouldCommit];
     }
     
     if (_wating_test)
@@ -396,6 +350,123 @@
         [self.navigationController pushViewController:testVC animated:YES];
     }
 }
+#pragma mark -- 判断是否可以直接提交
+- (void)jugeCouldCommit
+{
+    if ([OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]])
+    {
+        _defaultTeacherID = [OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]];
+        // 有默认老师
+        [self commitTestInfo];
+    }
+    else
+    {
+        MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
+        myTeacherVC.delegate = self;
+        [self.navigationController pushViewController:myTeacherVC animated:YES];
+    }
+}
+
+#pragma mark -- 开始提交模考
+- (void)commitTestInfo
+{
+    _loading_View.hidden = NO;
+    
+    BOOL json = [self makeUpJsonFile_test];
+    if (json)
+    {
+        // 压缩
+        NSString *testZipPath = [self zipCurrentTestFile];
+        NSData *zipData = [NSData dataWithContentsOfFile:testZipPath];
+        
+        // 网络提交 uploadfile
+        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+        [parameters setObject:@"modelpart" forKey:@"uploadfile"];
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTestCommitUrl];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+         {
+             if (zipData)
+             {
+                 [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"modelpart.zip" mimeType:@"application/zip"];
+                 
+             }
+         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             
+             _loading_View.hidden = YES;
+             if (operation.responseData)
+             {
+                 NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
+                 if ([[dict objectForKey:@"respCode"] intValue] == 1000)
+                 {
+                     // 提交成功
+                     [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+                     NSLog(@"模考提交老师成功");
+                     UIButton *commitBtn = (UIButton *)[self.view viewWithTag:kTestCommitButtonTag];
+                     [commitBtn setTitle:@"已提交" forState:UIControlStateNormal];
+                 }
+                 else
+                 {
+                     NSLog(@"提交失败：%@",[dict objectForKey:@"remark"]);
+                 }
+             }
+         }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             _loading_View.hidden = YES;
+             NSLog(@"失败乃");
+         }];
+    }
+    else
+    {
+        // 合成json文件失败
+    }
+}
+
+
+#pragma mark -- 选择老师回调
+- (void)selectTeacherId:(NSString *)teacherID
+{
+    _defaultTeacherID = teacherID;
+    [self commitTestInfo];
+}
+
+#pragma mark -- 合成模考json文件
+- (BOOL)makeUpJsonFile_test
+{
+    NSArray *jsonArray =  [OralDBFuncs getTopicAnswerJsonArrayWithTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:NO];
+    NSDictionary *modelpartInfo = @{@"modelpartInfo":jsonArray,@"teacherid":_defaultTeacherID,@"topic":[OralDBFuncs getCurrentTopicID],@"useid":[OralDBFuncs getCurrentUserID]};
+    NSLog(@"%@",modelpartInfo);
+    NSError *parseError = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:modelpartInfo options:NSJSONWritingPrettyPrinted error:&parseError];
+    NSString *jsonFilePath = [NSString stringWithFormat:@"%@/modelpart.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
+    BOOL saveSuc = [jsonData writeToFile:jsonFilePath atomically:YES];
+    return saveSuc;
+}
+
+#pragma mark -- 压缩模考zip包
+- (NSString *)zipCurrentTestFile
+{
+    NSArray *testAudioPathArray = [OralDBFuncs getTopicAnswerZipArrayWithTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:NO];
+    NSString *zipPath = [NSString stringWithFormat:@"%@/modelpart.zip",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
+    ZipArchive *zip = [[ZipArchive alloc] init];
+    BOOL ret = [zip CreateZipFile2:zipPath];
+    if (ret)
+    {
+        for (NSString *testAudioPath  in testAudioPathArray)
+        {
+            NSString *audioName = [[testAudioPath componentsSeparatedByString:@"/"] lastObject];
+            [zip addFileToZip:testAudioPath newname:audioName];
+        }
+        NSString *jsonPath = [NSString stringWithFormat:@"%@/modelpart.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
+        [zip addFileToZip:jsonPath newname:@"modelpart.json"];
+    }
+    //    NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
+    return zipPath;
+}
+
 
 #pragma mark - 模考播放
 #pragma mark -- 播放音频按钮点击事件

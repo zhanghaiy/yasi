@@ -21,9 +21,12 @@
 #import "UIButton+WebCache.h"
 #import "UIImageView+WebCache.h"
 #import "AFNetworking/AFHTTPRequestOperationManager.h"
+#import "ZipArchive.h"
+#import "MyTeacherViewController.h"
 
 
-@interface SCOPartMenuViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate>
+
+@interface SCOPartMenuViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,SelectTeacherDelegate>
 {
     Point_3_Commit_View *_commit_Head_View;
     Point_3_Review_Head_View *_review_Head_View;
@@ -46,6 +49,7 @@
     NSMutableArray *_section_array_point_3;// 头视图数组
     
     AudioPlayer *_audioPlayerManager;
+    NSString *_defaulTeacherID;
 }
 @end
 
@@ -568,7 +572,247 @@ static UIView *openView;
     }
 }
 
-#pragma mark - 检测网络状态 参数：yes 请求part资源信息  no test资源信息
+#pragma mark - 提交
+#pragma mark -- 提交按钮被点击
+- (void)commitCurrentPart:(UIButton *)btn
+{
+    [self jugeCouldCommit_Part];
+}
+
+#pragma mark -- 判断是否可以直接提交
+- (void)jugeCouldCommit_Part
+{
+    if ([OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]])
+    {
+        // 有默认老师
+        _defaulTeacherID = [OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]];
+        [self jugeNetState];
+    }
+    else
+    {
+        MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
+        myTeacherVC.delegate = self;
+        [self.navigationController pushViewController:myTeacherVC animated:YES];
+    }
+}
+
+#pragma mark -- 开始提交
+- (void)starCommitToTeacher_point_3
+{
+    // 提交给老师
+    if ([self makeUpJsonFile])
+    {
+        _loading_View.hidden = NO;
+        [self changeLoadingViewTitle:@"正在提交 请稍后..."];
+        [self.view bringSubviewToFront:_loading_View];
+        
+        NSString *zipPath =  [self zipCurrentPartFile];
+        NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
+        
+        // 网络提交 uploadfile
+        NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kPartCommitUrl];
+        NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+        [parameters setObject:@"part" forKey:@"uploadfile"];
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.requestSerializer = [AFJSONRequestSerializer serializer];
+        [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+         {
+             if (zipData)
+             {
+                 [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"part.zip" mimeType:@"application/zip"];
+             }
+         } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             
+             _loading_View.hidden = YES;
+             NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
+             NSLog(@"%@",dic);
+             if ([[dic objectForKey:@"respCode"] intValue] == 1000)
+             {
+                 // 标记 关卡3已经提交
+                 [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+                 _commited = YES;
+             }
+             else
+             {
+                 NSLog(@"提交失败");
+                 NSLog(@"%@",[dic objectForKey:@"remark"]);
+                 [self commitFail_point_3];
+             }
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error)
+         {
+             _loading_View.hidden = YES;
+             [self commitFail_point_3];
+             NSLog(@"失败乃");
+         }];
+    }
+    else
+    {
+        // 合成json文件失败
+    }
+}
+
+
+#pragma mark -- 构成json文件
+- (BOOL)makeUpJsonFile
+{
+    NSString *jsonPath_local = [NSString stringWithFormat:@"%@/temp/info.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
+    NSData *jsonData_local = [NSData dataWithContentsOfFile:jsonPath_local];
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData_local options:0 error:nil];
+    // 整个topic资源信息
+    NSDictionary *mainDic = [dict objectForKey:@"classtypeinfo"];
+    // 当前part资源信息
+    NSDictionary *curentPartDic = [[mainDic objectForKey:@"partlist"] objectAtIndex:[OralDBFuncs getCurrentPart]-1];
+    
+    NSString *topicid = [OralDBFuncs getCurrentTopicID];
+    // 获取闯关分数 前两关
+    TopicRecord *record = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[OralDBFuncs getCurrentTopic]];
+    NSMutableArray *checkPoint = [[NSMutableArray alloc]init];
+    for (int i = 0; i < 3; i ++)
+    {
+        NSDictionary *levelDic = [[curentPartDic objectForKey:@"levellist"] objectAtIndex:i];
+        NSString *level = [NSString stringWithFormat:@"%d",[[levelDic objectForKey:@"level"] intValue]];
+        NSString *levelid = [levelDic objectForKey:@"id"];
+        
+        int currentPart = [OralDBFuncs getCurrentPart];
+        int currentPoint = i+1;
+        int score = [self getScoreWithPart:currentPart Point:currentPoint Record:record];
+        NSString *pass_mark;
+        if (i < 2)
+        {
+            pass_mark = @"通关";
+        }
+        else
+        {
+            pass_mark = @"未通关";
+        }
+        NSDictionary *subDic = @{@"ifsubmitteacher":@"否",@"level":level,@"levelid":levelid,@"score":[NSNumber numberWithInt:score],@"status":pass_mark,@"topicid":topicid,@"userid":[OralDBFuncs getCurrentUserID]};
+        [checkPoint addObject:subDic];
+    }
+    
+    NSArray *partInfoArray = [OralDBFuncs getTopicAnswerJsonArrayWithTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:YES];
+    
+    NSDictionary *finalDict = @{@"partInfo":partInfoArray,@"checkPoint":checkPoint,@"teacherid":_defaulTeacherID};
+    NSLog(@"%@",finalDict);
+    
+    NSError *parseError = nil;
+    NSData *jsonData_makeUped = [NSJSONSerialization dataWithJSONObject:finalDict options:NSJSONWritingPrettyPrinted error:&parseError];
+    
+    NSString *jsonFilePath = [NSString stringWithFormat:@"%@/part.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
+    BOOL saveSuc = [jsonData_makeUped writeToFile:jsonFilePath atomically:YES];
+    return saveSuc;
+}
+
+#pragma mark -- 压缩zip包
+- (NSString *)zipCurrentPartFile
+{
+    NSString *zipPath = [NSString stringWithFormat:@"%@/part.zip",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
+    ZipArchive *zip = [[ZipArchive alloc] init];
+    BOOL ret = [zip CreateZipFile2:zipPath];
+    if (ret)
+    {
+        NSArray *recordArray = [OralDBFuncs getTopicAnswerZipArrayWithTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:YES];
+        for (NSString *audioPath  in recordArray)
+        {
+            NSString *audioName = [[audioPath componentsSeparatedByString:@"/"] lastObject];
+            [zip addFileToZip:audioPath newname:audioName];
+        }
+        NSString *jsonPath = [NSString stringWithFormat:@"%@/part.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
+        [zip addFileToZip:jsonPath newname:@"part.json"];
+    }
+    NSLog(@"%@",zipPath);
+    return zipPath;
+}
+
+#pragma mark -- 获取关卡1和2分数
+- (int)getScoreWithPart:(int)currentPart Point:(int)point Record:(TopicRecord *)record
+{
+    switch (currentPart)
+    {
+        case 1:
+        {
+            switch (point)
+            {
+                case 1:
+                {
+                    return record.p1_1;
+                }
+                    break;
+                case 2:
+                {
+                    return  record.p1_2;
+                }
+                    break;
+                case 3:
+                {
+                    return record.p1_3;
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+            break;
+        case 2:
+        {
+            switch (point)
+            {
+                case 1:
+                {
+                    return record.p2_1;
+                }
+                    break;
+                case 2:
+                {
+                    return record.p2_2;
+                }
+                    break;
+                case 3:
+                {
+                    return record.p2_3;
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+            break;
+        case 3:
+        {
+            switch (point)
+            {
+                case 1:
+                {
+                    return record.p3_1;
+                }
+                    break;
+                case 2:
+                {
+                    return record.p3_2;
+                }
+                    break;
+                case 3:
+                {
+                    return record.p3_3;
+                }
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+    return 0;
+}
+
+
+#pragma mark -- 检测网络状态 参数：yes 请求part资源信息  no test资源信息
 - (void)jugeNetState
 {
     BOOL net_wifi = [OralDBFuncs getNet_WiFi_Download];
@@ -608,7 +852,15 @@ static UIView *openView;
     }
 }
 
-#pragma mark - 警告框 delegate
+#pragma mark -- 选择老师回调
+- (void)selectTeacherId:(NSString *)teacherID
+{
+    _defaulTeacherID = teacherID;
+    [self jugeNetState];
+}
+
+
+#pragma mark -- 警告框 delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSLog(@"%ld",buttonIndex);
@@ -616,59 +868,6 @@ static UIView *openView;
     {
         [self starCommitToTeacher_point_3];
     }
-}
-
-#pragma mark - 提交
-#pragma mark -- 提交按钮被点击
-
-- (void)commitCurrentPart:(UIButton *)btn
-{
-    [self jugeNetState];
-}
-
-#pragma mark -- 开始提交
-- (void)starCommitToTeacher_point_3
-{
-    // 提交给老师
-    NSString *zipPath = [NSString stringWithFormat:@"%@/part.zip",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
-    NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
-    
-    // 网络提交 uploadfile
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kPartCommitUrl];
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setObject:@"part" forKey:@"uploadfile"];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
-     {
-         if (zipData)
-         {
-             [formData appendPartWithFileData:zipData name:@"uploadfile" fileName:@"part.zip" mimeType:@"application/zip"];
-         }
-     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-         
-         _loading_View.hidden = YES;
-         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
-         NSLog(@"%@",dic);
-         if ([[dic objectForKey:@"respCode"] intValue] == 1000)
-         {
-             // 标记 关卡3已经提交
-             [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
-             _commited = YES;
-         }
-         else
-         {
-             NSLog(@"提交失败");
-             NSLog(@"%@",[dic objectForKey:@"remark"]);
-             [self commitFail_point_3];
-         }
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         _loading_View.hidden = YES;
-         [self commitFail_point_3];
-         NSLog(@"失败乃");
-     }];
 }
 
 #pragma mark -- 提交失败警告框
@@ -897,7 +1096,7 @@ static UIView *openView;
             CGRect rect = [NSString CalculateSizeOfString:[self filterHTML:text] Width:kScreentWidth-75 Height:9999 FontSize:kFontSize_17];
             if (rect.size.height>50)
             {
-                return 75+rect.size.height-50;
+                return 75+(int)rect.size.height-50;
             }
             return 75;
         }
@@ -908,7 +1107,7 @@ static UIView *openView;
             CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:9999 FontSize:kFontSize_17];
             if (rect.size.height>50)
             {
-                return 75+rect.size.height-50;
+                return 75+(int)rect.size.height-50;
             }
             return 75;
         }
@@ -921,7 +1120,7 @@ static UIView *openView;
                 {
                     // 已反馈
                     NSString *questionID = [[_text_array_point_3 objectAtIndex:indexPath.section] objectForKey:@"questionid"];
-                    NSDictionary *subDic = [self retrievalReviewDictWithQuestionID:questionID]; //[_score_array_point_3 objectAtIndex:indexPath.section];
+                    NSDictionary *subDic = [self retrievalReviewDictWithQuestionID:questionID];
                     if ([[subDic objectForKey:@"teacherurl"] length])
                     {
                         // 语音评价 大小不变

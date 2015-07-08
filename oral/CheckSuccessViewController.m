@@ -13,6 +13,8 @@
 #import "SuccessCell.h"
 #import "OralDBFuncs.h"
 #import "NSString+CalculateStringSize.h"
+#import "DeviceManager.h"
+
 
 @interface CheckSuccessViewController ()<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate>
 {
@@ -40,40 +42,43 @@
     [_topScoreLabel setFrame:CGRectMake(0, score_Y, kScreentWidth, score_H)];
     [_topShareButton setFrame:CGRectMake((kScreentWidth-shareBtn_W)/2, topView_H-space_share_toBottom-shareBtn_H, shareBtn_W, shareBtn_H)];
     [_topDesLabel setFrame:CGRectMake(0, topView_H-space_share_toBottom-shareBtn_H-tipLabel_H-5, kScreentWidth, tipLabel_H)];
+    // 底部按钮
     float bottom_btn_W = 110.0/375*kScreentWidth;
     float bottom_btn_H = 50.0/667*kScreenHeight;
-    
     [_backButton setFrame:CGRectMake((kScreentWidth/2-bottom_btn_W)/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
-    
     [_continueButton setFrame:CGRectMake(kScreentWidth*3/4-bottom_btn_W/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
+    // 字体
+    _continueButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_16];
+    _backButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_16];
+    // 背景色
+    _backButton.backgroundColor = _backColor;
+    _continueButton.backgroundColor = _backColor;
+
+    // 文字色
+    [_backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_continueButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
+    // 圆角半径
+    _backButton.layer.masksToBounds = YES;
+    _backButton.layer.cornerRadius = _backButton.frame.size.height/2;
+    _continueButton.backgroundColor = _backColor;
+    _continueButton.layer.masksToBounds = YES;
+    _continueButton.layer.cornerRadius = _continueButton.frame.size.height/2;
     
+    // 中间文字
     float menu_label_H = 40.0/667*kScreenHeight;
     float menu_label_Y = topView_H;
-    
     [_midTitleLabel setFrame:CGRectMake(0, menu_label_Y, kScreentWidth, menu_label_H)];
-    
     [_midTableView setFrame:CGRectMake(0, menu_label_Y+menu_label_H, kScreentWidth, kScreenHeight-menu_label_Y-menu_label_H-bottom_btn_H-10)];
-    
-    
+    // 闯关成绩单文字颜色
+    _midTitleLabel.textColor = _backColor;
+    _midTitleLabel.textAlignment = NSTextAlignmentCenter;
+    _midTitleLabel.font = [UIFont systemFontOfSize:kFontSize_16];
     _topScoreLabel.backgroundColor = [UIColor clearColor];
     _topShareButton.backgroundColor = [UIColor whiteColor];
     _topShareButton.layer.masksToBounds = YES;
     _topShareButton.layer.cornerRadius = _topShareButton.frame.size.height/2;
     
-    
-    // 修改属性
-    // 底部按钮 椭圆形 背景色 文字色
-    _backButton.backgroundColor = _backColor;
-    [_backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _backButton.layer.masksToBounds = YES;
-    _backButton.layer.cornerRadius = _backButton.frame.size.height/2;
-    _continueButton.backgroundColor = _backColor;
-    [_continueButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    _continueButton.layer.masksToBounds = YES;
-    _continueButton.layer.cornerRadius = _continueButton.frame.size.height/2;
-    // 闯关成绩单文字颜色
-    _midTitleLabel.textColor = _backColor;
-    _midTitleLabel.textAlignment = NSTextAlignmentCenter;
     // 描述 分数  文字颜色
     _topScoreLabel.textColor = [UIColor whiteColor];
     _topDesLabel.textColor = [UIColor whiteColor];
@@ -219,7 +224,12 @@
     CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:99999 FontSize:kFontSize_14];
     if (rect.size.height>kCellHeght-20)
     {
-        return kCellHeght+rect.size.height-60;
+        NSInteger height = kCellHeght+rect.size.height-50;
+        if (height%2)
+        {
+            height += 1;
+        }
+        return height;
     }
     return kCellHeght;
 }
@@ -236,6 +246,10 @@
     if ( cell == nil)
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"SuccessCell" owner:self options:0] lastObject];
+        
+        cell.htmlWebView.scrollView.scrollEnabled=NO;
+        cell.htmlWebView.scrollView.backgroundColor = [UIColor whiteColor];
+        cell.backgroundView.backgroundColor = [UIColor whiteColor];
     }
     
     NSString *answerId = [[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"id"];
@@ -249,6 +263,8 @@
     [cell.scoreButton setTitle:[NSString stringWithFormat:@"%d",record.lastScore] forState:UIControlStateNormal];
     return cell;
 }
+
+
 
 - (void)didReceiveMemoryWarning
 {

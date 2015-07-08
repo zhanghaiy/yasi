@@ -11,7 +11,7 @@
 #import "MyTeacherCell.h"
 #import "NSURLConnectionRequest.h"
 #import "OralDBFuncs.h"
-
+#import "UIImageView+WebCache.h"
 
 @interface MyTeacherViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -143,7 +143,7 @@
     
     cell.teacherDesLabel.text = [dic objectForKey:@"signiture"];
     cell.teacherName.text = [dic objectForKey:@"teachername"];
-    
+    [cell.teaHeadImgV setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"teachericon"]] placeholderImage:[UIImage imageNamed:@"select_Teacher"]];
     cell.selectButton.tag = kSelectedButonTag + indexPath.row;
     [cell.selectButton addTarget:self action:@selector(selectTeacxher:) forControlEvents:UIControlEventTouchUpInside];
     return cell;

@@ -58,7 +58,7 @@
                 <outlet property="lineLabel" destination="auq-lJ-tTm" id="Ivu-GG-QHx"/>
                 <outlet property="scoreButton" destination="SqG-jf-lSx" id="Ji4-HB-LDn"/>
             </connections>
-            <point key="canvasLocation" x="356.5" y="137"/>
+            <point key="canvasLocation" x="358.5" y="148"/>
         </tableViewCell>
     </objects>
 </document>

@@ -826,8 +826,8 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 
 +(NSString *)getCurrentUserID
 {
-    NSString *userName = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_CONTEXT_USERID];
-    return userName;
+    NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_CONTEXT_USERID];
+    return userID;
 }
 
 +(void)setCurrentTopic:(NSString *)topicName
@@ -1000,13 +1000,71 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 {
     NSString *key = [NSString stringWithFormat:@"Test-%@-%@",topicName,userName];
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:commit] forKey:key];
-   
 }
 
 +(BOOL)getTestCommitTopic:(NSString *)topicName andUserName:(NSString *)userName
 {
     NSString *key = [NSString stringWithFormat:@"Test-%@-%@",topicName,userName];
     return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
+}
+
+
++(void)setTopicAnswerJsonArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;
+{
+    if (part)
+    {
+        NSString *key = [NSString stringWithFormat:@"Test-%@-%@-Json-Array-part",topicName,userName];
+        [[NSUserDefaults standardUserDefaults] setObject:array forKey:key];
+    }
+    else
+    {
+        NSString *key = [NSString stringWithFormat:@"Test-%@-%@-Json-Array-test",topicName,userName];
+        [[NSUserDefaults standardUserDefaults] setObject:array forKey:key];
+    }
+}
+
++(NSArray *)getTopicAnswerJsonArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part
+{
+    if (part)
+    {
+        NSString *key = [NSString stringWithFormat:@"Test-%@-%@-Json-Array-part",topicName,userName];
+        return [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    }
+    else
+    {
+        NSString *key = [NSString stringWithFormat:@"Test-%@-%@-Json-Array-test",topicName,userName];
+        return [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    }
+    
+}
+
+// 标记模考合成zip文件所需的数组
++(void)setTopicAnswerZipArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part
+{
+    if (part)
+    {
+        NSString *key = [NSString stringWithFormat:@"Test-%@-%@-zip-Array-part",topicName,userName];
+        [[NSUserDefaults standardUserDefaults] setObject:array forKey:key];
+    }
+    else
+    {
+        NSString *key = [NSString stringWithFormat:@"Test-%@-%@-zip-Array-test",topicName,userName];
+        [[NSUserDefaults standardUserDefaults] setObject:array forKey:key];
+    }
+}
+
++(NSArray *)getTopicAnswerZipArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part
+{
+    if (part)
+    {
+        NSString *key = [NSString stringWithFormat:@"Test-%@-%@-zip-Array-part",topicName,userName];
+        return [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    }
+    else
+    {
+        NSString *key = [NSString stringWithFormat:@"Test-%@-%@-zip-Array-test",topicName,userName];
+        return [[NSUserDefaults standardUserDefaults] objectForKey:key];
+    }
 }
 
 // 标记 默认老师

@@ -171,7 +171,7 @@
     _teaHeadImgView.layer.cornerRadius = _teaHeadImgView.bounds.size.height/2;
     _teaHeadImgView.layer.borderColor = _backColor.CGColor;
     _teaHeadImgView.layer.borderWidth = 2;
-    [_teaHeadImgView setImage:[UIImage imageNamed:@"Teacher_normal"]];
+    [_teaHeadImgView setImage:[UIImage imageNamed:@"teacher_normal"]];
     
     // 问题背景----layer
     _teaQuestionLabel.layer.masksToBounds = YES;
@@ -250,6 +250,7 @@
     _answerTextWebV = [[UIWebView alloc]initWithFrame:CGRectMake(webview_x, webView_y, webView_w, webView_H)];
     _answerTextWebV.hidden = NO;
     _answerTextWebV.delegate =self;
+    [_studentView addSubview:_answerTextWebV];
     
     _studentView.backgroundColor = [UIColor whiteColor];
     _stuFollowLabel.textColor = _backColor;//跟读颜色

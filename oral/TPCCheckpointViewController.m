@@ -14,7 +14,6 @@
 #import "CheckPractiseBookViewController.h"
 #import "CheckScoreViewController.h"
 
-#import "NetManager.h"
 #import "ZipManager.h"
 
 #import "CheckTestViewController.h"
@@ -348,17 +347,20 @@
 - (void)requestTopicZipResource
 {
     _loading_View.hidden = NO;
-    [self changeLoadingViewTitle:@"正在请求资源西你想，请稍后...."];
+    [self changeLoadingViewTitle:@"正在请求资源，请稍后...."];
     [self.view bringSubviewToFront:_loading_View];
     NSString *zipfileurl = [_topicDict objectForKey:@"zipfileurl"];
     NSLog(@"%@",zipfileurl);
-    
     [NSURLConnectionRequest requestWithUrlString:zipfileurl target:self aciton:@selector(requestPartZipFinished:) andRefresh:YES];
 }
 
 #pragma mark - 下载模考资源
 - (void)requestTestZip
 {
+    _loading_View.hidden = NO;
+    [self changeLoadingViewTitle:@"正在请求模考资源，请稍后...."];
+    [self.view bringSubviewToFront:_loading_View];
+    
     NSString *testZipUrl = [NSString stringWithFormat:@"%@%@?topid=%@",kBaseIPUrl,kTestUrl,[_topicDict objectForKey:@"id"]];
     NSLog(@"%@",testZipUrl);
     [NSURLConnectionRequest requestWithUrlString:testZipUrl target:self aciton:@selector(requestTestZipFinished:) andRefresh:YES];
@@ -366,14 +368,14 @@
 
 
 
-#pragma mark - 开始请求
-- (void)startRequestURL:(NSString *)urlString andCallBackAction:(SEL)action
-{
-    NetManager *netManager = [[NetManager alloc]init];
-    netManager.target = self;
-    netManager.action = action;
-    [netManager netGetUrl:urlString];
-}
+//#pragma mark - 开始请求
+//- (void)startRequestURL:(NSString *)urlString andCallBackAction:(SEL)action
+//{
+//    NetManager *netManager = [[NetManager alloc]init];
+//    netManager.target = self;
+//    netManager.action = action;
+//    [netManager netGetUrl:urlString];
+//}
 
 #pragma mark - 缓存闯关资源
 - (void)requestPartZipFinished:(NSURLConnectionRequest *)request
@@ -394,12 +396,14 @@
         else
         {
             // 保存失败 重新获取
+            [self showFailAlert];
         }
     }
     else
     {
         // zip请求失败
         NSLog(@"zip请求失败");
+        [self showFailAlert];
     }
 }
 
@@ -437,12 +441,14 @@
             // 成功 ---> zip
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
             NSString *zipUrl = [dict objectForKey:@"zipfileurl"];
-            [self startRequestURL:zipUrl andCallBackAction:@selector(requestTestZipFinished:)];
+            [NSURLConnectionRequest requestWithUrlString:zipUrl target:self aciton:@selector(requestTestZipFinished:) andRefresh:YES];
+//            [self startRequestURL:zipUrl andCallBackAction:@selector(requestTestZipFinished:)];
         }
         else
         {
             // 失败
             NSLog(@"失败");
+            [self showFailAlert];
         }
     }
     else
@@ -462,12 +468,18 @@
         else
         {
            // zip包下载失败
+            [self showFailAlert];
         }
     }
     
 }
 
-
+- (void)showFailAlert
+{
+    _loading_View.hidden = YES;
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"网络请求失败" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
 
 #pragma mark - 路径是否存在
 - (BOOL)filePathExit:(NSString *)path

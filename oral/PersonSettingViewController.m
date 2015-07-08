@@ -33,21 +33,18 @@
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitleWithTitle:@"设置"];
     self.view.backgroundColor = _backgroundViewColor;
-//    _imageArray = @[@"",@"Recharge",@"netSetting",@"VersionUpdate",@"AboutMe",@"defaultTeacher"];
-//    _textArray = @[@"我的账号",@"账户充值",@"网络设置",@"版本更新",@"关于我们",@"默认老师"];
     _textArray = @[@"我的账号",@"网络设置",@"关于我们",@"默认老师"];
     _imageArray = @[@"",@"netSetting",@"AboutMe",@"defaultTeacher"];
     
     _settingTableV = [[UITableView alloc]initWithFrame:CGRectMake(0, KNavTopViewHeight+10, kScreentWidth, kScreenHeight-KNavTopViewHeight-10) style:UITableViewStylePlain];
     _settingTableV.delegate = self;
     _settingTableV.dataSource = self;
-    _settingTableV.separatorColor = _backgroundViewColor;
+    _settingTableV.separatorColor = [UIColor colorWithRed:240/255.0 green:246/255.0 blue:247/255.0 alpha:1];
     _settingTableV.backgroundColor = _backgroundViewColor;
     if ([_settingTableV respondsToSelector:@selector(setSeparatorInset:)])
     {
         [_settingTableV setSeparatorInset:UIEdgeInsetsZero];
     }
-    
     if ([_settingTableV respondsToSelector:@selector(setLayoutMargins:)])
     {
         [_settingTableV setLayoutMargins:UIEdgeInsetsZero];
@@ -64,11 +61,9 @@
         [cell setSeparatorInset:UIEdgeInsetsZero];
         
     }
-    
     if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
         
         [cell setLayoutMargins:UIEdgeInsetsZero];
-        
     }
 }
 
@@ -90,6 +85,7 @@
     cell.textLabel.textColor = kText_Color;
     [cell.imageView setImage:[UIImage imageNamed:[_imageArray objectAtIndex:indexPath.row]]];
     cell.textLabel.text = [_textArray objectAtIndex:indexPath.row];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

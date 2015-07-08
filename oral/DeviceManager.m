@@ -16,6 +16,11 @@
     return [UIScreen mainScreen].bounds.size.height;
 }
 
++ (NSString *)currentVersion
+{
+    return [UIDevice currentDevice].systemVersion;
+}
+
 //判断操作系统是否为iOS7
 + (BOOL)upIOS7Version
 {

@@ -112,7 +112,7 @@
     CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:99999 FontSize:kFontSize_15];
     if (rect.size.height>70)
     {
-        return kCellHeight+rect.size.height-70;
+        return (int)(kCellHeight+rect.size.height-70);
     }
     return kCellHeight;
 }

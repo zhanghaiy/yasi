@@ -18,6 +18,8 @@
 //判断操作系统是否高于iOS7
 + (BOOL)upIOS7Version;
 
++ (NSString *)currentVersion;
+
 //获取设备的型号 返回的是一个字符串
 + (NSString *)currentDeviceModel;
 

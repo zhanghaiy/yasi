@@ -77,12 +77,6 @@
     _sum_part_Counts = _partListArray.count;
 }
 
-//#pragma mark -- 本地资源文件路径
-//- (NSString *)getFileBasePath
-//{
-//    NSString *path = [NSString stringWithFormat:@"%@/temp"];[NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/topicTest/temp",[OralDBFuncs getCurrentTopic]];
-//    return path;
-//}
 
 #pragma mark -- 本地录音文件路径
 - (NSString *)getRecordSavePath
@@ -840,18 +834,23 @@
     {
         // 稍后提交
         //1、 标记 关卡3是否提交
-        // 合成json文件 打包zip  在后续成绩单界面 直接用zip
-        if ([self makeUpLocalJsonFile_test])
-        {
-            [self zipCurrentTestFile];
-            [OralDBFuncs setTestCommit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
-            [self backToTopicPage];
-        }
-        else
-        {
-            NSLog(@"打包文件失败");
-            [self showAlertViewWithMessage:@"打包文件失败"];
-        }
+        
+        [OralDBFuncs setTestCommit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+        [OralDBFuncs setTopicAnswerJsonArray:_jsonArray  Topic:[OralDBFuncs getCurrentTopic]UserName:[OralDBFuncs getCurrentUserName] ISPart:NO];
+        [OralDBFuncs setTopicAnswerZipArray:_testAudioPathArray Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:NO];
+        [self backToTopicPage];
+//        // 合成json文件 打包zip  在后续成绩单界面 直接用zip
+//        if ([self makeUpLocalJsonFile_test])
+//        {
+//            [self zipCurrentTestFile];
+//            [OralDBFuncs setTestCommit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+//            [self backToTopicPage];
+//        }
+//        else
+//        {
+//            NSLog(@"打包文件失败");
+//            [self showAlertViewWithMessage:@"打包文件失败"];
+//        }
     }
     else if (btn.tag == KRightCommitButtonTag)
     {
@@ -949,10 +948,11 @@
     [alertV show];
 }
 
-#pragma mark - 合成json文件
+#pragma mark -- 合成json文件
 - (BOOL)makeUpLocalJsonFile_test
 {
     NSDictionary *modelpartInfo = @{@"modelpartInfo":_jsonArray,@"teacherid":_teacherid,@"topic":[OralDBFuncs getCurrentTopicID],@"useid":[OralDBFuncs getCurrentUserID]};
+    NSLog(@"%@",modelpartInfo);
     NSError *parseError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:modelpartInfo options:NSJSONWritingPrettyPrinted error:&parseError];
     NSString *jsonFilePath = [NSString stringWithFormat:@"%@/modelpart.json",[self getRecordSavePath]];
@@ -961,7 +961,7 @@
     return saveSuc;
 }
 
-#pragma mark - 压缩zip包
+#pragma mark -- 压缩zip包
 - (NSString *)zipCurrentTestFile
 {
     NSString *zipPath = [NSString stringWithFormat:@"%@/modelpart.zip",[self getRecordSavePath]];
@@ -978,7 +978,7 @@
         [zip addFileToZip:jsonPath newname:@"modelpart.json"];
     }
 //    NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
-    return zipPath;
+    return zipPath;// 此处返回路径  直接返回data 上传时存在问题
 }
 
 #pragma mark - 选择老师回调
@@ -991,14 +991,6 @@
 #pragma mark - 返回topic详情页
 - (void)backToTopicPage
 {
-//    for (UIViewController *viewControllers in self.navigationController.viewControllers)
-//    {
-//        if ([viewControllers isKindOfClass:[TPCCheckpointViewController class]])
-//        {
-//            [self.navigationController popToViewController:viewControllers animated:YES];
-//            break;
-//        }
-//    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 
