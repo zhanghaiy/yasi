@@ -137,8 +137,7 @@
     // 模考
     
     // 判断是否参加过模考
-    NSString *exitMokaoPath = [NSString stringWithFormat:@"%@/modelpart.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
-    if ([[NSFileManager defaultManager]fileExistsAtPath:exitMokaoPath])
+    if ([OralDBFuncs getTestFinishedWithTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName]])
     {
         // 参加过模考
         for (int i = 0; i < 3; i ++)

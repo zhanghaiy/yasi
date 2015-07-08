@@ -128,8 +128,14 @@
 
 
 // 标记模考/闯关合成zip文件所需的数组
-+(void)setTopicAnswerZipArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;;
-+(NSArray *)getTopicAnswerZipArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;;
++(void)setTopicAnswerZipArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;
++(NSArray *)getTopicAnswerZipArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;
+
++ (void)setTestFinished:(BOOL)finished Topic:(NSString *)topic UserName:(NSString *)userName;
++ (BOOL)getTestFinishedWithTopic:(NSString *)topic UserName:(NSString *)userName;
++ (void)setPartFinished:(BOOL)finished WithTopic:(NSString *)topic UserName:(NSString *)userName;
++ (BOOL)getPartFinishedWithTopic:(NSString *)topic UserName:(NSString *)userName;
+
 
 // 标记 默认老师
 + (void)setDefaultTeacherID:(NSString *)teacherId UserName:(NSString *)userName;

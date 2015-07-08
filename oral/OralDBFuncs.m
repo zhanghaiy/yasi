@@ -1067,6 +1067,31 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     }
 }
 
++ (void)setTestFinished:(BOOL)finished Topic:(NSString *)topic UserName:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-Test-finished",topic,userName];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:finished] forKey:key];
+}
+
++ (BOOL)getTestFinishedWithTopic:(NSString *)topic UserName:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-Test-finished",topic,userName];
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
+}
+
++ (void)setPartFinished:(BOOL)finished WithTopic:(NSString *)topic UserName:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-part-finished",topic,userName];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:finished] forKey:key];
+}
+
++ (BOOL)getPartFinishedWithTopic:(NSString *)topic UserName:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-part-finished",topic,userName];
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
+}
+
+
 // 标记 默认老师
 + (void)setDefaultTeacherID:(NSString *)teacherId UserName:(NSString *)userName
 {
