@@ -71,18 +71,8 @@
     [self.view addSubview:_rightTableView];
     
     NSString *urlSTr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTopicListUrl];
-    NSLog(@"%d",kCurrentNetStatus);
+    NSLog(@"%ld",kCurrentNetStatus);
     [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestFinished:) andRefresh:kCurrentNetStatus];
-
-//    if ([DetectionNetWorkState netStatus] == NotReachable)
-//    {
-//        // 当前无网络
-//        [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestFinished:) andRefresh:NO];
-//    }
-//    else
-//    {
-//        [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestFinished:) andRefresh:YES];
-//    }
 }
 
 #pragma mark - 网络反馈
@@ -176,8 +166,11 @@
         
         TopicRecord *currentRecord = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[dic objectForKey:@"classtype"]];
         float progress = currentRecord.completion/9.0;
+        NSLog(@"%f",progress);
         
-        cell.topicProgressV.progress = progress;
+//        [cell.topicProgressV setProgress:progress];
+        [cell.topicProgressV performSelector:@selector(setProVProgress:) withObject:[NSNumber numberWithFloat:progress]];
+//        cell.topicProgressV.progress = progress;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.topicButton.tag = indexPath.row+kTopicButtonTag;
         [cell.topicButton addTarget:self action:@selector(startPass:) forControlEvents:UIControlEventTouchUpInside];

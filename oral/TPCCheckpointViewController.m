@@ -37,34 +37,35 @@
 #define kLeftMarkButtonTag 1234
 #define kPartButtonTag 222
 
-
+#pragma mark - 加载视图
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
     [self changeLoadingViewTitle:@"正在加载资源文件,请稍后..."];
-
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
-    
     self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
     // 界面元素
     [self uiConfig];
     
+    // 当前topicNAme
     NSString *topicName = [_topicDict objectForKey:@"classtype"];
     [self addTitleLabelWithTitleWithTitle:topicName];
     
+    // 合成练习id
     NSDate *date = [NSDate date];
     NSString *dateStr = [ConstellationManager transformNSStringWithDate:date];
     NSString *recordId = [NSString stringWithFormat:@"record%@",dateStr];
+    // topicID
     NSString *topicID = [_topicDict objectForKey:@"id"];
-    [OralDBFuncs setCurrentRecordId:recordId];
-    [OralDBFuncs setCurrentTopic:topicName];
-    [OralDBFuncs setCurrentTopicID:topicID];
     
-    NSLog(@"%@",[_topicDict objectForKey:@"classtype"]);
+    [OralDBFuncs setCurrentRecordId:recordId];  // 当前的练习id
+    [OralDBFuncs setCurrentTopic:topicName];    // 当前topic名称
+    [OralDBFuncs setCurrentTopicID:topicID];    // 当前topicID
     
+    // 在数据库中标记当前topic
     if ([OralDBFuncs addTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[OralDBFuncs getCurrentTopic]])
     {
         NSLog(@"success");
@@ -73,23 +74,29 @@
     {
         NSLog(@"fail");
     }
-    
 }
 
+#pragma mark - 视图已经出现
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    TopicRecord *record = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[_topicDict objectForKey:@"classtype"]];
-    int complete = record.completion/3;
+//    TopicRecord *record = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[_topicDict objectForKey:@"classtype"]];
+//    int complete = record.completion/3;
+    // 此处解锁  要求：动画过渡
+    // 本地获取当前topic进度
+    NSInteger complete = [OralDBFuncs getUnLockNumWithTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName]];
+    // 解锁关卡按钮变为正常状态
     [self configPartBtnWithCompletion:complete];
     
+    // 改变滚动视图的偏移量
     [UIView animateWithDuration:1 animations:^{
         _partScrollView.contentOffset = CGPointMake(_partScrollView.frame.size.width*complete, 0);
     }];
 }
 
-- (void)configPartBtnWithCompletion:(int)completion
+#pragma mark - 改变part按钮背景色 （用于解锁效果）
+- (void)configPartBtnWithCompletion:(NSInteger)completion
 {
     for (int i= 0; i < 3; i ++)
     {
@@ -97,6 +104,7 @@
         if (i<=completion)
         {
             [partBtn setBackgroundColor:kPart_Button_Color];
+            partBtn.enabled = YES;
         }
         else
         {
@@ -201,7 +209,7 @@
     [self makePagesAloneWithButtonTag:kLeftMarkButtonTag];
 }
 
-#pragma mark - 页码按钮设置为圆形
+#pragma mark -- 页码按钮设置为圆形
 - (void)drawPageButton:(UIButton *)btn
 {
     btn.layer.cornerRadius = _leftMarkBtn.frame.size.width/2;
@@ -212,7 +220,7 @@
 
 
 
-#pragma mark - 显示当前的关卡数
+#pragma mark -- 显示当前的关卡数
 - (void)makePagesAloneWithButtonTag:(NSInteger)btnTag
 {
     for (int i = 0; i < 3; i ++)
@@ -229,8 +237,8 @@
     }
 }
 
-
-#pragma mark - 将要闯关
+#pragma mark - 闯关
+#pragma mark -- 闯关按钮被点击
 - (void)startPart:(UIButton *)btn
 {
     /*
@@ -257,8 +265,47 @@
         [self jugeNetStateWithSection:YES];
     }
 }
+#pragma mark -- 开始闯关
+- (void)beginPointWithPointCounts:(int)pointCounts
+{
+    // 标记当前练习的partNum
+    [OralDBFuncs setCurrentPart:(pointCounts+1)];
+    _loading_View.hidden = YES;
+    CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
+    [self.navigationController pushViewController:followVC animated:YES];
+}
 
-#pragma mark - 检测网络状态 参数：yes 请求part资源信息  no test资源信息
+#pragma mark - 模考
+#pragma mark -- 直接模考按钮被点击
+- (IBAction)testButtonClicked:(id)sender
+{
+    /*
+     判断模考资源是否存在 不存在 下载 存在 直接模考
+     */
+    NSString *jsonPath = [NSString stringWithFormat:@"%@/topicTest/temp/mockinfo.json",[self getLocalSavePath]];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:jsonPath])
+    {
+        [self startEnterTest];
+    }
+    else
+    {
+        _requestTest_zipUrl = YES;
+        [self jugeNetStateWithSection:NO];
+        
+    }
+}
+
+#pragma mark -- 进入模考
+- (void)startEnterTest
+{
+    _loading_View.hidden = YES;
+    CheckTestViewController *testVC = [[CheckTestViewController alloc]initWithNibName:@"CheckTestViewController" bundle:nil];
+    [self.navigationController pushViewController:testVC animated:YES];
+}
+
+
+#pragma mark - 网络
+#pragma mark -- 检测当前网络状态 （参数：part --》 yes 请求part资源信息  no test资源信息）
 - (void)jugeNetStateWithSection:(BOOL)part
 {
     _request_part = part;
@@ -299,17 +346,7 @@
     }
 }
 
-#pragma mark - 警告框 delegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSLog(@"%ld",buttonIndex);
-    if (buttonIndex == 1)
-    {
-        [self requestZipResourceOFPart:_request_part];
-    }
-}
-
-#pragma mark - 请求zip资源
+#pragma mark -- 请求zip资源 （参数Part：YES ---> 请求闯关zip包  NO ---> 请求模考zip包）
 - (void)requestZipResourceOFPart:(BOOL)part
 {
     if (part)
@@ -322,28 +359,7 @@
     }
 }
 
-
-#pragma mark - 开始闯关
-- (void)beginPointWithPointCounts:(int)pointCounts
-{
-    [OralDBFuncs setCurrentPart:(pointCounts+1)];
-    _loading_View.hidden = YES;
-    CheckFollowViewController *followVC = [[CheckFollowViewController alloc]initWithNibName:@"CheckFollowViewController" bundle:nil];
-    [self.navigationController pushViewController:followVC animated:YES];
-}
-
-#pragma mark - UIScrollView Delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    NSInteger mark = (scrollView.contentOffset.x+10)/(scrollView.contentSize.width/3);
-    [self makePagesAloneWithButtonTag:kLeftMarkButtonTag+mark];
-}
-
-
-
-
-#pragma mark - 网络请求
-#pragma mark - 下载闯关资源
+#pragma mark -- 下载闯关资源
 - (void)requestTopicZipResource
 {
     _loading_View.hidden = NO;
@@ -354,30 +370,7 @@
     [NSURLConnectionRequest requestWithUrlString:zipfileurl target:self aciton:@selector(requestPartZipFinished:) andRefresh:YES];
 }
 
-#pragma mark - 下载模考资源
-- (void)requestTestZip
-{
-    _loading_View.hidden = NO;
-    [self changeLoadingViewTitle:@"正在请求模考资源，请稍后...."];
-    [self.view bringSubviewToFront:_loading_View];
-    
-    NSString *testZipUrl = [NSString stringWithFormat:@"%@%@?topid=%@",kBaseIPUrl,kTestUrl,[_topicDict objectForKey:@"id"]];
-    NSLog(@"%@",testZipUrl);
-    [NSURLConnectionRequest requestWithUrlString:testZipUrl target:self aciton:@selector(requestTestZipFinished:) andRefresh:YES];
-}
-
-
-
-//#pragma mark - 开始请求
-//- (void)startRequestURL:(NSString *)urlString andCallBackAction:(SEL)action
-//{
-//    NetManager *netManager = [[NetManager alloc]init];
-//    netManager.target = self;
-//    netManager.action = action;
-//    [netManager netGetUrl:urlString];
-//}
-
-#pragma mark - 缓存闯关资源
+#pragma mark -- 缓存闯关资源
 - (void)requestPartZipFinished:(NSURLConnectionRequest *)request
 {
     //zip请求成功
@@ -407,7 +400,64 @@
     }
 }
 
-#pragma mark - 解压zip包
+
+#pragma mark -- 下载模考资源
+- (void)requestTestZip
+{
+    _loading_View.hidden = NO;
+    [self changeLoadingViewTitle:@"正在请求模考资源，请稍后...."];
+    [self.view bringSubviewToFront:_loading_View];
+    
+    NSString *testZipUrl = [NSString stringWithFormat:@"%@%@?topid=%@",kBaseIPUrl,kTestUrl,[_topicDict objectForKey:@"id"]];
+    NSLog(@"%@",testZipUrl);
+    [NSURLConnectionRequest requestWithUrlString:testZipUrl target:self aciton:@selector(requestTestZipFinished:) andRefresh:YES];
+}
+
+#pragma mark -- 请求 test zip资源
+- (void)requestTestZipFinished:(NSURLConnectionRequest *)request
+{
+    if (_requestTest_zipUrl)
+    {
+        // 请求zip路径
+        _requestTest_zipUrl = NO;
+        if (request.downloadData)
+        {
+            // 成功 ---> zip
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+            NSString *zipUrl = [dict objectForKey:@"zipfileurl"];
+            [NSURLConnectionRequest requestWithUrlString:zipUrl target:self aciton:@selector(requestTestZipFinished:) andRefresh:YES];
+        }
+        else
+        {
+            // 失败
+            NSLog(@"失败");
+            [self showFailAlert];
+        }
+    }
+    else
+    {
+        // 请求zip包
+        if (request.downloadData)
+        {
+            // zip包下载成功
+            NSString *testZip = [NSString stringWithFormat:@"%@/test.zip",[self getLocalSavePath]];
+            BOOL success = [self unZipToLocalData:request.downloadData WithPath:testZip andFolder:@"topicTest"];
+            if (success)
+            {
+                // 进入模考
+                [self startEnterTest];
+            }
+        }
+        else
+        {
+            // zip包下载失败
+            [self showFailAlert];
+        }
+    }
+    
+}
+
+#pragma mark -- 解压zip包
 - (BOOL)unZipToLocalData:(NSData*)data WithPath:(NSString *)path andFolder:(NSString *)folderName
 {
     if ([self filePathExit:[self getLocalSavePath]]==NO)
@@ -429,51 +479,22 @@
         return NO;
     }
 }
-#pragma mark - 请求 test zip资源
-- (void)requestTestZipFinished:(NSURLConnectionRequest *)request
+
+
+
+
+#pragma mark - 警告框
+#pragma mark -- 警告框 delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (_requestTest_zipUrl)
+    NSLog(@"%ld",buttonIndex);
+    if (buttonIndex == 1)
     {
-        // 请求zip路径
-        _requestTest_zipUrl = NO;
-        if (request.downloadData)
-        {
-            // 成功 ---> zip
-            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-            NSString *zipUrl = [dict objectForKey:@"zipfileurl"];
-            [NSURLConnectionRequest requestWithUrlString:zipUrl target:self aciton:@selector(requestTestZipFinished:) andRefresh:YES];
-//            [self startRequestURL:zipUrl andCallBackAction:@selector(requestTestZipFinished:)];
-        }
-        else
-        {
-            // 失败
-            NSLog(@"失败");
-            [self showFailAlert];
-        }
+        [self requestZipResourceOFPart:_request_part];
     }
-    else
-    {
-       // 请求zip包
-        if (request.downloadData)
-        {
-            // zip包下载成功
-            NSString *testZip = [NSString stringWithFormat:@"%@/test.zip",[self getLocalSavePath]];
-            BOOL success = [self unZipToLocalData:request.downloadData WithPath:testZip andFolder:@"topicTest"];
-            if (success)
-            {
-                // 进入模考
-                [self startEnterTest];
-            }
-        }
-        else
-        {
-           // zip包下载失败
-            [self showFailAlert];
-        }
-    }
-    
 }
 
+#pragma mark -- 创建网络请求失败警告框
 - (void)showFailAlert
 {
     _loading_View.hidden = YES;
@@ -481,7 +502,24 @@
     [alertV show];
 }
 
-#pragma mark - 路径是否存在
+
+#pragma mark - UIScrollView Delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    NSInteger mark = (scrollView.contentOffset.x+10)/(scrollView.contentSize.width/3);
+    [self makePagesAloneWithButtonTag:kLeftMarkButtonTag+mark];
+}
+
+
+#pragma mark - 路径
+#pragma mark -- 创建路径
+- (BOOL)createPath:(NSString *)path
+{
+    BOOL ret = [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
+    return ret;
+}
+
+#pragma mark -- 判断路径是否存在
 - (BOOL)filePathExit:(NSString *)path
 {
     if ([[NSFileManager defaultManager]fileExistsAtPath:path isDirectory:nil])
@@ -491,14 +529,7 @@
     return NO;
 }
 
-#pragma mark - 创建路径
-- (BOOL)createPath:(NSString *)path
-{
-    BOOL ret = [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
-    return ret;
-}
-
-#pragma mark - 获取当前topic根目录
+#pragma mark -- 获取当前topic根目录
 - (NSString *)getLocalSavePath
 {
     NSString *path = [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@",[_topicDict objectForKey:@"classtype"]];
@@ -520,32 +551,7 @@
 }
 */
 
-#pragma mark - 直接模考
-- (IBAction)testButtonClicked:(id)sender
-{
-    /*
-     判断模考资源是否存在 不存在 下载 存在 直接模考
-     */
-    NSString *jsonPath = [NSString stringWithFormat:@"%@/topicTest/temp/mockinfo.json",[self getLocalSavePath]];
-    if ([[NSFileManager defaultManager]fileExistsAtPath:jsonPath])
-    {
-        [self startEnterTest];
-    }
-    else
-    {
-        _requestTest_zipUrl = YES;
-        [self jugeNetStateWithSection:NO];
-
-    }
-}
-
-- (void)startEnterTest
-{
-    _loading_View.hidden = YES;
-    CheckTestViewController *testVC = [[CheckTestViewController alloc]initWithNibName:@"CheckTestViewController" bundle:nil];
-    [self.navigationController pushViewController:testVC animated:YES];
-}
-
+#pragma mark - 进入练习簿
 - (IBAction)practiseBook:(id)sender
 {
     // 练习本
@@ -553,6 +559,7 @@
     [self.navigationController pushViewController:practiseVC animated:YES];
 }
 
+#pragma mark - 进入成绩单
 - (IBAction)scoreMenu:(id)sender
 {
     // 成绩单
@@ -561,6 +568,7 @@
     [self.navigationController pushViewController:scoreMenuVC animated:YES];
 }
 
+#pragma mark - 返回上一页
 - (void)backToPrePage
 {
     [self.navigationController popViewControllerAnimated:YES];

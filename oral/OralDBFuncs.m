@@ -983,6 +983,19 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
 }
 
+// 标记topic完成度
++ (void)setUnLockNum:(NSInteger)unlockNum Topic:(NSString *)topic UserName:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"%@_%@_TopicUnLockNum",userName,topic];
+    [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInteger:unlockNum] forKey:key];
+}
+
++ (NSInteger)getUnLockNumWithTopic:(NSString *)topic UserName:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"%@_%@_TopicUnLockNum",userName,topic];
+    return  [[[NSUserDefaults standardUserDefaults] objectForKey:key]integerValue];
+}
+
 +(void)setTestPartDuration:(float)duration andPart:(int)partNum Topic:(NSString *)topic Username:(NSString *)username
 {
     NSString *key = [NSString stringWithFormat:@"%@-%@-test-part%d",username,topic,partNum];

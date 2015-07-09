@@ -28,8 +28,8 @@
 
 @interface SCOPartMenuViewController ()<UIScrollViewDelegate,UITableViewDataSource,UITableViewDelegate,SelectTeacherDelegate>
 {
-    Point_3_Commit_View *_commit_Head_View;
-    Point_3_Review_Head_View *_review_Head_View;
+    Point_3_Commit_View *_commit_Head_View; // 提交 未提交头视图
+    Point_3_Review_Head_View *_review_Head_View;// 反馈头视图
     
     BOOL _exit_point_3;// 判断用户是否练习过关卡3
     BOOL _commited;// 判断用户是否提交过
@@ -168,7 +168,7 @@
     CMTime audioDuration = audioAsset.duration;
     
     float audioDurationSeconds =CMTimeGetSeconds(audioDuration);
-    NSLog(@"%f",audioDurationSeconds);
+    NSLog(@"获取本地音频时长:%f",audioDurationSeconds);
     return audioDurationSeconds;
 }
 
@@ -259,9 +259,9 @@
     Point_3_Section_Head_View *sec_head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Section_Head_View" owner:self options:0] lastObject];
     sec_head_View.tag = viewTag+kSectionHeadPoint3Tag;
     sec_head_View.question_label.text = text;
-    if (rect.size.height>30)
+    if (rect.size.height>25)
     {
-        [sec_head_View setFrame:CGRectMake(0, 0, kScreentWidth, 60+(rect.size.height-35))];
+        [sec_head_View setFrame:CGRectMake(0, 0, kScreentWidth, 60+(rect.size.height-25))];
     }
     else
     {
@@ -269,6 +269,23 @@
     }
     sec_head_View.back_button.tag = kPoint3_Section_BackBtn_Tag + viewTag;
     [sec_head_View.back_button addTarget:self action:@selector(openPoint_3_SelectedCell:) forControlEvents:UIControlEventTouchUpInside];
+    [sec_head_View bringSubviewToFront:sec_head_View.markLabel];
+    
+    
+    if (_review_point_3)
+    {
+        sec_head_View.markLabel.hidden = YES;
+    }
+    else
+    {
+        sec_head_View.markLabel.hidden = NO;
+        sec_head_View.markLabel.text = @"老师给你反馈了，赶快点开看看吧~~";
+        sec_head_View.text_review_imgV.hidden = YES;
+        sec_head_View.audio_review_imgV.hidden = YES;
+    }
+
+    
+    
     return sec_head_View;
 }
 
@@ -313,9 +330,21 @@
 - (void)setPoint_3_commited_head_view
 {
     UITableView *tableV_point_3 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
+    _commit_Head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Commit_View" owner:self options:0] lastObject];
     [_commit_Head_View.commit_Button setTitle:@"已提交" forState:UIControlStateNormal];
     _commit_Head_View.commit_Button.enabled = NO;
     _commit_Head_View.commit_des_Label.text = @"已提交给老师，请耐心等待老师反馈~~~~";
+    tableV_point_3.tableHeaderView = _commit_Head_View;
+}
+
+#pragma mark -- 关卡3 未提交头视图
+- (void)setPoint_3_notcommited_head_view
+{
+    UITableView *tableV_point_3 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
+    _commit_Head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Commit_View" owner:self options:0] lastObject];
+    _commit_Head_View.commit_des_Label.text = @"提交你的回答给老师吧，会有很大的提高哦~~~";
+    [_commit_Head_View.commit_Button setTitle:@"提交" forState:UIControlStateNormal];
+    [_commit_Head_View.commit_Button addTarget:self action:@selector(commitCurrentPart:) forControlEvents:UIControlEventTouchUpInside];
     tableV_point_3.tableHeaderView = _commit_Head_View;
 }
 
@@ -511,50 +540,37 @@ static UIView *openView;
         _exit_point_3 = [OralDBFuncs getPartLevel3PracticeedwithTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
         // 是否提交
         _commited = [OralDBFuncs getPartLevel3CommitwithTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
-        
         // 关卡3 列表控件
         UITableView *tableV_point_3 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
-        
         if (_exit_point_3)// 练习过关卡3
         {
             // 反馈头视图
             _review_Head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Review_Head_View" owner:self options:0] lastObject];
+            
             // 反馈头视图点击事件
             UITapGestureRecognizer *tap_review = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(openTeacherSumReview:)];
             [_review_Head_View addGestureRecognizer:tap_review];
-            
-            // 提交头视图
-            _commit_Head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Commit_View" owner:self options:0] lastObject];
-            
             // 循环创建区头视图 加入数组
             _section_array_point_3 = [[NSMutableArray alloc]init];
             for (int i = 0; i < _text_array_point_3.count; i ++)
             {
                 [_section_array_point_3 addObject:[self create_point3_section_view_Tag:i andInfoDict:nil]];
             }
-            
             if (_commited)// 已提交
             {
+                // 已提交
+                [self setPoint_3_commited_head_view];
                 if (_review_point_3)// 已反馈
                 {
-                    
                     tableV_point_3.tableHeaderView = _review_Head_View;
-                    if (_review_point_3&&_commited)
-                    {
-                        // 网络请求
-                        [self requestLevel_3_watingInfo];
-                    }
-                }
-                else // 未反馈
-                {
-                    
+                    // 网络请求
+                    [self requestLevel_3_watingInfo];
                 }
             }
             else
             {
                 // 未提交 可查看自己的回答音频等信息
-                [_commit_Head_View.commit_Button setTitle:@"提交" forState:UIControlStateNormal];
-                [_commit_Head_View.commit_Button addTarget:self action:@selector(commitCurrentPart:) forControlEvents:UIControlEventTouchUpInside];
+                [self setPoint_3_notcommited_head_view];
             }
         }
         else // 未练习过
@@ -562,7 +578,6 @@ static UIView *openView;
             // 未练习过
             [self setPoint_3_table_head_view_notPracticed];
         }
-        
     }
     else
     {
@@ -632,6 +647,8 @@ static UIView *openView;
                  // 标记 关卡3已经提交
                  [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
                  _commited = YES;
+                 
+                 [_commit_Head_View.commit_Button setTitle:@"已提交" forState:UIControlStateNormal];
              }
              else
              {
@@ -915,6 +932,7 @@ static UIView *openView;
             _requestReviewSuccess = YES;
             [self analysizePartJson];
             UITableView *tabV = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
+            tabV.tableHeaderView = _review_Head_View;
             [tabV reloadData];
         }
         else
@@ -962,7 +980,6 @@ static UIView *openView;
     NSData *data = [NSData dataWithContentsOfFile:partReviewPath];
     NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     _score_array_point_3 = [dict objectForKey:@"teacheranswerlist"];
-    
     for (NSDictionary *subdic in _score_array_point_3)
     {
         if (![[subdic objectForKey:@"questionid"] length])
@@ -992,21 +1009,13 @@ static UIView *openView;
     if (tableView.tag == kTableViewBaseTag+2)
     {
         // point3
-        if (_requestReviewSuccess)
+        if (_exit_point_3)
         {
             return _text_array_point_3.count;
-        }
-        else
-        {
-            if (_commited)
-            {
-                return _text_array_point_3.count;
-            }
         }
         return 0;
     }
     return 1;
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -1028,7 +1037,7 @@ static UIView *openView;
         case 2:
         {
             // point 3
-            if (_requestReviewSuccess)
+            if (_exit_point_3)
             {
                 return 1;
             }
@@ -1056,20 +1065,24 @@ static UIView *openView;
     if (tableView.tag == kTableViewBaseTag+2)
     {
         Point_3_Section_Head_View *view = [_section_array_point_3 objectAtIndex:section];
-        if (_requestReviewSuccess)
+        if (_review_point_3&&_requestReviewSuccess)
         {
-            view.markLabel.hidden = YES;
-            [view.text_review_imgV setImage:[UIImage imageNamed:@"Text_review"]];
-            if (_open&&_openIndex == section)
+            NSString *questionID = [[_text_array_point_3 objectAtIndex:section] objectForKey:@"questionid"];
+            NSDictionary *subDic = [self retrievalReviewDictWithQuestionID:questionID];
+            if ([[subDic objectForKey:@"teacherurl"] length])
             {
-                view.text_review_imgV.hidden = YES;
+                // 语音评价 大小不变
+                [view.text_review_imgV setImage:[UIImage imageNamed:@"audio_review"]];
+            }
+            else if([[subDic objectForKey:@"teacherevaluate"] length])
+            {
+                // 文字评价 根据文字大小改变frame
+                [view.text_review_imgV setImage:[UIImage imageNamed:@"Text_review"]];
             }
         }
         else
         {
-            view.markLabel.hidden = NO;
-            view.text_review_imgV.hidden = YES;
-            view.audio_review_imgV.hidden = YES;
+            
         }
         return view;
     }
@@ -1104,7 +1117,7 @@ static UIView *openView;
         case 1:
         {
             NSString *text = [_text_array_point_2 objectAtIndex:indexPath.row];
-            CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:9999 FontSize:kFontSize_17];
+            CGRect rect = [NSString CalculateSizeOfString:[self filterHTML:text] Width:kScreentWidth-80 Height:9999 FontSize:kFontSize_17];
             if (rect.size.height>50)
             {
                 return 75+(int)rect.size.height-50;
@@ -1116,7 +1129,7 @@ static UIView *openView;
         {
             if (_open&& _openIndex == indexPath.section)
             {
-                if (_review_point_3)
+                if (_review_point_3&&_commited)
                 {
                     // 已反馈
                     NSString *questionID = [[_text_array_point_3 objectAtIndex:indexPath.section] objectForKey:@"questionid"];
@@ -1139,7 +1152,10 @@ static UIView *openView;
                     }
                     return 120;
                 }
-                return 60;
+                else
+                {
+                    return 60;
+                }
             }
             return 0;
         }
@@ -1186,24 +1202,20 @@ static UIView *openView;
             break;
         case 2:
         {
-            if (_requestReviewSuccess)
+            if (_review_point_3&&_commited)// 已反馈
             {
                 static NSString *cellId = @"Point_3_Review_Cell";
                 Point_3_Review_Cell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-                if (cell == nil)
-                {
+                if (cell == nil){
                     cell = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Review_Cell" owner:self options:0] lastObject];
                 }
-                
                 NSDictionary *userAnswerDic = [_text_array_point_3 objectAtIndex:indexPath.section];
-                [cell.player_button setTitle:[NSString stringWithFormat:@"%.f\"",round([[userAnswerDic objectForKey:@"duration"] floatValue]) ] forState:UIControlStateNormal];
+                [cell.player_button setTitle:[NSString stringWithFormat:@"%.1f\"",round([[userAnswerDic objectForKey:@"duration"] floatValue]) ] forState:UIControlStateNormal];
                 // 用户自己的头像
                 [cell.stu_head_imgV setImage:[UIImage imageNamed:@"person_head_image"]];
                 
                 cell.player_button.tag = indexPath.section + kPlaySelfButtonTag;
                 [cell.player_button addTarget:self action:@selector(playerSelfAnswer:) forControlEvents:UIControlEventTouchUpInside];
-                
-                
                 // 老师反馈
                 NSDictionary *reviewDic = [_score_array_point_3 objectAtIndex:indexPath.section];
                 // 老师头像
@@ -1226,12 +1238,10 @@ static UIView *openView;
                     
                     // 两种情况 1、宽度小于1行 2、多行
                     CGRect oraginalRect = cell.tea_review_button.frame;
-                    if (rect_1.size.width>(kScreentWidth-90))
-                    {
+                    if (rect_1.size.width>(kScreentWidth-90)){
                         // 2 、 多行
                         CGRect rect_2 = [NSString CalculateSizeOfString:review_text Width:(kScreentWidth-90) Height:99999 FontSize:kFontSize_14];
-                        if (rect_2.size.height>35)
-                        {
+                        if (rect_2.size.height>35){
                             oraginalRect.size.height = rect_2.size.height;
                         }
                         oraginalRect.origin.x = 15;
@@ -1239,29 +1249,24 @@ static UIView *openView;
                         [cell.tea_review_button setFrame:oraginalRect];
                         cell.tea_review_button.layer.cornerRadius = 5;
                     }
-                    else
-                    {
+                    else{
                         // 1、1行
                         [cell.tea_review_button setFrame:CGRectMake(kScreentWidth-75-rect_1.size.width, oraginalRect.origin.y, rect_1.size.width, 35)];
                     }
                 }
-                else
-                {
+                else{
                     [cell.tea_review_button setTitle:@"暂无评价" forState:UIControlStateNormal];
                 }
                 
-                if (_open&&_openIndex==indexPath.section)
-                {
+                if (_open&&_openIndex==indexPath.section){
                     //
                 }
-                else
-                {
+                else {
                     cell.hidden = YES;
                 }
-                
                 return cell;
             }
-            else
+            else //已提交 未提交 未反馈
             {
                 static NSString *cellId = @"Point_3_Commit_cell";
                 Point_3_Commit_cell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
@@ -1271,12 +1276,19 @@ static UIView *openView;
                 }
                 
                 NSDictionary *userAnswerDic = [_text_array_point_3 objectAtIndex:indexPath.section];
-                [cell.playerButton setTitle:[NSString stringWithFormat:@"%f\"",round([[userAnswerDic objectForKey:@"duration"] floatValue]) ] forState:UIControlStateNormal];
+                [cell.playerButton setTitle:[NSString stringWithFormat:@"%.0f\"",round([[userAnswerDic objectForKey:@"duration"] floatValue]) ] forState:UIControlStateNormal];
                 cell.playerButton.tag = indexPath.section + kPlaySelfButtonTag;
                 [cell.playerButton addTarget:self action:@selector(playerSelfAnswer:) forControlEvents:UIControlEventTouchUpInside];
-
                 // 用户自己的头像
                 [cell.stu_head_imgV setImage:[UIImage imageNamed:@"person_head_image"]];
+                if (_open&&_openIndex == indexPath.section)
+                {
+                    cell.hidden = NO;
+                }
+                else
+                {
+                    cell.hidden = YES;
+                }
                 return cell;
             }
         }

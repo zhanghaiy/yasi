@@ -86,6 +86,9 @@
     _midTableView.delegate = self;
     _midTableView.dataSource = self;
     _midTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _midTableView.showsHorizontalScrollIndicator = NO;
+    _midTableView.showsVerticalScrollIndicator = NO;
+    
 }
 
 #pragma mark - 获取总分
@@ -153,13 +156,13 @@
     [_topShareButton setTitleColor:[color_array objectAtIndex:index] forState:UIControlStateNormal];
 
     // 根据分数 设置标题
-    NSArray *textArray = @[@"成绩不错呦~超过了62%的小伙伴!",@"成绩不错呦~超过了62%的小伙伴!",@"没及格~需要加强联系呦~努力努力！！！！"];
+    NSArray *textArray = @[@"成绩不错~~继续保持！！！",@"成绩中等~~继续努力！！！",@"成绩不理想，需要加强联系哦~~加油！！！！"];
     _topDesLabel.text = [textArray objectAtIndex:index];
     
     if (!index)
     {
         // 不及格 不可以继续闯关
-//        _continueButton.enabled = NO;
+        _continueButton.enabled = NO;
     }
 }
 
@@ -185,7 +188,6 @@
 {
     /*
      数据结构
-     
      _topicInfoDict--> topic闯关信息---> dict(字典)
      当前topic所有part--> partListArray = [_topicInfoDict objectForKey:@"partlist"] -->数组
      当前part--> curretPartDict = [partListArray objectAtIndex:_currentPartCounts] -->字典
@@ -195,7 +197,6 @@
     //    NSString *path = [[NSBundle mainBundle]pathForResource:@"info" ofType:@"json"];
     
     NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/info.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
-    
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *maindict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
     // 整个topic资源信息

@@ -48,13 +48,13 @@
     [self addSubview:_progressView];
 }
 
-- (void)setProgress:(float)progress
+- (void)setProVProgress:(NSNumber*)progress
 {
-    _progress = progress;
+    _progress = progress.floatValue;
+    NSLog(@"%f",_progress);
     
-    NSInteger wid = progress*self.frame.size.width;
+    NSInteger wid = _progress*self.frame.size.width;
     _progressView.frame = CGRectMake(0, 0, wid, self.frame.size.height);
-//    _progressView.layer.cornerRadius = 10;
 }
 
 - (void)setColor:(UIColor *)color

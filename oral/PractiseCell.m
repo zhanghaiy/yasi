@@ -31,6 +31,7 @@
     _scoreButton.layer.cornerRadius = _scoreButton.frame.size.height/2;
     
     _lineLabel.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
+    _textWebView.scrollView.scrollEnabled = NO;
 }
 
 - (void)setCellIndex:(NSInteger)cellIndex

@@ -17,4 +17,6 @@
 @property (nonatomic,assign) float progress;
 @property (nonatomic,assign) UIColor *color;
 
+- (void)setProVProgress:(NSNumber*)progress;
+
 @end

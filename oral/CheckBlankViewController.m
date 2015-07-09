@@ -518,10 +518,26 @@
 {
     NSString *text = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
     if(_dfEngine)
+    {
         [_dfEngine startEngineFor:[self filterHTML:text]];
-    
-    NSString *answerid = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"id"];
-    [_saveAnswerIdArray addObject:answerid];
+        NSString *answerid = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"id"];
+        [_saveAnswerIdArray addObject:answerid];
+    }
+    else
+    {
+        _dfEngine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"cocim_haiyan"];
+        if (_dfEngine)
+        {
+            [_dfEngine startEngineFor:[self filterHTML:text]];
+            NSString *answerid = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"id"];
+            [_saveAnswerIdArray addObject:answerid];
+        }
+        else
+        {
+            UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"语音引擎初始化失败，回到主界面" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertV show];
+        }
+    }
 }
 
 #pragma mark  - 停止思必驰

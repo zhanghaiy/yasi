@@ -14,7 +14,7 @@
 #import "OralDBFuncs.h"
 
 
-@interface CheckFollowViewController ()<DFAiengineSentProtocol,UIWebViewDelegate>
+@interface CheckFollowViewController ()<DFAiengineSentProtocol,UIWebViewDelegate,UIAlertViewDelegate>
 {
     NSDictionary *_topicInfoDict;// 整个topic信息
     NSDictionary *_currentPartDict;// 当前part资源信息
@@ -361,7 +361,7 @@
  以下： 播放问题音频、回答音频 开始跟读 均采用定时器延时 为了实现界面控件先后动画
  */
 #pragma mark - 播放问题准备
-#pragma mark - 播放之前动画
+#pragma mark -- 播放之前动画
 - (void)prepareQuestion
 {
     _questionTextLabel.font = [UIFont systemFontOfSize:kFontSize_14];
@@ -389,7 +389,7 @@
 
 
 #pragma mark - 播放回答准备
-#pragma mark - 回答前动画
+#pragma mark -- 回答前动画
 - (void)prepareAnswer
 {
     // 文本
@@ -403,7 +403,7 @@
     [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(playAnswer) userInfo:nil repeats:NO];
 }
 
-#pragma mark - 播放回答音频
+#pragma mark -- 播放回答音频
 - (void)playAnswer
 {
     //合成音频路径
@@ -415,7 +415,7 @@
     [_markAllAnswerIdArray addObject:answerid];
 }
 
-#pragma mark - 播放完成回调
+#pragma mark -- 播放完成回调
 - (void)playerCallBack
 {
     NSLog(@"playerCallBack");
@@ -435,14 +435,14 @@
 
 
 #pragma mark - 跟读准备
-#pragma mark - 动画
+#pragma mark -- 动画
 - (void)prepareFollow
 {
     // 停顿 1S
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(followTextShow) userInfo:nil repeats:NO];
 }
 
-#pragma mark - 显示-->请跟读
+#pragma mark -- 显示-->请跟读
 - (void)followTextShow
 {
     [self stopReduceTimer];
@@ -451,7 +451,7 @@
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(stuImageBrite) userInfo:nil repeats:NO];
 }
 
-#pragma mark - 头像-->亮
+#pragma mark -- 头像-->亮
 - (void)stuImageBrite
 {
     [self stopReduceTimer];
@@ -462,7 +462,7 @@
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(willFollowRecord) userInfo:nil repeats:NO];
 }
 
-#pragma mark - 跟读按钮-->显示
+#pragma mark -- 跟读按钮-->显示
 - (void)willFollowRecord
 {
     [_reduceTimer invalidate];
@@ -473,13 +473,13 @@
 
 
 #pragma mark - 切换问题变换文本
-#pragma mark - 展示问题文本
+#pragma mark -- 展示问题文本
 - (void)showCurrentQuestionText
 {
     _questionTextLabel.text = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"question"];
 }
 
-#pragma mark - 展示回答文本
+#pragma mark -- 展示回答文本
 - (void)showCurrentAnswerText
 {
     _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
@@ -518,14 +518,29 @@
 
 
 #pragma mark - 思必驰语音引擎
-#pragma mark - 开启思必驰引擎
+#pragma mark -- 开启思必驰引擎
 - (void)startSBCAiengine
 {
     NSString *text = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
     if(_dfEngine)
+    {
         [_dfEngine startEngineFor:[self filterHTML:text]];
+    }
+    else
+    {
+        _dfEngine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"cocim_haiyan"];
+        if (_dfEngine)
+        {
+            [_dfEngine startEngineFor:[self filterHTML:text]];
+        }
+        else
+        {
+            UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:@"语音引擎初始化失败，回到主界面" delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertV show];
+        }
+    }
 }
-#pragma mark - 结束思必驰引擎
+#pragma mark -- 结束思必驰引擎
 - (void)stopSBCAiengine
 {
     // 展示分数
@@ -533,7 +548,7 @@
     
 }
 
-#pragma mark - 思必驰反馈
+#pragma mark -- 思必驰反馈
 -(void)processAiengineSentResult:(DFAiengineSentResult *)result
 {
 //    NSDictionary *fluency = result.fluency;
@@ -551,7 +566,7 @@
 
 
 
-#pragma mark - 思必驰反馈信息
+#pragma mark -- 思必驰反馈信息
 - (void)showResult:(DFAiengineSentResult *)result
 {
     // 若思必驰出错 停止
@@ -622,10 +637,13 @@
     _sumCounts ++;
 }
 
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self backToPrePage];
+}
 
 #pragma mark - 定时器
-#pragma mark -  时间倒计时
+#pragma mark --  时间倒计时
 - (void)timeReduce
 {
     CGRect rect = _timeProgressLabel.frame;
@@ -641,7 +659,7 @@
     }
 }
 
-#pragma mark - 关闭定时器
+#pragma mark -- 关闭定时器
 - (void)stopReduceTimer
 {
     [_reduceTimer invalidate];
@@ -765,6 +783,7 @@
     _scoreButton.hidden = YES;
     _timeProgressLabel.hidden = NO;
     _stuImageView.hidden = NO;
+    _stuTitleLabel.text = @"";
     
     _currentAnswerCounts++;// 当前回答数+1
     if (_currentAnswerCounts>=_sumAnswerCounts)
@@ -786,11 +805,9 @@
             float levelScore = _sumScore/_sumCounts;
             [OralDBFuncs updateTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[OralDBFuncs getCurrentTopic] part:[OralDBFuncs getCurrentPart] level:[OralDBFuncs getCurrentPoint] andScore:levelScore];
             NSLog(@"~~~~~~~~~~~~~~~");
-            
             CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
             [self.navigationController pushViewController:successVC animated:YES];
         }
-        
     }
     else
     {

@@ -168,7 +168,7 @@
 //    _teacherView.frame = rect;
     
     // 老师头像 圆形 有光圈
-    _teaHeadImgView.image = [UIImage imageNamed:@"touxiang.png"];
+    _teaHeadImgView.image = [UIImage imageNamed:@"teacher_normal"];
     _teaHeadImgView.layer.masksToBounds = YES;
     _teaHeadImgView.layer.cornerRadius = _teaHeadImgView.frame.size.height/2;
     _teaHeadImgView.layer.borderColor = _backColor.CGColor;
@@ -492,7 +492,11 @@
     else
     {
         [OralDBFuncs setPartLevel3Practiceed:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
-       // 提交给老师
+
+//        [OralDBFuncs setPartFinished:YES WithTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName]];
+        [OralDBFuncs setUnLockNum:[OralDBFuncs getCurrentPart] Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName]];
+
+        // 提交给老师
         _CommitLeftButton.hidden = NO;
         _commitRightButton.hidden = NO;
     }
@@ -523,7 +527,6 @@
     UIButton *btn = (UIButton *)sender;
     if (btn.tag == kCommitLeftButtonTag)
     {
-        
         // 稍后提交
         [OralDBFuncs setPartLevel3Commit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
         [OralDBFuncs setTopicAnswerJsonArray:_partInfoArray Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:YES];

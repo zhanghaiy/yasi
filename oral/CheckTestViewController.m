@@ -838,6 +838,7 @@
         [OralDBFuncs setTestCommit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
         [OralDBFuncs setTopicAnswerJsonArray:_jsonArray  Topic:[OralDBFuncs getCurrentTopic]UserName:[OralDBFuncs getCurrentUserName] ISPart:NO];
         [OralDBFuncs setTopicAnswerZipArray:_testAudioPathArray Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:NO];
+        [OralDBFuncs setTestFinished:YES Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName]];
         [self backToTopicPage];
 //        // 合成json文件 打包zip  在后续成绩单界面 直接用zip
 //        if ([self makeUpLocalJsonFile_test])

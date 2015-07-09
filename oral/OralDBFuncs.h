@@ -112,9 +112,16 @@
 +(void)setPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum;
 +(BOOL)getPartLevel3CommitwithTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum;
 
+// 标记关卡3是否完成
 +(void)setPartLevel3Practiceed:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum;
 +(BOOL)getPartLevel3PracticeedwithTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum;
 
+// 标记topic完成度
++ (void)setUnLockNum:(NSInteger)unlockNum Topic:(NSString *)topic UserName:(NSString *)userName;
++ (NSInteger)getUnLockNumWithTopic:(NSString *)topic UserName:(NSString *)userName;
+
+
+//标记part音频总时间 用于成绩单 界面 模考部分
 +(void)setTestPartDuration:(float)duration andPart:(int)partNum Topic:(NSString *)topic Username:(NSString *)username;
 +(float)getTestPartDurationWithPart:(int)partNum Topic:(NSString *)topic Username:(NSString *)username;
 
@@ -133,8 +140,8 @@
 
 + (void)setTestFinished:(BOOL)finished Topic:(NSString *)topic UserName:(NSString *)userName;
 + (BOOL)getTestFinishedWithTopic:(NSString *)topic UserName:(NSString *)userName;
-+ (void)setPartFinished:(BOOL)finished WithTopic:(NSString *)topic UserName:(NSString *)userName;
-+ (BOOL)getPartFinishedWithTopic:(NSString *)topic UserName:(NSString *)userName;
+//+ (void)setPartFinished:(BOOL)finished WithTopic:(NSString *)topic UserName:(NSString *)userName PartNum:;
+//+ (BOOL)getPartFinishedWithTopic:(NSString *)topic UserName:(NSString *)userName PartNum;
 
 
 // 标记 默认老师
@@ -160,8 +167,10 @@
 
 // 数据库增加topic
 +(BOOL)addTopicRecordFor:(NSString *)userName with:(NSString *)topicName;
+
 // 标记闯关每一关卡的总得分
 +(void)updateTopicRecordFor:(NSString *)userName with:(NSString *)topicName part:(int)part level:(int)level andScore:(int)score;
+
 // 获取闯关每一关卡的总得分
 +(TopicRecord *)getTopicRecordFor:(NSString *)userName withTopic:(NSString *)topicName;
 
@@ -194,8 +203,6 @@
 // 获取到闯关成绩
 +(PracticeBookRecord *)getLastRecordFor:(NSString *)userName topicName:(NSString *)topicName answerId:(NSString *)answerId partNum:(int)partNum andLevelNum:(int)levelNum;
 +(BOOL)isInLastBook:(NSString *)userName withAnswerId:(NSString *)answer_id;
-
-
 
 // 标记关卡3的成绩
 +(BOOL)replaceLevel3RecordFor:(NSString *)userName topicName:(NSString *)topicName partNum:(int)partNum questionNum:(int)questionNum withUserAudioName:(NSString *)userAudioName recordId:(NSString *)recordId replyFlag:(int)replyFlag score:(int)score teacherName:(NSString *)teacherName teacherReplyName:(NSString *)teacherReplyName;
