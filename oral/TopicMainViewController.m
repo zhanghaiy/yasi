@@ -71,7 +71,6 @@
     [self.view addSubview:_rightTableView];
     
     NSString *urlSTr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTopicListUrl];
-    NSLog(@"%ld",kCurrentNetStatus);
     [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestFinished:) andRefresh:kCurrentNetStatus];
 }
 
@@ -166,7 +165,6 @@
         
         TopicRecord *currentRecord = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[dic objectForKey:@"classtype"]];
         float progress = currentRecord.completion/9.0;
-        NSLog(@"%f",progress);
         
 //        [cell.topicProgressV setProgress:progress];
         [cell.topicProgressV performSelector:@selector(setProVProgress:) withObject:[NSNumber numberWithFloat:progress]];
@@ -199,7 +197,6 @@
 #pragma mark - 进入闯关界面
 - (void)startPass:(UIButton *)btn
 {
-    NSLog(@"%ld",btn.tag);
     NSDictionary *selectedTopicDict = [_topicArray objectAtIndex:btn.tag - kTopicButtonTag];
     TPCCheckpointViewController *checkVC = [[TPCCheckpointViewController alloc]initWithNibName:@"TPCCheckpointViewController" bundle:nil];
     checkVC.topicDict = selectedTopicDict;
@@ -230,7 +227,6 @@
 #pragma mark - 滑动列表时调用该方法
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    NSLog(@"%f",scrollView.contentOffset.y / kmainCellHeight);
     if (_selectFromRight == NO)
     {
         if (scrollView.tag == kTopicMainTableViewTag)

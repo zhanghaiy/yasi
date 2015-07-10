@@ -24,7 +24,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
   
-    NSLog(@"%@",[OralDBFuncs getCurrentUserName]);
     if ([OralDBFuncs getCurrentUserName])
     {
         [OralDBFuncs updateUserLastLoginTimeStamp:[OralDBFuncs getCurrentUserName]];

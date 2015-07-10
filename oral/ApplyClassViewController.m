@@ -100,7 +100,6 @@
     {
         [UIView animateWithDuration:1 animations:^{
             self.view.frame = CGRectMake(0, -216, kScreentWidth, kScreenHeight);
-            NSLog(@"%f",_upRect.origin.y);
         }];
     }
     return YES;
@@ -182,8 +181,6 @@
     [UIView animateWithDuration:0.5 animations:^{
         _codeView.frame = _downRect;
         _infoView.frame = _upRect;
-        NSLog(@"%f",_downRect.origin.y);
-        NSLog(@"%f",_upRect.origin.y);
     }];
 }
 
