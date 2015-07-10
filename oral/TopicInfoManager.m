@@ -40,5 +40,7 @@ static TopicInfoManager *manager = nil;
     return [_allTopicsDict objectForKey:topicID];
 }
 
+//- (void)addPartPracticeInfoWithPracticeID:(NSString *)practiceID Commit:(BOOL)commit 
+
 
 @end

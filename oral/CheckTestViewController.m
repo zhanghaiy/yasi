@@ -535,6 +535,7 @@
             _testFinished = YES;
             _commitButtonLeft.hidden = NO;
             _commitButtonRight.hidden = NO;
+            [OralDBFuncs setTestFinished:YES Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName]];
         }
     }
 }
@@ -838,7 +839,6 @@
         [OralDBFuncs setTestCommit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
         [OralDBFuncs setTopicAnswerJsonArray:_jsonArray  Topic:[OralDBFuncs getCurrentTopic]UserName:[OralDBFuncs getCurrentUserName] ISPart:NO];
         [OralDBFuncs setTopicAnswerZipArray:_testAudioPathArray Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:NO];
-        [OralDBFuncs setTestFinished:YES Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName]];
         [self backToTopicPage];
 //        // 合成json文件 打包zip  在后续成绩单界面 直接用zip
 //        if ([self makeUpLocalJsonFile_test])
@@ -925,6 +925,7 @@
                  NSLog(@"upload success!");
                  // 提交成功后回到topic详情页面
                  [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
+                 [OralDBFuncs markTestCommitedNumberTopic:[OralDBFuncs getCurrentTopic] User:[OralDBFuncs getCurrentUserName]];
                  NSLog(@"模考提交老师成功");
                  _commitSuccess = YES;
                  [self showAlertViewWithMessage:@"提交成功"];

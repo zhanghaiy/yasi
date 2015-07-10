@@ -11,6 +11,11 @@
 @interface TopicInfoManager : NSObject
 
 @property (strong,nonatomic) NSMutableDictionary *allTopicsDict;
+
+//@property (strong,nonatomic) NSMutableDictionary *part_Commit_review_Dict;
+//@property (strong,nonatomic) NSMutableDictionary *test_Commit_Review_dict;
+
+
 + (TopicInfoManager *)getTopicInfoManager;
 - (void)setTopicDetailInfo:(NSDictionary *)topicInfoDic TopicID:(NSString *)topicID;
 - (NSDictionary *)getTopicDetailInfoWithTopicID:(NSString *)topicID;

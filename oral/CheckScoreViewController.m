@@ -39,11 +39,11 @@
     
     float _test_part_sumTime;
     
-    BOOL _wating_part; // 判断当前topic是否有处理信息
-    BOOL _wating_test;
     
-    NSDictionary *_watingDict_part;
-    NSDictionary *_watingDict_test;
+    NSMutableArray *_watingInfoArray;// 老师已处理事项的数组
+    
+    BOOL _wating_test;// 标记是否有模考的反馈
+    NSDictionary *_watingDict_test; // 模考反馈基本信息
     NSString *_defaultTeacherID;
 }
 @end
@@ -265,6 +265,7 @@
     _playerManager.action = @selector(playTestFinished:);
     _playerManager.target = self;
     
+    _watingInfoArray = [[NSMutableArray alloc]init];
     [self requestTestWating];
 }
 
@@ -287,7 +288,6 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:reuqest.downloadData options:0 error:nil];
         if ([[dic objectForKey:@"respCode"] integerValue] == 1000)
         {
-            // 成功
             NSArray *waitingList = [dic objectForKey:@"waitingList"];
             // 此处需：遍历数组 找到 当前topic 当前的模考反馈信息 此处需和后台确认
             if (waitingList.count)
@@ -302,9 +302,9 @@
                         if ([[watingListDic objectForKey:@"part"] intValue])
                         {
                             // part3
-                            _wating_part = YES;
-                            _watingDict_part = watingListDic;
+                            [_watingInfoArray addObject:watingListDic];
                         }
+                        
                         if ([[watingListDic objectForKey:@"part"]length]==0)
                         {
                             NSLog(@"~~~~~%@~~~~~~",[watingListDic objectForKey:@"part"]);
@@ -341,11 +341,17 @@
         [self jugeCouldCommit];
     }
     
+
     if (_wating_test)
     {
-        // 如果老师已反馈
+        // 如果老师已反馈 在此判断反馈的是否是最新的
         ScoreTestMenuViewController *testVC = [[ScoreTestMenuViewController alloc]init];
-        testVC.watingDict = _watingDict_test;
+        NSInteger commitNUm = [OralDBFuncs getTestCommitedNumberTopic:[OralDBFuncs getCurrentTopic] User:[OralDBFuncs getCurrentUserName]];
+        NSInteger currentNum = [[_watingDict_test objectForKey:@"hissn"] integerValue];
+        if ([OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]]&& (commitNUm == currentNum))
+        {
+            testVC.watingDict = _watingDict_test;
+        }
         [self.navigationController pushViewController:testVC animated:YES];
     }
 }
@@ -603,27 +609,34 @@
 - (void)partButtonClicked:(UIButton *)btn
 {
      // part1 -- 3
-    
-//    [OralDBFuncs setCurrentPart:(int)(btn.tag-kPartButtonTag+1)];
-//    ScoreDetailViewController *scoreVC = [[ScoreDetailViewController alloc]initWithNibName:@"ScoreDetailViewController" bundle:nil];
-//    scoreVC.review_part = _wating_part;
-//    NSLog(@"%d",_wating_part);
-//    if (_wating_part)
-//    {
-//        scoreVC.watingDic = _watingDict_part;
-//    }
-//    [self.navigationController pushViewController:scoreVC animated:YES];
-    
     int _enterCurrentPart = (int)(btn.tag-kPartButtonTag+1);
     [OralDBFuncs setCurrentPart:_enterCurrentPart];
 
-    SCOPartMenuViewController *scoreVC = [[SCOPartMenuViewController alloc]initWithNibName:@"SCOPartMenuViewController" bundle:nil];
-    if (_wating_part)
+    NSDictionary *currentWatingDIc;
+    BOOL have_currentPart_review = NO;
+    for (NSDictionary *watingDic in _watingInfoArray)
     {
-        if ([[_watingDict_part objectForKey:@"part"] intValue] == _enterCurrentPart)
+        NSInteger review_partNum = [[watingDic objectForKey:@"part"] intValue];
+        if (_enterCurrentPart == review_partNum)
+        {
+            currentWatingDIc = watingDic;
+            have_currentPart_review = YES;
+            break;
+        }
+    }
+    
+    SCOPartMenuViewController *scoreVC = [[SCOPartMenuViewController alloc]initWithNibName:@"SCOPartMenuViewController" bundle:nil];
+    // 首先判断最新一次的闯关是否提交 若果未提交 则肯定没反馈（就算有也是之前的）
+    BOOL _commit = [OralDBFuncs getPartLevel3CommitwithTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+    if (have_currentPart_review&&_commit)
+    {
+        // 提交了 那么有可能有反馈 下面对比当前反馈是否是最新一次的练习的反馈
+        NSInteger hissn = [[currentWatingDIc objectForKey:@"hissn"] integerValue];
+        NSInteger commitNum = [OralDBFuncs getPartLevel3CommitNumTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+        if (hissn == commitNum)
         {
             scoreVC.review_point_3 = YES;
-            scoreVC.review_dict_point_3 = _watingDict_part;
+            scoreVC.review_dict_point_3 = currentWatingDIc;
         }
         else
         {

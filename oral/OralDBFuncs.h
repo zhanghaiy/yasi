@@ -112,36 +112,44 @@
 +(void)setPartLevel3Commit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum;
 +(BOOL)getPartLevel3CommitwithTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum;
 
-// 标记关卡3是否完成
-+(void)setPartLevel3Practiceed:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum;
-+(BOOL)getPartLevel3PracticeedwithTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum;
+// 标记关卡3提交次数
++ (void)setPartLevel3CommitNum:(NSInteger)commitNum Topic:(NSString *)topicName UserName:(NSString *)username PartNum:(NSInteger)partNum;
++ (NSInteger)getPartLevel3CommitNumTopic:(NSString *)topic UserName:(NSString *)userName PartNum:(NSInteger)partNum;
 
-// 标记topic完成度
-+ (void)setUnLockNum:(NSInteger)unlockNum Topic:(NSString *)topic UserName:(NSString *)userName;
+// -------------------- 标记关卡3  -------------------------------------
+// 标记关卡3 完成次数 以及解锁等信息
++(void)setPartLevel3Finished:(BOOL)finished AddPracticeNum:(BOOL)addPraNum UnLockNum:(NSInteger)unLockNum Topic:(NSString *)topic User:(NSString *)userName PartNum:(NSInteger)partNum;
+// 获取关卡3 完成次数
++ (NSInteger)getPartLevel3FinishedNumTopic:(NSString *)topic UserName:(NSString *)userName PartNum:(NSInteger)partNum;
+// 获取关卡3是否完成
++(BOOL)getPartLevel3PracticeedwithTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(NSInteger)partNum;
+// 获取topic解锁关数
 + (NSInteger)getUnLockNumWithTopic:(NSString *)topic UserName:(NSString *)userName;
 
+// -------------------- 合成zip有关  -------------------------------------
+// 标记模考/闯关合成json文件所需的数组
++(void)setTopicAnswerJsonArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;;
++(NSArray *)getTopicAnswerJsonArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;
 
-//标记part音频总时间 用于成绩单 界面 模考部分
+// 标记模考/闯关合成zip文件所需的数组
++(void)setTopicAnswerZipArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;
++(NSArray *)getTopicAnswerZipArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;
+
+// --------------------  模考  -------------------------------------
+//标记模考音频总时间 用于成绩单 界面 模考部分
 +(void)setTestPartDuration:(float)duration andPart:(int)partNum Topic:(NSString *)topic Username:(NSString *)username;
 +(float)getTestPartDurationWithPart:(int)partNum Topic:(NSString *)topic Username:(NSString *)username;
 
 // 标记模考是否提交
 +(void)setTestCommit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName;
 +(BOOL)getTestCommitTopic:(NSString *)topicName andUserName:(NSString *)userName;
-
-// 标记模考/闯关合成json文件所需的数组
-+(void)setTopicAnswerJsonArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;;
-+(NSArray *)getTopicAnswerJsonArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;
-
-
-// 标记模考/闯关合成zip文件所需的数组
-+(void)setTopicAnswerZipArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;
-+(NSArray *)getTopicAnswerZipArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;
-
+// 标记模考是否完成
 + (void)setTestFinished:(BOOL)finished Topic:(NSString *)topic UserName:(NSString *)userName;
 + (BOOL)getTestFinishedWithTopic:(NSString *)topic UserName:(NSString *)userName;
-//+ (void)setPartFinished:(BOOL)finished WithTopic:(NSString *)topic UserName:(NSString *)userName PartNum:;
-//+ (BOOL)getPartFinishedWithTopic:(NSString *)topic UserName:(NSString *)userName PartNum;
+
+// 标记模考提交次数
++ (void)markTestCommitedNumberTopic:(NSString*)topic User:(NSString *)userName;
++ (NSInteger)getTestCommitedNumberTopic:(NSString*)topic User:(NSString *)userName;
 
 
 // 标记 默认老师

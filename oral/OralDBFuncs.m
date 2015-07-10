@@ -971,57 +971,91 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
 }
 
-+(void)setPartLevel3Practiceed:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum
+
+// 标记关卡3提交次数
++ (void)setPartLevel3CommitNum:(NSInteger)commitNum Topic:(NSString *)topicName UserName:(NSString *)username PartNum:(NSInteger)partNum
 {
-    NSString *key = [NSString stringWithFormat:@"%@-%@-Part-%d-Level-3-practiced",topicName,userName,partNum];
-    return [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:commit] forKey:key];
+    NSString *key = [NSString stringWithFormat:@"%@_%@_Part_%ld_CommitNum",username,topicName,partNum];
+    [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInteger:commitNum] forKey:key];
 }
 
-+(BOOL)getPartLevel3PracticeedwithTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(int)partNum
++ (NSInteger)getPartLevel3CommitNumTopic:(NSString *)topic UserName:(NSString *)userName PartNum:(NSInteger)partNum
 {
-    NSString *key = [NSString stringWithFormat:@"%@-%@-Part-%d-Level-3-practiced",topicName,userName,partNum];
-    return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
+    NSString *key = [NSString stringWithFormat:@"%@_%@_Part_%ld_CommitNum",userName,topic,partNum];
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:key])
+    {
+        return [[[NSUserDefaults standardUserDefaults]objectForKey:key] integerValue];
+    }
+    return 0;
 }
 
-// 标记topic完成度
-+ (void)setUnLockNum:(NSInteger)unlockNum Topic:(NSString *)topic UserName:(NSString *)userName
+#pragma mark -- 标记关卡3 完成次数 以及解锁等信息
++(void)setPartLevel3Finished:(BOOL)finished AddPracticeNum:(BOOL)addPraNum UnLockNum:(NSInteger)unLockNum Topic:(NSString *)topic User:(NSString *)userName PartNum:(NSInteger)partNum
 {
-    NSString *key = [NSString stringWithFormat:@"%@_%@_TopicUnLockNum",userName,topic];
-    [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInteger:unlockNum] forKey:key];
+    // 1、 标记关卡3完成次数
+    if (addPraNum)
+    {
+        NSString *key_FinishNum = [NSString stringWithFormat:@"%@_%@_Part_%ld_FinishedNum",userName,topic,partNum];
+        if ([[NSUserDefaults standardUserDefaults]objectForKey:key_FinishNum])
+        {
+            NSInteger last_num = [[[NSUserDefaults standardUserDefaults]objectForKey:key_FinishNum] integerValue];
+            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInteger:last_num+1] forKey:key_FinishNum];
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInteger:1] forKey:key_FinishNum];
+        }
+    }
+    
+    // 2、 标记 是否完成 ----可以去掉 暂时不去
+    NSString *key_finish = [NSString stringWithFormat:@"%@_%@_Part_%ld_finish",userName,topic,partNum];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:finished] forKey:key_finish];
+    
+    // 3、标记解锁关卡
+
+    NSString *key_lock = [NSString stringWithFormat:@"%@_%@_Part_unlock",userName,topic];
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:key_lock])
+    {
+        NSInteger orignal = [[[NSUserDefaults standardUserDefaults]objectForKey:key_lock] integerValue];
+        if (orignal<unLockNum)
+        {
+            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInteger:unLockNum] forKey:key_lock];
+        }
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInteger:unLockNum] forKey:key_lock];
+    }
 }
 
+#pragma mark -- 获取关卡3 完成次数
++ (NSInteger)getPartLevel3FinishedNumTopic:(NSString *)topic UserName:(NSString *)userName PartNum:(NSInteger)partNum
+{
+    NSString *key_FinishNum = [NSString stringWithFormat:@"%@_%@_Part_%ld_FinishedNum",userName,topic,partNum];
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:key_FinishNum])
+    {
+        return [[[NSUserDefaults standardUserDefaults]objectForKey:key_FinishNum] integerValue];
+    }
+    return 0;
+}
+
+#pragma mark -- 获取关卡3是否完成
++(BOOL)getPartLevel3PracticeedwithTopic:(NSString *)topicName andUserName:(NSString *)userName PartNum:(NSInteger)partNum
+{
+    NSString *key_finish = [NSString stringWithFormat:@"%@_%@_Part_%ld_finish",userName,topicName,partNum];
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:key_finish] boolValue];
+}
+
+#pragma mark -- 获取topic解锁关数
 + (NSInteger)getUnLockNumWithTopic:(NSString *)topic UserName:(NSString *)userName
 {
-    NSString *key = [NSString stringWithFormat:@"%@_%@_TopicUnLockNum",userName,topic];
-    return  [[[NSUserDefaults standardUserDefaults] objectForKey:key]integerValue];
-}
-
-+(void)setTestPartDuration:(float)duration andPart:(int)partNum Topic:(NSString *)topic Username:(NSString *)username
-{
-    NSString *key = [NSString stringWithFormat:@"%@-%@-test-part%d",username,topic,partNum];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:duration] forKey:key];
-}
-
-+(float)getTestPartDurationWithPart:(int)partNum Topic:(NSString *)topic Username:(NSString *)username
-{
-    NSString *key = [NSString stringWithFormat:@"%@-%@-test-part%d",username,topic,partNum];
-    return [[[NSUserDefaults standardUserDefaults] objectForKey:key] floatValue];
-}
-
-// 标记模考是否提交
-+(void)setTestCommit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName
-{
-    NSString *key = [NSString stringWithFormat:@"Test-%@-%@",topicName,userName];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:commit] forKey:key];
-}
-
-+(BOOL)getTestCommitTopic:(NSString *)topicName andUserName:(NSString *)userName
-{
-    NSString *key = [NSString stringWithFormat:@"Test-%@-%@",topicName,userName];
-    return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
+    NSString *key_lock = [NSString stringWithFormat:@"%@_%@_Part_unlock",userName,topic];
+    return  [[[NSUserDefaults standardUserDefaults] objectForKey:key_lock]integerValue];
 }
 
 
+#pragma mark - 模考、闯关 合成zip所需
+#pragma mark -- 标记模考or闯关合成json文件所需的数组
 +(void)setTopicAnswerJsonArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part;
 {
     if (part)
@@ -1036,6 +1070,7 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     }
 }
 
+#pragma mark -- 获取模考or闯关合成json文件所需的数组
 +(NSArray *)getTopicAnswerJsonArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part
 {
     if (part)
@@ -1051,7 +1086,7 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     
 }
 
-// 标记模考合成zip文件所需的数组
+#pragma mark -- 标记模考合成zip文件所需的数组
 +(void)setTopicAnswerZipArray:(NSArray *)array  Topic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part
 {
     if (part)
@@ -1066,6 +1101,7 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     }
 }
 
+#pragma mark -- 获取模考合成zip文件所需的数组
 +(NSArray *)getTopicAnswerZipArrayWithTopic:(NSString *)topicName UserName:(NSString *)userName ISPart:(BOOL)part
 {
     if (part)
@@ -1080,6 +1116,35 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     }
 }
 
+
+
+
++(void)setTestPartDuration:(float)duration andPart:(int)partNum Topic:(NSString *)topic Username:(NSString *)username
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-test-part%d",username,topic,partNum];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithFloat:duration] forKey:key];
+}
+
++(float)getTestPartDurationWithPart:(int)partNum Topic:(NSString *)topic Username:(NSString *)username
+{
+    NSString *key = [NSString stringWithFormat:@"%@-%@-test-part%d",username,topic,partNum];
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:key] floatValue];
+}
+
+#pragma mark - 模考
+#pragma mark -- 标记模考是否提交
++(void)setTestCommit:(BOOL)commit withTopic:(NSString *)topicName andUserName:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"Test-%@-%@",topicName,userName];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:commit] forKey:key];
+}
+
++(BOOL)getTestCommitTopic:(NSString *)topicName andUserName:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"Test-%@-%@",topicName,userName];
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
+}
+
 + (void)setTestFinished:(BOOL)finished Topic:(NSString *)topic UserName:(NSString *)userName
 {
     NSString *key = [NSString stringWithFormat:@"%@-%@-Test-finished",topic,userName];
@@ -1092,17 +1157,27 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
 }
 
-+ (void)setPartFinished:(BOOL)finished WithTopic:(NSString *)topic UserName:(NSString *)userName
+
+// 标记模考提交次数
++ (void)markTestCommitedNumberTopic:(NSString*)topic User:(NSString *)userName
 {
-    NSString *key = [NSString stringWithFormat:@"%@-%@-part-finished",topic,userName];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:finished] forKey:key];
+    NSString *key = [NSString stringWithFormat:@"%@_%@_Test_CommitedNumber",userName,topic];
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:key])
+    {
+        NSInteger ori = [[[NSUserDefaults standardUserDefaults]objectForKey:key] integerValue];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:ori+1] forKey:key];
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:1] forKey:key];
+    }
+}
++ (NSInteger)getTestCommitedNumberTopic:(NSString*)topic User:(NSString *)userName
+{
+    NSString *key = [NSString stringWithFormat:@"%@_%@_Test_CommitedNumber",userName,topic];
+    return [[[NSUserDefaults standardUserDefaults]objectForKey:key] integerValue];
 }
 
-+ (BOOL)getPartFinishedWithTopic:(NSString *)topic UserName:(NSString *)userName
-{
-    NSString *key = [NSString stringWithFormat:@"%@-%@-part-finished",topic,userName];
-    return [[[NSUserDefaults standardUserDefaults] objectForKey:key] boolValue];
-}
 
 
 // 标记 默认老师

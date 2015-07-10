@@ -279,7 +279,7 @@
     else
     {
         sec_head_View.markLabel.hidden = NO;
-        sec_head_View.markLabel.text = @"老师给你反馈了，赶快点开看看吧~~";
+        sec_head_View.markLabel.text = @"点开看看自己的回答情况吧";
         sec_head_View.text_review_imgV.hidden = YES;
         sec_head_View.audio_review_imgV.hidden = YES;
     }
@@ -647,7 +647,6 @@ static UIView *openView;
                  // 标记 关卡3已经提交
                  [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
                  _commited = YES;
-                 
                  [_commit_Head_View.commit_Button setTitle:@"已提交" forState:UIControlStateNormal];
              }
              else

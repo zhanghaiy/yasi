@@ -491,12 +491,10 @@
     }
     else
     {
-        [OralDBFuncs setPartLevel3Practiceed:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
-
-//        [OralDBFuncs setPartFinished:YES WithTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName]];
-        [OralDBFuncs setUnLockNum:[OralDBFuncs getCurrentPart] Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName]];
-
-        // 提交给老师
+        // 此处存储 用户 当前part 关卡3已结束  无论提交与否 成绩单页面都要展示 所以作此标记
+        // 标记用户闯关数 以便于解锁下一个part  标记用户关卡3完成次数 用于成绩单页面对比
+        [OralDBFuncs setPartLevel3Finished:YES AddPracticeNum:YES UnLockNum:[OralDBFuncs getCurrentPart] Topic:[OralDBFuncs getCurrentTopic] User:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+        // 提交给老师按钮 显示
         _CommitLeftButton.hidden = NO;
         _commitRightButton.hidden = NO;
     }
@@ -528,12 +526,15 @@
     if (btn.tag == kCommitLeftButtonTag)
     {
         // 稍后提交
+        // 标记是否提交 未提交 在成绩单页面可以提交
         [OralDBFuncs setPartLevel3Commit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+        // 标记提交时合成json文件所需的内容 成绩单页面可直接用
         [OralDBFuncs setTopicAnswerJsonArray:_partInfoArray Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:YES];
+        // 标记提交时合成zip文件所需的内容 成绩单页面可直接用
         [OralDBFuncs setTopicAnswerZipArray:_recordPathArray Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:YES];
         [self backToTopicPage];
         
-        // 合成json文件 打包zip  在后续成绩单界面 直接用zip  ---- 错误
+        // 合成json文件 打包zip  在后续成绩单界面 直接用zip  ---- 错误 未考虑无默认老师情况 暂时pass
 //        if ([self makeUpJsonFile])
 //        {
 //            [self zipCurrentPartFile];
@@ -556,11 +557,12 @@
             if ([OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]])
             {
                 _teacherId = [OralDBFuncs getDefaultTeacherIDForUserName:[OralDBFuncs getCurrentUserName]];
-                // 有默认老师
+                // 有默认老师 监测网络状态 对比本地设置  直接提交
                 [self jugeNetState];
             }
             else
             {
+                // 无默认老师  提示用户选择老师 选择后再提交
                 MyTeacherViewController *myTeacherVC = [[MyTeacherViewController alloc]initWithNibName:@"MyTeacherViewController" bundle:nil];
                 myTeacherVC.delegate = self;
                 [self.navigationController pushViewController:myTeacherVC animated:YES];
@@ -578,6 +580,7 @@
 #pragma mark - 检测网络状态 参数：yes 请求part资源信息  no test资源信息
 - (void)jugeNetState
 {
+    // 本地设置 是否允许2g3g4g 提交 （此处有点繁琐 原因设置界面有两个选项：1、wifi下下载  2、2g3g4g下下载 目前暂时这样）
     BOOL net_wifi = [OralDBFuncs getNet_WiFi_Download];
     BOOL net_2g3g4g = [OralDBFuncs getNet_2g3g4g_Download];
     
@@ -585,7 +588,7 @@
     {
         case NotReachable:
         {
-            // 无网络状态
+            // 无网络状态 （按照逻辑此处不会有 前面已经判断）
             UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"当前无网络链接" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alertView show];
         }
@@ -664,6 +667,8 @@
              {
                  // 标记 关卡3已经提交
                  [OralDBFuncs setPartLevel3Commit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
+                 // 此处需修改
+                 [OralDBFuncs setPartLevel3CommitNum:1 Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
                  // 提交成功后回到topic详情页面
                  _commitSuccess = YES;
                  [self showAlertViewWithMessage:@"提交成功"];
