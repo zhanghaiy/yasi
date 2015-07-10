@@ -134,12 +134,20 @@
         {
            // 打印失败码
             NSLog(@"登陆失败码：%@\n登录失败信息：%@",[dict objectForKey:@"respCode"],[dict objectForKey:@"remark"]);
+            [self createFailAlert:@"登陆失败"];
         }
     }
     else
     {
        // 网络问题
+        [self createFailAlert:@"网络错误"];
     }
+}
+
+- (void)createFailAlert:(NSString *)message
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
 }
 
 - (void)enterTopic

@@ -575,7 +575,7 @@ static UIView *openView;
         }
         else // 未练习过
         {
-            // 未练习过
+            // 设置未练习头视图 （提示用户暂无成绩）
             [self setPoint_3_table_head_view_notPracticed];
         }
     }
@@ -1182,6 +1182,9 @@ static UIView *openView;
             PracticeBookRecord *record = [_score_array_point_1 objectAtIndex:indexPath.row];
             [cell.textWebView loadHTMLString:record.lastText baseURL:nil];
             [cell.scoreButton setTitle:[NSString stringWithFormat:@"%d",record.lastScore] forState:UIControlStateNormal];
+            NSArray *colorArr = @[_perfColor,_goodColor,_badColor];
+            NSInteger index = record.lastScore>=80?0:(record.lastScore>=60?1:2);
+            cell.scoreButton.backgroundColor =  [colorArr objectAtIndex:index];
             return cell;
         }
             break;
@@ -1196,6 +1199,9 @@ static UIView *openView;
             PracticeBookRecord *record = [_score_array_point_2 objectAtIndex:indexPath.row];
             [cell.textWebView loadHTMLString:record.lastText baseURL:nil];
             [cell.scoreButton setTitle:[NSString stringWithFormat:@"%d",record.lastScore] forState:UIControlStateNormal];
+            NSArray *colorArr = @[_perfColor,_goodColor,_badColor];
+            NSInteger index = record.lastScore>=80?0:(record.lastScore>=60?1:2);
+            cell.scoreButton.backgroundColor =  [colorArr objectAtIndex:index];
             return cell;
         }
             break;

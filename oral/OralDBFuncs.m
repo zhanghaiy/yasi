@@ -104,7 +104,6 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 }
 
 #pragma mark -- 用户纪录
-
 +(BOOL)addUser:(NSString *)userName
 {
     NSString *statement = [NSString stringWithFormat:@"replace into user_lists (user_name) values('%@')", userName];

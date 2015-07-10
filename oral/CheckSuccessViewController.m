@@ -95,6 +95,8 @@
 - (void)getSumScore
 {
     // 获取总分
+    NSLog(@"~~~~~~~~~获取总分~~~~~~~");
+
     if ([OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[OralDBFuncs getCurrentTopic]])
     {
         TopicRecord *topicRecord = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[OralDBFuncs getCurrentTopic]];
@@ -137,7 +139,6 @@
     // 根据分数设置颜色
     int score = [_topScoreLabel.text intValue];
     
-    
     // 3种颜色 同闯关
 //    NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
 //    int index = score>=80?0:(score>=60?1:2);
@@ -164,6 +165,8 @@
         // 不及格 不可以继续闯关
         _continueButton.enabled = NO;
     }
+    NSLog(@"~~~~~~~~~获取总分  end ~~~~~~~");
+
 }
 
 
@@ -176,12 +179,16 @@
     self.navTopView.hidden = YES;
     self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
     [self uiConfig];
-    
+    NSLog(@"测试bug ~~~~~~~ 001");
     // 获取总分 此处由于时间问题 一直崩溃 暂不获取
     [self getSumScore];
+    NSLog(@"测试bug ~~~~~~~ 002");
+
     // 合成成绩单数据源
     _scoreMenuArray = [[NSMutableArray alloc]init];
     [self makeUpScoreMenu];
+    NSLog(@"测试bug ~~~~~~~ 003");
+
 }
 
 - (void)makeUpScoreMenu
@@ -199,8 +206,12 @@
     NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/info.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *maindict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+    NSLog(@"整个topic资源信息");
     // 整个topic资源信息
     NSDictionary *dict = [maindict objectForKey:@"classtypeinfo"];
+   
+    NSLog(@"当前part资源信息");
+
     // 当前part资源信息
     NSDictionary *subDict = [[dict objectForKey:@"partlist"] objectAtIndex:[OralDBFuncs getCurrentPart]-1];
     NSArray *questionList = [[[subDict objectForKey:@"levellist"] objectAtIndex:[OralDBFuncs getCurrentPoint]-1] objectForKey:@"questionlist"];
@@ -213,8 +224,14 @@
         {
             NSString *answerID = [subSubSubDic objectForKey:@"id"];
             [_answer_Cintent_Array addObject:subSubSubDic];
-            PracticeBookRecord *scoreInfoRecord = [OralDBFuncs getLastRecordFor:[OralDBFuncs getCurrentUserName] topicName:[OralDBFuncs getCurrentTopic] answerId:answerID partNum:[OralDBFuncs getCurrentPart] andLevelNum:[OralDBFuncs getCurrentPoint]];
-            [_answer_DB_Dictionary setObject:scoreInfoRecord forKey:answerID];
+            NSLog(@"!!!!!!!!!PracticeBookRecord!!!!!!!!");
+
+            if ([OralDBFuncs getLastRecordFor:[OralDBFuncs getCurrentUserName] topicName:[OralDBFuncs getCurrentTopic] answerId:answerID partNum:[OralDBFuncs getCurrentPart] andLevelNum:[OralDBFuncs getCurrentPoint]])
+            {
+                PracticeBookRecord *scoreInfoRecord = [OralDBFuncs getLastRecordFor:[OralDBFuncs getCurrentUserName] topicName:[OralDBFuncs getCurrentTopic] answerId:answerID partNum:[OralDBFuncs getCurrentPart] andLevelNum:[OralDBFuncs getCurrentPoint]];
+                [_answer_DB_Dictionary setObject:scoreInfoRecord forKey:answerID];
+            }
+            
         }
     }
 }

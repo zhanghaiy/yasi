@@ -130,8 +130,23 @@
             [OralDBFuncs addUser:userName];
             [self enterTopicPage];
         }
+        else
+        {
+            [self createFailAlert:[dict objectForKey:@"remark"]];
+        }
+    }
+    else
+    {
+        [self createFailAlert:@"请检查网络"];
     }
 }
+
+- (void)createFailAlert:(NSString *)message
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
+
 
 - (void)enterTopicPage
 {
