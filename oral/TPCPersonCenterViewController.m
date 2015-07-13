@@ -126,16 +126,37 @@
     }
     
     // 生日
-    NSString *birthday = [_personInfoDic objectForKey:@"birthday"];
-    _birthLabel.text = [NSString stringWithFormat:@"生日：%@",birthday];
+    if ([[_personInfoDic objectForKey:@"birthday"] length])
+    {
+        NSString *birthday = [_personInfoDic objectForKey:@"birthday"];
+        _birthLabel.text = [NSString stringWithFormat:@"生日：%@",birthday];
+    }
+    else
+    {
+        _birthLabel.text = @"生日：未填写";
+    }
     
     // 爱好
-    NSString *hobbies = [_personInfoDic objectForKey:@"hobbies"];
-    _loveLabel.text = [NSString stringWithFormat:@"爱好：%@",hobbies];
+    if ([[_personInfoDic objectForKey:@"hobbies"] length])
+    {
+        NSString *hobbies = [_personInfoDic objectForKey:@"hobbies"];
+        _loveLabel.text = [NSString stringWithFormat:@"爱好：%@",hobbies];
+    }
+    else
+    {
+        _loveLabel.text = @"爱好：未填写";
+    }
     
-    NSString *constellation = [_personInfoDic objectForKey:@"constellation"];
-    [_ConstellationButton setTitle:constellation forState:UIControlStateNormal];
-    
+    if ([[_personInfoDic objectForKey:@"constellation"] length])
+    {
+        NSString *constellation = [_personInfoDic objectForKey:@"constellation"];
+        [_ConstellationButton setTitle:constellation forState:UIControlStateNormal];
+    }
+    else
+    {
+        [_ConstellationButton setTitle:@"星座" forState:UIControlStateNormal];
+    }
+   
     NSString *sex = [NSString stringWithFormat:@"%@",[_personInfoDic objectForKey:@"sex"]];
     [_sexButton setTitle:sex forState:UIControlStateNormal];
     

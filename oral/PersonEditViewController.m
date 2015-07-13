@@ -62,7 +62,7 @@
     }
     else
     {
-        _nameStr = @"";
+        _nameStr = @"未填写";
     }
     
     if ([_personInfoDict objectForKey:@"sex"])
@@ -71,7 +71,7 @@
     }
     else
     {
-        _sexString = @"";
+        _sexString = @"未填写";
     }
 
     
@@ -81,7 +81,7 @@
     }
     else
     {
-       _birthStr = @"";
+       _birthStr = @"未填写";
     }
     
     if ([_personInfoDict objectForKey:@"constellation"])
@@ -97,7 +97,7 @@
         }
         else
         {
-            _constellation = @"";
+            _constellation = @"未填写";
         }
     }
     
@@ -107,7 +107,7 @@
     }
     else
     {
-        _hobbies = @"";
+        _hobbies = @"未填写";
     }
     
     if ([_personInfoDict objectForKey:@"signiture"])
@@ -116,7 +116,7 @@
     }
     else
     {
-        _signiture = @"";
+        _signiture = @"未填写";
     }
     
 }
