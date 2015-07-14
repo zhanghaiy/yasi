@@ -296,20 +296,20 @@
     UITableView *tableV_point_2 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+1];
     if (_score_array_point_1.count==0)
     {
-        UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
+        UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, tableV_point_1.frame.size.height-tableV_point_1.frame.origin.y)];
         lab.textAlignment = NSTextAlignmentCenter;
         lab.textColor = kPart_Button_Color;
-        lab.font = [UIFont systemFontOfSize:kFontSize_12];
+        lab.font = [UIFont systemFontOfSize:kFontSize_17];
         lab.text = @"暂无成绩";
         tableV_point_1.tableHeaderView = lab;
     }
     
     if (_score_array_point_2.count==0)
     {
-        UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
+        UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, tableV_point_2.frame.size.height-tableV_point_2.frame.origin.y)];
         lab.textAlignment = NSTextAlignmentCenter;
         lab.textColor = kPart_Button_Color;
-        lab.font = [UIFont systemFontOfSize:kFontSize_12];
+        lab.font = [UIFont systemFontOfSize:kFontSize_17];
         lab.text = @"暂无成绩";
         tableV_point_2.tableHeaderView = lab;
     }
@@ -319,11 +319,11 @@
 - (void)setPoint_3_table_head_view_notPracticed
 {
     UITableView *tableV_point_3 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
-    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 40)];
+    UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, tableV_point_3.frame.size.height-tableV_point_3.frame.origin.y)];
     lab.text = @"暂无成绩";
     lab.textAlignment = NSTextAlignmentCenter;
     lab.textColor = kPart_Button_Color;
-    lab.font = [UIFont systemFontOfSize:kFontSize_12];
+    lab.font = [UIFont systemFontOfSize:kFontSize_17];
     tableV_point_3.tableHeaderView = lab;
 }
 #pragma mark -- 关卡3 已提交头视图
@@ -332,6 +332,7 @@
     UITableView *tableV_point_3 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
     _commit_Head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Commit_View" owner:self options:0] lastObject];
     [_commit_Head_View.commit_Button setTitle:@"已提交" forState:UIControlStateNormal];
+    [_commit_Head_View.commit_Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _commit_Head_View.commit_Button.enabled = NO;
     _commit_Head_View.commit_des_Label.text = @"已提交给老师，请耐心等待老师反馈~~~~";
     tableV_point_3.tableHeaderView = _commit_Head_View;

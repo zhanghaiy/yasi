@@ -95,6 +95,41 @@
 }
 
 #pragma mark - tableview delegate
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (_practiceArray.count)
+    {
+        return 0;
+    }
+    else
+    {
+        return tableView.frame.size.height-tableView.frame.origin.y;
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (_practiceArray.count)
+    {
+        return nil;
+    }
+    else
+    {
+        UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, tableView.frame.size.height-tableView.frame.origin.y)];
+        lable.text = @"暂无数据";
+        lable.font = [UIFont systemFontOfSize:kFontSize_17];
+        lable.textAlignment = NSTextAlignmentCenter;
+        lable.textColor = kText_Color;
+        return lable;
+    }
+}
+
 #pragma mark - cell数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -301,6 +336,7 @@
     [OralDBFuncs addPracticeTime:round(result.systime) ForUser:[OralDBFuncs getCurrentUserName]];
     NSDictionary *fluency = result.fluency;
     NSString *msg = [NSString stringWithFormat:@"总体评分：%d\n发音：%d，完整度：%d，流利度：%d", result.overall, result.pron, result.integrity, ((NSNumber *)[fluency objectForKey:@"overall"]).intValue];
+    NSLog(@"%@",msg);
     [self performSelectorOnMainThread:@selector(showResult:) withObject:result waitUntilDone:NO];
 }
 

@@ -49,7 +49,7 @@
 @end
 
 @implementation CheckScoreViewController
-#define kPartButtonWidth 230
+#define kPartButtonWidth 240
 #define kPartButtonHeight 100
 #define kPartButtonTag 333
 #define kTestViewTAg 555
@@ -204,11 +204,11 @@
     else
     {
        // 未模考
-        UILabel *testTipLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 30, kScreentWidth, 80)];
+        UILabel *testTipLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 30, kScreentWidth, _backScrollV.frame.size.height-_backScrollV.frame.origin.y)];
         testTipLabel.text = @"暂无模考信息";
         testTipLabel.textColor = _pointColor;
         testTipLabel.textAlignment = NSTextAlignmentCenter;
-        testTipLabel.font = [UIFont systemFontOfSize:kFontSize_14];
+        testTipLabel.font = [UIFont systemFontOfSize:kFontSize_17];
         [_backScrollV addSubview:testTipLabel];
     }
     
@@ -220,10 +220,10 @@
     {
         // 240 100
         UIButton *partButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [partButton setFrame:CGRectMake(kScreentWidth+75, 65+i*(kPartButtonHeight+15), kScreentWidth-150, kPartButtonHeight)];
+        [partButton setFrame:CGRectMake(kScreentWidth*3/2-kPartButtonWidth/2, 65+i*(kPartButtonHeight+20), kPartButtonWidth, kPartButtonHeight)];
         [partButton setTitle:[partButtonNameArray objectAtIndex:i] forState:UIControlStateNormal];
         [partButton setTitleColor:_pointColor forState:UIControlStateNormal];
-        partButton.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
+        partButton.backgroundColor = _backgroundViewColor;//[UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
         partButton.layer.masksToBounds = YES;
         partButton.layer.cornerRadius = kPartButtonHeight/2;
         partButton.titleLabel.font = [UIFont systemFontOfSize:25];

@@ -64,25 +64,30 @@
     [OralDBFuncs setCurrentRecordId:recordId];  // 当前的练习id
     [OralDBFuncs setCurrentTopic:topicName];    // 当前topic名称
     [OralDBFuncs setCurrentTopicID:topicID];    // 当前topicID
-    
+}
+
+#pragma mark - 在数据库中增加topic
+- (void)addTopicToDB
+{
     // 在数据库中标记当前topic
-    if ([OralDBFuncs addTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[OralDBFuncs getCurrentTopic]])
+    if(![OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[OralDBFuncs getCurrentTopic]])
     {
-        NSLog(@"success");
+        if ([OralDBFuncs addTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[OralDBFuncs getCurrentTopic]])
+        {
+            NSLog(@"success");
+        }
+        else
+        {
+            NSLog(@"fail");
+        }
     }
-    else
-    {
-        NSLog(@"fail");
-    }
+
 }
 
 #pragma mark - 视图已经出现
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-//    TopicRecord *record = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[_topicDict objectForKey:@"classtype"]];
-//    int complete = record.completion/3;
     // 此处解锁  要求：动画过渡
     // 本地获取当前topic进度
     NSInteger complete = [OralDBFuncs getUnLockNumWithTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName]];
@@ -108,8 +113,7 @@
         }
         else
         {
-            UIColor *color = [UIColor colorWithWhite:200/255.0 alpha:1];
-            [partBtn setBackgroundColor:color];
+            [partBtn setBackgroundColor:kUnEnabledColor];
             partBtn.enabled = NO;
         }
     }
@@ -118,9 +122,7 @@
 #pragma mark - UI调整
 - (void)uiConfig
 {
-    
     // 手动调整frame
-    
     float practice_Y = 120.0/667*kScreenHeight;
     float practice_X = 90.0/375.0*kScreentWidth;
     NSLog(@"%f",practice_X);
@@ -164,14 +166,14 @@
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setFrame:partSrollViewRect];
         
-        btn.backgroundColor = _pointColor;
+        btn.backgroundColor = kPart_Button_Color;
         btn.tag = kPartButtonTag+i;
         btn.layer.cornerRadius = btn.frame.size.height/2;
         [btn setTitle:[partTitleArray objectAtIndex:i] forState:UIControlStateNormal];
         [btn addTarget:self action:@selector(startPart:) forControlEvents:UIControlEventTouchUpInside];
-//        btn.titleLabel.font = [UIFont systemFontOfSize:30];
+        btn.titleLabel.font = [UIFont systemFontOfSize:30];
         // @"HiraKakuProN-W3"
-        btn.titleLabel.font = [UIFont fontWithName:@"MarkerFelt-thin" size:30];
+//        btn.titleLabel.font = [UIFont fontWithName:@"MarkerFelt-thin" size:30];
         [_partScrollView addSubview:btn];
     }
     
@@ -381,8 +383,7 @@
         BOOL success =  [self unZipToLocalData:request.downloadData WithPath:zipPath andFolder:@"topicResource"];
         if (success)
         {
-            BOOL addSuccess = [OralDBFuncs addTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[_topicDict objectForKey:@"classtype"]];
-            NSLog(@"~~~~~~~增加topic successs : %d~~~~~~",addSuccess);
+            [self addTopicToDB];
             // 跳转页面 进入闯关
             [self beginPointWithPointCounts:_markPart];
         }
@@ -444,6 +445,7 @@
             BOOL success = [self unZipToLocalData:request.downloadData WithPath:testZip andFolder:@"topicTest"];
             if (success)
             {
+                [self addTopicToDB];
                 // 进入模考
                 [self startEnterTest];
             }

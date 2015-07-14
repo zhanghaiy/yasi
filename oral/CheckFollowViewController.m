@@ -12,7 +12,7 @@
 #import "TPCCheckpointViewController.h"
 #import "DFAiengineSentObject.h"
 #import "OralDBFuncs.h"
-
+#import "NSString+CalculateStringSize.h"
 
 @interface CheckFollowViewController ()<DFAiengineSentProtocol,UIWebViewDelegate,UIAlertViewDelegate>
 {
@@ -52,6 +52,8 @@
     int _sumCounts;
     NSMutableArray *_markAllAnswerIdArray;
     UIWebView *_answerTextWebV;// 代码创建 为了去掉黑线
+    
+    BOOL _review_sbc;
 }
 
 
@@ -89,7 +91,7 @@
 {
     // 创建提示标签
     [self createTipLabel];
-    
+    _review_sbc = NO;
     
     // 确定 frame 适配
     // 1--->问题总数View topview
@@ -151,8 +153,8 @@
     
     // 3-->底部控件
     
-    float follow_Button_H = 65.0/667*kScreenHeight;
-    float follow_space_bottom = 30.0/667*kScreenHeight;
+    float follow_Button_H = 70.0/667*kScreenHeight;
+    float follow_space_bottom = 50.0/667*kScreenHeight;
     float add_practice_button_H = 50.0/667*kScreenHeight;
     float add_practice_button_W = 120.0/375*kScreentWidth;
     float btn_space_btn = 15.0/375*kScreentWidth;
@@ -494,8 +496,15 @@
 - (void)showCurrentAnswerText
 {
     _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
-    NSString *str = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"] ;
-    [_answerTextWebV loadHTMLString:str baseURL:nil];
+    NSString *str = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
+    int  ww = _answerTextWebV.frame.size.width;
+    CGRect rect = [NSString CalculateSizeOfString:[self filterHTML:str] Width:ww Height:9999 FontSize:kFontSize_15];
+    int  hh = rect.size.height;
+    
+    _answerTextWebV.backgroundColor = [UIColor whiteColor];
+    _answerTextWebV.scrollView.backgroundColor = [UIColor whiteColor];
+    NSString *newStr = [NSString stringWithFormat:@"<style>#box{width:%dpx;height:%dpx;position: absolute;top:50%%;left:50%%;margin-top:%dpx;margin-left:%dpx;font-size:15;}</style><div id='box'>%@</div>",ww,hh,-hh/2,-ww/2,str];
+    [_answerTextWebV loadHTMLString:newStr baseURL:nil];
 }
 
 #pragma mark - webViewDelegate
@@ -508,6 +517,17 @@
     [webView stringByEvaluatingJavaScriptFromString:bodyStyleVertical];
     [webView stringByEvaluatingJavaScriptFromString:bodyStyleHorizontal];
     [webView stringByEvaluatingJavaScriptFromString:mapStyle];
+    
+    //字体大小
+//    [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.webkitTextSizeAdjust= '100%'"];
+
+    //字体颜色
+    if (_review_sbc == NO)
+    {
+        [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.webkitTextFillColor= '#646464'"];
+    }
+    //页面背景色
+//    [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.background='#2E2E2E'"];
 }
 
 #pragma mark - 去掉html标签 (未用到----2015.06.11)
@@ -587,6 +607,7 @@
         _reduceTimer = nil;
         _answerButton.selected = NO;
     }
+    
     // 获取录音时长
     long recordTime = result.systime;
     // 增加录音时长
@@ -603,8 +624,15 @@
     }
     
     // 存储的字段赋值
+    _review_sbc = YES;
+    NSString *str = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
+    int  ww = _answerTextWebV.frame.size.width;
+    CGRect rect = [NSString CalculateSizeOfString:[self filterHTML:str] Width:ww Height:9999 FontSize:kFontSize_15];
+    int  hh = rect.size.height;
     NSString *msg1 = [_dfEngine getRichResultString:result.details];
-    _currentAnswerHtml = msg1;
+    
+    _currentAnswerHtml = [NSString stringWithFormat:@"<style>#box{width:%dpx;height:%dpx;position: absolute;top:50%%;left:50%%;margin-top:%dpx;margin-left:%dpx;font-size:15;}</style><div id='box'>%@</div>",ww,hh,-hh/2,-ww/2,msg1];
+    
     [_answerTextWebV loadHTMLString:_currentAnswerHtml baseURL:nil];
     _currentAnswerScore = result.overall;
     _currentAnswerIntegrity = result.integrity;
@@ -770,6 +798,7 @@
 - (IBAction)nextQuestion:(id)sender
 {
     // 下一题
+    _review_sbc = NO;
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(jugePointIsFinished_follow) userInfo:nil repeats:NO];
 }
 

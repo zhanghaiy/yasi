@@ -38,13 +38,13 @@
     _titleTextColor = [UIColor colorWithWhite:91/255.0 alpha:1];
     _backColor = [UIColor colorWithRed:128/255.0 green:230/255.0 blue:209/255.0 alpha:1];
     _timeProgressColor = [UIColor colorWithRed:245/255.0 green:88/255.0 blue:62/255.0 alpha:1];
-    _textColor = [UIColor colorWithWhite:135/255.0 alpha:1];
+    _textColor = kText_Color;//[UIColor colorWithWhite:135/255.0 alpha:1];
     _pointColor = [UIColor colorWithRed:35/255.0 green:222/255.0 blue:191/255.0 alpha:1];
     _backgroundViewColor = [UIColor colorWithRed:244/255.0 green:249/255.0 blue:250/255.0 alpha:1];
     
     _badColor = [UIColor colorWithRed:255/255.0 green:63/255.0 blue:37/255.0 alpha:1];
     _perfColor = [UIColor colorWithRed:0 green:231/255.0 blue:136/255.0 alpha:1];
-    _goodColor = [UIColor colorWithRed:250/255.0 green:220/255.0 blue:18/255.0 alpha:1];
+    _goodColor = [UIColor colorWithRed:255/255.0 green:170/255.0 blue:6/255.0 alpha:1];
     [self createLoadingView];
 }
 

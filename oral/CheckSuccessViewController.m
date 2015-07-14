@@ -51,8 +51,8 @@
     _continueButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_16];
     _backButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_16];
     // 背景色
-    _backButton.backgroundColor = _backColor;
-    _continueButton.backgroundColor = _backColor;
+    _backButton.backgroundColor = kPart_Button_Color;
+    _continueButton.backgroundColor = kPart_Button_Color;
 
     // 文字色
     [_backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -71,7 +71,7 @@
     [_midTitleLabel setFrame:CGRectMake(0, menu_label_Y, kScreentWidth, menu_label_H)];
     [_midTableView setFrame:CGRectMake(0, menu_label_Y+menu_label_H, kScreentWidth, kScreenHeight-menu_label_Y-menu_label_H-bottom_btn_H-10)];
     // 闯关成绩单文字颜色
-    _midTitleLabel.textColor = _backColor;
+    _midTitleLabel.textColor = kPart_Button_Color;
     _midTitleLabel.textAlignment = NSTextAlignmentCenter;
     _midTitleLabel.font = [UIFont systemFontOfSize:kFontSize_16];
     _topScoreLabel.backgroundColor = [UIColor clearColor];
@@ -132,7 +132,6 @@
                 _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p3_2];
             }
         }
-        
     }
     
     // 根据分数设置颜色
@@ -157,12 +156,12 @@
         _topDesLabel.text = @"闯关失败~再接再厉！";
     }
     
-    if (!index)
-    {
-        // 不及格 不可以继续闯关
-        _continueButton.enabled = NO;
-        _continueButton.backgroundColor = [UIColor colorWithWhite:200/255.0 alpha:1];
-    }
+//    if (!index)
+//    {
+//        // 不及格 不可以继续闯关
+//        _continueButton.enabled = NO;
+//        _continueButton.backgroundColor = kUnEnabledColor;
+//    }
 }
 
 - (void)requestScorePercentWithScore:(NSInteger)score
@@ -174,12 +173,16 @@
         关卡ID	levelid	M
         用户ID	userid	M
      */
+    _loading_View.hidden = NO;
+    [self.view bringSubviewToFront:_loading_View];
+    [self changeLoadingViewTitle:@"网络加载中..."];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?score=%ld&topcid=%@&part=%d&levelid=%@&userid=%@",kBaseIPUrl,kSelectScorePercent,score,[OralDBFuncs getCurrentTopicID],[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentLevelID],[OralDBFuncs getCurrentUserID]];
     [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestPercentEnd:) andRefresh:YES];
 }
 
 - (void)requestPercentEnd:(NSURLConnectionRequest *)request
 {
+    _loading_View.hidden = YES;
     if (request.downloadData)
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];

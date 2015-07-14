@@ -265,7 +265,6 @@
          NSLog(@"%@",error.localizedFailureReason);
          NSLog(@"失败乃");
      }];
-
 }
 
 - (void)uploadImageFinished:(NSURLConnectionRequest *)request
