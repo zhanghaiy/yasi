@@ -17,7 +17,7 @@
 #define KEY_CONTEXT_CUR_LEVEL   @"df_oral_level"
 #define KEY_CONTEXT_CUR_PART    @"df_oral_part"
 #define KEY_CONTEXT_RECORDID    @"df_oral_recordid"
-
+#define KEY_CONTEXT_CUR_LEVELID @"df_oral_levelid"
 
 NSString *const DATABASE_FILE_NAME = @"df_oral.db";
 NSString *const DATABASE_RESOURCE_NAME = @"df_oral";
@@ -886,6 +886,15 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 {
     NSNumber *number = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_CONTEXT_CUR_PART];
     return [number intValue];
+}
+
++(void)setCurrentLevelID:(NSString *)levelID
+{
+    [[NSUserDefaults standardUserDefaults] setObject:levelID forKey:KEY_CONTEXT_CUR_LEVELID];
+}
++(NSString *)getCurrentLevelID
+{
+   return  [[NSUserDefaults standardUserDefaults] objectForKey:KEY_CONTEXT_CUR_LEVELID];
 }
 
 // 标记加入练习簿的id

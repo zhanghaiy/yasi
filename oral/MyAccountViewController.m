@@ -32,7 +32,7 @@
     
     
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"我的账号"];
+    [self addTitleLabelWithTitle:@"我的账号"];
     
     self.view.backgroundColor = _backgroundViewColor;
     

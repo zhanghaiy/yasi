@@ -42,7 +42,7 @@
     NSString *title = [NSString stringWithFormat:@"%@老师",[_teacherDic objectForKey:@"teachername"]];
     
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:title];
+    [self addTitleLabelWithTitle:title];
     
     self.navTopView.backgroundColor  = _backgroundViewColor;
     

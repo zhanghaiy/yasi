@@ -216,7 +216,7 @@
     // Do any additional setup after loading the view from its nib.
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"闯关进度"];
+    [self addTitleLabelWithTitle:@"闯关进度"];
     [self uiConfig];
     
     _topicManager = [TopicInfoManager getTopicInfoManager];

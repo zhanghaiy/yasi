@@ -289,9 +289,11 @@
     _topicInfoDict = [dict objectForKey:@"classtypeinfo"];
     // 当前part资源信息
     NSLog(@"%d  %d",[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint]);
+    
     _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:[OralDBFuncs getCurrentPart]-1];
     // 当前关卡信息 关卡一
     _currentPointDict = [[_currentPartDict objectForKey:@"levellist"] objectAtIndex:[OralDBFuncs getCurrentPoint]-1];
+    
     // 当前关卡所有问题
     _questioListArray = [_currentPointDict objectForKey:@"questionlist"];
     // 总问题数
@@ -314,24 +316,29 @@
     
     _sumCounts = 0;
     _sumScore = 0;
-    _markAllAnswerIdArray = [[NSMutableArray alloc]init];
+    _markAllAnswerIdArray = [[NSMutableArray alloc]init];// 记录每个回答的answerid  用于关卡3提交
     
+    // 设置当前的关卡
     [OralDBFuncs setCurrentPoint:1];
     
+    _answerTime = KAnswerSumTime;// 回答时间
     
-    _answerTime = KAnswerSumTime;
+    // 播放器
     audioPlayer = [AudioPlayer getAudioManager];
     audioPlayer.target = self;
     audioPlayer.action = @selector(playerCallBack);
     
     NSString *title = [NSString stringWithFormat:@"Part%d-%d",[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint]];
-    [self addTitleLabelWithTitleWithTitle:title];
+    [self addTitleLabelWithTitle:title];
     self.navTopView.backgroundColor = _backColor;
     self.titleLab.textColor = [UIColor whiteColor];
-    
     self.view.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
-    [self moNiDataFromLocal];
     
+    [self moNiDataFromLocal];
+    // 当前关卡的id
+    NSString *levelID = [_currentPointDict objectForKey:@"id"];
+    [OralDBFuncs setCurrentLevelID:levelID];
+
     self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
     [self uiConfig];
     

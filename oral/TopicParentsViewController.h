@@ -40,7 +40,7 @@
 // 返回按钮
 - (void)addBackButtonWithImageName:(NSString *)imageName;
 // titleLabel
-- (void)addTitleLabelWithTitleWithTitle:(NSString *)title;
+- (void)addTitleLabelWithTitle:(NSString *)title;
 // 返回上一页
 - (void)backToPrePage;
 - (NSString *)getPathWithTopic:(NSString *)topicName IsPart:(BOOL)isPart;

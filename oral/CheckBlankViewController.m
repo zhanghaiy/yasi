@@ -89,18 +89,29 @@
     audioPlayer.action = @selector(playerEnd);
     _currentPointCounts = 1;
 
+    // 设置当前关卡
     [OralDBFuncs setCurrentPoint:2];
+    
+    // 顶部title
     NSString *title = [NSString stringWithFormat:@"Part%d-%d",[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint]];
-    [self addTitleLabelWithTitleWithTitle:title];
+    [self addTitleLabelWithTitle:title];
+    
     self.navTopView.backgroundColor = _backColor;
     self.titleLab.textColor = [UIColor whiteColor];
-    
+    // 背景色
     self.view.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
-    [self moNiDataFromLocal];
-    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
-    [self uiConfig];
-    [self createTipLabel];
     
+    // 解析本地json文件
+    [self moNiDataFromLocal];
+    // 当前关卡的id 存入本地  用于闯关成功界面 请求百分比
+    NSString *levelID = [_currentPointDict objectForKey:@"id"];
+    [OralDBFuncs setCurrentLevelID:levelID];
+
+    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
+    [self uiConfig];// 配置UI界面
+    [self createTipLabel];// 创建加入练习本提示界面
+    
+    // 初始化引擎
     _dfEngine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"cocim_haiyan"];
 }
 

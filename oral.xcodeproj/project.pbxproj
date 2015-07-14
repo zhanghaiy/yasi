@@ -76,6 +76,7 @@
 		FD6244A91B0585820037836E /* CheckFollowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD6244A71B0585820037836E /* CheckFollowViewController.xib */; };
 		FD66D1501B4142D100194C9A /* AboutMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FD66D14E1B4142D100194C9A /* AboutMeViewController.m */; };
 		FD66D1511B4142D100194C9A /* AboutMeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FD66D14F1B4142D100194C9A /* AboutMeViewController.xib */; };
+		FD68FAC71B549BD500FE5D99 /* libDFAiengineSentObject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD68FAC61B549BD500FE5D99 /* libDFAiengineSentObject.a */; };
 		FD6AB7511B2AB6AC004721A7 /* df_oral.db in Resources */ = {isa = PBXBuildFile; fileRef = FD6AB7501B2AB6AC004721A7 /* df_oral.db */; };
 		FD6AB7541B2ABDBC004721A7 /* OralDBFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6AB7531B2ABDBC004721A7 /* OralDBFuncs.m */; };
 		FD6B80D41B1843FF00F9562C /* NSString+CalculateStringSize.m in Sources */ = {isa = PBXBuildFile; fileRef = FD6B80D31B1843FF00F9562C /* NSString+CalculateStringSize.m */; };
@@ -149,8 +150,6 @@
 		FDA25E161B0DC31900F35545 /* CheckKeyWordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA25E141B0DC31900F35545 /* CheckKeyWordViewController.m */; };
 		FDA25E171B0DC31900F35545 /* CheckKeyWordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FDA25E151B0DC31900F35545 /* CheckKeyWordViewController.xib */; };
 		FDA25E1B1B0DD98D00F35545 /* RecordManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FDA25E1A1B0DD98D00F35545 /* RecordManager.m */; };
-		FDAFE0F91B4379C7002D7EEE /* libDFAiengineSentObject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDAFE0F81B4379C7002D7EEE /* libDFAiengineSentObject.a */; };
-		FDAFE0FB1B4379D2002D7EEE /* libDFAiengineSentObject2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDAFE0FA1B4379D2002D7EEE /* libDFAiengineSentObject2.a */; };
 		FDAFE0FF1B43861F002D7EEE /* LoadingViews.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAFE0FE1B43861F002D7EEE /* LoadingViews.m */; };
 		FDAFE1031B43B848002D7EEE /* TopicInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FDAFE1021B43B848002D7EEE /* TopicInfoManager.m */; };
 		FDD404141B0492F900DE2E84 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FDD404131B0492F900DE2E84 /* main.m */; };
@@ -285,6 +284,7 @@
 		FD66D14D1B4142D100194C9A /* AboutMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutMeViewController.h; sourceTree = "<group>"; };
 		FD66D14E1B4142D100194C9A /* AboutMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutMeViewController.m; sourceTree = "<group>"; };
 		FD66D14F1B4142D100194C9A /* AboutMeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutMeViewController.xib; sourceTree = "<group>"; };
+		FD68FAC61B549BD500FE5D99 /* libDFAiengineSentObject.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDFAiengineSentObject.a; sourceTree = "<group>"; };
 		FD6AB7501B2AB6AC004721A7 /* df_oral.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = df_oral.db; sourceTree = "<group>"; };
 		FD6AB7521B2ABDBC004721A7 /* OralDBFuncs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OralDBFuncs.h; sourceTree = "<group>"; };
 		FD6AB7531B2ABDBC004721A7 /* OralDBFuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OralDBFuncs.m; sourceTree = "<group>"; };
@@ -417,8 +417,6 @@
 		FDA25E151B0DC31900F35545 /* CheckKeyWordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CheckKeyWordViewController.xib; sourceTree = "<group>"; };
 		FDA25E191B0DD98D00F35545 /* RecordManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordManager.h; sourceTree = "<group>"; };
 		FDA25E1A1B0DD98D00F35545 /* RecordManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordManager.m; sourceTree = "<group>"; };
-		FDAFE0F81B4379C7002D7EEE /* libDFAiengineSentObject.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDFAiengineSentObject.a; sourceTree = "<group>"; };
-		FDAFE0FA1B4379D2002D7EEE /* libDFAiengineSentObject2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libDFAiengineSentObject2.a; sourceTree = "<group>"; };
 		FDAFE0FD1B43861F002D7EEE /* LoadingViews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViews.h; sourceTree = "<group>"; };
 		FDAFE0FE1B43861F002D7EEE /* LoadingViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViews.m; sourceTree = "<group>"; };
 		FDAFE1011B43B848002D7EEE /* TopicInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicInfoManager.h; sourceTree = "<group>"; };
@@ -456,8 +454,7 @@
 			files = (
 				FD6FC7681B31302500CE143F /* libz.dylib in Frameworks */,
 				FD530E3F1B2964F500E3EC26 /* libstdc++.6.dylib in Frameworks */,
-				FDAFE0F91B4379C7002D7EEE /* libDFAiengineSentObject.a in Frameworks */,
-				FDAFE0FB1B4379D2002D7EEE /* libDFAiengineSentObject2.a in Frameworks */,
+				FD68FAC71B549BD500FE5D99 /* libDFAiengineSentObject.a in Frameworks */,
 				FD530E3D1B2961A800E3EC26 /* libiconv.dylib in Frameworks */,
 				FD530E3B1B29619000E3EC26 /* libz.1.1.3.dylib in Frameworks */,
 			);
@@ -1125,8 +1122,7 @@
 		FDD404051B0492F900DE2E84 = {
 			isa = PBXGroup;
 			children = (
-				FDAFE0FA1B4379D2002D7EEE /* libDFAiengineSentObject2.a */,
-				FDAFE0F81B4379C7002D7EEE /* libDFAiengineSentObject.a */,
+				FD68FAC61B549BD500FE5D99 /* libDFAiengineSentObject.a */,
 				FD530E3E1B2964F500E3EC26 /* libstdc++.6.dylib */,
 				FD530E3C1B2961A800E3EC26 /* libiconv.dylib */,
 				FD530E3A1B29619000E3EC26 /* libz.1.1.3.dylib */,

@@ -117,4 +117,14 @@
 // 查询已处理待办事项 参数 waitingid
 #define kReviewWatingEvent @"/yasi/waiting/selectWaitingByUserId.do"
 
+/*
+    查询用户闯关的百分比 （学生端）分数	score	M
+    课程ID	topcid	M
+    PART号	part	M
+    关卡ID	levelid	M
+    用户ID	userid	M
+ */
+#define kSelectScorePercent @"/yasi/clearance/selectPercentage.do"
+
+
 #endif

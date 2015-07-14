@@ -65,7 +65,7 @@
     
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"练习簿"];
+    [self addTitleLabelWithTitle:@"练习簿"];
     
     self.view.backgroundColor = _backgroundViewColor;
     

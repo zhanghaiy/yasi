@@ -130,7 +130,7 @@
     
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"My Travel"];
+    [self addTitleLabelWithTitle:@"My Travel"];
     [self makeUpDataArray];
     [self createPickerView];
     

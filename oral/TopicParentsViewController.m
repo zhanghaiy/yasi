@@ -64,7 +64,7 @@
 }
 
 // titleLabel
-- (void)addTitleLabelWithTitleWithTitle:(NSString *)title
+- (void)addTitleLabelWithTitle:(NSString *)title
 {
     _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(60, 26, kScreentWidth-60*2, 40)];
     _titleLab.textColor = _titleTextColor;

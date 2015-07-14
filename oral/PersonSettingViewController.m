@@ -31,7 +31,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"设置"];
+    [self addTitleLabelWithTitle:@"设置"];
     self.view.backgroundColor = _backgroundViewColor;
     _textArray = @[@"我的账号",@"网络设置",@"关于我们",@"默认老师"];
     _imageArray = @[@"",@"netSetting",@"AboutMe",@"defaultTeacher"];

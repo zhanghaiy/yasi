@@ -32,7 +32,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:245/255.0 green:249/255.0 blue:250/255.0 alpha:1];
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:self.pageTitleString];
+    [self addTitleLabelWithTitle:self.pageTitleString];
     
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];

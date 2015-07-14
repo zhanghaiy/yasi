@@ -31,7 +31,7 @@
 //    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreentWidth);
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"申请加班"];
+    [self addTitleLabelWithTitle:@"申请加班"];
     
     self.view.backgroundColor = _backgroundViewColor;
     

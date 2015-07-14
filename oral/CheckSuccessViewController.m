@@ -14,7 +14,7 @@
 #import "OralDBFuncs.h"
 #import "NSString+CalculateStringSize.h"
 #import "DeviceManager.h"
-
+#import "NSURLConnectionRequest.h"
 
 @interface CheckSuccessViewController ()<UITableViewDataSource,UITableViewDelegate,UIWebViewDelegate>
 {
@@ -138,27 +138,25 @@
     
     // 根据分数设置颜色
     int score = [_topScoreLabel.text intValue];
-    
-    // 3种颜色 同闯关
-//    NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
-//    int index = score>=80?0:(score>=60?1:2);
-//    _topBackView.backgroundColor = [colorArray objectAtIndex:index];
-//    [_topShareButton setTitleColor:[colorArray objectAtIndex:index] forState:UIControlStateNormal];
-
-    
     // 2中颜色
-    UIColor *color_fail = [UIColor colorWithRed:249/255.0 green:220/255.0 blue:18/255.0 alpha:1];
-    UIColor *color_sucess = [UIColor colorWithRed:1/255.0 green:196/255.0 blue:255/255.0 alpha:1];
+    UIColor *color_fail = _goodColor;
+    UIColor *color_sucess = [UIColor colorWithRed:0 green:179/255.0 blue:231/255.0 alpha:1];
     
     NSArray *color_array = @[color_fail,color_sucess];
     int index = score>=60?1:0;
-
     _topBackView.backgroundColor = [color_array objectAtIndex:index];
     [_topShareButton setTitleColor:[color_array objectAtIndex:index] forState:UIControlStateNormal];
-
+    
     // 根据分数 设置标题
-    NSArray *textArray = @[@"成绩不错~~继续保持！！！",@"成绩中等~~继续努力！！！",@"成绩不理想，需要加强联系哦~~加油！！！！"];
-    _topDesLabel.text = [textArray objectAtIndex:index];
+    if (score>=60)
+    {
+        // 网络请求百分比
+        [self requestScorePercentWithScore:score];
+    }
+    else
+    {
+        _topDesLabel.text = @"闯关失败~再接再厉！";
+    }
     
     if (!index)
     {
@@ -166,7 +164,43 @@
         _continueButton.enabled = NO;
     }
     NSLog(@"~~~~~~~~~获取总分  end ~~~~~~~");
+}
 
+- (void)requestScorePercentWithScore:(NSInteger)score
+{
+    /*
+        分数	score	M
+        课程ID	topcid	M
+        PART号	part	M
+        关卡ID	levelid	M
+        用户ID	userid	M
+     */
+    NSString *urlStr = [NSString stringWithFormat:@"%@%@?score=%ld&topcid=%@&part=%d&levelid=%@&userid=%@",kBaseIPUrl,kSelectScorePercent,score,[OralDBFuncs getCurrentTopicID],[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentLevelID],[OralDBFuncs getCurrentUserID]];
+    NSLog(@"%@",urlStr);
+    [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestPercentEnd:) andRefresh:YES];
+}
+
+- (void)requestPercentEnd:(NSURLConnectionRequest *)request
+{
+    if (request.downloadData)
+    {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        if ([[dict objectForKey:@"respCode"] intValue] == 1000)
+        {
+            // 成功
+            NSString *text = [NSString stringWithFormat:@"成绩不错，超过了%@的小伙伴~~",[dict objectForKey:@"newSize"]];
+            _topDesLabel.text = text;
+        }
+        else
+        {
+            NSLog(@"%@",[dict objectForKey:@"remark"]);
+        }
+    }
+    else
+    {
+        NSString *text = [NSString stringWithFormat:@"成绩不错，超过了(网络出错 查询不到百分比)的小伙伴"];
+        _topDesLabel.text = text;
+    }
 }
 
 
@@ -179,15 +213,12 @@
     self.navTopView.hidden = YES;
     self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
     [self uiConfig];
-    NSLog(@"测试bug ~~~~~~~ 001");
     // 获取总分 此处由于时间问题 一直崩溃 暂不获取
     [self getSumScore];
-    NSLog(@"测试bug ~~~~~~~ 002");
 
     // 合成成绩单数据源
     _scoreMenuArray = [[NSMutableArray alloc]init];
     [self makeUpScoreMenu];
-    NSLog(@"测试bug ~~~~~~~ 003");
 
 }
 

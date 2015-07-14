@@ -54,7 +54,7 @@
     
     _notSearch = NO;
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"搜索"];
+    [self addTitleLabelWithTitle:@"搜索"];
     self.view.backgroundColor = _backgroundViewColor;
     
     [self uiconfig];

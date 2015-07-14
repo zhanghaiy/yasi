@@ -52,7 +52,7 @@
     
     // 当前topicNAme
     NSString *topicName = [_topicDict objectForKey:@"classtype"];
-    [self addTitleLabelWithTitleWithTitle:topicName];
+    [self addTitleLabelWithTitle:topicName];
     
     // 合成练习id
     NSDate *date = [NSDate date];

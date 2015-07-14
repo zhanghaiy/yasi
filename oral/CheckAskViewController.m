@@ -112,7 +112,7 @@
     
     [OralDBFuncs setCurrentPoint:3];
     NSString *title = [NSString stringWithFormat:@"Part%d-%d",[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint]];
-    [self addTitleLabelWithTitleWithTitle:title];
+    [self addTitleLabelWithTitle:title];
 
     self.navTopView.backgroundColor = [UIColor colorWithRed:144/255.0 green:231/255.0 blue:208/255.0 alpha:1];
     self.titleLab.textColor = [UIColor whiteColor];

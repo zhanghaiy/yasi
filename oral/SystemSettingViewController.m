@@ -29,7 +29,7 @@
     // Do any additional setup after loading the view from its nib.
     
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:@"网络设置"];
+    [self addTitleLabelWithTitle:@"网络设置"];
     
     self.view.backgroundColor = _backgroundViewColor;
     

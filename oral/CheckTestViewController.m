@@ -269,7 +269,7 @@
     _testAudioPathArray = [[NSMutableArray alloc]init];
     _jsonArray = [[NSMutableArray alloc]init];
     // 返回按钮
-    [self addTitleLabelWithTitleWithTitle:@"直接模考"];
+    [self addTitleLabelWithTitle:@"直接模考"];
     self.view.backgroundColor = [UIColor whiteColor];
     [self uiConfig];
     

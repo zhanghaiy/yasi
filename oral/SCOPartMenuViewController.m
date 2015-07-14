@@ -521,7 +521,7 @@ static UIView *openView;
     
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
-    [self addTitleLabelWithTitleWithTitle:[OralDBFuncs getCurrentTopic]];
+    [self addTitleLabelWithTitle:[OralDBFuncs getCurrentTopic]];
     
     // 音频播放器
     _audioPlayerManager = [AudioPlayer getAudioManager];

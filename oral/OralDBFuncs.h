@@ -103,6 +103,9 @@
 // 获取当前part
 +(int)getCurrentPart;
 
++(void)setCurrentLevelID:(NSString *)levelID;
++(NSString *)getCurrentLevelID;
+
 // 标记加入练习簿的id
 + (void)setAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName AnswerId:(NSString *)answerid AnswerText:(NSString *)answerText;
 + (NSArray *)getAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName;
