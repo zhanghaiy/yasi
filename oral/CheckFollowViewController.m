@@ -288,8 +288,6 @@
     // 整个topic资源信息
     _topicInfoDict = [dict objectForKey:@"classtypeinfo"];
     // 当前part资源信息
-    NSLog(@"%d  %d",[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint]);
-    
     _currentPartDict = [[_topicInfoDict objectForKey:@"partlist"] objectAtIndex:[OralDBFuncs getCurrentPart]-1];
     // 当前关卡信息 关卡一
     _currentPointDict = [[_currentPartDict objectForKey:@"levellist"] objectAtIndex:[OralDBFuncs getCurrentPoint]-1];
@@ -389,9 +387,16 @@
     NSString *audiourl = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"audiourl"];
     
     NSString *audioPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES],audiourl];
-
-    NSLog(@"%@",audioPath);
-    [audioPlayer playerPlayWithFilePath:audioPath];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:audioPath])
+    {
+        //
+        [audioPlayer playerPlayWithFilePath:audioPath];
+    }
+    else
+    {
+        // 找不到音频路径
+        NSLog(@"找不到音频路径");
+    }
 }
 
 
@@ -425,7 +430,6 @@
 #pragma mark -- 播放完成回调
 - (void)playerCallBack
 {
-    NSLog(@"playerCallBack");
     if (_startAnswer==NO)
     {
         // 播放回答音频
@@ -608,15 +612,10 @@
     _currentAnswerPron = result.pron;
     _currentAnswerAudioName = [[sbcToPath componentsSeparatedByString:@"/"] lastObject];
     _currentAnswerReferAudioName = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"audiourl"];
-    NSLog(@"%@",_currentAnswerReferAudioName);
     _currentAnswerId = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"id"];
-    NSLog(@"%@",_currentAnswerId);
-    
-    NSLog(@"%d",[OralDBFuncs getCurrentPart]);
     
     // 存储一条记录 到数据库
     BOOL saveSuccess = [OralDBFuncs replaceLastRecordFor:[OralDBFuncs getCurrentUserName] TopicName:[OralDBFuncs getCurrentTopic] answerId:_currentAnswerId partNum:[OralDBFuncs getCurrentPart] levelNum:[OralDBFuncs getCurrentPoint] withRecordId:[OralDBFuncs getCurrentRecordId] lastText:_currentAnswerHtml lastScore:_currentAnswerScore lastPron:_currentAnswerPron lastIntegrity:_currentAnswerIntegrity lastFluency:_currentAnswerFluency lastAudioName:_currentAnswerAudioName];
-    NSLog(@"\n\n\n~~~~~~~~~~~~~~saveSuccess:%d\n\n\n",saveSuccess);
     
     _timeProgressLabel.hidden = YES;// 隐藏时间进度条
     _timeProgressLabel.frame = _timeProgressRect;//回复时间进度条 以便下次使用
@@ -731,7 +730,6 @@
     [praData writeToFile:pracToPath atomically:YES];
     // 加入练习簿
     BOOL suc = [OralDBFuncs addPracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentAnswerId andReferAudioName:_currentAnswerReferAudioName andLastAUdioName:pracAnswerAudioName andLastText:_currentAnswerHtml andLastScore:_currentAnswerScore Pron:_currentAnswerPron Integrity:_currentAnswerIntegrity fluency:_currentAnswerFluency];
-    NSLog(@"%d",suc);
     if (suc)
     {
         _tipStr = @"成功加入练习簿";
@@ -811,7 +809,6 @@
             //计算总分 存储记录 提交服务端 (网络提交暂时搁置)
             float levelScore = _sumScore/_sumCounts;
             [OralDBFuncs updateTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[OralDBFuncs getCurrentTopic] part:[OralDBFuncs getCurrentPart] level:[OralDBFuncs getCurrentPoint] andScore:levelScore];
-            NSLog(@"~~~~~~~~~~~~~~~");
             CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
             [self.navigationController pushViewController:successVC animated:YES];
         }
@@ -860,7 +857,6 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    NSLog(@"viewDidDisappear");
     audioPlayer.target = nil;
     if (_reduceTimer != nil)
     {

@@ -453,7 +453,6 @@
 #pragma mark -- 播放完成回调
 - (void)playerEnd
 {
-    NSLog(@"playerCallBack");
     // 跟读 录音 (思必驰)
     [self prepareBlank];
 }
@@ -748,7 +747,6 @@
         {
             float levelScore = _sumScore/_sumCounts;
             [OralDBFuncs updateTopicRecordFor:[OralDBFuncs getCurrentUserName] with:[OralDBFuncs getCurrentTopic] part:[OralDBFuncs getCurrentPart] level:[OralDBFuncs getCurrentPoint] andScore:levelScore];
-            NSLog(@"~~~~~~~~~~~~~~~");
             
             //关卡结束 跳转过渡页
             CheckSuccessViewController *successVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
@@ -795,7 +793,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    NSLog(@"viewWillDisappear");
     audioPlayer.target = nil;
     if (_reduceTimer != nil)
     {

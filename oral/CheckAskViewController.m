@@ -463,8 +463,6 @@
     NSString *questiontext = [questioDic objectForKey:@"question"];
     NSDictionary *answerDic = [[questioDic objectForKey:@"answerlist"] objectAtIndex:0];
     
-    NSLog(@"~~~~~~~~~\nlevel:%@\npartid:%@\nquestionid:%@\nquestionText:%@\n~~~~~~",level,partid,questionid,questiontext);
-    
     NSString *answerid = [answerDic objectForKey:@"id"];
     NSString *audioUrl = [NSString stringWithFormat:@"Part%d-%d-%ld.wav",[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentPoint],_currentQuestionCounts+1];
     
@@ -533,21 +531,6 @@
         // 标记提交时合成zip文件所需的内容 成绩单页面可直接用
         [OralDBFuncs setTopicAnswerZipArray:_recordPathArray Topic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:YES];
         [self backToTopicPage];
-        
-        // 合成json文件 打包zip  在后续成绩单界面 直接用zip  ---- 错误 未考虑无默认老师情况 暂时pass
-//        if ([self makeUpJsonFile])
-//        {
-//            [self zipCurrentPartFile];
-//            // 稍后提交
-//            [self backToTopicPage];
-//            //1、 标记 关卡3是否提交
-//            [OralDBFuncs setPartLevel3Commit:NO withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
-//        }
-//        else
-//        {
-//            NSLog(@"打包文件失败");
-//        }
-        
     }
     else if (btn.tag == kCommitRightButtonTag)
     {
@@ -621,7 +604,6 @@
 #pragma mark - 警告框 delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"%ld",buttonIndex);
     if (buttonIndex == 1)
     {
         [self startRequst];
@@ -662,7 +644,6 @@
          } success:^(AFHTTPRequestOperation *operation, id responseObject) {
              _loading_View.hidden = YES;
              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
-             NSLog(@"%@",dic);
              if ([[dic objectForKey:@"respCode"] intValue] == 1000)
              {
                  // 标记 关卡3已经提交
@@ -676,8 +657,6 @@
              else
              {
                  _commitSuccess = NO;
-                 NSLog(@"提交失败");
-                 NSLog(@"%@",[dic objectForKey:@"remark"]);
                  [self commitFailed];
              }
              
@@ -686,7 +665,6 @@
          {
              _commitSuccess = NO;
              _loading_View.hidden = YES;
-             NSLog(@"失败乃");
              [self commitFailed];
          }];
 
@@ -729,7 +707,6 @@
         NSString *jsonPath = [NSString stringWithFormat:@"%@/part.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
         [zip addFileToZip:jsonPath newname:@"part.json"];
     }
-    NSLog(@"%@",zipPath);
     return zipPath;
 }
 
@@ -765,7 +742,6 @@
     }
     
     NSDictionary *finalDict = @{@"partInfo":_partInfoArray,@"checkPoint":checkPoint,@"teacherid":_teacherId};
-    NSLog(@"%@",finalDict);
     
     NSError *parseError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:finalDict options:NSJSONWritingPrettyPrinted error:&parseError];
@@ -880,7 +856,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    NSLog(@"viewWillDisappear");
     audioPlayer.target = nil;
     if (_reduceTimer != nil)
     {
@@ -892,7 +867,6 @@
 - (void)selectTeacherId:(NSString *)teacherID
 {
     _teacherId = teacherID;
-    NSLog(@"选取老师后回调---老师id:%@",_teacherId);
 
     [self jugeNetState];
 }

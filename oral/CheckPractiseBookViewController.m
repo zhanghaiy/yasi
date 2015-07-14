@@ -156,8 +156,6 @@
 
     // 自己联系音频路径
     NSString *answerPath = [NSString stringWithFormat:@"%@/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES],_currentPracticeRecord.lastAudioName];
-    NSLog(@"%@",answerPath);
-    NSLog(@"%@",referPath);
     
     switch (btn.tag-cell.cellIndex)
     {
@@ -214,7 +212,6 @@
                     btn.selected = YES;
                     // 开启思必驰引擎
                     NSString *lastText = [_answerTextDict objectForKey:_currentPracticeRecord.answerId];
-                    NSLog(@"开启思必驰引擎 : 文本： %@",lastText);
                     [self startSBCAiengineWithText:lastText];
                     _markAnswerTime = 0;
                     [self showTimeProgress];
@@ -237,7 +234,6 @@
                 BOOL deleteSuc = [OralDBFuncs deletePracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:_currentPracticeRecord.answerId];
                 if (deleteSuc)
                 {
-                    NSLog(@"删除成功");
                     [OralDBFuncs deleteAddPracticeTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] AnswerId:_currentPracticeRecord.answerId];
                     [self makeUpPracticeBookDataArray];
                     [_practiseTableV reloadData];
@@ -287,7 +283,6 @@
 - (void)startSBCAiengineWithText:(NSString *)text
 {
     // 参考文本
-    NSLog(@"%@",text);
     if(_dfAiengine)
         [_dfAiengine startEngineFor:[self filterHTML:text]];
 }
@@ -306,7 +301,6 @@
     [OralDBFuncs addPracticeTime:round(result.systime) ForUser:[OralDBFuncs getCurrentUserName]];
     NSDictionary *fluency = result.fluency;
     NSString *msg = [NSString stringWithFormat:@"总体评分：%d\n发音：%d，完整度：%d，流利度：%d", result.overall, result.pron, result.integrity, ((NSNumber *)[fluency objectForKey:@"overall"]).intValue];
-    NSLog(@"%@",msg);
     [self performSelectorOnMainThread:@selector(showResult:) withObject:result waitUntilDone:NO];
 }
 

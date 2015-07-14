@@ -33,14 +33,12 @@
 //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     //发送请求
     [manager POST:urlString parameters:parameDict success:^(AFHTTPRequestOperation *operation, id responseObject){
-        NSLog(@"JSON: %@", responseObject);
         self.success = YES;
         _downLoadData = operation.responseData;
         [self.target performSelectorOnMainThread:self.action withObject:self waitUntilDone:NO];
      }
     failure:^(AFHTTPRequestOperation *operation, NSError *error){
         
-        NSLog(@"Error: %@", error);
         self.success = NO;
         [self.target performSelectorOnMainThread:self.action withObject:self waitUntilDone:NO];
     }];

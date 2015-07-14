@@ -88,8 +88,6 @@
             }
             [_playPathArray addObject:part_alone_array];
         }
-        
-        NSLog(@"%@",_playPathArray);
     }
     else
     {
@@ -170,8 +168,6 @@
             progressV.progress = 1;
             progressV.progressView.backgroundColor = _pointColor;
             [testBAckView addSubview:progressV];
-            NSLog(@"~~~~~~~~%ld",progressV.tag);
-            
         }
         
         // 提交按钮
@@ -274,8 +270,6 @@
 - (void)requestTestWating
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kSelectNewWatingEvent,[OralDBFuncs getCurrentUserID]];
-    NSLog(@"请求老师已处理事项：%@~~~~~",urlStr);
-    
     [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestWatingFinished:) andRefresh:YES];
 }
 
@@ -307,7 +301,6 @@
                         
                         if ([[watingListDic objectForKey:@"part"]length]==0)
                         {
-                            NSLog(@"~~~~~%@~~~~~~",[watingListDic objectForKey:@"part"]);
                             // 此处为模考反馈 给用户提示可以查看评价
                             _wating_test = YES;
                             _watingDict_test = watingListDic;
@@ -315,7 +308,6 @@
                             UIButton *commitButton_test = (UIButton *)[self.view viewWithTag:kTestCommitButtonTag];
                             [commitButton_test setTitle:@"查看老师反馈" forState:UIControlStateNormal];
                         }
-                        NSLog(@"~~~~~%@~~~~~~",[watingListDic objectForKey:@"part"]);
                     }
                 }
             }
@@ -443,7 +435,6 @@
 {
     NSArray *jsonArray =  [OralDBFuncs getTopicAnswerJsonArrayWithTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:NO];
     NSDictionary *modelpartInfo = @{@"modelpartInfo":jsonArray,@"teacherid":_defaultTeacherID,@"topic":[OralDBFuncs getCurrentTopicID],@"useid":[OralDBFuncs getCurrentUserID]};
-    NSLog(@"%@",modelpartInfo);
     NSError *parseError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:modelpartInfo options:NSJSONWritingPrettyPrinted error:&parseError];
     NSString *jsonFilePath = [NSString stringWithFormat:@"%@/modelpart.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
@@ -518,7 +509,6 @@
 {
     NSString *questionName = [[_currentTestArray objectAtIndex:_markPlayCounts/2] objectForKey:@"quesUrl"];
     NSString *questionPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO],questionName];
-    NSLog(@"%@",questionPath);
     if ([[NSFileManager defaultManager]fileExistsAtPath:questionPath])
     {
         [_playerManager playerPlayWithFilePath:questionPath];
@@ -536,7 +526,6 @@
 {
     NSString *answerName = [[_currentTestArray objectAtIndex:_markPlayCounts/2] objectForKey:@"answerUrl"];
     NSString *answerPath = [NSString stringWithFormat:@"%@/%@",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO],answerName];
-    NSLog(@"%@",answerPath);
     if ([[NSFileManager defaultManager]fileExistsAtPath:answerPath])
     {
         [_playerManager playerPlayWithFilePath:answerPath];

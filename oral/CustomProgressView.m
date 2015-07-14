@@ -51,7 +51,6 @@
 - (void)setProVProgress:(NSNumber*)progress
 {
     _progress = progress.floatValue;
-    NSLog(@"%f",_progress);
     
     NSInteger wid = _progress*self.frame.size.width;
     _progressView.frame = CGRectMake(0, 0, wid, self.frame.size.height);
@@ -60,7 +59,6 @@
 - (void)setProgress:(float)progress
 {
     _progress = progress;
-    NSLog(@"%f",_progress);
     
     NSInteger wid = _progress*self.frame.size.width;
     _progressView.frame = CGRectMake(0, 0, wid, self.frame.size.height);

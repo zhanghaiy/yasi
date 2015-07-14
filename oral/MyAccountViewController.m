@@ -65,8 +65,6 @@
 #pragma mark - 退出当前账号
 - (void)outBtnClicked:(UIButton *)btn
 {
-    NSLog(@"退出当前账号");
-    
     /*
         删除当前用户的用户名 用户id
      */

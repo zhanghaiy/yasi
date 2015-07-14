@@ -79,7 +79,6 @@
     // userId  classId
     NSString *userId = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
     NSString *urlString = [NSString stringWithFormat:@"%@%@?userId=%@&classId=%@",kBaseIPUrl,kStuOutClassUrlString,userId,_classId];
-    NSLog(@"退出班级url%@",urlString);
     [NSURLConnectionRequest requestWithUrlString:urlString target:self aciton:@selector(outClassFinished:) andRefresh:YES];
 }
 
@@ -112,7 +111,6 @@
 - (void)requestClassInfo
 {
     NSString *url = [NSString stringWithFormat:@"%@%@?classId=%@&teacherId=%@",kBaseIPUrl,kSelectClassMemoUrl,_classId,_teacherId];
-    NSLog(@"%@",url);
     [NSURLConnectionRequest requestWithUrlString:url target:self aciton:@selector(requestFinished:) andRefresh:YES];
 }
 
@@ -122,7 +120,6 @@
     if ([request.downloadData length]>0)
     {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        NSLog(@"%@",dic);
         _stu_Progress_Array = [dic objectForKey:@"studentlist"];
         [_stu_Progress_TableView reloadData];
         
@@ -138,7 +135,6 @@
 - (void)requestClassNotice
 {
     NSString *classNoticeUrl = [NSString stringWithFormat:@"%@%@?classId=%@",kBaseIPUrl,kSelectClassNewNoticeUrl,_classId];
-    NSLog(@"请求班级公告: %@~~~",classNoticeUrl);
     [NSURLConnectionRequest requestWithUrlString:classNoticeUrl target:self aciton:@selector(requestClassNoticeFinished:) andRefresh:YES];
 }
 
@@ -166,7 +162,6 @@
             else
             {
                 // 暂无公告
-                NSLog(@"暂无公告");
                 _noticeDesLabel.text = @"暂无公告";
             }
         }
@@ -236,7 +231,6 @@
     cell.stuNameLabel.text = [dict objectForKey:@"studentname"];
     cell.stuPassCountLabel.text = [NSString stringWithFormat:@"%d/%d",[[dict objectForKey:@"countpassclasstype"] intValue],[[dict objectForKey:@"countclasstype"] intValue]];
     float progress = [[dict objectForKey:@"countpassclasstype"] floatValue]/[[dict objectForKey:@"countclasstype"] floatValue];
-    NSLog(@"%f",progress);
     cell.stuPassProgressView.progress = progress;
     cell.stuPassProgressView.color = kPart_Button_Color;
 

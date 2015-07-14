@@ -95,7 +95,6 @@
 - (void)getSumScore
 {
     // 获取总分
-    NSLog(@"~~~~~~~~~获取总分~~~~~~~");
 
     if ([OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[OralDBFuncs getCurrentTopic]])
     {
@@ -162,8 +161,8 @@
     {
         // 不及格 不可以继续闯关
         _continueButton.enabled = NO;
+        _continueButton.backgroundColor = [UIColor colorWithWhite:200/255.0 alpha:1];
     }
-    NSLog(@"~~~~~~~~~获取总分  end ~~~~~~~");
 }
 
 - (void)requestScorePercentWithScore:(NSInteger)score
@@ -176,7 +175,6 @@
         用户ID	userid	M
      */
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?score=%ld&topcid=%@&part=%d&levelid=%@&userid=%@",kBaseIPUrl,kSelectScorePercent,score,[OralDBFuncs getCurrentTopicID],[OralDBFuncs getCurrentPart],[OralDBFuncs getCurrentLevelID],[OralDBFuncs getCurrentUserID]];
-    NSLog(@"%@",urlStr);
     [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestPercentEnd:) andRefresh:YES];
 }
 
@@ -237,12 +235,8 @@
     NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/info.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
     NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
     NSDictionary *maindict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
-    NSLog(@"整个topic资源信息");
     // 整个topic资源信息
     NSDictionary *dict = [maindict objectForKey:@"classtypeinfo"];
-   
-    NSLog(@"当前part资源信息");
-
     // 当前part资源信息
     NSDictionary *subDict = [[dict objectForKey:@"partlist"] objectAtIndex:[OralDBFuncs getCurrentPart]-1];
     NSArray *questionList = [[[subDict objectForKey:@"levellist"] objectAtIndex:[OralDBFuncs getCurrentPoint]-1] objectForKey:@"questionlist"];
@@ -255,7 +249,6 @@
         {
             NSString *answerID = [subSubSubDic objectForKey:@"id"];
             [_answer_Cintent_Array addObject:subSubSubDic];
-            NSLog(@"!!!!!!!!!PracticeBookRecord!!!!!!!!");
 
             if ([OralDBFuncs getLastRecordFor:[OralDBFuncs getCurrentUserName] topicName:[OralDBFuncs getCurrentTopic] answerId:answerID partNum:[OralDBFuncs getCurrentPart] andLevelNum:[OralDBFuncs getCurrentPoint]])
             {

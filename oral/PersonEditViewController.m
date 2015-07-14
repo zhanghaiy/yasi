@@ -201,7 +201,6 @@
     NSString *userID = [OralDBFuncs getCurrentUserID];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kAlterPersonInfo];
     NSString *params = [NSString stringWithFormat:@"userId=%@&nickname=%@&sex=%@&constellation=%@&birthday=%@&hobbies=%@&signiture=%@",userID,_nameStr,_sexString,_constellation,_birthStr,_hobbies,_signiture];;
-    NSLog(@"%@",urlStr);
     _loading_View.hidden = NO;
     [self.view bringSubviewToFront:_loading_View];
     [self changeLoadingViewTitle:@"正在提交资料，请稍后~~~~"];
@@ -251,7 +250,6 @@
          
          _loading_View.hidden = YES;
          NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
-         NSLog(@"%@",dic);
          if ([[dic objectForKey:@"respCode"] intValue] == 1000)
          {
              // 标记 关卡3已经提交

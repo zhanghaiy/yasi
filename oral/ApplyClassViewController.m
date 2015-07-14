@@ -10,10 +10,11 @@
 #import "NSURLConnectionRequest.h"
 
 
-@interface ApplyClassViewController ()<UITextFieldDelegate>
+@interface ApplyClassViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
 {
     CGRect _upRect;
     CGRect _downRect;
+    BOOL _commitSucess;
 }
 @end
 
@@ -22,17 +23,17 @@
 #define kCodeTextTag 201
 
 
-
+#pragma mark - 加载视图
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-//    self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreentWidth);
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     [self addTitleLabelWithTitle:@"申请加班"];
     
+    _commitSucess = NO;
     self.view.backgroundColor = _backgroundViewColor;
     
     _userId = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
@@ -64,6 +65,7 @@
     
 }
 
+#pragma mark - 视图已经出现
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -71,12 +73,14 @@
     _infoView.frame = _downRect;
 }
 
+#pragma mark - 触空白收键盘
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [_codeTextField resignFirstResponder];
     [_infoTextField resignFirstResponder];
 }
 
+#pragma mark - return 收键盘
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [UIView animateWithDuration:1 animations:^{
@@ -87,6 +91,7 @@
     return YES;
 }
 
+#pragma mark - 正在输入
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     if (textField.tag == kCodeTextTag)// 有码申请
@@ -105,23 +110,52 @@
     return YES;
 }
 
-
+#pragma mark - 申请加班
 - (void)applyToAddClassPostParams:(NSString *)paramStr
 {
+    _loading_View.hidden = NO;
+    [self changeLoadingViewTitle:@"正在提交申请，请稍后..."];
+    [self.view bringSubviewToFront:_loading_View];
     NSString *url = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kApplyClassUrl];
     [NSURLConnectionRequest requestPOSTUrlString:url andParamStr:paramStr target:self action:@selector(requestFinished:) andRefresh:YES];
 }
 
+#pragma mark - 申请加班回调
 - (void)requestFinished:(NSURLConnectionRequest *)request
 {
+    _loading_View.hidden = YES;
     if ([request.downloadData length])
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
+        if ([[dict objectForKey:@"respCode"] intValue] == 1000)
+        {
+            _commitSucess = YES;
+        }
         NSString *remark = [dict objectForKey:@"remark"];
-        NSLog(@"%@",remark);
-        NSLog(@"%@",dict);
+        [self showAlertWithMessage:remark];
+    }
+    else
+    {
+        [self showAlertWithMessage:@"网络错误"];
     }
 }
+
+#pragma mark - 展示警告框
+- (void)showAlertWithMessage:(NSString *)remark
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:remark delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
+}
+#pragma mark - UIAlertView Delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (_commitSucess)
+    {
+        // 返回上一页
+        [self backToPrePage];
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -138,6 +172,7 @@
 }
 */
 
+#pragma mark - 加入班级按钮点击事件 无码
 - (IBAction)infoAddButtonClicked:(id)sender
 {
     NSString *paramSTR;
@@ -161,6 +196,8 @@
         _infoView.frame = _downRect;
     }];
 }
+
+#pragma mark - 加入班级按钮点击事件 有码申请
 - (IBAction)codeAddButtonClicked:(id)sender
 {
     NSString *paramSTR;

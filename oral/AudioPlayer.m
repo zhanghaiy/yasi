@@ -37,20 +37,13 @@ static AudioPlayer *audioPlayer;
         _player.volume = 1;
         [_player prepareToPlay];
         [_player play];
-        NSLog(@"正在播放");
     }
-    else
-    {
-        NSLog(@"找不到音频路径");
-    }
-    
 }
 
 #pragma mark - 播放
 - (void)beginePlay
 {
     [_player play];
-    NSLog(@"正在播放音频");
 }
 
 #pragma mark- 暂停

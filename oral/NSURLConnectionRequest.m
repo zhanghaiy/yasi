@@ -116,7 +116,6 @@
     //接收完成
     // 存储数据
     NSString *dataPath = [NSString stringWithFormat:@"%@/%@",[self getLoadPath],self.requestUrlString];
-    NSLog(@"存储数据:%@",dataPath);
     [_downloadData writeToFile:dataPath atomically:NO];
     
     if ([_target respondsToSelector:_aciton]) {

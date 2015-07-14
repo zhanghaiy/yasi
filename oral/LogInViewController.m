@@ -116,12 +116,10 @@
     if (request.downloadData)
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        NSLog(@"%@",dict);
         if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
         {
             // 登陆成功 保存个人信息
             NSString *userid = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"studentid"];
-            NSLog(@"%@",dict);
             NSString *userName = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"studentname"];
             [OralDBFuncs setCurrentUser:userName UserId:userid UserIconUrl:[dict objectForKey:@"icon"]];
             [OralDBFuncs addUser:userName];
@@ -132,9 +130,7 @@
         }
         else
         {
-           // 打印失败码
-            NSLog(@"登陆失败码：%@\n登录失败信息：%@",[dict objectForKey:@"respCode"],[dict objectForKey:@"remark"]);
-            [self createFailAlert:@"登陆失败"];
+            [self createFailAlert:[dict objectForKey:@"remark"]];
         }
     }
     else

@@ -922,22 +922,17 @@
              if ([[dic objectForKey:@"respCode"] intValue] == 1000)
              {
                  // 提交成功后回到topic详情页面
-                 NSLog(@"upload success!");
-                 // 提交成功后回到topic详情页面
                  [OralDBFuncs setTestCommit:YES withTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
                  [OralDBFuncs markTestCommitedNumberTopic:[OralDBFuncs getCurrentTopic] User:[OralDBFuncs getCurrentUserName]];
-                 NSLog(@"模考提交老师成功");
                  _commitSuccess = YES;
                  [self showAlertViewWithMessage:@"提交成功"];
              }
              else
              {
-                 NSLog(@"提交失败：%@",[dic objectForKey:@"remark"]);
                  [self commitFailed_test];
              }
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              _loading_View.hidden = YES;
-             NSLog(@"失败乃");
              [self commitFailed_test];
          }];
 
@@ -954,11 +949,9 @@
 - (BOOL)makeUpLocalJsonFile_test
 {
     NSDictionary *modelpartInfo = @{@"modelpartInfo":_jsonArray,@"teacherid":_teacherid,@"topic":[OralDBFuncs getCurrentTopicID],@"useid":[OralDBFuncs getCurrentUserID]};
-    NSLog(@"%@",modelpartInfo);
     NSError *parseError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:modelpartInfo options:NSJSONWritingPrettyPrinted error:&parseError];
     NSString *jsonFilePath = [NSString stringWithFormat:@"%@/modelpart.json",[self getRecordSavePath]];
-    NSLog(@"~~~~~~~json文件保存路径：%@~~~~~~~",jsonFilePath);
     BOOL saveSuc = [jsonData writeToFile:jsonFilePath atomically:YES];
     return saveSuc;
 }

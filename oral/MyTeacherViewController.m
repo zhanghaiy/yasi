@@ -34,7 +34,6 @@
 {
     // 选择老师 userId teacherName change
     NSString *str = [NSString stringWithFormat:@"%@%@?userId=%@change=1",kBaseIPUrl,kChooseTeacherUrl,[OralDBFuncs getCurrentUserID]];
-    NSLog(@"~~~~~~选择老师：%@~~~~~~",str);
     [NSURLConnectionRequest requestWithUrlString:str target:self aciton:@selector(requestFinished:) andRefresh:YES];
 }
 
