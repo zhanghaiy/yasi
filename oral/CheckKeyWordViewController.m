@@ -57,7 +57,6 @@
     _jumpButton.backgroundColor = [UIColor whiteColor];
     [_jumpButton setTitleColor:_pointColor forState:UIControlStateNormal];
 
-
     CGRect rect = _keyScrollView.frame;
     rect.size.width = kScreentWidth;
     rect.size.height = kScreentWidth*52/75;

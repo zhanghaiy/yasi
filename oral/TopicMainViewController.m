@@ -163,12 +163,9 @@
         [cell.topicButton setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"bgimgurl"]]];
 //        [cell.topicButton setImage:[UIImage imageNamed:@"topic_new_test"] forState:UIControlStateNormal];
         cell.topicTitle.text = [dic objectForKey:@"classtype"];
-        
-        
         cell.progressColor = kPart_Button_Color;
 
         // 暂时写死  此处是根据本地数据（自己存储的）来算出用户的进度
-        
         TopicRecord *currentRecord = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[dic objectForKey:@"classtype"]];
         float progress = currentRecord.completion/9.0;
         

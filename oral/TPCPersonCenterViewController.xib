@@ -29,7 +29,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ULp-lh-jfy">
                     <rect key="frame" x="0.0" y="66" width="375" height="135"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person_top_Back" translatesAutoresizingMaskIntoConstraints="NO" id="jMo-sx-cZW">
+                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person_top_Back" translatesAutoresizingMaskIntoConstraints="NO" id="jMo-sx-cZW">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="135"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="生日：未填写" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9D-Ca-ojn">

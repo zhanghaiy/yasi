@@ -43,13 +43,13 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="auq-lJ-tTm" secondAttribute="trailing" constant="20" id="0vX-By-bfg"/>
-                    <constraint firstItem="FPY-t7-CpH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="64H-LI-rYl"/>
+                    <constraint firstItem="auq-lJ-tTm" firstAttribute="top" secondItem="FPY-t7-CpH" secondAttribute="bottom" constant="8" id="MwH-3b-vWt"/>
+                    <constraint firstItem="SqG-jf-lSx" firstAttribute="leading" secondItem="FPY-t7-CpH" secondAttribute="trailing" constant="10" id="SjK-hp-2V1"/>
                     <constraint firstAttribute="bottom" secondItem="auq-lJ-tTm" secondAttribute="bottom" id="blV-Gr-A4F"/>
                     <constraint firstAttribute="centerY" secondItem="SqG-jf-lSx" secondAttribute="centerY" id="h8m-Bw-aCx"/>
-                    <constraint firstItem="SqG-jf-lSx" firstAttribute="leading" secondItem="FPY-t7-CpH" secondAttribute="trailing" constant="10" id="nBx-pd-Jag"/>
-                    <constraint firstItem="FPY-t7-CpH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="naf-XV-oXh"/>
-                    <constraint firstItem="auq-lJ-tTm" firstAttribute="top" secondItem="FPY-t7-CpH" secondAttribute="bottom" constant="8" symbolic="YES" id="vPh-ma-Zh5"/>
+                    <constraint firstItem="FPY-t7-CpH" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="paK-yg-a5F"/>
                     <constraint firstAttribute="trailing" secondItem="SqG-jf-lSx" secondAttribute="trailing" constant="20" id="vdE-87-IEG"/>
+                    <constraint firstItem="FPY-t7-CpH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="wXB-4e-iDp"/>
                     <constraint firstItem="auq-lJ-tTm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="zvn-HV-jQe"/>
                 </constraints>
             </tableViewCellContentView>

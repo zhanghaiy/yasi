@@ -27,7 +27,8 @@
     _playerButton.layer.masksToBounds = YES;
     _playerButton.layer.cornerRadius = _playerButton.frame.size.height/2.0;
     _playerButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
-
+    _playerButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _playerButton.contentEdgeInsets = UIEdgeInsetsMake(0,10, 0, 0);
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

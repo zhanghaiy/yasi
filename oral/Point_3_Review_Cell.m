@@ -36,14 +36,18 @@
     _player_button.backgroundColor = kPart_Button_Color;
     _player_button.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     
+    _player_button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _player_button.contentEdgeInsets = UIEdgeInsetsMake(0,10, 0, 10);
+    
+    _player_button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _player_button.contentEdgeInsets = UIEdgeInsetsMake(0,10, 0, 10);
+    
     
     _tea_head_imgV.layer.masksToBounds = YES;
     _tea_head_imgV.layer.cornerRadius = _tea_head_imgV.frame.size.height/2.0;
     _stu_head_imgV.layer.masksToBounds = YES;
     _stu_head_imgV.layer.cornerRadius = _stu_head_imgV.frame.size.height/2.0;
     
-    
-
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

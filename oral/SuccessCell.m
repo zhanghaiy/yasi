@@ -19,20 +19,6 @@
     _scoreButton.layer.cornerRadius = _scoreButton.bounds.size.height/2;
     _lineLabel.backgroundColor = [UIColor colorWithWhite:230/255.0 alpha:1];
     _scoreButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_normal];
-    
-    for (UIView *subView in _htmlWebView.subviews)
-    {
-        if ([subView isKindOfClass:[UIScrollView class]])
-        {
-            for (UIView *shadowView in [subView subviews])
-            {
-                if ([shadowView isKindOfClass:[UIImageView class]])
-                {
-                    shadowView.hidden = YES;
-                }
-            }
-        }
-    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

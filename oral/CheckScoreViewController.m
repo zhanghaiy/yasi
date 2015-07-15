@@ -165,7 +165,7 @@
             CustomProgressView *progressV = [[CustomProgressView alloc]initWithFrame:CGRectMake(50, 20, testBAckView.frame.size.width-70, 4)];
             progressV.tag = kProgressViewTag+i;
             progressV.backgroundColor = [UIColor whiteColor];
-            progressV.progress = 1;
+            progressV.progress = 0;
             progressV.progressView.backgroundColor = _pointColor;
             [testBAckView addSubview:progressV];
         }
@@ -174,31 +174,28 @@
         NSInteger yyy = kScreenHeight<500?(kScreenHeight-kTestCommitButtonHeight-10-100):380;
         UIButton *commitTestButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [commitTestButton setFrame:CGRectMake((kScreentWidth-kTestCommitButtonWidth)/2, yyy, kTestCommitButtonWidth, kTestCommitButtonHeight)];
-        
         // 一共三种状态 1：未提交 --》tijiao geilaoshi
-        
         [commitTestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        
         commitTestButton.layer.cornerRadius = kTestCommitButtonHeight/2;
-        commitTestButton.backgroundColor = _pointColor;
+        commitTestButton.backgroundColor = kPart_Button_Color;
         commitTestButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
         [commitTestButton addTarget:self action:@selector(commitTest:) forControlEvents:UIControlEventTouchUpInside];
         commitTestButton.tag = kTestCommitButtonTag;
+        commitTestButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_Button_normal];
         [_backScrollV addSubview:commitTestButton];
-        
         [commitTestButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         // 判断是否莫考过 --- 未完待续
         BOOL commited = [OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName]];
         if (commited)
         {
             // 已提交
-            [commitTestButton setTitle:@"等待老师评价" forState:UIControlStateNormal];
+            [commitTestButton setTitle:@"待反馈" forState:UIControlStateNormal];
             commitTestButton.enabled = NO;
         }
         else
         {
             // 未提交
-            [commitTestButton setTitle:@"提交给老师" forState:UIControlStateNormal];
+            [commitTestButton setTitle:@"提交" forState:UIControlStateNormal];
         }
     }
     else
@@ -206,13 +203,11 @@
        // 未模考
         UILabel *testTipLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 30, kScreentWidth, _backScrollV.frame.size.height-_backScrollV.frame.origin.y)];
         testTipLabel.text = @"暂无模考信息";
-        testTipLabel.textColor = _pointColor;
+        testTipLabel.textColor = kPart_Button_Color;
         testTipLabel.textAlignment = NSTextAlignmentCenter;
-        testTipLabel.font = [UIFont systemFontOfSize:kFontSize_17];
+        testTipLabel.font = [UIFont systemFontOfSize:kFontSize_normal];
         [_backScrollV addSubview:testTipLabel];
     }
-    
-    
     
     // 闯关
     NSArray *partButtonNameArray = @[@"Part-One",@"Part-Two",@"Part-Three"];
@@ -567,7 +562,7 @@
     // 此处为 ： 时间进度条减小 获取到所有音频大小 然后加起来 构成倒计时
     // 获取音频文件的时长----待完善
     CustomProgressView *progressV = (CustomProgressView *)[self.view viewWithTag:kProgressViewTag+_ClickedIndex];
-    progressV.progress = 1;
+    progressV.progress = 0;
     _decreaseRatio = 1.0/_test_part_sumTime/10;
     _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(timeDaoJiShi) userInfo:nil repeats:YES];
 }
@@ -583,9 +578,9 @@
 - (void)timeDaoJiShi
 {
     CustomProgressView *progressV = (CustomProgressView *)[self.view viewWithTag:kProgressViewTag+_ClickedIndex];
-    progressV.progress -= _decreaseRatio;
+    progressV.progress += _decreaseRatio;
     
-    if (progressV.progress<=0)
+    if (progressV.progress>=1)
     {
         [self stopTimer];
         UIButton *playBtn = (UIButton *)[self.view viewWithTag:kPlayButtonTag+_ClickedIndex];

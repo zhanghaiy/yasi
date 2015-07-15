@@ -189,12 +189,13 @@
         [pointButton setTitleColor:_textColor forState:UIControlStateNormal];
         
         pointButton.tag = kPointButtonTag + i;
-        pointButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_12];
+        pointButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_normal];
         [pointButton addTarget:self action:@selector(pointButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [topPointBUttonView addSubview:pointButton];
         if (i == 0)
         {
             pointButton.selected = YES;
+            pointButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_Button_normal];
         }
     }
     
@@ -242,10 +243,12 @@
         if (newBtn.tag == count+kPointButtonTag)
         {
             newBtn.selected = YES;
+            newBtn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_Button_normal];
         }
         else
         {
             newBtn.selected = NO;
+            newBtn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_normal];
         }
     }
 }
@@ -299,7 +302,7 @@
         UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, tableV_point_1.frame.size.height-tableV_point_1.frame.origin.y)];
         lab.textAlignment = NSTextAlignmentCenter;
         lab.textColor = kPart_Button_Color;
-        lab.font = [UIFont systemFontOfSize:kFontSize_17];
+        lab.font = [UIFont systemFontOfSize:kFontSize_normal];
         lab.text = @"暂无成绩";
         tableV_point_1.tableHeaderView = lab;
     }
@@ -309,7 +312,7 @@
         UILabel *lab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, tableV_point_2.frame.size.height-tableV_point_2.frame.origin.y)];
         lab.textAlignment = NSTextAlignmentCenter;
         lab.textColor = kPart_Button_Color;
-        lab.font = [UIFont systemFontOfSize:kFontSize_17];
+        lab.font = [UIFont systemFontOfSize:kFontSize_normal];
         lab.text = @"暂无成绩";
         tableV_point_2.tableHeaderView = lab;
     }
@@ -323,9 +326,10 @@
     lab.text = @"暂无成绩";
     lab.textAlignment = NSTextAlignmentCenter;
     lab.textColor = kPart_Button_Color;
-    lab.font = [UIFont systemFontOfSize:kFontSize_17];
+    lab.font = [UIFont systemFontOfSize:kFontSize_normal];
     tableV_point_3.tableHeaderView = lab;
 }
+
 #pragma mark -- 关卡3 已提交头视图
 - (void)setPoint_3_commited_head_view
 {
@@ -345,6 +349,7 @@
     _commit_Head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Commit_View" owner:self options:0] lastObject];
     _commit_Head_View.commit_des_Label.text = @"提交你的回答给老师吧，会有很大的提高哦~~~";
     [_commit_Head_View.commit_Button setTitle:@"提交" forState:UIControlStateNormal];
+    [_commit_Head_View.commit_Button setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
     [_commit_Head_View.commit_Button addTarget:self action:@selector(commitCurrentPart:) forControlEvents:UIControlEventTouchUpInside];
     tableV_point_3.tableHeaderView = _commit_Head_View;
 }
@@ -620,10 +625,8 @@ static UIView *openView;
     {
         _loading_View.hidden = NO;
         [self.view bringSubviewToFront:_loading_View];
-        
         NSString *zipPath =  [self zipCurrentPartFile];
         NSData *zipData = [NSData dataWithContentsOfFile:zipPath];
-        
         // 网络提交 uploadfile
         NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kPartCommitUrl];
         NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
@@ -1064,7 +1067,7 @@ static UIView *openView;
     if (tableView.tag == kTableViewBaseTag+2)
     {
         Point_3_Section_Head_View *view = [_section_array_point_3 objectAtIndex:section];
-        if (_review_point_3&&_requestReviewSuccess)
+        if (_review_point_3&&_requestReviewSuccess)//已反馈
         {
             NSString *questionID = [[_text_array_point_3 objectAtIndex:section] objectForKey:@"questionid"];
             NSDictionary *subDic = [self retrievalReviewDictWithQuestionID:questionID];
@@ -1081,7 +1084,10 @@ static UIView *openView;
         }
         else
         {
-            
+            if (_open&&_openIndex == section)
+            {
+                view.markLabel.hidden = YES;
+            }
         }
         return view;
     }

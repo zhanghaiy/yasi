@@ -282,14 +282,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *text = [[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"answer"];
-    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-90 Height:99999 FontSize:kFontSize_14];
+    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-90 Height:99999 FontSize:kFontSize_16];
     if (rect.size.height>kCellHeght-20)
     {
         NSInteger height = kCellHeght+rect.size.height-50;
-        if (height%2)
-        {
-            height += 1;
-        }
         return height;
     }
     return kCellHeght;
@@ -309,15 +305,17 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"SuccessCell" owner:self options:0] lastObject];
         
         cell.htmlWebView.scrollView.scrollEnabled=NO;
-        cell.htmlWebView.scrollView.backgroundColor = [UIColor whiteColor];
-        cell.backgroundView.backgroundColor = [UIColor whiteColor];
+//        cell.htmlWebView.scrollView.backgroundColor = [UIColor whiteColor];
+//        cell.backgroundView.backgroundColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     NSString *answerId = [[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"id"];
     PracticeBookRecord *record = [_answer_DB_Dictionary objectForKey:answerId];
-    [cell.htmlWebView loadHTMLString:record.lastText baseURL:nil];
     cell.htmlWebView.delegate = self;
+    
+    [cell.htmlWebView loadHTMLString:record.lastText baseURL:nil];
+    
     
     NSArray *colorArr = @[_perfColor,_goodColor,_badColor];
     int scoreCun = record.lastScore>=80?0:(record.lastScore>=60?1:2);

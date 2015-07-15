@@ -17,14 +17,14 @@
 @interface PersonProgressViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     UITableView *_tableV;
-    PointProgressView *_proV_tableHeaderV;
-    NSInteger _cellHeigth_alone;
-    UIScrollView *_topScrollV;
-    UIScrollView *_bottomScrollV;
+    PointProgressView *_proV_tableHeaderV;// 闯关总进度
+    NSInteger _cellHeigth_alone;// 单行topic高度
+    UIScrollView *_topScrollV; // 正在练习的 topic 滚动背景
+    UIScrollView *_bottomScrollV; // 练习完成的
     
-    NSArray *_notPassListArray;
-    NSArray *_passListArray;
-    NSMutableArray *_practicingArray;
+    NSArray *_notPassListArray; // 未通关 topic
+    NSArray *_passListArray;// 已通关 topic
+    NSMutableArray *_practicingArray; // 正在练习的topic
     TopicInfoManager *_topicManager;
 }
 @end
@@ -66,19 +66,19 @@
     if (topicCount==0)
     {
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, _cellHeigth_alone)];
-        label.text = @"亲，最近没有练习呦，赶快去学习吧~~~~~~~~";
+        label.text = @"暂无正在练习的topic";
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = kPart_Button_Color;
-        label.font = [UIFont systemFontOfSize:kFontSize_14];
+        label.font = [UIFont systemFontOfSize:kFontSize_normal];
         [_topScrollV addSubview:label];
     }
     else
     {
         NSInteger pages = (topicCount%3?(topicCount/3+1):topicCount/3);
-        NSInteger btnWith = _cellHeigth_alone-25;
+        NSInteger btnHeight = (_cellHeigth_alone-25);
+        NSInteger btnWith = btnHeight*240.0/200.0;
         NSInteger btn_space = (kScreentWidth-3*btnWith)/4;
         _topScrollV.contentSize = CGSizeMake(kScreentWidth*pages, _cellHeigth_alone+20);
-        
         NSInteger mark_topic_count=0;
         for (int i = 0; i < pages; i ++)
         {
@@ -87,30 +87,24 @@
                 if (mark_topic_count<topicCount)
                 {
                     mark_topic_count ++;
-                    NSLog(@"%ld",mark_topic_count);
                     NSString *topicID = [[_practicingArray objectAtIndex:mark_topic_count-1] objectForKey:@"classtypeid"];
                     NSDictionary *topicDetailDic = [_topicManager getTopicDetailInfoWithTopicID:topicID];
                     NSString *topicImgUrl = [topicDetailDic objectForKey:@"bgimgurl"];
-                    NSLog(@"正在练习的:%@",topicImgUrl);
-
                     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    [btn setFrame:CGRectMake(i*kScreentWidth+btn_space+j*(btnWith+btn_space), 12, btnWith, btnWith)];
+                    [btn setFrame:CGRectMake(i*kScreentWidth+btn_space+j*(btnWith+btn_space), 12, btnWith, btnHeight)];
                     btn.tag = kTopBtnBaseTag + mark_topic_count;
                     [btn setImageWithURL:[NSURL URLWithString:topicImgUrl] placeholderImage:[UIImage imageNamed:@"33.jpg"]];
-
                     [btn addTarget:self action:@selector(topicButton_topButton_Clicked:) forControlEvents:UIControlEventTouchUpInside];
                     
-                    btn.layer.masksToBounds = YES;
-                    btn.layer.cornerRadius = btn.frame.size.height/2;
-                    btn.layer.borderWidth = 1;
-                    btn.layer.borderColor = [UIColor clearColor].CGColor;
-                    
+//                    btn.layer.masksToBounds = YES;
+//                    btn.layer.cornerRadius = btn.frame.size.height/2;
+//                    btn.layer.borderWidth = 1;
+//                    btn.layer.borderColor = [UIColor clearColor].CGColor;
                     
                     [_topScrollV addSubview:btn];
-                    
                     TopicRecord *record = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[[_practicingArray objectAtIndex:mark_topic_count-1] objectForKey:@"classtype"]];
                     float progress = record.completion/9.0;
-                    CustomProgressView *proV = [[CustomProgressView alloc]initWithFrame:CGRectMake(i*kScreentWidth+btn_space+j*(btnWith+btn_space), 25+btnWith, btnWith, 8)];
+                    CustomProgressView *proV = [[CustomProgressView alloc]initWithFrame:CGRectMake(i*kScreentWidth+btn_space+j*(btnWith+btn_space), 25+btnHeight, btnWith, 8)];
                     proV.color = kPart_Button_Color;
                     proV.progress = progress;
                     proV.tag = kTopProBaseTag + mark_topic_count;
@@ -135,17 +129,19 @@
     if (topicCount==0)
     {
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, _cellHeigth_alone*2)];
-        label.text = @"赶快抓紧时间学习吧亲\n\n您还没有完成的topic呦";
+        label.text = @"暂无完成的topic";
         label.textAlignment = NSTextAlignmentCenter;
         label.textColor = kPart_Button_Color;
         label.numberOfLines = 0;
-        label.font = [UIFont systemFontOfSize:kFontSize_14];
+        label.font = [UIFont systemFontOfSize:kFontSize_normal];
         [_bottomScrollV addSubview:label];
     }
     else
     {
         NSInteger pages = (topicCount%9?(topicCount/9+1):topicCount/9);
-        NSInteger btnWith = _cellHeigth_alone-25;
+        NSInteger btnH = _cellHeigth_alone-25;
+        NSInteger btnWith =  btnH*240/200;
+        
         NSInteger btn_space = (kScreentWidth-3*btnWith)/4;
         _bottomScrollV.contentSize = CGSizeMake(kScreentWidth*pages, _cellHeigth_alone*3);
         
@@ -162,20 +158,18 @@
                         NSString *topicID = [[_passListArray objectAtIndex:mark_topic_count] objectForKey:@"classtypeid"];
                         NSDictionary *topicDetailDic = [_topicManager getTopicDetailInfoWithTopicID:topicID];
                         NSString *topicImgUrl = [topicDetailDic objectForKey:@"bgimgurl"];
-                        NSLog(@"%@",topicImgUrl);
                         
                         mark_topic_count ++;
                         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                        [btn setFrame:CGRectMake(i*kScreentWidth+btn_space+k*(btnWith+btn_space), 12 + j*_cellHeigth_alone, btnWith, btnWith)];
+                        [btn setFrame:CGRectMake(i*kScreentWidth+btn_space+k*(btnWith+btn_space), 12 + j*_cellHeigth_alone, btnWith, btnH)];
                         btn.tag = kBottomBtnTag + mark_topic_count;
                         [btn setImageWithURL:[NSURL URLWithString:topicImgUrl] placeholderImage:[UIImage imageNamed:@"topic_moni"]];
                         [btn addTarget:self action:@selector(topicButton_bottomButton_Clicked:) forControlEvents:UIControlEventTouchUpInside];
                         
-                        btn.layer.masksToBounds = YES;
-                        btn.layer.cornerRadius = btn.frame.size.height/2;
-                        btn.layer.borderWidth = 1;
-                        btn.layer.borderColor = [UIColor clearColor].CGColor;
-                        
+//                        btn.layer.masksToBounds = YES;
+//                        btn.layer.cornerRadius = btn.frame.size.height/2;
+//                        btn.layer.borderWidth = 1;
+//                        btn.layer.borderColor = [UIColor clearColor].CGColor;
                         [_bottomScrollV addSubview:btn];
                     }
                 }
@@ -220,7 +214,6 @@
     [self uiConfig];
     
     _topicManager = [TopicInfoManager getTopicInfoManager];
-    
     [self requestTopicProgress];
 }
 

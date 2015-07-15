@@ -123,7 +123,7 @@
     {
         UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, tableView.frame.size.height-tableView.frame.origin.y)];
         lable.text = @"暂无数据";
-        lable.font = [UIFont systemFontOfSize:kFontSize_17];
+        lable.font = [UIFont systemFontOfSize:kFontSize_normal];
         lable.textAlignment = NSTextAlignmentCenter;
         lable.textColor = kText_Color;
         return lable;
@@ -144,7 +144,7 @@
      */
     PracticeBookRecord *record = [_practiceArray objectAtIndex:indexPath.row];
     NSString *text = [_answerTextDict objectForKey:record.answerId];
-    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:99999 FontSize:kFontSize_15];
+    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-90 Height:99999 FontSize:kFontSize_15];
     if (rect.size.height>70)
     {
         return (int)(kCellHeight+rect.size.height-70);
