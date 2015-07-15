@@ -33,62 +33,74 @@
     // 修改frame
     float topView_H = 350.0/667*kScreenHeight;
     float shareBtn_W = 100.0/375*kScreentWidth;
-    float shareBtn_H = 55.0/667*kScreenHeight;
+    float shareBtn_H = 50.0/667*kScreenHeight;
     float tipLabel_H = 30;
     float space_share_toBottom = 15.0/667*kScreenHeight;
     float score_H = 180.0/667*kScreenHeight;
     float score_Y = topView_H-5-space_share_toBottom-shareBtn_H-tipLabel_H-score_H;
     [_topBackView setFrame:CGRectMake(0, 0, kScreentWidth, topView_H)];
     [_topScoreLabel setFrame:CGRectMake(0, score_Y, kScreentWidth, score_H)];
+    
     [_topShareButton setFrame:CGRectMake((kScreentWidth-shareBtn_W)/2, topView_H-space_share_toBottom-shareBtn_H, shareBtn_W, shareBtn_H)];
+    
     [_topDesLabel setFrame:CGRectMake(0, topView_H-space_share_toBottom-shareBtn_H-tipLabel_H-5, kScreentWidth, tipLabel_H)];
     // 底部按钮
     float bottom_btn_W = 110.0/375*kScreentWidth;
     float bottom_btn_H = 50.0/667*kScreenHeight;
     [_backButton setFrame:CGRectMake((kScreentWidth/2-bottom_btn_W)/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
     [_continueButton setFrame:CGRectMake(kScreentWidth*3/4-bottom_btn_W/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
-    // 字体
-    _continueButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_16];
-    _backButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_16];
-    // 背景色
-    _backButton.backgroundColor = kPart_Button_Color;
-    _continueButton.backgroundColor = kPart_Button_Color;
 
-    // 文字色
-    [_backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_continueButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 
-    // 圆角半径
-    _backButton.layer.masksToBounds = YES;
-    _backButton.layer.cornerRadius = _backButton.frame.size.height/2;
-    _continueButton.backgroundColor = _backColor;
-    _continueButton.layer.masksToBounds = YES;
-    _continueButton.layer.cornerRadius = _continueButton.frame.size.height/2;
-    
     // 中间文字
     float menu_label_H = 40.0/667*kScreenHeight;
     float menu_label_Y = topView_H;
     [_midTitleLabel setFrame:CGRectMake(0, menu_label_Y, kScreentWidth, menu_label_H)];
     [_midTableView setFrame:CGRectMake(0, menu_label_Y+menu_label_H, kScreentWidth, kScreenHeight-menu_label_Y-menu_label_H-bottom_btn_H-10)];
     // 闯关成绩单文字颜色
-    _midTitleLabel.textColor = kPart_Button_Color;
-    _midTitleLabel.textAlignment = NSTextAlignmentCenter;
-    _midTitleLabel.font = [UIFont systemFontOfSize:kFontSize_16];
-    _topScoreLabel.backgroundColor = [UIColor clearColor];
-    _topShareButton.backgroundColor = [UIColor whiteColor];
+    
+    
+    // 圆角半径
+    // 总分数
+    _topShareButton.hidden = NO;
     _topShareButton.layer.masksToBounds = YES;
     _topShareButton.layer.cornerRadius = _topShareButton.frame.size.height/2;
+    // 再来一次/返回  按钮
+    _backButton.layer.masksToBounds = YES;
+    _backButton.layer.cornerRadius = _backButton.frame.size.height/2;
+    _continueButton.layer.masksToBounds = YES;
+    _continueButton.layer.cornerRadius = _continueButton.frame.size.height/2;
     
-    // 描述 分数  文字颜色
-    _topScoreLabel.textColor = [UIColor whiteColor];
-    _topDesLabel.textColor = [UIColor whiteColor];
-    
+    // 列表控件 delegate
     _midTableView.delegate = self;
     _midTableView.dataSource = self;
     _midTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _midTableView.showsHorizontalScrollIndicator = NO;
     _midTableView.showsVerticalScrollIndicator = NO;
     
+    // 背景色
+    _continueButton.backgroundColor = kPart_Button_Color;
+    _backButton.backgroundColor = kPart_Button_Color;
+    _midTableView.backgroundColor = _backgroundViewColor;
+    _topScoreLabel.backgroundColor = [UIColor clearColor];
+    _topShareButton.backgroundColor = [UIColor whiteColor];
+    
+    // 文字大小
+    _midTitleLabel.font = [UIFont systemFontOfSize:kFontSize_Button_normal];
+    _continueButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_Button_normal];
+    _backButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_Button_normal];
+    _topDesLabel.font = [UIFont systemFontOfSize:kFontSize_Button_normal];
+    _topShareButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_Button_normal];
+    
+    // 文字颜色
+    [_backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_continueButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _midTitleLabel.textColor = kPart_Button_Color;
+    _topDesLabel.textColor = [UIColor whiteColor];
+    _topScoreLabel.textColor = [UIColor whiteColor];
+    
+    // 文字 对其方式
+    _midTitleLabel.textAlignment = NSTextAlignmentCenter;
+    _topDesLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 #pragma mark - 获取总分
@@ -96,6 +108,7 @@
 {
     // 获取总分
 
+    NSInteger sumScore = 0;
     if ([OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[OralDBFuncs getCurrentTopic]])
     {
         TopicRecord *topicRecord = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[OralDBFuncs getCurrentTopic]];
@@ -103,53 +116,57 @@
         {
             if ([OralDBFuncs getCurrentPoint] == 1)
             {
-                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p1_1];
+                sumScore = topicRecord.p1_1;
             }
             else if ([OralDBFuncs getCurrentPoint] == 2)
             {
-                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p1_2];
+                sumScore = topicRecord.p1_2;
             }
         }
         else if ([OralDBFuncs getCurrentPart] == 2)
         {
             if ([OralDBFuncs getCurrentPoint] == 1)
             {
-                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p2_1];
+                sumScore = topicRecord.p2_1;
             }
             else if ([OralDBFuncs getCurrentPoint] == 2)
             {
-                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p2_2];
+                sumScore = topicRecord.p2_2;
             }
         }
         else if ([OralDBFuncs getCurrentPart] == 3)
         {
             if ([OralDBFuncs getCurrentPoint] == 1)
             {
-                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p3_1];
+                sumScore = topicRecord.p3_1;
+
             }
             else if ([OralDBFuncs getCurrentPoint] == 2)
             {
-                _topScoreLabel.text = [NSString stringWithFormat:@"%d",topicRecord.p3_2];
+                sumScore = topicRecord.p3_2;
             }
         }
     }
     
+    _topScoreLabel.text = [NSString stringWithFormat:@"%d",sumScore];
     // 根据分数设置颜色
-    int score = [_topScoreLabel.text intValue];
     // 2中颜色
     UIColor *color_fail = _goodColor;
     UIColor *color_sucess = [UIColor colorWithRed:0 green:179/255.0 blue:231/255.0 alpha:1];
-    
     NSArray *color_array = @[color_fail,color_sucess];
-    int index = score>=60?1:0;
+    int index = sumScore>=60?1:0;
+    
+    // 根据分数 改变控件颜色
     _topBackView.backgroundColor = [color_array objectAtIndex:index];
+    [_topShareButton setTitleColor:[color_array objectAtIndex:index] forState:UIControlStateNormal];
+    [_topShareButton setBackgroundColor:[UIColor whiteColor]];
     [_topShareButton setTitleColor:[color_array objectAtIndex:index] forState:UIControlStateNormal];
     
     // 根据分数 设置标题
-    if (score>=60)
+    if (sumScore>=60)
     {
         // 网络请求百分比
-        [self requestScorePercentWithScore:score];
+        [self requestScorePercentWithScore:sumScore];
     }
     else
     {
@@ -265,7 +282,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *text = [[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"answer"];
-    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-80 Height:99999 FontSize:kFontSize_14];
+    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-90 Height:99999 FontSize:kFontSize_14];
     if (rect.size.height>kCellHeght-20)
     {
         NSInteger height = kCellHeght+rect.size.height-50;
@@ -294,6 +311,7 @@
         cell.htmlWebView.scrollView.scrollEnabled=NO;
         cell.htmlWebView.scrollView.backgroundColor = [UIColor whiteColor];
         cell.backgroundView.backgroundColor = [UIColor whiteColor];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     NSString *answerId = [[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"id"];

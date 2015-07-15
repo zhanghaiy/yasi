@@ -613,15 +613,15 @@
     NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
     int scoreCun = _currentAnswerScore>=80?0:(_currentAnswerScore>=60?1:2);
     [_stuScoreButton setTitle:[NSString stringWithFormat:@"%d",_currentAnswerScore] forState:UIControlStateNormal];
-    [_stuScoreButton setBackgroundColor:[colorArray objectAtIndex:scoreCun]];
-    
+    [_stuScoreButton setBackgroundColor:[UIColor whiteColor]];
+    [_stuScoreButton setTitleColor:[colorArray objectAtIndex:scoreCun] forState:UIControlStateNormal];
+
     _sumScore += _currentAnswerScore;
     _sumCounts ++;
     
     // 隐藏回答按钮  展示下一题区域
     _followAnswerButton.hidden = YES;
     _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(jugePointIsFinished) userInfo:nil repeats:NO];
-
 }
 
 #pragma mark - 定时器

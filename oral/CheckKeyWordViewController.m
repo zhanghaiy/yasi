@@ -49,7 +49,7 @@
     _currentPage = 0;
     [self changButtonBack];
     
-    _jumpButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_12];
+    _jumpButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_second];
     _jumpButton.layer.masksToBounds = YES;
     _jumpButton.layer.cornerRadius = _jumpButton.frame.size.height/2;
     _jumpButton.layer.borderWidth = 1;
@@ -70,51 +70,34 @@
     NSInteger x = (rect.size.width-150)/2+20;
     NSInteger y = rect.size.height/2;
     NSInteger w = 150;
-    NSInteger h = 40;
+    NSInteger h = 80;
     
     UILabel *tipLabel = [[UILabel alloc]initWithFrame:CGRectMake(x, y-h, w, h)];
-//    tipLabel.font = [UIFont systemFontOfSize:22];
-    tipLabel.font = [UIFont fontWithName:@"MarkerFelt-thin" size:22];
-
-    tipLabel.text = @"欢迎来到";
+    tipLabel.font = [UIFont systemFontOfSize:kFontSize_Button_normal];
+    tipLabel.text = @"欢迎来到\n\n关键词学习阶段";
     tipLabel.textAlignment = NSTextAlignmentLeft;
-    tipLabel.numberOfLines = 1;
-    tipLabel.textColor = _pointColor;
+    tipLabel.numberOfLines = 0;
+    tipLabel.textColor = kPart_Button_Color;
     [_keyScrollView addSubview:tipLabel];
-    
-    
-    UILabel *tipLabel_down = [[UILabel alloc]initWithFrame:CGRectMake(x, y, w, h)];
-//    tipLabel_down.font = [UIFont systemFontOfSize:20];
-    tipLabel_down.font = [UIFont fontWithName:@"MarkerFelt-thin" size:20];
 
-    tipLabel_down.text = @"关键词学习阶段";
-    tipLabel_down.textAlignment = NSTextAlignmentLeft;
-    tipLabel_down.numberOfLines = 0;
-    tipLabel_down.textColor = _pointColor;
-    [_keyScrollView addSubview:tipLabel_down];
-    
-    
     for (int i = 0; i < keyWordArray.count; i ++)
     {
         CGRect newRect = rect;
         newRect.origin.x = (i+1)*rect.size.width;
         newRect.origin.y = 0;
         UILabel *keyLabel = [[UILabel alloc]initWithFrame:newRect];
-//        keyLabel.font = [UIFont systemFontOfSize:30];
-        // @"MarkerFelt-thin" @"STHeitiSC-Light"
-        keyLabel.font = [UIFont fontWithName:@"MarkerFelt-thin" size:30];
+        keyLabel.font = [UIFont systemFontOfSize:20];
         keyLabel.text = [keyWordArray objectAtIndex:i];
         keyLabel.textAlignment = NSTextAlignmentCenter;
-        keyLabel.textColor = _pointColor;
+        keyLabel.textColor = kPart_Button_Color;
         [_keyScrollView addSubview:keyLabel];
     }
     
     _startPointButton.layer.masksToBounds = YES;
     _startPointButton.layer.cornerRadius = _startPointButton.frame.size.height/2;
-    _startPointButton.backgroundColor = _pointColor;
+    _startPointButton.backgroundColor = kPart_Button_Color;
     _startPointButton.titleLabel.textColor = [UIColor whiteColor];
-//    _startPointButton.titleLabel.font = [UIFont systemFontOfSize:20];
-    _startPointButton.titleLabel.font = [UIFont fontWithName:@"STHeitiSC-Medium" size:16];
+    _startPointButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_Button_normal];
     _startPointButton.hidden = YES;
 }
 

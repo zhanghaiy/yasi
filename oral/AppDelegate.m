@@ -11,6 +11,9 @@
 #import "LogInViewController.h"
 #import "OralDBFuncs.h"
 
+#import "CheckSuccessViewController.h"
+#import "CheckKeyWordViewController.h"
+
 @interface AppDelegate ()
 
 @end
@@ -37,6 +40,12 @@
          LogInViewController *logInVC = [[LogInViewController alloc]initWithNibName:@"LogInViewController" bundle:nil];
          self.window.rootViewController = logInVC;
     }
+    
+//    CheckSuccessViewController *sucVC = [[CheckSuccessViewController alloc]initWithNibName:@"CheckSuccessViewController" bundle:nil];
+//    self.window.rootViewController = sucVC;
+    
+//    CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
+//    self.window.rootViewController = keyVC;
     
     if (![OralDBFuncs initializeDb])
     {

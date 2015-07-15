@@ -82,7 +82,7 @@
 #pragma mark - 网络反馈
 - (void)requestFinished:(NSURLConnectionRequest *)request
 {
-//    _loading_View.hidden = YES;
+    _loading_View.hidden = YES;
     if (request.downloadData)
     {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];

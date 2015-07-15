@@ -166,10 +166,6 @@
     // title颜色
     [_nextButton setTitleColor:_pointColor forState:UIControlStateNormal];
     [_addPracticeButton setTitleColor:_pointColor forState:UIControlStateNormal];
-
-//    [_nextButton setAdjustsImageWhenHighlighted:NO];
-//    [_addPracticeButton setAdjustsImageWhenHighlighted:YES];
-
     // 圆角半径
     _nextButton.layer.masksToBounds = YES;
     _nextButton.layer.cornerRadius = _nextButton.frame.size.height/2;
@@ -210,12 +206,12 @@
     [_timeProgressLabel setFrame:CGRectMake(10, stu_head_Y+stu_head_H/2, stu_Progress_W, 2)];
     
     // 分数按钮
-    
     float score_W = 100.0/667*kScreenHeight;
     float score_H = 50.0/375*kScreentWidth;
     float score_Y = _studentView.frame.size.height-5-score_H;
     float score_X = (_studentView.frame.size.width-score_W)/2;
     [_scoreButton setFrame:CGRectMake(score_X, score_Y, score_W, score_H)];
+    [_scoreButton setBackgroundColor:[UIColor clearColor]];
     
     // webview
     float webview_x = 10;
@@ -562,7 +558,7 @@
         _dfEngine = [[DFAiengineSentObject alloc]initSentEngine:self withUser:@"cocim_haiyan"];
         if (_dfEngine)
         {
-            [_dfEngine startEngineFor:[self filterHTML:text]];
+            [_dfEngine startEngineFor:[self filterHTML:[self filterHTML:text]]];
         }
         else
         {
@@ -576,7 +572,6 @@
 {
     // 展示分数
     [_dfEngine stopEngine];
-    
 }
 
 #pragma mark -- 思必驰反馈
@@ -664,7 +659,8 @@
     NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
     int scoreCun = _currentAnswerScore>=80?0:(_currentAnswerScore>=60?1:2);
     [_scoreButton setTitle:[NSString stringWithFormat:@"%d",_currentAnswerScore] forState:UIControlStateNormal];
-    [_scoreButton setBackgroundColor:[colorArray objectAtIndex:scoreCun]];
+    [_scoreButton setTitleColor:[colorArray objectAtIndex:scoreCun] forState:UIControlStateNormal];
+    [_scoreButton setBackgroundColor:[UIColor whiteColor]];
     _sumScore += _currentAnswerScore;
     _sumCounts ++;
 }
