@@ -619,7 +619,6 @@ static UIView *openView;
     if ([self makeUpJsonFile])
     {
         _loading_View.hidden = NO;
-        [self changeLoadingViewTitle:@"正在提交 请稍后..."];
         [self.view bringSubviewToFront:_loading_View];
         
         NSString *zipPath =  [self zipCurrentPartFile];

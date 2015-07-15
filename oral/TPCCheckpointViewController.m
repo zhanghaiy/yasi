@@ -43,7 +43,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [self changeLoadingViewTitle:@"正在加载资源文件,请稍后..."];
     // 返回按钮
     [self addBackButtonWithImageName:@"back-Blue"];
     self.view.frame = CGRectMake(0, 0, kScreentWidth, kScreenHeight);
@@ -365,11 +364,9 @@
 - (void)requestTopicZipResource
 {
     _loading_View.hidden = NO;
-    [self changeLoadingViewTitle:@"正在请求资源，请稍后...."];
     [self.view bringSubviewToFront:_loading_View];
     NSString *zipfileurl = [_topicDict objectForKey:@"zipfileurl"];
-    NSLog(@"%@",zipfileurl);
-    [NSURLConnectionRequest requestWithUrlString:zipfileurl target:self aciton:@selector(requestPartZipFinished:) andRefresh:YES];
+    [NSURLConnectionRequest requestWithUrlString:zipfileurl target:self aciton:@selector(requestPartZipFinished:) andRefresh:YES ShowPercent:YES PercentAction:@selector(changeLoadingViewPercentTitle:)];
 }
 
 #pragma mark -- 缓存闯关资源
@@ -406,7 +403,6 @@
 - (void)requestTestZip
 {
     _loading_View.hidden = NO;
-    [self changeLoadingViewTitle:@"正在请求模考资源，请稍后...."];
     [self.view bringSubviewToFront:_loading_View];
     
     NSString *testZipUrl = [NSString stringWithFormat:@"%@%@?topid=%@",kBaseIPUrl,kTestUrl,[_topicDict objectForKey:@"id"]];
@@ -426,7 +422,7 @@
             // 成功 ---> zip
             NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
             NSString *zipUrl = [dict objectForKey:@"zipfileurl"];
-            [NSURLConnectionRequest requestWithUrlString:zipUrl target:self aciton:@selector(requestTestZipFinished:) andRefresh:YES];
+            [NSURLConnectionRequest requestWithUrlString:zipUrl target:self aciton:@selector(requestTestZipFinished:) andRefresh:YES ShowPercent:YES PercentAction:@selector(changeLoadingViewPercentTitle:)];
         }
         else
         {

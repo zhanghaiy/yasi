@@ -68,6 +68,12 @@
     
     _passwordTextField.tintColor = kPart_Button_Color;
     
+    
+    [_passwordTextField setValue:kPart_Button_Color forKeyPath:@"_placeholderLabel.textColor"];
+    [_nameTextField setValue:kPart_Button_Color forKeyPath:@"_placeholderLabel.textColor"];
+
+    
+    
     float regButton_Y = 310.0/667*kScreenHeight;
     [_registerButton setFrame:CGRectMake((kScreentWidth-85)/2, regButton_Y, 85, 40)];
     

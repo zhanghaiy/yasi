@@ -70,6 +70,11 @@
     _rightTableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_rightTableView];
     
+    
+    _loading_View.hidden = NO;
+    [self changeLoadingViewPercentTitle:@"加载中..."];
+    [self.view bringSubviewToFront:_loading_View];
+    
     NSString *urlSTr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTopicListUrl];
     [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestFinished:) andRefresh:kCurrentNetStatus];
 }
@@ -77,7 +82,7 @@
 #pragma mark - 网络反馈
 - (void)requestFinished:(NSURLConnectionRequest *)request
 {
-    _loading_View.hidden = YES;
+//    _loading_View.hidden = YES;
     if (request.downloadData)
     {
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
@@ -156,6 +161,7 @@
         }
         NSDictionary *dic = [_topicArray objectAtIndex:indexPath.row];
         [cell.topicButton setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"bgimgurl"]]];
+//        [cell.topicButton setImage:[UIImage imageNamed:@"topic_new_test"] forState:UIControlStateNormal];
         cell.topicTitle.text = [dic objectForKey:@"classtype"];
         
         
@@ -166,9 +172,7 @@
         TopicRecord *currentRecord = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[dic objectForKey:@"classtype"]];
         float progress = currentRecord.completion/9.0;
         
-//        [cell.topicProgressV setProgress:progress];
         [cell.topicProgressV performSelector:@selector(setProVProgress:) withObject:[NSNumber numberWithFloat:progress]];
-//        cell.topicProgressV.progress = progress;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.topicButton.tag = indexPath.row+kTopicButtonTag;
         [cell.topicButton addTarget:self action:@selector(startPass:) forControlEvents:UIControlEventTouchUpInside];

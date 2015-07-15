@@ -19,6 +19,12 @@
 
 @implementation LogInViewController
 
+#define kQQButtonTag 50
+#define kWechatTag 51
+#define KSinaWeiboTag 52
+#define kRenrenTag 53
+
+#pragma mark - 加载视图
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -31,13 +37,13 @@
     [self.view sendSubviewToBack:_backV];
 }
 
-
+#pragma mark - UI配置
 - (void)uiConfig
 {
-    
-    NSInteger logo_y = 55.0/667*kScreenHeight;
-    NSInteger logo_h = 170.0/667*kScreenHeight;
-    _logoImgV.frame = CGRectMake((kScreentWidth-logo_h-1)/2, logo_y, logo_h-1, logo_h);
+    NSInteger logo_y = 56.0/667*kScreenHeight;
+    NSInteger logo_h = 131.0/667*kScreenHeight;
+    NSInteger logo_W = 134.0/667*kScreenHeight;
+    _logoImgV.frame = CGRectMake((kScreentWidth-logo_W)/2, logo_y, logo_W, logo_h);
     
     NSInteger control_H = 40.0/667*kScreenHeight;
     NSInteger space_H = 30.0/667*kScreenHeight;
@@ -72,8 +78,33 @@
     _passWordTextField.layer.borderWidth = 1;
     _passWordTextField.layer.borderColor = kPart_Button_Color.CGColor;
     _passWordTextField.textColor = kPart_Button_Color;
+    [_passWordTextField setValue:kPart_Button_Color forKeyPath:@"_placeholderLabel.textColor"];
+    [_userNameTextFiled setValue:kPart_Button_Color forKeyPath:@"_placeholderLabel.textColor"];
+    
+    
+    
+    NSInteger thidPart_Y = 536.0/667*kScreenHeight;
+    NSInteger thirdPart_W = 53.0/375*kScreentWidth;
+    NSInteger thirdPart_H = 29.0/667*kScreenHeight;
+    NSInteger spaceToLeft = 29.0/375*kScreentWidth;
+
+    [_qq_button setFrame:CGRectMake(spaceToLeft, thidPart_Y, thirdPart_W, thirdPart_H)];
+    
+    [_wechat_button setFrame:CGRectMake(spaceToLeft*2+thirdPart_W, thidPart_Y, thirdPart_W, thirdPart_H)];
+    
+    [_sina_button setFrame:CGRectMake(spaceToLeft*3+thirdPart_W*2, thidPart_Y, thirdPart_W, thirdPart_H)];
+    
+    [_renren_button setFrame:CGRectMake(spaceToLeft*4+thirdPart_W*3, thidPart_Y, thirdPart_W, thirdPart_H)];
+
+    
+    _qq_button.tag = kQQButtonTag;
+    _wechat_button.tag = kWechatTag;
+    _sina_button.tag = KSinaWeiboTag;
+    _renren_button.tag = kRenrenTag;
+    
 }
 
+#pragma mark - 收键盘
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [_userNameTextFiled resignFirstResponder];
@@ -101,6 +132,7 @@
 }
 */
 
+#pragma mark - 登陆按钮点击事件
 - (IBAction)loginButtonClicked:(id)sender
 {
     if ([_userNameTextFiled.text length]>0&&[_passWordTextField.text length]>0)
@@ -111,6 +143,7 @@
     }
 }
 
+#pragma mark - 网络
 - (void)requestFinished:(NSURLConnectionRequest *)request
 {
     if (request.downloadData)
@@ -140,12 +173,14 @@
     }
 }
 
+#pragma mark - 警告框
 - (void)createFailAlert:(NSString *)message
 {
     UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
     [alertV show];
 }
 
+#pragma mark - 进入主页
 - (void)enterTopic
 {
     TopicMainViewController *topicVC = [[TopicMainViewController alloc]init];
@@ -154,9 +189,46 @@
     [self presentViewController:nvc animated:YES completion:nil];
 }
 
+#pragma mark - 注册
 - (IBAction)registerButtonClicked:(id)sender
 {
     RegisterViewController *registerVC = [[RegisterViewController alloc]initWithNibName:@"RegisterViewController" bundle:nil];
     [self presentViewController:registerVC animated:YES completion:nil];
 }
+
+
+#pragma mark - 第三方登陆
+- (IBAction)loginOfThirdPart:(id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    switch (btn.tag)
+    {
+        case kQQButtonTag:// QQ
+        {
+            
+        }
+            break;
+        case kWechatTag:// 微信
+        {
+            
+        }
+            break;
+        case KSinaWeiboTag:// 新浪微博
+        {
+            
+        }
+            break;
+        case kRenrenTag:// 人人
+        {
+            
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+
+
+
 @end

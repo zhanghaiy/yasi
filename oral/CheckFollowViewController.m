@@ -658,15 +658,13 @@
     /*
      根据反馈结果填空
      0,213,136  绿色  80<=x<=100
-     246,215,0  黄色  60<=x<80
+     255,170,6  黄色  60<=x<80
      212,0,44   红色   0<=x<60
-     待完善
      */
     NSArray *colorArray = @[_perfColor,_goodColor,_badColor];
     int scoreCun = _currentAnswerScore>=80?0:(_currentAnswerScore>=60?1:2);
     [_scoreButton setTitle:[NSString stringWithFormat:@"%d",_currentAnswerScore] forState:UIControlStateNormal];
     [_scoreButton setBackgroundColor:[colorArray objectAtIndex:scoreCun]];
-    
     _sumScore += _currentAnswerScore;
     _sumCounts ++;
 }

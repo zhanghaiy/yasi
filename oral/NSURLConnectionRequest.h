@@ -19,8 +19,13 @@
 //后续操作
 @property (nonatomic,assign) SEL aciton;
 
-//生成httpRequest对象，并执行服务器的交互
-//外部使用此类，只需要调用此方法，不用理会内部的实现
+@property (nonatomic,assign) NSInteger sumLength;// 标记下载文件总长度
+@property (nonatomic,assign) SEL percentAction;  // 下载文件时显示百分比回调方法
+@property (nonatomic,assign) BOOL showPercent; // 是否显示百分比
+
+// get
++ (void)requestWithUrlString:(NSString *)urlStr target:(id)target aciton:(SEL)aciton andRefresh:(BOOL)isRefresh ShowPercent:(BOOL)shoePercent PercentAction:(SEL)perAction;
+
 + (void)requestWithUrlString:(NSString *)urlStr target:(id)target aciton:(SEL)aciton andRefresh:(BOOL)isRefresh;
 // post方式
 + (void)requestPOSTUrlString:(NSString *)urlStr andParamStr:(NSString *)paramStr target:(id)target action:(SEL)action andRefresh:(BOOL)refresh;

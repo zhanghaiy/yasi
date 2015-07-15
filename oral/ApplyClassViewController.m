@@ -114,7 +114,6 @@
 - (void)applyToAddClassPostParams:(NSString *)paramStr
 {
     _loading_View.hidden = NO;
-    [self changeLoadingViewTitle:@"正在提交申请，请稍后..."];
     [self.view bringSubviewToFront:_loading_View];
     NSString *url = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kApplyClassUrl];
     [NSURLConnectionRequest requestPOSTUrlString:url andParamStr:paramStr target:self action:@selector(requestFinished:) andRefresh:YES];

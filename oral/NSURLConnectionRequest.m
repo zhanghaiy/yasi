@@ -23,16 +23,64 @@
     return self;
 }
 
+#pragma mark - get Request
+/*
+    有2个方法  上面的--->初始的  下面的---->后续拓展的方法
+    原来的不能满足需求 增加方法满足新需求  同时保证原先仍可用
+ */
+#pragma mark -- 初始写的 网络请求
 + (void)requestWithUrlString:(NSString *)urlStr target:(id)target aciton:(SEL)aciton andRefresh:(BOOL)isRefresh
+{
+    [self requestWithUrlString:urlStr target:target aciton:aciton andRefresh:isRefresh ShowPercent:NO PercentAction:nil];
+}
+
+#pragma mark -- 后来完善的
++ (void)requestWithUrlString:(NSString *)urlStr target:(id)target aciton:(SEL)aciton andRefresh:(BOOL)isRefresh ShowPercent:(BOOL)shoePercent PercentAction:(SEL)perAction
 {
     NSURLConnectionRequest *request = [[NSURLConnectionRequest alloc] init];
     request.requestUrlString = urlStr;
     request.target = target;
     request.aciton = aciton;
-    //发起请求
-    [request startRequest];
+    request.percentAction = perAction;
+    request.showPercent = shoePercent;
+    
+    // 增加缓存
+    NSString *requestPath = [NSString stringWithFormat:@"%@/%@",[request getLoadPath],urlStr];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:requestPath]&&(isRefresh==NO))
+    {
+        NSData *data = [NSData dataWithContentsOfFile:requestPath];
+        [request.downloadData setLength:0];
+        [request.downloadData appendData:data];
+        //让target执行action,同时传出request
+        if ([request.target respondsToSelector:request.aciton])
+        {
+            [request.target performSelector:request.aciton withObject:request afterDelay:NO];
+        }
+    }
+    else
+    {
+        //发起请求
+        [request startRequest];
+    }
+    
 }
 
+#pragma mark -- get 开始请求
+//向服务器发起请求的方法
+- (void)startRequest
+{
+    if (_requestUrlString.length ==0) {
+        return;
+    }
+    NSURL *url = [NSURL URLWithString:_requestUrlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    //http协议 get请求  请求方式 异步
+    _urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+}
+
+
+#pragma mark - Post Request
 + (void)requestPOSTUrlString:(NSString *)urlStr andParamStr:(NSString *)paramStr target:(id)target action:(SEL)action andRefresh:(BOOL)refresh
 {
     NSURLConnectionRequest *request = [[NSURLConnectionRequest alloc] init];
@@ -51,7 +99,6 @@
         //让target执行action,同时传出request
         if ([request.target respondsToSelector:request.aciton])
         {
-            //告知编译器 performSelector 没有问题
             [request.target performSelector:request.aciton withObject:request afterDelay:NO];
         }
     }
@@ -62,17 +109,7 @@
     }
 }
 
-
-- (NSString *)getLoadPath
-{
-    NSString *path = [NSString stringWithFormat:@"%@/Documents/NetData",NSHomeDirectory()];
-    if ([[NSFileManager defaultManager]fileExistsAtPath:path])
-    {
-        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    return path;
-}
-
+#pragma mark -- post 开始请求
 - (void)postRequest:(NSString *)paramStr
 {
     NSMutableURLRequest *postRequest = [[NSMutableURLRequest alloc] init];
@@ -84,17 +121,18 @@
     _urlConnection = [[NSURLConnection alloc] initWithRequest:postRequest delegate:self];
 }
 
-//向服务器发起请求的方法
-- (void)startRequest
+
+#pragma mark - 获取存储的data路径
+- (NSString *)getLoadPath
 {
-    if (_requestUrlString.length ==0) {
-        return;
+    NSString *path = [NSString stringWithFormat:@"%@/Documents/NetData",NSHomeDirectory()];
+    if ([[NSFileManager defaultManager]fileExistsAtPath:path])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
     }
-    NSURL *url = [NSURL URLWithString:_requestUrlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    //http协议 get请求  请求方式 异步
-    _urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    return path;
 }
+
 
 
 
@@ -102,13 +140,26 @@
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
     //清空旧数据 ,200 ok  404/400/500
     [_downloadData setLength:0];
+    // 标记总长度
+    _sumLength = response.expectedContentLength;// 预计总长度
 }
 
 
-//收数据
+//接收数据
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
     [_downloadData appendData:data];
+    // 判断是否显示下载进度
+    if (_showPercent)
+    {
+        NSInteger currentLength = _downloadData.length;
+        NSInteger percent = currentLength*100/_sumLength;
+        NSString *percentString = [NSString stringWithFormat:@"%ld%%",percent];
+        if ([self.target respondsToSelector:_percentAction])
+        {
+            [self.target performSelector:_percentAction withObject:percentString afterDelay:0];
+        }
+    }
 }
 
 

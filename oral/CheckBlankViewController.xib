@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CheckBlankViewController">
             <connections>
-                <outlet property="continueButton" destination="CSm-n7-XRw" id="msu-Cc-NaO"/>
                 <outlet property="followAnswerButton" destination="vWq-JQ-Ca2" id="Vux-8h-kpZ"/>
                 <outlet property="stuCountLabel" destination="h09-uF-ggS" id="kKm-2F-nbZ"/>
                 <outlet property="stuFollowLabel" destination="S6h-cl-SNv" id="Wdt-Wu-lIr"/>
@@ -82,19 +81,6 @@
                     </subviews>
                     <color key="backgroundColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CSm-n7-XRw">
-                    <rect key="frame" x="127" y="577" width="120" height="50"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="backgroundColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                    <state key="normal" title="继续">
-                        <color key="titleColor" red="0.45758730079999999" green="0.84484614160000004" blue="0.75618872559999994" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="continueButtonClicked:" destination="-1" eventType="touchUpInside" id="nDf-cI-TDW"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="vWq-JQ-Ca2">
                     <rect key="frame" x="152" y="562" width="70" height="70"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

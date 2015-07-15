@@ -21,5 +21,10 @@
 
 - (IBAction)loginButtonClicked:(id)sender;
 - (IBAction)registerButtonClicked:(id)sender;
+@property (strong, nonatomic) IBOutlet UIButton *qq_button;
+@property (strong, nonatomic) IBOutlet UIButton *wechat_button;
+@property (strong, nonatomic) IBOutlet UIButton *sina_button;
+@property (strong, nonatomic) IBOutlet UIButton *renren_button;
+- (IBAction)loginOfThirdPart:(id)sender;
 
 @end

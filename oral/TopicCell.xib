@@ -28,32 +28,32 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bjv-yZ-fdc">
-                                <rect key="frame" x="118" y="2" width="85" height="85"/>
+                                <rect key="frame" x="109" y="2" width="102" height="85"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="85" id="4pH-HE-MuJ"/>
-                                    <constraint firstAttribute="width" constant="85" id="b2Q-aJ-cbG"/>
+                                    <constraint firstAttribute="width" constant="102" id="b2Q-aJ-cbG"/>
                                 </constraints>
                                 <state key="normal">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ao7-NM-wZH" customClass="CustomProgressView">
-                                <rect key="frame" x="118" y="97" width="85" height="8"/>
+                                <rect key="frame" x="109" y="97" width="102" height="8"/>
                                 <color key="backgroundColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="8" id="3qX-WM-aRR"/>
-                                    <constraint firstAttribute="width" constant="85" id="zBT-P3-KDk"/>
+                                    <constraint firstAttribute="width" constant="102" id="zBT-P3-KDk"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Bjv-yZ-fdc" firstAttribute="top" secondItem="8ME-a8-LEA" secondAttribute="top" constant="2" id="1oo-dO-9K3"/>
+                            <constraint firstAttribute="centerX" secondItem="ao7-NM-wZH" secondAttribute="centerX" id="ACc-aJ-DBQ"/>
+                            <constraint firstAttribute="centerX" secondItem="Bjv-yZ-fdc" secondAttribute="centerX" id="FFO-IV-nN0"/>
                             <constraint firstItem="ao7-NM-wZH" firstAttribute="top" secondItem="Bjv-yZ-fdc" secondAttribute="bottom" constant="10" id="H5Y-f8-nyt"/>
                             <constraint firstAttribute="trailing" secondItem="rnW-4O-rgE" secondAttribute="trailing" constant="52" id="KtP-Vg-yZq"/>
-                            <constraint firstAttribute="centerX" secondItem="ao7-NM-wZH" secondAttribute="centerX" id="NOI-Cm-tnQ"/>
                             <constraint firstAttribute="height" constant="140" id="ODH-ZD-BB6"/>
-                            <constraint firstAttribute="centerX" secondItem="Bjv-yZ-fdc" secondAttribute="centerX" id="Ryc-oc-Eox"/>
                             <constraint firstAttribute="bottom" secondItem="rnW-4O-rgE" secondAttribute="bottom" constant="3" id="V3P-QA-Wvl"/>
                             <constraint firstItem="rnW-4O-rgE" firstAttribute="leading" secondItem="8ME-a8-LEA" secondAttribute="leading" constant="53" id="qrP-QZ-RIl"/>
                         </constraints>

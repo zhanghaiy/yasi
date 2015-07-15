@@ -203,20 +203,8 @@
     
     float follow_Button_H = 65.0/667*kScreenHeight;
     float follow_space_bottom = 30.0/667*kScreenHeight;
-    float next_button_H = 50.0/667*kScreenHeight;
-    float next_button_W = 120.0/375*kScreentWidth;
     
     [_followAnswerButton setFrame:CGRectMake((kScreentWidth-follow_Button_H)/2, kScreenHeight-follow_space_bottom-follow_Button_H, follow_Button_H, follow_Button_H)];
-    [_continueButton setFrame:CGRectMake((kScreentWidth-next_button_W)/2, kScreenHeight-follow_space_bottom-next_button_H, next_button_W, next_button_H)];
-
-    // 下一题
-    [_continueButton setTitleColor:_pointColor forState:UIControlStateNormal];
-    [_continueButton setAdjustsImageWhenHighlighted:NO];
-    _continueButton.layer.masksToBounds = YES;
-    _continueButton.layer.cornerRadius = _continueButton.frame.size.height/2;
-    [_continueButton setBackgroundColor:[UIColor whiteColor]];
-    _continueButton.hidden = YES;
-    [_continueButton setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
     
     // 学生部分控件
     
@@ -578,14 +566,8 @@
     _stuTimeProgressLabel.frame = _timeProgressRect;//回复时间进度条 以便下次使用
     _stuHeadImgView.hidden = YES;// 隐藏学生头像
     _stuScoreButton.hidden = NO; // 展示分数区域
-    
-    
-    // 隐藏回答按钮  展示下一题区域
-    _followAnswerButton.hidden = YES;
-    _continueButton.hidden = NO;
     _stuHeadImgView.alpha = 0.3;
-    [_continueButton setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
-    
+
     
     // 转移思必驰录音 清空原有的
     NSString *sbcPath = [NSString stringWithFormat:@"%@/Documents/record/%@.wav",NSHomeDirectory(),result.recordId];
@@ -636,6 +618,10 @@
     _sumScore += _currentAnswerScore;
     _sumCounts ++;
     
+    // 隐藏回答按钮  展示下一题区域
+    _followAnswerButton.hidden = YES;
+    _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(jugePointIsFinished) userInfo:nil repeats:NO];
+
 }
 
 #pragma mark - 定时器
@@ -693,37 +679,12 @@
 }
 
 
-//#pragma mark - 下一问题
-//- (void)next
-//{
-//    _stuFollowLabel.text = @"";
-//    if (_currentAnswerCounts<_sumAnswerCounts)
-//    {
-//        // 继续当前问题
-//        [self changeAnswerProgress];
-//        _startAnswer = YES;//标记 用于播放器回调方法
-//        [self prepareBlank];
-//    }
-//    else
-//    {
-//        // 下一题
-//        [self questionCountChanged];//标记当前进行的问题数
-//        [self changeAnswerProgress];
-//        _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
-//        [self prepareQuestion];
-//    }
-//}
-
-
-
 #pragma mark - 判断闯关是否结束
 - (void)jugePointIsFinished
 {
     [self stopReduceTimer];
     _answerTime = KAnswerSumTime;
     // 隐藏下一问题按钮区域
-    _continueButton.hidden = YES;
-    _continueButton.selected = NO;
     // 隐藏分数 显示学生头像 时间进度条
     _stuScoreButton.hidden = YES;
     _stuTimeProgressLabel.hidden = NO;
@@ -781,8 +742,6 @@
     }
 }
 
-
-
 #pragma mark -- 动态改变当前回答进度
 - (void)changeAnswerProgress
 {
@@ -811,7 +770,6 @@
     NSString *bodyStyleVertical = @"document.getElementsByTagName('body')[0].style.verticalAlign = 'middle';";
     NSString *bodyStyleHorizontal = @"document.getElementsByTagName('body')[0].style.textAlign = 'center';";
     NSString *mapStyle = @"document.getElementById('mapid').style.margin = 'auto';";
-    
     [webView stringByEvaluatingJavaScriptFromString:bodyStyleVertical];
     [webView stringByEvaluatingJavaScriptFromString:bodyStyleHorizontal];
     [webView stringByEvaluatingJavaScriptFromString:mapStyle];

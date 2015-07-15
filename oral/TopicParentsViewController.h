@@ -32,10 +32,6 @@
 @property (nonatomic,strong) UILabel *lineLab;
 @property (nonatomic,strong) UILabel *titleLab; //  标题控件
 
-
-//@property (nonatomic,copy) NSString *topicName;
-//@property (nonatomic,assign) int currentPartCounts;// 当前part 共3部分 范围（0--2）
-
 @property (nonatomic,copy) NSString *pageTitleString;
 // 返回按钮
 - (void)addBackButtonWithImageName:(NSString *)imageName;
@@ -43,7 +39,8 @@
 - (void)addTitleLabelWithTitle:(NSString *)title;
 // 返回上一页
 - (void)backToPrePage;
+
 - (NSString *)getPathWithTopic:(NSString *)topicName IsPart:(BOOL)isPart;
-- (void)changeLoadingViewTitle:(NSString *)title;
+- (void)changeLoadingViewPercentTitle:(NSString *)title;
 
 @end

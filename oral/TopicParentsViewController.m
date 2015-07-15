@@ -48,7 +48,7 @@
     [self createLoadingView];
 }
 
-// 返回按钮
+#pragma mark - 设置返回按钮样式
 - (void)addBackButtonWithImageName:(NSString *)imageName
 {
     UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -58,12 +58,13 @@
     [self.navTopView addSubview:backButton];
 }
 
+#pragma mark - 返回上一页
 - (void)backToPrePage
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-// titleLabel
+#pragma mark - 创建titleLabel
 - (void)addTitleLabelWithTitle:(NSString *)title
 {
     _titleLab = [[UILabel alloc]initWithFrame:CGRectMake(60, 26, kScreentWidth-60*2, 40)];
@@ -74,21 +75,7 @@
     [self.navTopView addSubview:_titleLab];
 }
 
-// 右侧按钮
-- (void)addRightButton
-{
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backButton setFrame:CGRectMake(kScreentWidth-45, 7, 35, 35)];
-    [backButton setBackgroundImage:[UIImage imageNamed:@"teacher_normal"] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(personCenter) forControlEvents:UIControlEventTouchUpInside];
-    [self.navTopView addSubview:backButton];
-}
-
-- (void)personCenter
-{
-    // 个人中心
-}
-
+#pragma mark - 状态栏
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
     return UIStatusBarStyleDefault;
@@ -101,15 +88,15 @@
     return NO; // 返回NO表示要显示，返回YES将hiden
 }
 
-
+#pragma mark - 获取路径 闯关 or 模考
 - (NSString *)getPathWithTopic:(NSString *)topicName IsPart:(BOOL)isPart
 {
     NSArray *sectionArr = @[@"topicTest",@"topicResource"];
     return [NSHomeDirectory() stringByAppendingFormat:@"/Documents/%@/%@",topicName,[sectionArr objectAtIndex:isPart]];
 }
 
-
-- (void)changeLoadingViewTitle:(NSString *)title
+#pragma mark - loadingView
+- (void)changeLoadingViewPercentTitle:(NSString *)title
 {
     _tipLabel.text = title;
 }
@@ -123,42 +110,41 @@
     NSInteger action_View_W = 300.0/375.0*kScreentWidth;
     NSInteger action_View_H = 200.0/667.0*kScreenHeight;
     
-    UIView *actionView = [[UIView alloc]initWithFrame:CGRectMake((kScreentWidth-200)/2, kScreenHeight/2-100, action_View_W, action_View_H)];
+    UIView *actionView = [[UIView alloc]initWithFrame:CGRectMake((kScreentWidth-action_View_W)/2, kScreenHeight/2-100, action_View_W, action_View_H)];
     actionView.layer.masksToBounds = YES;
     actionView.layer.cornerRadius = 5;
     actionView.layer.borderWidth = 1;
     actionView.layer.borderColor = kPart_Button_Color.CGColor;
-    
     actionView.backgroundColor = [UIColor whiteColor];
     
-    NSInteger action_W = 60;
-    NSInteger tipLabel_H = 40;
-    float load_Y = (action_View_H-action_W-tipLabel_H)/2;
-    float tip_Y = action_W+load_Y;
+    // 动画等明天美工出图 再完善  宽高有待调整
+    NSInteger loadingImgV_W = 219;
+    NSInteger loadingImgV_H = 114;
+    NSInteger loadingImgV_Y = (action_View_H-loadingImgV_H)/2;
+    NSInteger loadingImgV_X = (action_View_W-loadingImgV_W)/2;
     
-//    UIActivityIndicatorView *action = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake((action_View_W-action_W)/2, load_Y, action_W, action_W)];
-//    action.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-//    [actionView addSubview:action];
-//    [action startAnimating];
+    NSInteger loadingLabel_H = 30;
+    NSInteger loadingLabel_W = loadingImgV_W-30;
+    NSInteger loadingLabel_X = (action_View_W-loadingLabel_W)/2;
+    NSInteger loadingLabel_Y = (action_View_H - loadingLabel_H)/2;
     
-    UIImageView *loadingImgV = [[UIImageView alloc]initWithFrame:CGRectMake((action_View_W-action_W)/2, (action_View_H-action_W-tipLabel_H)/2, action_W, action_W)];
-    loadingImgV.animationDuration = 2;
-    loadingImgV.animationImages = @[[UIImage imageNamed:@"Loading_1"],[UIImage imageNamed:@"Loading_2"],[UIImage imageNamed:@"Loading_3"],[UIImage imageNamed:@"Loading_4"],[UIImage imageNamed:@"Loading_5"],[UIImage imageNamed:@"Loading_6"],[UIImage imageNamed:@"Loading_7"],[UIImage imageNamed:@"Loading_8"]];
+    UIImageView *loadingImgV = [[UIImageView alloc]initWithFrame:CGRectMake(loadingImgV_X, loadingImgV_Y, loadingImgV_W, loadingImgV_H)];
+    loadingImgV.animationDuration = 1;
+    loadingImgV.animationImages = @[[UIImage imageNamed:@"loading"]];
     loadingImgV.animationRepeatCount = -1;
     [actionView addSubview:loadingImgV];
     [loadingImgV startAnimating];
     
-    _tipLabel= [[UILabel alloc]initWithFrame:CGRectMake(0,tip_Y, actionView.frame.size.width, tipLabel_H)];
+    _tipLabel= [[UILabel alloc]initWithFrame:CGRectMake(loadingLabel_X,loadingLabel_Y, loadingLabel_W, loadingLabel_H)];
     _tipLabel.textAlignment = NSTextAlignmentCenter;
     _tipLabel.textColor = kPart_Button_Color;
     _tipLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     _tipLabel.numberOfLines = 0;
+    _tipLabel.text = @"加载中...";
     [actionView addSubview:_tipLabel];
     
-    actionView.center = _loading_View.center;
     [_loading_View addSubview:actionView];
     [self.view addSubview:_loading_View];
-    
 }
 
 

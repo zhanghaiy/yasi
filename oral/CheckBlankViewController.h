@@ -32,8 +32,6 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *followAnswerButton;
 
-@property (strong, nonatomic) IBOutlet UIButton *continueButton;
-- (IBAction)continueButtonClicked:(id)sender;
 - (IBAction)followAnswerButtonClicked:(id)sender;
 
 

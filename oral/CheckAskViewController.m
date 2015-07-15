@@ -98,7 +98,6 @@
     // Do any additional setup after loading the view from its nib.
     
     _commitSuccess = NO;
-    [self changeLoadingViewTitle:@"正在提交给老师，请耐心等待..."];
     _partInfoArray = [[NSMutableArray alloc]init];
     _recordPathArray = [[NSMutableArray alloc]init];
 
@@ -477,13 +476,13 @@
 {
     _currentQuestionCounts++;
     _markTimeChangeCounts = 0;
+    // 继续
+    [UIView animateWithDuration:2 animations:^{
+        [self narrowStuHeadImage];
+        _stuHeadImgV.alpha = 0.3;
+    }];
     if (_currentQuestionCounts<_sumQuestionCounts)
     {
-        // 继续
-        [UIView animateWithDuration:2 animations:^{
-            [self narrowStuHeadImage];
-            _stuHeadImgV.alpha = 0.3;
-        }];
         [self questionCountChanged_ask];
         _reduceTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(prepareQuestion_ask) userInfo:nil repeats:NO];
     }
@@ -621,7 +620,6 @@
 - (void)startRequst
 {
     _loading_View.hidden = NO;
-    [self changeLoadingViewTitle:@"正在提交给老师，请稍后..."];
     [self.view bringSubviewToFront:_loading_View];
     BOOL makeUpSuccess = [self makeUpJsonFile];
     if (makeUpSuccess)

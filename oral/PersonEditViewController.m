@@ -203,7 +203,6 @@
     NSString *params = [NSString stringWithFormat:@"userId=%@&nickname=%@&sex=%@&constellation=%@&birthday=%@&hobbies=%@&signiture=%@",userID,_nameStr,_sexString,_constellation,_birthStr,_hobbies,_signiture];;
     _loading_View.hidden = NO;
     [self.view bringSubviewToFront:_loading_View];
-    [self changeLoadingViewTitle:@"正在提交资料，请稍后~~~~"];
     [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:params target:self action:@selector(alterFinished:) andRefresh:YES];
 }
 
@@ -212,7 +211,6 @@
 //    [self upImage_post];
     _loading_View.hidden = NO;
     [self.view bringSubviewToFront:_loading_View];
-    [self changeLoadingViewTitle:@"正在上传头像~~~~~"];
     NSString *userID = [OralDBFuncs getCurrentUserID];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kAlterPersonInfo];
     
