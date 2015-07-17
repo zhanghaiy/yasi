@@ -74,7 +74,7 @@
 + (BOOL)getNet_2g3g4g_Download;
 
 
-// 标记当前用户 用户名 昵称
+// 标记当前用户 用户名 昵称 头像
 +(void)setCurrentUser:(NSString *)userName UserId:(NSString *)userid UserIconUrl:(NSString *)iconUrl;
 // 删除记录
 +(void)removeCurrentUserInfo;
@@ -84,6 +84,7 @@
 +(NSString *)getCurrentUserName;
 // 获取用户id
 +(NSString *)getCurrentUserID;
+
 
 // 标记当前topic
 +(void)setCurrentTopic:(NSString *)topicName;

@@ -13,6 +13,11 @@
 @interface CheckSuccessViewController : TopicParentsViewController
 @property (weak, nonatomic) IBOutlet UIView *topBackView;
 @property (weak, nonatomic) IBOutlet UIButton *topShareButton;
+- (IBAction)shareButtonClicked:(id)sender;
+
+
+
+
 @property (weak, nonatomic) IBOutlet UILabel *topDesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *topScoreLabel;
 

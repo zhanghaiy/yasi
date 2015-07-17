@@ -12,7 +12,7 @@
 #import "TPCCheckpointViewController.h"
 #import "DFAiengineSentObject.h"
 #import "OralDBFuncs.h"
-
+#import "NSString+CalculateStringSize.h"
 
 @interface CheckBlankViewController ()<DFAiengineSentProtocol,UIWebViewDelegate>
 {
@@ -52,8 +52,9 @@
     int _sumCounts;
     
     NSMutableArray *_saveAnswerIdArray;
-    UIWebView *_answerTextWebV;// 代码创建 为了去掉黑线
-
+    UIWebView *_answerTextWebV;
+    
+    BOOL _showReview_Html;
 }
 @end
 
@@ -88,7 +89,8 @@
     audioPlayer.target = self;
     audioPlayer.action = @selector(playerEnd);
     _currentPointCounts = 1;
-
+    _showReview_Html = NO;
+    
     // 设置当前关卡
     [OralDBFuncs setCurrentPoint:2];
     
@@ -471,7 +473,13 @@
 {
     _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
     NSString *answerTextBlank = [self makeUpBlankStringWithDict:[_currentAnswerListArray objectAtIndex:_currentAnswerCounts]];
-    [_answerTextWebV loadHTMLString:answerTextBlank baseURL:nil];
+    
+    int  ww = _answerTextWebV.frame.size.width;
+    CGRect rect = [NSString CalculateSizeOfString:[self filterHTML:answerTextBlank] Width:ww Height:9999 FontSize:kFontSize_15];
+    int  hh = rect.size.height;
+
+     NSString *new_html =[NSString stringWithFormat:@"<style>#box{width:%dpx;height:%dpx;position: absolute;top:50%%;left:50%%;margin-top:%dpx;margin-left:%dpx;font-size:15;}</style><div id='box'>%@</div>",ww,hh,-hh/2,-ww/2,answerTextBlank];
+    [_answerTextWebV loadHTMLString:new_html baseURL:nil];
 }
 
 #pragma mark - 去掉html标签 (改用webView 此方法已不需要 暂时保留 2015.06.11)
@@ -555,7 +563,6 @@
 //    [self performSelectorOnMainThread:@selector(showHtmlMsg:) withObject:msg1 waitUntilDone:NO];
     
     [self performSelectorOnMainThread:@selector(showResult:) withObject:result waitUntilDone:NO];
-
 }
 
 
@@ -580,10 +587,15 @@
         [[NSFileManager defaultManager]removeItemAtPath:sbcPath error:nil];
     }
     
+    _showReview_Html = YES;
+    NSString *str = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
+    int  ww = _answerTextWebV.frame.size.width;
+    CGRect rect = [NSString CalculateSizeOfString:[self filterHTML:str] Width:ww Height:9999 FontSize:kFontSize_15];
+    int  hh = rect.size.height;
     _currentAnswerHtml = [_dfEngine getRichResultString:result.details];
+    NSString *new_html =[NSString stringWithFormat:@"<style>#box{width:%dpx;height:%dpx;position: absolute;top:50%%;left:50%%;margin-top:%dpx;margin-left:%dpx;font-size:15;}</style><div id='box'>%@</div>",ww,hh,-hh/2,-ww/2,_currentAnswerHtml];
     // 展示每个单词发音情况
-    [_answerTextWebV loadHTMLString:_currentAnswerHtml baseURL:nil];
-    
+    [_answerTextWebV loadHTMLString:new_html baseURL:nil];
     
     
     // 存储分数有关
@@ -682,6 +694,7 @@
 #pragma mark - 判断闯关是否结束
 - (void)jugePointIsFinished
 {
+    _showReview_Html = NO;
     [self stopReduceTimer];
     _answerTime = KAnswerSumTime;
     // 隐藏下一问题按钮区域
@@ -773,6 +786,12 @@
     [webView stringByEvaluatingJavaScriptFromString:bodyStyleVertical];
     [webView stringByEvaluatingJavaScriptFromString:bodyStyleHorizontal];
     [webView stringByEvaluatingJavaScriptFromString:mapStyle];
+    
+    //字体颜色
+    if (_showReview_Html == NO)
+    {
+        [webView stringByEvaluatingJavaScriptFromString:@"document.getElementsByTagName('body')[0].style.webkitTextFillColor= '#646464'"];
+    }
 }
 
 

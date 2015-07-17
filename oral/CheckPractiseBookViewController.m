@@ -51,9 +51,13 @@
         _answerTextDict = [[NSMutableDictionary alloc]init];
         for (NSDictionary *answerDic in answerIdArray)
         {
-            [_practiceArray addObject:[OralDBFuncs getPracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:[answerDic objectForKey:@"id"]]];
+            if ([OralDBFuncs getPracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:[answerDic objectForKey:@"id"]])
+            {
+                [_practiceArray addObject:[OralDBFuncs getPracticeBookRecordFor:[OralDBFuncs getCurrentUserName] withAnswerId:[answerDic objectForKey:@"id"]]];
+                
+                [_answerTextDict setObject:[answerDic objectForKey:@"text"] forKey:[answerDic objectForKey:@"id"]];
+            }
             
-            [_answerTextDict setObject:[answerDic objectForKey:@"text"] forKey:[answerDic objectForKey:@"id"]];
         }
     }
 }
@@ -143,7 +147,7 @@
         此处根据文字大小计算出宽高 ---待完善
      */
     PracticeBookRecord *record = [_practiceArray objectAtIndex:indexPath.row];
-    NSString *text = [_answerTextDict objectForKey:record.answerId];
+    NSString *text = [_answerTextDict objectForKey:record.answerId];//@"测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题"@"测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题";
     CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-90 Height:99999 FontSize:kFontSize_15];
     if (rect.size.height>70)
     {
@@ -166,7 +170,10 @@
     cell.delegate = self;
     cell.action = @selector(pracCellCallBack:);
     PracticeBookRecord *record = [_practiceArray objectAtIndex:indexPath.row];
+    
     [cell.textWebView loadHTMLString:record.lastText baseURL:nil];
+//    [cell.textWebView loadHTMLString:@"测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题" baseURL:nil];
+
     [cell.scoreButton setTitle:[NSString stringWithFormat:@"%d",record.lastScore] forState:UIControlStateNormal];
     int colorIndex = record.lastScore>=80?0:(record.lastScore>=60?1:2);
     NSArray *colorArr = @[_perfColor,_goodColor,_badColor];

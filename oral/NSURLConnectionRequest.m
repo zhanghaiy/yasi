@@ -23,6 +23,27 @@
     return self;
 }
 
+#pragma mark - 上传图片
++ (void)upLoadImageWithUrlString:(NSString *)urlStr ParamStr:(NSString *)params Target:(id)target Action:(SEL)selector
+{
+    NSURLConnectionRequest *requestManager = [[NSURLConnectionRequest alloc] init];
+    requestManager.requestUrlString = urlStr;
+    requestManager.target = target;
+    requestManager.aciton = selector;
+    [requestManager startUpLoadImageWithParams:params];
+}
+
+
+- (void)startUpLoadImageWithParams:(NSString *)params
+{
+    //根据url初始化request
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.requestUrlString]];
+    //http method
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    _urlConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+}
+
 #pragma mark - get Request
 /*
     有2个方法  上面的--->初始的  下面的---->后续拓展的方法

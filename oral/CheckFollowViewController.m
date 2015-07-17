@@ -624,11 +624,11 @@
     int  ww = _answerTextWebV.frame.size.width;
     CGRect rect = [NSString CalculateSizeOfString:[self filterHTML:str] Width:ww Height:9999 FontSize:kFontSize_15];
     int  hh = rect.size.height;
-    NSString *msg1 = [_dfEngine getRichResultString:result.details];
-    
-    _currentAnswerHtml = [NSString stringWithFormat:@"<style>#box{width:%dpx;height:%dpx;position: absolute;top:50%%;left:50%%;margin-top:%dpx;margin-left:%dpx;font-size:15;}</style><div id='box'>%@</div>",ww,hh,-hh/2,-ww/2,msg1];
-    
-    [_answerTextWebV loadHTMLString:_currentAnswerHtml baseURL:nil];
+   
+    _currentAnswerHtml =[_dfEngine getRichResultString:result.details]; //;
+    NSString *new_html =[NSString stringWithFormat:@"<style>#box{width:%dpx;height:%dpx;position: absolute;top:50%%;left:50%%;margin-top:%dpx;margin-left:%dpx;font-size:15;}</style><div id='box'>%@</div>",ww,hh,-hh/2,-ww/2,_currentAnswerHtml];
+
+    [_answerTextWebV loadHTMLString:new_html baseURL:nil];
     _currentAnswerScore = result.overall;
     _currentAnswerIntegrity = result.integrity;
     _currentAnswerFluency = [[result.fluency objectForKey:@"overall"] intValue];

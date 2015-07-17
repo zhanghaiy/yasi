@@ -32,6 +32,8 @@
     NSString *_hobbies;// 爱好
     
     UITextView *footerTextV;
+    BOOL _mark_Alter_Image;
+    BOOL _mark_Alter_info;
 }
 @end
 
@@ -122,9 +124,13 @@
 }
 
 #pragma mark - 加载视图
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    _mark_Alter_Image = NO;
+    _mark_Alter_info = NO;
     
     self.view.backgroundColor = _backgroundViewColor;
     
@@ -190,82 +196,63 @@
     [self.view addSubview:_person_edit_tableV];
     _person_edit_tableV.tableHeaderView = _table_Header_View;
     _person_edit_tableV.tableFooterView = _table_footer_view;
-    
 }
 
-#pragma mark - 完成修改
+#pragma mark - 修改资料完成
+#pragma mark -- 完成按钮被点击
 - (void)finishAlter:(UIButton *)btn
 {
-    // 提交修改资料
+    if (_mark_Alter_info||_mark_Alter_Image)
+    {
+        [self alterPersonInfomation];
+    }
+    else
+    {
+        [self backToPrePage];
+    }
+}
+
+#pragma mark -- 开始提交信息
+- (void)alterPersonInfomation
+{
+    _loading_View.hidden = NO;
+    [self.view bringSubviewToFront:_loading_View];
+    
     _signiture = footerTextV.text;
     NSString *userID = [OralDBFuncs getCurrentUserID];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kAlterPersonInfo];
-    NSString *params = [NSString stringWithFormat:@"userId=%@&nickname=%@&sex=%@&constellation=%@&birthday=%@&hobbies=%@&signiture=%@",userID,_nameStr,_sexString,_constellation,_birthStr,_hobbies,_signiture];;
-    _loading_View.hidden = NO;
-    [self.view bringSubviewToFront:_loading_View];
-    [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:params target:self action:@selector(alterFinished:) andRefresh:YES];
+    NSString *paramString;
+    if (_mark_Alter_Image)
+    {
+        NSString *imgPath =[NSHomeDirectory() stringByAppendingString:@"/Documents/img.png"];
+        [_imgData writeToFile:imgPath atomically:NO];
+        NSData *imgData = [NSData dataWithContentsOfFile:imgPath];
+        NSString *imgStr = (__bridge NSString *) CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,(CFStringRef)[imgData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength],NULL,CFSTR(":/?#[]@!$&’()*+,;="),kCFStringEncodingUTF8);
+        if (_mark_Alter_info)
+        {
+            // 都修改了
+            paramString = [NSString stringWithFormat:@"userId=%@&nickname=%@&sex=%@&constellation=%@&birthday=%@&hobbies=%@&signiture=%@&icon=%@&pname=img.png",userID,_nameStr,_sexString,_constellation,_birthStr,_hobbies,_signiture,imgStr];
+        }
+        else
+        {
+           // 只修改头像
+            paramString = [NSString stringWithFormat:@"userId=%@&icon=%@&pname=img.png",userID,imgStr];
+        }
+    }
+    else
+    {
+        if (_mark_Alter_info)
+        {
+            // 只修改信息
+            paramString = [NSString stringWithFormat:@"userId=%@&nickname=%@&sex=%@&constellation=%@&birthday=%@&hobbies=%@&signiture=%@",userID,_nameStr,_sexString,_constellation,_birthStr,_hobbies,_signiture];
+        }
+    }
+    [NSURLConnectionRequest upLoadImageWithUrlString:urlStr ParamStr:paramString Target:self Action:@selector(alterPersonInfomationCallBack:)];
+
 }
 
-- (void)upLoadImage
-{
-//    [self upImage_post];
-    _loading_View.hidden = NO;
-    [self.view bringSubviewToFront:_loading_View];
-    NSString *userID = [OralDBFuncs getCurrentUserID];
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kAlterPersonInfo];
-    
-    NSString *imgPath = [NSString stringWithFormat:@"%@/Documents/img.png",NSHomeDirectory()];
-    [_imgData writeToFile:imgPath atomically:NO];
-    NSData *newImgData = [NSData dataWithContentsOfFile:imgPath];
-    
-    NSString *params = [NSString stringWithFormat:@"userId=%@&icon=%@",userID,newImgData];
-    [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:params target:self action:@selector(uploadImageFinished:) andRefresh:YES];
-}
-
-- (void)upImage_post
-{
-    // 提交给老师
-    NSString *userID = [OralDBFuncs getCurrentUserID];
-    NSString *urlStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kAlterPersonInfo];
-    
-    NSString *imgPath = [NSString stringWithFormat:@"%@/Documents/img.png",NSHomeDirectory()];
-    [_imgData writeToFile:imgPath atomically:NO];
-    NSData *newImgData = [NSData dataWithContentsOfFile:imgPath];
-    // 网络提交 uploadfile
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
-    [parameters setObject:@"img" forKey:@"icon"];
-    [parameters setObject:userID forKey:@"userId"];
-
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    [manager POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
-     {
-         if (newImgData)
-         {
-             [formData appendPartWithFileData:newImgData name:@"icon" fileName:@"img.png" mimeType:@"image/png"];
-         }
-     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-         
-         _loading_View.hidden = YES;
-         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
-         if ([[dic objectForKey:@"respCode"] intValue] == 1000)
-         {
-             // 标记 关卡3已经提交
-         }
-         else
-         {
-             NSLog(@"提交失败");
-             NSLog(@"%@",[dic objectForKey:@"remark"]);
-         }
-     } failure:^(AFHTTPRequestOperation *operation, NSError *error)
-     {
-         _loading_View.hidden = YES;
-         NSLog(@"%@",error.localizedFailureReason);
-         NSLog(@"失败乃");
-     }];
-}
-
-- (void)uploadImageFinished:(NSURLConnectionRequest *)request
+#pragma mark -- 修改信息回调
+- (void)alterPersonInfomationCallBack:(NSURLConnectionRequest *)request
 {
     _loading_View.hidden = YES;
     if (request.downloadData)
@@ -275,46 +262,21 @@
         {
             // 成功
             NSLog(@"%@",[dic objectForKey:@"remark"]);
-            [self  finishBack];
-        }
-        NSLog(@"%@",[dic objectForKey:@"remark"]);
-    }
-}
-
-- (void)alterFinished:(NSURLConnectionRequest *)request
-{
-    if (request.downloadData)
-    {
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        if ([[dic objectForKey:@"respCode"] intValue] == 1000)
-        {
-//            if (_imgData)
-//            {
-//                // 上传头像
-//                [self upLoadImage];
-//            }
-//            else
-//            {
-//                _loading_View.hidden = YES;
-//               [self  finishBack];
-//            }
-            _loading_View.hidden = YES;
+            [OralDBFuncs setCurrentUser:[OralDBFuncs getCurrentUserName] UserId:[OralDBFuncs getCurrentUserID] UserIconUrl:[dic objectForKey:@"icon"]];
             [self  finishBack];
         }
         else
         {
-            _loading_View.hidden = YES;
             [self createAlertView:[dic objectForKey:@"remark"]];
         }
     }
     else
     {
-        _loading_View.hidden = YES;
-        NSLog(@"失败");
-        [self createAlertView:@"保存失败\n请检查网络"];
+        [self createAlertView:@"修改失败，请检查网络"];
     }
 }
 
+#pragma mark -- 完成修改回调
 - (void)finishBack
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -540,7 +502,7 @@
         UIImage *originImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         
         //图片压缩，因为原图都是很大的，不必要传原图
-        UIImage *scaleImage = [self scaleImage:originImage toScale:0.8];
+        UIImage *scaleImage = [self scaleImage:originImage toScale:0.5];
         
         //以下这两步都是比较耗时的操作，最好开一个HUD提示用户，这样体验会好些，不至于阻塞界面
         if (UIImagePNGRepresentation(scaleImage) == nil) {
@@ -556,6 +518,7 @@
         UIImage *image = [UIImage imageWithData:data];
         UIButton *btn = (UIButton *)[self.view viewWithTag:kHeadButtonTag];
         [btn setBackgroundImage:image forState:UIControlStateNormal];
+        _mark_Alter_Image = YES;
     }
 }
 
@@ -638,6 +601,7 @@
 {
     NSLog(@"%@",textField.text);
     NSLog(@"%ld",textField.tag);
+    _mark_Alter_info = YES;
     switch (textField.tag)
     {
         case kDesTextFieldTag:
@@ -661,6 +625,11 @@
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)textViewDidChange:(UITextView *)textView
+{
+    _mark_Alter_info = YES;
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView

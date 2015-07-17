@@ -23,6 +23,8 @@
 @property (nonatomic,assign) SEL percentAction;  // 下载文件时显示百分比回调方法
 @property (nonatomic,assign) BOOL showPercent; // 是否显示百分比
 
+//上传图片
++ (void)upLoadImageWithUrlString:(NSString *)urlStr ParamStr:(NSString *)params Target:(id)target Action:(SEL)selector;
 // get
 + (void)requestWithUrlString:(NSString *)urlStr target:(id)target aciton:(SEL)aciton andRefresh:(BOOL)isRefresh ShowPercent:(BOOL)shoePercent PercentAction:(SEL)perAction;
 

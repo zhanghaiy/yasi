@@ -19,8 +19,9 @@
     NSMutableArray *_teacherArray;
     FooterView *_footerView;
     NSString *_teacherId;
-    
     BOOL _markDefault;
+    BOOL _reloading;
+    UIView *refreshV;
 }
 @end
 
@@ -29,7 +30,15 @@
 #define kFooterViewHeight 60
 #define kSelectedButonTag 99
 
+#define kDownRefreshViewHeght 100
+#define kDownRefreshViewTag 11
+#define kLoadingImgViewHeight 50
+#define kLoadingViewTag 22
+#define kLoadingLabelTag 23
+
+
 #pragma mark - 网络
+#pragma mark -- 开始请求老师列表
 - (void)startRequest
 {
     // 选择老师 userId teacherName change
@@ -37,14 +46,45 @@
     [NSURLConnectionRequest requestWithUrlString:str target:self aciton:@selector(requestFinished:) andRefresh:YES];
 }
 
+#pragma mark -- 请求老师列表反馈
 - (void)requestFinished:(NSURLConnectionRequest *)request
 {
+    
+    if (_reloading)
+    {
+        _reloading = NO;
+        [self endReloadingUIConfig];
+    }
+    else
+    {
+        _loading_View.hidden = YES;
+    }
     if ([request.downloadData length])
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        _teacherArray = [dict objectForKey:@"teacherinfolist"];
-        [_myTeaTableV reloadData];
+        if ([dict objectForKey:@"respCode"])
+        {
+            _teacherArray = [dict objectForKey:@"teacherinfolist"];
+            [_myTeaTableV reloadData];
+            _myTeaTableV.contentOffset = CGPointMake(0, 0);
+        }
+        else
+        {
+            NSString *remark = [dict objectForKey:@"remark"];
+            [self showAlertWithMessage:remark];
+        }
     }
+    else
+    {
+        [self showAlertWithMessage:@"请求失败"];
+    }
+}
+
+#pragma mark -- 根据内容创建警告框
+- (void)showAlertWithMessage:(NSString *)message
+{
+    UIAlertView *alertV = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertV show];
 }
 
 #pragma mark - 视图加载
@@ -82,10 +122,17 @@
     [self.view addSubview:_myTeaTableV];
     _myTeaTableV.backgroundColor = [UIColor clearColor];
     
+    _reloading = NO;
+    _loading_View.hidden = YES;
+    [self.view bringSubviewToFront:_loading_View];
     [self startRequest];
+    
+    [self addDownRefreshViewWithFrame:CGRectMake(0, -kDownRefreshViewHeght, kScreentWidth, kDownRefreshViewHeght)];
+    [_myTeaTableV addSubview:refreshV];
 }
 
 
+#pragma mark - 完成按钮被点击
 - (void)finishButtonClicked:(UIButton *)btn
 {
     // 完成
@@ -101,33 +148,45 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - 设置默认老师
-- (void)settingDefaultTeacher:(UIButton *)btn
+
+#pragma mark - delegate
+#pragma mark -- 区数
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (btn.selected)
+    return 1;
+}
+#pragma mark -- 区高度
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (_teacherArray.count == 0)
     {
-        btn.selected = NO;
-        _markDefault = NO;
+        return 300;
     }
-    else
-    {
-        btn.selected = YES;
-        _markDefault = YES;
-    }
+    return 0;
 }
 
-
-
-- (void)backToPrePage
+#pragma mark -- 区头视图
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    if (_teacherArray.count == 0)
+    {
+        UILabel *lable = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 300)];
+        lable.font = [UIFont systemFontOfSize:kFontSize_14];
+        lable.text = @"暂无数据";
+        lable.textAlignment = NSTextAlignmentCenter;
+        lable.textColor = kPart_Button_Color;
+        return lable;
+    }
+    return nil;
 }
 
+#pragma mark --  row 行个数
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _teacherArray.count;
 }
 
+#pragma mark -- 绘制cell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellId = @"MyTeacherCell";
@@ -148,6 +207,13 @@
     return cell;
 }
 
+
+#pragma mark -- cell高度
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return kTeaTableViewCellHeight;
+}
+
 #pragma mark - 选择老师
 - (void)selectTeacxher:(UIButton *)btn
 {
@@ -166,33 +232,111 @@
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+
+#pragma mark - 下拉刷新
+#pragma mark -- 创建下拉刷新界面
+- (void)addDownRefreshViewWithFrame:(CGRect)frame
 {
-    return kTeaTableViewCellHeight;
+    refreshV = [[UIView alloc]initWithFrame:frame];
+    UIImageView *loadingImgV = [[UIImageView alloc]initWithFrame:CGRectMake((kScreentWidth-kLoadingImgViewHeight)/2, (kDownRefreshViewHeght-kLoadingImgViewHeight)/2, kLoadingImgViewHeight, kLoadingImgViewHeight)];
+    loadingImgV.animationDuration = 2;
+    loadingImgV.animationImages = @[[UIImage imageNamed:@"Loading_1"],[UIImage imageNamed:@"Loading_2"],[UIImage imageNamed:@"Loading_3"],[UIImage imageNamed:@"Loading_4"],[UIImage imageNamed:@"Loading_5"],[UIImage imageNamed:@"Loading_6"]];
+    loadingImgV.animationRepeatCount = -1;
+    loadingImgV.tag = kLoadingViewTag;
+    [loadingImgV setImage:[UIImage imageNamed:@"Loading_1"]];
+    loadingImgV.hidden = YES;
+    [refreshV addSubview:loadingImgV];
+    
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, kDownRefreshViewHeght-40, kScreentWidth, 20)];
+    label.font = [UIFont systemFontOfSize:kFontSize_second];
+    label.text = @"下拉换一批老师";
+    label.textColor = kPart_Button_Color;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.tag = kLoadingLabelTag;
+    [refreshV addSubview:label];
 }
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+#pragma mark -- 开启加载动画
+- (void)startAnimation
 {
-    return 30;
+    UIImageView *imgV = (UIImageView *)[self.view viewWithTag:kLoadingViewTag];
+    imgV.hidden = NO;
+    [imgV startAnimating];
+    UILabel *lab = (UILabel *)[self.view viewWithTag:kLoadingLabelTag];
+    lab.hidden = YES;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+#pragma mark -- 下拉列表时
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    UIButton *changBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [changBtn setFrame:CGRectMake(0, 0, kScreentWidth, 30)];
-    [changBtn setTitle:@"点击换一批老师" forState:UIControlStateNormal];
-    [changBtn setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
-    changBtn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
-    [changBtn setBackgroundColor:[UIColor whiteColor]];
-    [changBtn addTarget:self action:@selector(changeTeacher) forControlEvents:UIControlEventTouchUpInside];
-    return changBtn;
+    if (!_reloading)
+    {
+        if (scrollView.contentOffset.y<-kDownRefreshViewHeght)
+        {
+            NSLog(@"下拉列表");
+            _reloading = YES;
+        }
+    }
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (_reloading)
+    {
+        NSLog(@"开始刷新");
+        [self configRefreshUI];
+        [self startRequest];
+    }
+}
+
+#pragma mark -- 开启刷新动画
+- (void)configRefreshUI
+{
+    [refreshV removeFromSuperview];
+    [self addDownRefreshViewWithFrame:CGRectMake(0, KNavTopViewHeight, kScreentWidth, kDownRefreshViewHeght)];
+    [self.view addSubview:refreshV];
+    _myTeaTableV.frame = CGRectMake(0, kDownRefreshViewHeght+KNavTopViewHeight, kScreentWidth, kScreenHeight-kDownRefreshViewHeght-KNavTopViewHeight);
+    [self startAnimation];
+}
+
+- (void)endReloadingUIConfig
+{
+    _myTeaTableV.frame = CGRectMake(0, kDownRefreshViewHeght+KNavTopViewHeight, kScreentWidth, kScreenHeight-kDownRefreshViewHeght-KNavTopViewHeight);
+    [refreshV removeFromSuperview];
+    _myTeaTableV.frame = CGRectMake(0, KNavTopViewHeight+2, kScreentWidth, kScreenHeight-kDownRefreshViewHeght-KNavTopViewHeight);
+    [self addDownRefreshViewWithFrame:CGRectMake(0, -kDownRefreshViewHeght, kScreentWidth, kDownRefreshViewHeght)];
+    [_myTeaTableV addSubview:refreshV];
+}
+
+#pragma mark -- 换一批老师 网络请求
 - (void)changeTeacher
 {
     [self startRequest];
 }
+
+
+#pragma mark - 设置默认老师
+- (void)settingDefaultTeacher:(UIButton *)btn
+{
+    if (btn.selected)
+    {
+        btn.selected = NO;
+        _markDefault = NO;
+    }
+    else
+    {
+        btn.selected = YES;
+        _markDefault = YES;
+    }
+}
+
+
+#pragma mark - 返回上一页
+- (void)backToPrePage
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

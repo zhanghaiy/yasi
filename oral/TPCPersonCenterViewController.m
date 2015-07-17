@@ -117,7 +117,17 @@
     if ([[_personInfoDic objectForKey:@"icon"] length]>0)
     {
         NSString *iconUrl = [_personInfoDic objectForKey:@"icon"];
-        [_personHeadButton setImageWithURL:[NSURL URLWithString:iconUrl]];
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:iconUrl]];
+        /*
+         因为 每次请求图片的url是一样的  
+         所以会存在这样的现象：
+            SDWebImage 有缓存机制  URL 一样 则不会重新网络请求  直接从缓存中获取  所以不能用 SDWebImage
+         [_personHeadButton setImageWithURL:[NSURL URLWithString:iconUrl]];
+         */
+        [_personHeadButton setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+        
+        // 将头像url存入本地
+        [OralDBFuncs setCurrentUser:[OralDBFuncs getCurrentUserName] UserId:[OralDBFuncs getCurrentUserID] UserIconUrl:iconUrl];
     }
     else
     {
@@ -173,6 +183,7 @@
     {
         _signatureLabel.text = @"个性签名：未填写";
     }
+    
 }
 
 - (void)didReceiveMemoryWarning {

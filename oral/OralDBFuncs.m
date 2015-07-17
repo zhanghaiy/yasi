@@ -797,6 +797,8 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
     return [[NSUserDefaults standardUserDefaults]objectForKey:key];
 }
 
+
+
 +(void)setCurrentUser:(NSString *)userName UserId:(NSString *)userid UserIconUrl:(NSString *)iconUrl
 {
     [[NSUserDefaults standardUserDefaults] setObject:userName forKey:KEY_CONTEXT_USERNAME];

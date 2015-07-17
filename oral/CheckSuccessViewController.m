@@ -103,7 +103,7 @@
     _topDesLabel.textAlignment = NSTextAlignmentCenter;
 }
 
-#pragma mark - 获取总分
+#pragma mark - 获取总分 从数据库
 - (void)getSumScore
 {
     // 获取总分
@@ -173,14 +173,15 @@
         _topDesLabel.text = @"闯关失败~再接再厉！";
     }
     
-//    if (!index)
-//    {
-//        // 不及格 不可以继续闯关
-//        _continueButton.enabled = NO;
-//        _continueButton.backgroundColor = kUnEnabledColor;
-//    }
+    if (!index)
+    {
+        // 不及格 不可以继续闯关
+        _continueButton.enabled = NO;
+        _continueButton.backgroundColor = kUnEnabledColor;
+    }
 }
 
+#pragma mark - 网络请求 百分比
 - (void)requestScorePercentWithScore:(NSInteger)score
 {
     /*
@@ -220,7 +221,7 @@
     }
 }
 
-
+#pragma mark - 加载视图
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -239,6 +240,7 @@
 
 }
 
+#pragma mark - 组成成绩单
 - (void)makeUpScoreMenu
 {
     /*
@@ -279,10 +281,11 @@
     }
 }
 
+#pragma mark - UITableView Delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *text = [[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"answer"];
-    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-90 Height:99999 FontSize:kFontSize_16];
+    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-90 Height:99999 FontSize:kFontSize_17];
     if (rect.size.height>kCellHeght-20)
     {
         NSInteger height = kCellHeght+rect.size.height-50;
@@ -305,8 +308,6 @@
         cell = [[[NSBundle mainBundle]loadNibNamed:@"SuccessCell" owner:self options:0] lastObject];
         
         cell.htmlWebView.scrollView.scrollEnabled=NO;
-//        cell.htmlWebView.scrollView.backgroundColor = [UIColor whiteColor];
-//        cell.backgroundView.backgroundColor = [UIColor whiteColor];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
@@ -315,7 +316,6 @@
     cell.htmlWebView.delegate = self;
     
     [cell.htmlWebView loadHTMLString:record.lastText baseURL:nil];
-    
     
     NSArray *colorArr = @[_perfColor,_goodColor,_badColor];
     int scoreCun = record.lastScore>=80?0:(record.lastScore>=60?1:2);
@@ -343,6 +343,7 @@
 */
 
 
+#pragma mark - 再来一次按钮被点击
 - (IBAction)backToLastPage:(id)sender
 {
     for (UIViewController *viewControllers in self.navigationController.viewControllers)
@@ -354,9 +355,19 @@
         }
     }
 }
+
+#pragma mark - 继续闯关按钮被点击
 - (IBAction)continueNextPoint:(id)sender
 {
     CheckKeyWordViewController *keyVC = [[CheckKeyWordViewController alloc]initWithNibName:@"CheckKeyWordViewController" bundle:nil];
     [self.navigationController pushViewController:keyVC animated:YES];
 }
+
+#pragma mark - 分享按钮点击事件
+
+- (IBAction)shareButtonClicked:(id)sender
+{
+    
+}
+
 @end

@@ -60,6 +60,8 @@
 
 // 阿里云
 #define kBaseIPUrl @"http://114.215.172.72:80"
+#define kBaseIPUrl_local @"http://192.168.0.12:9999"
+
 // 主页 topic 信息
 #define kTopicListUrl @"/yasi/examtheme/queryClassTypeInfo.do"
 
