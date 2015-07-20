@@ -212,11 +212,15 @@
     {
         paramsStr = [NSString stringWithFormat:@"userId=%@",userId];
     }
+    
+    _loading_View.hidden = NO;
+    [self.view bringSubviewToFront:_loading_View];
     [NSURLConnectionRequest requestPOSTUrlString:urlStr andParamStr:paramsStr target:self action:@selector(requestFinished:) andRefresh:YES];
 }
 
 - (void)requestFinished:(NSURLConnectionRequest *)request
 {
+    _loading_View.hidden = YES;
     if ([request.downloadData length]>0)
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];

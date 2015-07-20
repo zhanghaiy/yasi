@@ -191,7 +191,7 @@
     _teaQuestionLabel.layer.cornerRadius = _teaQuestionLabel.frame.size.height/1334*kScreenHeight;
     // 问题文本 多行显示
     _teaQuestionLabel.text = @"";//起始为空
-    _teaQuestionLabel.textColor = _textColor;
+    _teaQuestionLabel.textColor = kText_Color;
     _teaQuestionLabel.textAlignment = NSTextAlignmentCenter;
     _teaQuestionLabel.numberOfLines = 0;
     _teaQuestionLabel.backgroundColor = [UIColor clearColor];
@@ -242,6 +242,9 @@
     float score_Y = _studentView.frame.size.height-5-score_H;
     float score_X = (_studentView.frame.size.width-score_W)/2;
     [_stuScoreButton setFrame:CGRectMake(score_X, score_Y, score_W, score_H)];
+    
+    _stuScoreButton.titleLabel.font = [UIFont systemFontOfSize:30];
+    
     
     // webview
     float webview_x = 10;
@@ -466,6 +469,8 @@
 - (void)showCurrentQuestionText
 {
     _teaQuestionLabel.text = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"question"];
+    _teaQuestionLabel.font = [UIFont fontWithName:@"Arial" size:kFontSize_14];
+
 }
 
 #pragma mark -- 展示回答文本
@@ -478,11 +483,11 @@
     CGRect rect = [NSString CalculateSizeOfString:[self filterHTML:answerTextBlank] Width:ww Height:9999 FontSize:kFontSize_15];
     int  hh = rect.size.height;
 
-     NSString *new_html =[NSString stringWithFormat:@"<style>#box{width:%dpx;height:%dpx;position: absolute;top:50%%;left:50%%;margin-top:%dpx;margin-left:%dpx;font-size:15;}</style><div id='box'>%@</div>",ww,hh,-hh/2,-ww/2,answerTextBlank];
+     NSString *new_html =[NSString stringWithFormat:@"<style>#box{width:%dpx;height:%dpx;position: absolute;top:50%%;left:50%%;margin-top:%dpx;margin-left:%dpx;font-size:15;font-family:\"Arial\";}</style><div id='box'>%@</div>",ww,hh,-hh/2,-ww/2,answerTextBlank];
     [_answerTextWebV loadHTMLString:new_html baseURL:nil];
 }
 
-#pragma mark - 去掉html标签 (改用webView 此方法已不需要 暂时保留 2015.06.11)
+#pragma mark - 去掉html标签 
 -(NSString *)filterHTML:(NSString *)html
 {
     NSScanner * scanner = [NSScanner scannerWithString:html];
@@ -715,6 +720,7 @@
             // 继续当前问题
             [self changeAnswerProgress];
             _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
+            _sumAnswerCounts = _currentAnswerListArray.count;
             [self prepareQuestion];
         }
         else

@@ -16,7 +16,7 @@
 @interface CheckKeyWordViewController ()<UIScrollViewDelegate>
 {
     NSInteger _currentPage;
-    NSArray *keyWordArray ;
+    NSMutableArray *_keyWordArray ;
 }
 @end
 
@@ -27,13 +27,41 @@
 #define kStartPointButtonTag 13
 
 
+- (void)makeUpKeyWordDataArray
+{
+    _keyWordArray = [[NSMutableArray alloc]init];
+    
+    NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/info.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
+    NSData *jsonData = [NSData dataWithContentsOfFile:jsonPath];
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+    // 整个topic资源信息
+    NSDictionary *topicDic = [dict objectForKey:@"classtypeinfo"];
+    NSInteger nextPoint = [OralDBFuncs getCurrentPoint]+1;
+    // 当前关卡信息
+    NSDictionary *nextPointDic = [[[[topicDic objectForKey:@"partlist"] objectAtIndex:[OralDBFuncs getCurrentPart]-1] objectForKey:@"levellist"] objectAtIndex:nextPoint-1];
+    NSArray *questionArray = [nextPointDic objectForKey:@"questionlist"];
+    for (NSDictionary *subDic in questionArray)
+    {
+        NSArray *answerArray = [subDic objectForKey:@"answerlist"];
+        for (NSDictionary *subsubDic in answerArray)
+        {
+            NSString *keyWordsStr = [subsubDic objectForKey:@"keyword"];
+            NSArray *keyArray = [keyWordsStr componentsSeparatedByString:@"||"];
+            for (NSString *key in keyArray)
+            {
+                [_keyWordArray addObject:key];
+            }
+        }
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    keyWordArray = @[@"go outside",@"experience other cultures",@"afford to do so"];
-
+//    keyWordArray = @[@"go outside",@"experience other cultures",@"afford to do so"];
+    [self makeUpKeyWordDataArray];
     self.navTopView.hidden = YES;
     self.lineLab.hidden = YES;
     [self uiConfig];
@@ -62,7 +90,7 @@
     rect.size.height = kScreentWidth*52/75;
     _keyScrollView.frame = rect;
     
-    _keyScrollView.contentSize = CGSizeMake(rect.size.width*(keyWordArray.count+1), rect.size.height);
+    _keyScrollView.contentSize = CGSizeMake(rect.size.width*(_keyWordArray.count+1), rect.size.height);
     _keyScrollView.pagingEnabled = YES;
     _keyScrollView.delegate = self;
     
@@ -79,15 +107,16 @@
     tipLabel.textColor = kPart_Button_Color;
     [_keyScrollView addSubview:tipLabel];
 
-    for (int i = 0; i < keyWordArray.count; i ++)
+    for (int i = 0; i < _keyWordArray.count; i ++)
     {
         CGRect newRect = rect;
         newRect.origin.x = (i+1)*rect.size.width;
         newRect.origin.y = 0;
         UILabel *keyLabel = [[UILabel alloc]initWithFrame:newRect];
         keyLabel.font = [UIFont systemFontOfSize:20];
-        keyLabel.text = [keyWordArray objectAtIndex:i];
+        keyLabel.text = [_keyWordArray objectAtIndex:i];
         keyLabel.textAlignment = NSTextAlignmentCenter;
+        keyLabel.numberOfLines = 0;
         keyLabel.textColor = kPart_Button_Color;
         [_keyScrollView addSubview:keyLabel];
     }
@@ -128,7 +157,7 @@
         [_preButton setBackgroundImage:[UIImage imageNamed:@"preTip-d"] forState:UIControlStateNormal];
         _startPointButton.hidden = YES;
     }
-    else if (_currentPage == keyWordArray.count)
+    else if (_currentPage == _keyWordArray.count)
     {
         [_nextButton setBackgroundImage:[UIImage imageNamed:@"nextTip-d"] forState:UIControlStateNormal];
         _startPointButton.hidden = NO;
@@ -163,7 +192,7 @@
             break;
         case kNextButtonTag:
         {
-            if (_currentPage<keyWordArray.count)
+            if (_currentPage<_keyWordArray.count)
             {
                 _currentPage++;
                 [self changeKeyWord];

@@ -82,6 +82,8 @@
 #pragma mark - 网络请求
 - (void)requestPersonInfo
 {
+    _loading_View.hidden = NO;
+    [self.view bringSubviewToFront:_loading_View];
     _userId = [OralDBFuncs getCurrentUserID];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kUserInfoUrl,_userId];
     NSLog(@"%@",urlStr);
@@ -90,6 +92,7 @@
 
 - (void)requestEnd:(NSURLConnectionRequest *)request
 {
+    _loading_View.hidden = YES;
     if ([request.downloadData length])
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];

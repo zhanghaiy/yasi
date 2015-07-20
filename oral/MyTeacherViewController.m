@@ -240,10 +240,10 @@
     refreshV = [[UIView alloc]initWithFrame:frame];
     UIImageView *loadingImgV = [[UIImageView alloc]initWithFrame:CGRectMake((kScreentWidth-kLoadingImgViewHeight)/2, (kDownRefreshViewHeght-kLoadingImgViewHeight)/2, kLoadingImgViewHeight, kLoadingImgViewHeight)];
     loadingImgV.animationDuration = 2;
-    loadingImgV.animationImages = @[[UIImage imageNamed:@"Loading_1"],[UIImage imageNamed:@"Loading_2"],[UIImage imageNamed:@"Loading_3"],[UIImage imageNamed:@"Loading_4"],[UIImage imageNamed:@"Loading_5"],[UIImage imageNamed:@"Loading_6"]];
+    loadingImgV.animationImages = @[[UIImage imageNamed:@"loading_1"],[UIImage imageNamed:@"loading_2"],[UIImage imageNamed:@"loading_3"],[UIImage imageNamed:@"loading_4"]];
     loadingImgV.animationRepeatCount = -1;
     loadingImgV.tag = kLoadingViewTag;
-    [loadingImgV setImage:[UIImage imageNamed:@"Loading_1"]];
+    [loadingImgV setImage:[UIImage imageNamed:@"loading_1"]];
     loadingImgV.hidden = YES;
     [refreshV addSubview:loadingImgV];
     

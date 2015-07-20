@@ -151,7 +151,7 @@
     _topScoreLabel.text = [NSString stringWithFormat:@"%d",sumScore];
     // 根据分数设置颜色
     // 2中颜色
-    UIColor *color_fail = _goodColor;
+    UIColor *color_fail = [UIColor colorWithRed:250/255.0 green:220/255.0 blue:18/255.0 alpha:1];
     UIColor *color_sucess = [UIColor colorWithRed:0 green:179/255.0 blue:231/255.0 alpha:1];
     NSArray *color_array = @[color_fail,color_sucess];
     int index = sumScore>=60?1:0;
@@ -173,12 +173,12 @@
         _topDesLabel.text = @"闯关失败~再接再厉！";
     }
     
-    if (!index)
-    {
-        // 不及格 不可以继续闯关
-        _continueButton.enabled = NO;
-        _continueButton.backgroundColor = kUnEnabledColor;
-    }
+//    if (!index)
+//    {
+//        // 不及格 不可以继续闯关
+//        _continueButton.enabled = NO;
+//        _continueButton.backgroundColor = kUnEnabledColor;
+//    }
 }
 
 #pragma mark - 网络请求 百分比
@@ -281,17 +281,32 @@
     }
 }
 
+#pragma mark - 去掉html标签 (未用到----2015.06.11)
+-(NSString *)filterHTML:(NSString *)html
+{
+    NSScanner * scanner = [NSScanner scannerWithString:html];
+    NSString * text = nil;
+    while([scanner isAtEnd]==NO)
+    {
+        //找到标签的起始位置
+        [scanner scanUpToString:@"<" intoString:nil];
+        //找到标签的结束位置
+        [scanner scanUpToString:@">" intoString:&text];
+        //替换字符
+        html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
+    }
+    return html;
+}
+
+
 #pragma mark - UITableView Delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *text = [[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"answer"];
+    NSString *text = [self filterHTML:[[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"answer"]];
+    NSLog(@"%@",text);
     CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-90 Height:99999 FontSize:kFontSize_17];
-    if (rect.size.height>kCellHeght-20)
-    {
-        NSInteger height = kCellHeght+rect.size.height-50;
-        return height;
-    }
-    return kCellHeght;
+    NSLog(@"文字：%f",rect.size.height);
+    return (int)rect.size.height+30;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -314,13 +329,16 @@
     NSString *answerId = [[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"id"];
     PracticeBookRecord *record = [_answer_DB_Dictionary objectForKey:answerId];
     cell.htmlWebView.delegate = self;
-    
+    NSLog(@"~~~%@~~~~~",record.lastText);
     [cell.htmlWebView loadHTMLString:record.lastText baseURL:nil];
     
     NSArray *colorArr = @[_perfColor,_goodColor,_badColor];
     int scoreCun = record.lastScore>=80?0:(record.lastScore>=60?1:2);
     [cell.scoreButton setBackgroundColor:[colorArr objectAtIndex:scoreCun]];
     [cell.scoreButton setTitle:[NSString stringWithFormat:@"%d",record.lastScore] forState:UIControlStateNormal];
+    
+    NSLog(@"cell-- webview:%f",cell.htmlWebView.frame.size.height);
+    
     return cell;
 }
 

@@ -109,10 +109,13 @@
         {
             [partBtn setBackgroundColor:kPart_Button_Color];
             partBtn.enabled = YES;
+            partBtn.alpha = 1;
         }
         else
         {
             [partBtn setBackgroundColor:kUnEnabledColor];
+            partBtn.alpha = 0.5;
+//            [partBtn setBackgroundColor:_backgroundViewColor];
             partBtn.enabled = NO;
         }
     }

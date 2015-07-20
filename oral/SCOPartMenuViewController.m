@@ -339,6 +339,7 @@
     [_commit_Head_View.commit_Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _commit_Head_View.commit_Button.enabled = NO;
     _commit_Head_View.commit_des_Label.text = @"已提交给老师，请耐心等待老师反馈~~~~";
+    _commit_Head_View.commit_des_Label.textColor = kPart_Button_Color;
     tableV_point_3.tableHeaderView = _commit_Head_View;
 }
 
@@ -348,6 +349,8 @@
     UITableView *tableV_point_3 = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
     _commit_Head_View = [[[NSBundle mainBundle]loadNibNamed:@"Point_3_Commit_View" owner:self options:0] lastObject];
     _commit_Head_View.commit_des_Label.text = @"提交你的回答给老师吧，会有很大的提高哦~~~";
+    _commit_Head_View.commit_des_Label.textColor = kPart_Button_Color;
+
     [_commit_Head_View.commit_Button setTitle:@"提交" forState:UIControlStateNormal];
     [_commit_Head_View.commit_Button setTitleColor:kPart_Button_Color forState:UIControlStateNormal];
     [_commit_Head_View.commit_Button addTarget:self action:@selector(commitCurrentPart:) forControlEvents:UIControlEventTouchUpInside];
@@ -410,7 +413,7 @@ static UIView *openView;
         else
         {
             // 1、1行
-            reviewWidth = round(rect_1.size.width);
+            reviewWidth = round(rect_1.size.width)+20;
             reviewHeight = 35;
             viewHeight = 130;
         }
@@ -434,6 +437,8 @@ static UIView *openView;
     [scoreBtn setTitle:[NSString stringWithFormat:@"%.1f",[[_review_dict_point_3 objectForKey:@"score"] floatValue]] forState:UIControlStateNormal];
     scoreBtn.titleLabel.font =  [UIFont systemFontOfSize:kFontSize_16];
     [openView addSubview:scoreBtn];
+    
+   
     
     UIImageView *reviewImgV = [[UIImageView alloc]initWithFrame:CGRectMake(15, 50, 20, 15)];
     [openView addSubview:reviewImgV];
@@ -461,6 +466,10 @@ static UIView *openView;
     float ratio = reviewHeight>35?5:reviewBtn.frame.size.height/2;
     reviewBtn.layer.cornerRadius = ratio;
     reviewBtn.titleLabel.font =[UIFont systemFontOfSize:kFontSize_14];
+    
+    reviewBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    reviewBtn.contentEdgeInsets = UIEdgeInsetsMake(0,10, 0, 10);
+    
     [openView addSubview:reviewBtn];
     
     if (_review_text)
@@ -1069,6 +1078,9 @@ static UIView *openView;
         Point_3_Section_Head_View *view = [_section_array_point_3 objectAtIndex:section];
         if (_review_point_3&&_requestReviewSuccess)//已反馈
         {
+            view.markLabel.hidden = YES;
+            view.text_review_imgV.hidden = NO;
+            view.audio_review_imgV.hidden = YES;
             NSString *questionID = [[_text_array_point_3 objectAtIndex:section] objectForKey:@"questionid"];
             NSDictionary *subDic = [self retrievalReviewDictWithQuestionID:questionID];
             if ([[subDic objectForKey:@"teacherurl"] length])
@@ -1087,6 +1099,10 @@ static UIView *openView;
             if (_open&&_openIndex == section)
             {
                 view.markLabel.hidden = YES;
+            }
+            else
+            {
+                view.markLabel.hidden = NO;
             }
         }
         return view;
@@ -1271,6 +1287,7 @@ static UIView *openView;
                 
                 if (_open&&_openIndex==indexPath.section){
                     //
+            
                 }
                 else {
                     cell.hidden = YES;

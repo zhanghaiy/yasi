@@ -35,6 +35,8 @@
 
 #define kmainCellHeight ((kScreenHeight-kNavBarHeight)/3)
 #define kRightCellHeight ((kScreenHeight-kNavBarHeight-kmainCellHeight*2/3)/7)
+#define kRightCellWith (kRightCellHeight*240.0/200.0)
+
 #define kRightTableY (kScreenHeight-(kRightCellHeight*7)-kNavBarHeight)/2
 
 
@@ -61,7 +63,7 @@
     _topicTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_topicTableView];
     
-    _rightTableView = [[UITableView alloc]initWithFrame:CGRectMake(kScreentWidth, 45+kRightTableY, kRightCellHeight, kRightCellHeight*7) style:UITableViewStylePlain];
+    _rightTableView = [[UITableView alloc]initWithFrame:CGRectMake(kScreentWidth, 45+kRightTableY, kRightCellWith, kRightCellHeight*7) style:UITableViewStylePlain];
     _rightTableView.delegate = self;
     _rightTableView.dataSource = self;
     _rightTableView.tag = kRightTableVIewTag;
@@ -72,7 +74,7 @@
     
     
     _loading_View.hidden = NO;
-    [self changeLoadingViewPercentTitle:@"加载中..."];
+    [self changeLoadingViewPercentTitle:@"加载中"];
     [self.view bringSubviewToFront:_loading_View];
     
     NSString *urlSTr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTopicListUrl];
@@ -184,9 +186,9 @@
             cell = [[[NSBundle mainBundle]loadNibNamed:@"RightMainCell" owner:self options:0] lastObject];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
         NSDictionary *dict = [_topicArray objectAtIndex:indexPath.row];
         [cell.smallTopicButton setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"bgimgurl"]]];
+//        [cell.smallTopicButton setImage:[UIImage imageNamed:@"topic_new_test"] forState:UIControlStateNormal];
 
         cell.smallTopicButton.tag = indexPath.row+kTopicButtonTag*10;
         [cell.smallTopicButton addTarget:self action:@selector(jumpToCurrentTopic:) forControlEvents:UIControlEventTouchUpInside];

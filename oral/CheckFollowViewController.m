@@ -142,7 +142,7 @@
     
     // 问题文本 多行显示
     _questionTextLabel.text = @"";//起始为空
-    _questionTextLabel.textColor = _textColor;
+    _questionTextLabel.textColor = kText_Color;
     _questionTextLabel.textAlignment = NSTextAlignmentCenter;
     _questionTextLabel.numberOfLines = 0;
     [_questionTextLabel setBackgroundColor:[UIColor clearColor]];
@@ -486,11 +486,14 @@
 - (void)showCurrentQuestionText
 {
     _questionTextLabel.text = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"question"];
+    _questionTextLabel.font = [UIFont fontWithName:@"Arial" size:kFontSize_14];
+//    _questionTextLabel.font = [UIFont fontWithName:@"Times New Roman" size:kFontSize_16];
 }
 
 #pragma mark -- 展示回答文本
 - (void)showCurrentAnswerText
 {
+    _review_sbc = NO;
     _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
     NSString *str = [[_currentAnswerListArray objectAtIndex:_currentAnswerCounts] objectForKey:@"answer"];
     int  ww = _answerTextWebV.frame.size.width;
@@ -499,7 +502,7 @@
     
     _answerTextWebV.backgroundColor = [UIColor whiteColor];
     _answerTextWebV.scrollView.backgroundColor = [UIColor whiteColor];
-    NSString *newStr = [NSString stringWithFormat:@"<style>#box{width:%dpx;height:%dpx;position: absolute;top:50%%;left:50%%;margin-top:%dpx;margin-left:%dpx;font-size:15;}</style><div id='box'>%@</div>",ww,hh,-hh/2,-ww/2,str];
+    NSString *newStr = [NSString stringWithFormat:@"<style>#box{width:%dpx;height:%dpx;position: absolute;top:50%%;left:50%%;margin-top:%dpx;margin-left:%dpx;font-size:15;font-family:\"Arial\";}</style><div id='box'>%@</div>",ww,hh,-hh/2,-ww/2,str];
     [_answerTextWebV loadHTMLString:newStr baseURL:nil];
 }
 
@@ -627,7 +630,7 @@
    
     _currentAnswerHtml =[_dfEngine getRichResultString:result.details]; //;
     NSString *new_html =[NSString stringWithFormat:@"<style>#box{width:%dpx;height:%dpx;position: absolute;top:50%%;left:50%%;margin-top:%dpx;margin-left:%dpx;font-size:15;}</style><div id='box'>%@</div>",ww,hh,-hh/2,-ww/2,_currentAnswerHtml];
-
+//    _currentAnswerHtml = new_html;
     [_answerTextWebV loadHTMLString:new_html baseURL:nil];
     _currentAnswerScore = result.overall;
     _currentAnswerIntegrity = result.integrity;
@@ -824,6 +827,7 @@
             [self questionCountChanged1];//标记当前进行的问题数
             [self changeAnswerProgress];
             _currentAnswerListArray = [[_questioListArray objectAtIndex:_currentQuestionCounts] objectForKey:@"answerlist"];
+            _sumAnswerCounts = _currentAnswerListArray.count;
             [self prepareQuestion];
         }
         else

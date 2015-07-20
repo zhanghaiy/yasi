@@ -9,6 +9,7 @@
 #import "TopicParentsViewController.h"
 
 #import "TPCCheckpointViewController.h"
+#import "CircleProgressView.h"
 
 
 @interface TopicParentsViewController ()
@@ -18,6 +19,8 @@
 @end
 
 @implementation TopicParentsViewController
+#define kLoadingProgressViewTag 99
+
 
 - (void)viewDidLoad
 {
@@ -118,8 +121,8 @@
     actionView.backgroundColor = [UIColor whiteColor];
     
     // 动画等明天美工出图 再完善  宽高有待调整
-    NSInteger loadingImgV_W = 219;
-    NSInteger loadingImgV_H = 114;
+    NSInteger loadingImgV_W = 90;
+    NSInteger loadingImgV_H = 90;
     NSInteger loadingImgV_Y = (action_View_H-loadingImgV_H)/2;
     NSInteger loadingImgV_X = (action_View_W-loadingImgV_W)/2;
     
@@ -129,23 +132,39 @@
     NSInteger loadingLabel_Y = (action_View_H - loadingLabel_H)/2;
     
     UIImageView *loadingImgV = [[UIImageView alloc]initWithFrame:CGRectMake(loadingImgV_X, loadingImgV_Y, loadingImgV_W, loadingImgV_H)];
-    loadingImgV.animationDuration = 1;
-    loadingImgV.animationImages = @[[UIImage imageNamed:@"loading"]];
+    loadingImgV.animationDuration = 1.6;
+    loadingImgV.animationImages = @[[UIImage imageNamed:@"loading_1"],[UIImage imageNamed:@"loading_2"],[UIImage imageNamed:@"loading_3"],[UIImage imageNamed:@"loading_4"],[UIImage imageNamed:@"loading_5"],[UIImage imageNamed:@"loading_6"],[UIImage imageNamed:@"loading_7"],[UIImage imageNamed:@"loading_8"],[UIImage imageNamed:@"loading_9"],[UIImage imageNamed:@"loading_10"],[UIImage imageNamed:@"loading_11"],[UIImage imageNamed:@"loading_12"]];
     loadingImgV.animationRepeatCount = -1;
     [actionView addSubview:loadingImgV];
     [loadingImgV startAnimating];
+    
+    
+//    CircleProgressView *loadingProgressV = [[CircleProgressView alloc]initWithFrame:CGRectMake(loadingImgV_X, loadingImgV_Y, loadingImgV_W, loadingImgV_H)];
+//    loadingProgressV.tag = kLoadingProgressViewTag;
+//    [loadingProgressV settingProgress:0 andColor:[UIColor colorWithRed:52/255.0 green:224/255.0 blue:196/255.0 alpha:1] andWidth:3 andCircleLocationWidth:3];
+    
     
     _tipLabel= [[UILabel alloc]initWithFrame:CGRectMake(loadingLabel_X,loadingLabel_Y, loadingLabel_W, loadingLabel_H)];
     _tipLabel.textAlignment = NSTextAlignmentCenter;
     _tipLabel.textColor = kPart_Button_Color;
     _tipLabel.font = [UIFont systemFontOfSize:kFontSize_14];
     _tipLabel.numberOfLines = 0;
-    _tipLabel.text = @"加载中...";
+    _tipLabel.text = @"加载中";
     [actionView addSubview:_tipLabel];
     
     [_loading_View addSubview:actionView];
     [self.view addSubview:_loading_View];
 }
+
+//- (void)startLoading
+//{
+//    _loading_View.hidden = NO;
+//    [self.view bringSubviewToFront:_loading_View];
+//    
+//    CircleProgressView *progressV = (CircleProgressView *)[self.view viewWithTag:kLoadingProgressViewTag];
+//    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:<#(id)#> selector:<#(SEL)#> userInfo:<#(id)#> repeats:<#(BOOL)#>]
+//    progressV settingProgress:<#(CGFloat)#> andColor:<#(UIColor *)#> andWidth:<#(int)#> andCircleLocationWidth:<#(NSInteger)#>
+//}
 
 
 - (void)didReceiveMemoryWarning {

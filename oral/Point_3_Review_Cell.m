@@ -39,8 +39,8 @@
     _player_button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     _player_button.contentEdgeInsets = UIEdgeInsetsMake(0,10, 0, 10);
     
-    _player_button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    _player_button.contentEdgeInsets = UIEdgeInsetsMake(0,10, 0, 10);
+    _tea_review_button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    _tea_review_button.contentEdgeInsets = UIEdgeInsetsMake(0,10, 0, 10);
     
     
     _tea_head_imgV.layer.masksToBounds = YES;
