@@ -114,11 +114,10 @@
 {
     if ((_nameTextField.text.length>0)&&(_passwordTextField.text.length>0))
     {
-        NSString *paramsStr = [NSString stringWithFormat:@"accountname=%@&password=%@",_nameTextField.text,_passwordTextField.text];
+        NSString *paramsStr = [NSString stringWithFormat:@"accountname=%@&password=%@&nickname=%@",_nameTextField.text,_passwordTextField.text,_nameTextField.text];
         NSString *registerStr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kRegisterUrl];
         [NSURLConnectionRequest requestPOSTUrlString:registerStr andParamStr:paramsStr target:self action:@selector(requestFinished:) andRefresh:YES];
     }
-    
 }
 
 - (void)requestFinished:(NSURLConnectionRequest *)request
@@ -134,6 +133,7 @@
             NSString *userName = _nameTextField.text;
             [OralDBFuncs setCurrentUser:userName UserId:userid UserIconUrl:[dict objectForKey:@"icon"]];
             [OralDBFuncs addUser:userName];
+            [OralDBFuncs setCuurentIsDSFLogin:NO andDSFType:0];
             [self enterTopicPage];
         }
         else

@@ -14,5 +14,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *text_review_imgV;
 @property (strong, nonatomic) IBOutlet UIImageView *audio_review_imgV;
 @property (strong, nonatomic) IBOutlet UIButton *back_button;
+@property (strong, nonatomic) IBOutlet UILabel *lineLab;
 
 @end

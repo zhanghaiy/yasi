@@ -46,7 +46,9 @@
     _backgroundViewColor = [UIColor colorWithRed:244/255.0 green:249/255.0 blue:250/255.0 alpha:1];
     
     _badColor = [UIColor colorWithRed:255/255.0 green:63/255.0 blue:37/255.0 alpha:1];
-    _perfColor = [UIColor colorWithRed:0 green:231/255.0 blue:136/255.0 alpha:1];
+//    _perfColor = [UIColor colorWithRed:0 green:231/255.0 blue:136/255.0 alpha:1];
+    _perfColor = [UIColor colorWithRed:18/255.0 green:136/255.0 blue:18/255.0 alpha:1];
+
     _goodColor = [UIColor colorWithRed:255/255.0 green:170/255.0 blue:6/255.0 alpha:1];
     [self createLoadingView];
 }
@@ -133,7 +135,7 @@
     
     UIImageView *loadingImgV = [[UIImageView alloc]initWithFrame:CGRectMake(loadingImgV_X, loadingImgV_Y, loadingImgV_W, loadingImgV_H)];
     loadingImgV.animationDuration = 1.6;
-    loadingImgV.animationImages = @[[UIImage imageNamed:@"loading_1"],[UIImage imageNamed:@"loading_2"],[UIImage imageNamed:@"loading_3"],[UIImage imageNamed:@"loading_4"],[UIImage imageNamed:@"loading_5"],[UIImage imageNamed:@"loading_6"],[UIImage imageNamed:@"loading_7"],[UIImage imageNamed:@"loading_8"],[UIImage imageNamed:@"loading_9"],[UIImage imageNamed:@"loading_10"],[UIImage imageNamed:@"loading_11"],[UIImage imageNamed:@"loading_12"]];
+    loadingImgV.animationImages = @[[UIImage imageNamed:@"Loading_1"],[UIImage imageNamed:@"Loading_2"],[UIImage imageNamed:@"Loading_3"],[UIImage imageNamed:@"Loading_4"],[UIImage imageNamed:@"Loading_5"],[UIImage imageNamed:@"Loading_6"],[UIImage imageNamed:@"Loading_7"],[UIImage imageNamed:@"Loading_8"],[UIImage imageNamed:@"Loading_9"],[UIImage imageNamed:@"Loading_10"],[UIImage imageNamed:@"Loading_11"],[UIImage imageNamed:@"Loading_12"]];
     loadingImgV.animationRepeatCount = -1;
     [actionView addSubview:loadingImgV];
     [loadingImgV startAnimating];

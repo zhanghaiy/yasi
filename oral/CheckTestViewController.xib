@@ -54,7 +54,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="ENb-Bb-kCn"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -62,7 +62,7 @@
                     <rect key="frame" x="0.0" y="155" width="375" height="170"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQb-5P-adA">
-                            <rect key="frame" x="75" y="15" width="280" height="140"/>
+                            <rect key="frame" x="75" y="15" width="225" height="140"/>
                             <string key="text">Translation Translation Trans lationTran slation Transl ation Transl ationTranslatio nTrans latio nTransl ation Trans lation Translation Translation Trans lationTran slation Transl ation Transl ationTranslatio nTrans latio nTransl ation Trans lation</string>
                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -75,9 +75,9 @@
                                 <constraint firstAttribute="width" constant="100" id="yrP-cG-KEL"/>
                             </constraints>
                         </imageView>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jld-tc-zpb">
-                            <rect key="frame" x="75" y="15" width="280" height="140"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jld-tc-zpb">
+                            <rect key="frame" x="75" y="15" width="225" height="140"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                             <state key="normal" title="点击显示问题">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -100,13 +100,13 @@
                     <constraints>
                         <constraint firstItem="HQb-5P-adA" firstAttribute="leading" secondItem="6v1-mM-ncs" secondAttribute="leading" constant="75" id="2wL-Qf-kXK"/>
                         <constraint firstAttribute="bottom" secondItem="HQb-5P-adA" secondAttribute="bottom" constant="15" id="4hl-np-2dU"/>
-                        <constraint firstAttribute="trailing" secondItem="jld-tc-zpb" secondAttribute="trailing" constant="20" id="5Tr-tw-TUh"/>
+                        <constraint firstAttribute="trailing" secondItem="jld-tc-zpb" secondAttribute="trailing" constant="75" id="5Tr-tw-TUh"/>
                         <constraint firstItem="jld-tc-zpb" firstAttribute="leading" secondItem="6v1-mM-ncs" secondAttribute="leading" constant="75" id="64C-D1-OL3"/>
                         <constraint firstItem="HQb-5P-adA" firstAttribute="top" secondItem="6v1-mM-ncs" secondAttribute="top" constant="15" id="65w-ys-8IN"/>
                         <constraint firstAttribute="bottom" secondItem="jld-tc-zpb" secondAttribute="bottom" constant="15" id="9K8-7d-TiF"/>
                         <constraint firstAttribute="centerX" secondItem="p84-fB-fJd" secondAttribute="centerX" id="Qwd-VE-f0R"/>
                         <constraint firstItem="jld-tc-zpb" firstAttribute="top" secondItem="6v1-mM-ncs" secondAttribute="top" constant="15" id="TbW-bc-xkg"/>
-                        <constraint firstAttribute="trailing" secondItem="HQb-5P-adA" secondAttribute="trailing" constant="20" id="Uh9-hD-K2H"/>
+                        <constraint firstAttribute="trailing" secondItem="HQb-5P-adA" secondAttribute="trailing" constant="75" id="Uh9-hD-K2H"/>
                         <constraint firstAttribute="centerY" secondItem="p84-fB-fJd" secondAttribute="centerY" id="bkk-qb-7ab"/>
                         <constraint firstAttribute="centerY" secondItem="TA2-nh-xzw" secondAttribute="centerY" id="ec6-rX-5Tg"/>
                         <constraint firstAttribute="width" secondItem="6v1-mM-ncs" secondAttribute="height" multiplier="75:34" id="gtX-ev-lqa"/>

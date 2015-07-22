@@ -103,13 +103,30 @@
         }
         else
         {
-        
+            [self netFailed];
         }
     }
     else
     {
-        
+        [self netFailed];
     }
+}
+
+- (void)netFailed
+{
+    if ([OralDBFuncs getCurrentUserIconUrl])
+    {
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+        [_personHeadButton setBackgroundImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
+    }
+    else
+    {
+        // 显示默认图片
+        [_personHeadButton setBackgroundImage:[UIImage imageNamed:@"personDefault"] forState:UIControlStateNormal];
+    }
+    
+    NSString *nickname = [NSString stringWithFormat:@"昵称：%@",[_personInfoDic objectForKey:@"nickname"]];
+    _nameLabel.text = nickname;
 }
 
 
@@ -128,9 +145,16 @@
          [_personHeadButton setImageWithURL:[NSURL URLWithString:iconUrl]];
          */
         [_personHeadButton setImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
-        
         // 将头像url存入本地
         [OralDBFuncs setCurrentUser:[OralDBFuncs getCurrentUserName] UserId:[OralDBFuncs getCurrentUserID] UserIconUrl:iconUrl];
+        
+//        [_personBackImgV setImage:[UIImage imageWithData:data]];
+    }
+    else if ([OralDBFuncs getCurrentUserIconUrl])
+    {
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+        [_personHeadButton setBackgroundImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
+//         [_personBackImgV setImage:[UIImage imageWithData:imageData]];
     }
     else
     {

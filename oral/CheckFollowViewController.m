@@ -156,8 +156,8 @@
     float follow_Button_H = 70.0/667*kScreenHeight;
     float follow_space_bottom = 50.0/667*kScreenHeight;
     float add_practice_button_H = 50.0/667*kScreenHeight;
-    float add_practice_button_W = 120.0/375*kScreentWidth;
-    float btn_space_btn = 15.0/375*kScreentWidth;
+    float add_practice_button_W = 110.0/375*kScreentWidth;
+    float btn_space_btn = 30.0/375*kScreentWidth;
     
     [_answerButton setFrame:CGRectMake((kScreentWidth-follow_Button_H)/2, kScreenHeight-follow_space_bottom-follow_Button_H, follow_Button_H, follow_Button_H)];
     [_addPracticeButton setFrame:CGRectMake(kScreentWidth/2-add_practice_button_W-btn_space_btn/2, kScreenHeight-follow_space_bottom-add_practice_button_H, add_practice_button_W, add_practice_button_H)];
@@ -201,6 +201,18 @@
     [_stuImageView setFrame:CGRectMake(stu_head_X, stu_head_Y, stu_head_H, stu_head_H)];
     [_stuImageView setImage:[UIImage imageNamed:@"person_head_image"]];
 
+    if ([[OralDBFuncs getCurrentUserIconUrl] length]>1)
+    {
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+        NSLog(@"%@",[OralDBFuncs getCurrentUserIconUrl]);
+        [_stuImageView setImage:[UIImage imageWithData:imageData]];
+    }
+    else
+    {
+        [_stuImageView setImage:[UIImage imageNamed:@"personDefault"]];
+    }
+    
+    
     // 进度条
     float stu_Progress_W = _studentView.frame.size.width-stu_head_space_right*3-stu_head_H;
     [_timeProgressLabel setFrame:CGRectMake(10, stu_head_Y+stu_head_H/2, stu_Progress_W, 2)];

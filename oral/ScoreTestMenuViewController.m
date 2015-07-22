@@ -11,6 +11,7 @@
 #import "NSURLConnectionRequest.h"
 #import "OralDBFuncs.h"
 #import "ZipManager.h"
+#import "UIButton+WebCache.h"
 
 @interface ScoreTestMenuViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
@@ -214,14 +215,26 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 此处+5 式界面美观 不至于有紧凑感
+    NSInteger question_height;
+    NSString *question = [self selectQuestionTextWithQuestionID:[[_review_array objectAtIndex:indexPath.section] objectForKey:@"questionid"]];
+    CGRect questionRect = [self getCellHeightWithText:question andWidth:(kScreentWidth-40) Height:9999 Font:kFontSize_14];
+    if (questionRect.size.height>25)
+    {
+        question_height = questionRect.size.height-25;
+    }
+    else
+    {
+        question_height = 0;
+    }
+    
     NSDictionary *reviewDic = [_review_array objectAtIndex:indexPath.section];
     if ([reviewDic objectForKey:@"teacherevaluate"])
     {
         NSString *teacherevaluate = [reviewDic objectForKey:@"teacherevaluate"];
         CGRect rect = [self getCellHeightWithText:teacherevaluate andWidth:kTextBaseWIdth Height:9999 Font:kCellFont];
-        return (rect.size.height>kTextBaseHeight)?kCellHeight + rect.size.height-kTextBaseHeight+5:kCellHeight;
+        return ((rect.size.height>kTextBaseHeight)?kCellHeight + rect.size.height-kTextBaseHeight+5:kCellHeight)+question_height;
     }
-    return kCellHeight;
+    return kCellHeight+question_height;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -231,6 +244,7 @@
     if (cell == nil)
     {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"TestReviewCell" owner:self options:0] lastObject];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     cell.reviewLabel.numberOfLines = 0;
     cell.controlsColor = _pointColor;
@@ -252,6 +266,12 @@
         NSString *questionId = [reviewDic objectForKey:@"questionid"];
         cell.titleLabel.text = [NSString stringWithFormat:@"%@",[self selectQuestionTextWithQuestionID:questionId]];
         cell.titleLabel.numberOfLines = 0;
+        
+        CGRect questionRect = [self getCellHeightWithText:cell.titleLabel.text andWidth:(kScreentWidth-30) Height:9999 Font:kFontSize_14];
+        if (questionRect.size.height>25)
+        {
+            cell.titleLabel.frame = CGRectMake(15, 10, kScreentWidth-30, questionRect.size.height);
+        }
     }
     
     if ([[reviewDic objectForKey:@"teacherevaluate"] length]>=1)
@@ -261,34 +281,30 @@
         if (textRec.size.height>kTextBaseHeight)
         {
             // 多行
-            CGRect reLabelRect = cell.reviewLabel.frame;
-            reLabelRect.size.width = kTextBaseWIdth;
-            reLabelRect.size.height = textRec.size.height+5;
-            cell.reviewLabel.frame = reLabelRect;
+            [cell.reviewBackView setFrame:CGRectMake(75, 25+cell.titleLabel.frame.size.height, kTextBackBaseWIdth, textRec.size.height+15)];
+            [cell.reviewLabel setFrame:CGRectMake(10, 7, kTextBaseWIdth, textRec.size.height)];
             
-            reLabelRect = cell.reviewBackView.frame;
-            reLabelRect.size.width = kTextBackBaseWIdth;
-            reLabelRect.size.height = textRec.size.height+15;
-            cell.reviewBackView.frame = reLabelRect;
+            NSInteger head_W = 45;
+            NSInteger head_Y = cell.reviewBackView.frame.origin.y+cell.reviewBackView.frame.size.height/2-head_W/2;
+            
+            NSInteger spot_W = 5;
+            NSInteger spot_Y = cell.reviewBackView.frame.origin.y+cell.reviewBackView.frame.size.height/2-spot_W/2;
+            
+            [cell.headButton setFrame:CGRectMake(15, head_Y, head_W, head_W)];
+            [cell.spotImgV setFrame:CGRectMake(20+head_W, spot_Y, spot_W, spot_W)];
         }
         else
         {
             // 一行
             textRec = [self getCellHeightWithText:[reviewDic objectForKey:@"teacherevaluate"] andWidth:9999 Height:15 Font:kCellFont];
-            
-            CGRect reviewRect = cell.reviewLabel.frame;
-            reviewRect.size.width = textRec.size.width+40;
-            reviewRect.size.height = kTextBaseHeight;
-            cell.reviewLabel.frame = reviewRect;
-            
-            CGRect backRect = cell.reviewBackView.frame;
-            backRect.size.width = textRec.size.width + 50;
-            backRect.size.height = kTextBackBaseHeight;
-            cell.reviewBackView.frame = backRect;
+            [cell.reviewBackView setFrame:CGRectMake(75, 25+cell.titleLabel.frame.size.height, textRec.size.width+50, 35)];
+            [cell.reviewLabel setFrame:CGRectMake(10, 7, textRec.size.width+30, 20)];
         }
     }
     else
     {
+        [cell.reviewBackView setFrame:CGRectMake(75, 25+cell.titleLabel.frame.size.height, 100, 35)];
+        [cell.reviewLabel setFrame:CGRectMake(10, 7, 80, 20)];
         if ([[reviewDic objectForKey:@"teacherurllength"] isKindOfClass:[NSNull class]])
         {
             cell.reviewLabel.text = [NSString stringWithFormat:@"暂无评价"];
@@ -298,7 +314,16 @@
             cell.reviewLabel.text = [NSString stringWithFormat:@" %d\"",[[reviewDic objectForKey:@"teacherurllength"] intValue]];
         }
     }
-    cell.reviewBackView.layer.cornerRadius = (cell.reviewBackView.frame.size.height>50)?15:cell.reviewBackView.bounds.size.height/2;
+    NSInteger head_W = 45;
+    NSInteger head_Y = cell.reviewBackView.frame.origin.y+cell.reviewBackView.frame.size.height/2-head_W/2;
+    NSInteger spot_W = 5;
+    NSInteger spot_Y = cell.reviewBackView.frame.origin.y+cell.reviewBackView.frame.size.height/2-spot_W/2;
+    [cell.headButton setFrame:CGRectMake(15, head_Y, head_W, head_W)];
+    [cell.spotImgV setFrame:CGRectMake(20+head_W, spot_Y, spot_W, spot_W)];
+    cell.reviewBackView.layer.cornerRadius = cell.reviewBackView.bounds.size.height/2;
+    // 老师头像
+    [cell.headButton setImageWithURL:[_watingDict objectForKey:@"teachericon"] placeholderImage:[UIImage imageNamed:@"personDefault"]];
+    
     return cell;
 }
 

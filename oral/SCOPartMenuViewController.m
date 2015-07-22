@@ -219,9 +219,17 @@
         tableView.dataSource = self;
         tableView.tag  = kTableViewBaseTag+i;
         tableView.backgroundColor = _backgroundViewColor;
-        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         tableView.showsVerticalScrollIndicator = NO;
         [_point_scroll_View addSubview:tableView];
+        
+        if (i == 2)
+        {
+            tableView.separatorColor = _backgroundViewColor;
+        }
+        else
+        {
+            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        }
     }
 }
 
@@ -447,7 +455,7 @@ static UIView *openView;
     UIButton *teacherHeadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [teacherHeadBtn setFrame:CGRectMake(15, 75, 45, 45)];
     [teacherHeadBtn setBackgroundImage:[UIImage imageNamed:@"class_teacher_head"] forState:UIControlStateNormal];
-    [teacherHeadBtn setImageWithURL:[NSURL URLWithString:[_review_dict_point_3 objectForKey:@"teachericon"]] placeholderImage:[UIImage imageNamed:@"class_teacher_head"]];
+    [teacherHeadBtn setImageWithURL:[NSURL URLWithString:[_review_dict_point_3 objectForKey:@"teachericon"]] placeholderImage:[UIImage imageNamed:@"personDefault"]];
     
     teacherHeadBtn.layer.masksToBounds = YES;
     teacherHeadBtn.layer.cornerRadius = teacherHeadBtn.frame.size.height/2;
@@ -1112,12 +1120,13 @@ static UIView *openView;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 0.1;
+    return 1;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     UILabel *linLab = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, kScreentWidth, 1)];
+    linLab.backgroundColor = _backgroundViewColor;
     return linLab;
 }
 
@@ -1239,14 +1248,21 @@ static UIView *openView;
                 NSDictionary *userAnswerDic = [_text_array_point_3 objectAtIndex:indexPath.section];
                 [cell.player_button setTitle:[NSString stringWithFormat:@"%.1f\"",round([[userAnswerDic objectForKey:@"duration"] floatValue]) ] forState:UIControlStateNormal];
                 // 用户自己的头像
-                [cell.stu_head_imgV setImage:[UIImage imageNamed:@"person_head_image"]];
-                
+                if ([OralDBFuncs getCurrentUserIconUrl])
+                {
+                    NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+                    [cell.stu_head_imgV setImage:[UIImage imageWithData:imgData]];
+                }
+                else
+                {
+                    [cell.stu_head_imgV setImage:[UIImage imageNamed:@"personDefault"]];
+                }
                 cell.player_button.tag = indexPath.section + kPlaySelfButtonTag;
                 [cell.player_button addTarget:self action:@selector(playerSelfAnswer:) forControlEvents:UIControlEventTouchUpInside];
                 // 老师反馈
                 NSDictionary *reviewDic = [_score_array_point_3 objectAtIndex:indexPath.section];
                 // 老师头像
-                [cell.tea_head_imgV setImageWithURL:[NSURL URLWithString:[_review_dict_point_3 objectForKey:@"teachericon"]] placeholderImage:[UIImage imageNamed:@"class_teacher_head"]];
+                [cell.tea_head_imgV setImageWithURL:[NSURL URLWithString:[_review_dict_point_3 objectForKey:@"teachericon"]] placeholderImage:[UIImage imageNamed:@"personDefault"]];
                 if ([[reviewDic objectForKey:@"teacherurl"] length])
                 {
                     // 语音评价 可播放
@@ -1308,7 +1324,16 @@ static UIView *openView;
                 cell.playerButton.tag = indexPath.section + kPlaySelfButtonTag;
                 [cell.playerButton addTarget:self action:@selector(playerSelfAnswer:) forControlEvents:UIControlEventTouchUpInside];
                 // 用户自己的头像
-                [cell.stu_head_imgV setImage:[UIImage imageNamed:@"person_head_image"]];
+                if ([OralDBFuncs getCurrentUserIconUrl])
+                {
+                    NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+                    [cell.stu_head_imgV setImage:[UIImage imageWithData:imgData]];
+                }
+                else
+                {
+                    [cell.stu_head_imgV setImage:[UIImage imageNamed:@"personDefault"]];
+                }
+
                 if (_open&&_openIndex == indexPath.section)
                 {
                     cell.hidden = NO;

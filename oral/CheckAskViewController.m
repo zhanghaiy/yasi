@@ -207,6 +207,18 @@
     _stuHeadImgViewRect.size.width += 30;
     _stuHeadImgViewRect.size.height += 30;
     
+    
+    if ([[OralDBFuncs getCurrentUserIconUrl] length]>1)
+    {
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+        NSLog(@"%@",[OralDBFuncs getCurrentUserIconUrl]);
+        [_stuHeadImgV setImage:[UIImage imageWithData:imageData]];
+    }
+    else
+    {
+        [_stuHeadImgV setImage:[UIImage imageNamed:@"personDefault"]];
+    }
+    
     /*
          创建时间进度条： 圆形时间进度条 围绕在学生头像外圈
                        随着时间的增加而增加 当走完一圈 时间用尽 回答结束

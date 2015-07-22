@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "sqlite3.h"
 
+
 @interface TopicRecord : NSObject
 @property (strong, nonatomic) NSString *userName;
 @property (strong, nonatomic) NSString *topicName;
@@ -84,6 +85,10 @@
 +(NSString *)getCurrentUserName;
 // 获取用户id
 +(NSString *)getCurrentUserID;
+
++ (void)setCuurentIsDSFLogin:(BOOL)login andDSFType:(NSInteger)type;
++ (BOOL)getCuurentIsDSFLogin;
++ (NSInteger)getCuurentDSFLoginType;
 
 
 // 标记当前topic

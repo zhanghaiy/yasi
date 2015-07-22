@@ -146,9 +146,7 @@
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
         if ([[dict objectForKey:@"respCode"] intValue] == 1000)
         {
-            //
             NSLog(@"%@",dict);
-            
             _pictureArray = [dict objectForKey:@"teacherimagelist"];
             _infoListArray = [dict objectForKey:@"teacherinfolist"];
             [self createShowImageView];

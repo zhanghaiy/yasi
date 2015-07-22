@@ -35,10 +35,10 @@
                             <constraint firstAttribute="width" constant="33" id="qBU-Ie-yMh"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <state key="normal" image="Prac_listen_n" backgroundImage="person_head_image">
+                        <state key="normal" image="Prac_listen_n" backgroundImage="personDefault">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
-                        <state key="selected" backgroundImage="person_head_image"/>
+                        <state key="selected" backgroundImage="personDefault"/>
                         <connections>
                             <action selector="buttonClicked:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="4Tt-vU-h3j"/>
                         </connections>
@@ -146,6 +146,6 @@
         <image name="Prac_listen_n" width="33" height="33"/>
         <image name="Prac_play_n" width="33" height="33"/>
         <image name="Prac_play_s" width="33" height="33"/>
-        <image name="person_head_image" width="68" height="68"/>
+        <image name="personDefault" width="45" height="45"/>
     </resources>
 </document>

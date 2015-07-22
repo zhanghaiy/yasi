@@ -24,6 +24,7 @@
     _markLabel.textAlignment = NSTextAlignmentLeft;
     _markLabel.textColor = [UIColor colorWithWhite:135/255.0 alpha:1];
     _markLabel.font = [UIFont systemFontOfSize:kFontSize_12];
+    _lineLab.backgroundColor = [UIColor colorWithRed:240/255.0 green:245/255.0 blue:250/255.0 alpha:1];
     
 }
 

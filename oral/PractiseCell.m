@@ -25,7 +25,10 @@
     // Initialization code
     
     [_play_self_Button setImage:[UIImage imageNamed:@"Prac_listen_n"] forState:UIControlStateNormal];
-    [_play_self_Button setImage:[UIImage imageNamed:@"person_head_image"] forState:UIControlStateSelected];
+    [_play_self_Button setImage:[UIImage imageNamed:@"personDefault"] forState:UIControlStateSelected];
+    
+    _play_self_Button.layer.cornerRadius = _play_self_Button.frame.size.height/2;
+    _play_self_Button.layer.masksToBounds = YES;
     
     _scoreButton.layer.masksToBounds = YES;
     _scoreButton.layer.cornerRadius = _scoreButton.frame.size.height/2;

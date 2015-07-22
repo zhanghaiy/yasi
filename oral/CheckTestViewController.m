@@ -210,6 +210,17 @@
     _stuHeadImageV.layer.masksToBounds = YES;
     _stuHeadImageV.layer.cornerRadius = _stuHeadImageV.frame.size.height/2;
     
+    if ([[OralDBFuncs getCurrentUserIconUrl] length]>1)
+    {
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+        NSLog(@"%@",[OralDBFuncs getCurrentUserIconUrl]);
+        [_stuHeadImageV setImage:[UIImage imageWithData:imageData]];
+    }
+    else
+    {
+        [_stuHeadImageV setImage:[UIImage imageNamed:@"personDefault"]];
+    }
+    
     // 设置初始界面元素 隐藏特定的控件
     _teaCircleImageView.hidden = YES;// 仿声波动画控件
     _teaDesLabel.hidden = YES;// 关键词提示控件

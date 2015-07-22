@@ -30,12 +30,12 @@
 #define kFooterViewHeight 60
 #define kSelectedButonTag 99
 
-#define kDownRefreshViewHeght 100
+#define kDownRefreshViewHeght 80
 #define kDownRefreshViewTag 11
-#define kLoadingImgViewHeight 50
+#define kLoadingImgViewHeight 40
 #define kLoadingViewTag 22
 #define kLoadingLabelTag 23
-
+#define kLoadingLabTag 24
 
 #pragma mark - 网络
 #pragma mark -- 开始请求老师列表
@@ -240,12 +240,20 @@
     refreshV = [[UIView alloc]initWithFrame:frame];
     UIImageView *loadingImgV = [[UIImageView alloc]initWithFrame:CGRectMake((kScreentWidth-kLoadingImgViewHeight)/2, (kDownRefreshViewHeght-kLoadingImgViewHeight)/2, kLoadingImgViewHeight, kLoadingImgViewHeight)];
     loadingImgV.animationDuration = 2;
-    loadingImgV.animationImages = @[[UIImage imageNamed:@"loading_1"],[UIImage imageNamed:@"loading_2"],[UIImage imageNamed:@"loading_3"],[UIImage imageNamed:@"loading_4"]];
+    loadingImgV.animationImages = @[[UIImage imageNamed:@"Loading_1"],[UIImage imageNamed:@"Loading_2"],[UIImage imageNamed:@"Loading_3"],[UIImage imageNamed:@"Loading_4"],[UIImage imageNamed:@"Loading_5"],[UIImage imageNamed:@"Loading_6"],[UIImage imageNamed:@"Loading_7"],[UIImage imageNamed:@"Loading_8"],[UIImage imageNamed:@"Loading_9"],[UIImage imageNamed:@"Loading_10"],[UIImage imageNamed:@"Loading_11"],[UIImage imageNamed:@"Loading_12"]];
     loadingImgV.animationRepeatCount = -1;
     loadingImgV.tag = kLoadingViewTag;
-    [loadingImgV setImage:[UIImage imageNamed:@"loading_1"]];
     loadingImgV.hidden = YES;
     [refreshV addSubview:loadingImgV];
+    
+    UILabel *lab = [[UILabel alloc]initWithFrame:loadingImgV.frame];
+    lab.textAlignment = NSTextAlignmentCenter;
+    lab.textColor = kPart_Button_Color;
+    lab.text = @"加载中..";
+    lab.font = [UIFont systemFontOfSize:kFontSize_12];
+    [refreshV addSubview:lab];
+    lab.hidden = YES;
+    lab.tag = kLoadingLabTag;
     
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, kDownRefreshViewHeght-40, kScreentWidth, 20)];
     label.font = [UIFont systemFontOfSize:kFontSize_second];
@@ -262,6 +270,9 @@
     UIImageView *imgV = (UIImageView *)[self.view viewWithTag:kLoadingViewTag];
     imgV.hidden = NO;
     [imgV startAnimating];
+    UILabel *label = (UILabel *)[self.view viewWithTag:kLoadingLabTag];
+    label.hidden = NO;
+    
     UILabel *lab = (UILabel *)[self.view viewWithTag:kLoadingLabelTag];
     lab.hidden = YES;
 }

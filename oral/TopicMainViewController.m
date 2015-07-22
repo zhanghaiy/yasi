@@ -39,6 +39,7 @@
 
 #define kRightTableY (kScreenHeight-(kRightCellHeight*7)-kNavBarHeight)/2
 
+#define kPersonButtonTag 1992
 
 
 #pragma mark - 视图加载
@@ -50,7 +51,20 @@
     _selectFromRight = NO;
     UIButton *personBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [personBtn setFrame:CGRectMake((kScreentWidth-35)/2, 24+(kNavBarHeight-24-35)/2, 35, 35)];
-    [personBtn setBackgroundImage:[UIImage imageNamed:@"person_head_image"] forState:UIControlStateNormal];
+    personBtn.tag = 1992;
+    personBtn.layer.masksToBounds = YES;
+    personBtn.layer.cornerRadius = personBtn.frame.size.height/2;
+    if ([[OralDBFuncs getCurrentUserIconUrl] length]>1)
+    {
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+        NSLog(@"%@",[OralDBFuncs getCurrentUserIconUrl]);
+        [personBtn setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [personBtn setBackgroundImage:[UIImage imageNamed:@"personDefault"] forState:UIControlStateNormal];
+    }
+    
     [personBtn addTarget:self action:@selector(toPersonCenter) forControlEvents:UIControlEventTouchUpInside];
     [self.navTopView addSubview:personBtn];
     
@@ -72,13 +86,27 @@
     _rightTableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_rightTableView];
     
-    
     _loading_View.hidden = NO;
-    [self changeLoadingViewPercentTitle:@"加载中"];
     [self.view bringSubviewToFront:_loading_View];
-    
     NSString *urlSTr = [NSString stringWithFormat:@"%@%@",kBaseIPUrl,kTopicListUrl];
     [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(requestFinished:) andRefresh:kCurrentNetStatus];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    UIButton *personBtn = (UIButton *)[self.view viewWithTag:kPersonButtonTag];
+    if ([[OralDBFuncs getCurrentUserIconUrl] length]>1)
+    {
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+        NSLog(@"%@",[OralDBFuncs getCurrentUserIconUrl]);
+        [personBtn setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [personBtn setBackgroundImage:[UIImage imageNamed:@"personDefault"] forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - 网络反馈
@@ -162,8 +190,9 @@
             cell = [[[NSBundle mainBundle]loadNibNamed:@"TopicCell" owner:self options:0] lastObject];
         }
         NSDictionary *dic = [_topicArray objectAtIndex:indexPath.row];
+//            [cell.topicButton setBackgroundImage:[UIImage imageNamed:@"topic_new_test"] forState:UIControlStateNormal];
+       
         [cell.topicButton setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"bgimgurl"]]];
-//        [cell.topicButton setImage:[UIImage imageNamed:@"topic_new_test"] forState:UIControlStateNormal];
         cell.topicTitle.text = [dic objectForKey:@"classtype"];
         cell.progressColor = kPart_Button_Color;
 

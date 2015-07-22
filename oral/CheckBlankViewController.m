@@ -231,9 +231,21 @@
     
     [_stuHeadImgView setFrame:CGRectMake(stu_head_X, stu_head_Y, stu_head_H, stu_head_H)];
     
+    if ([[OralDBFuncs getCurrentUserIconUrl] length]>1)
+    {
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+        NSLog(@"%@",[OralDBFuncs getCurrentUserIconUrl]);
+        [_stuHeadImgView setImage:[UIImage imageWithData:imageData]];
+    }
+    else
+    {
+        [_stuHeadImgView setImage:[UIImage imageNamed:@"personDefault"]];
+    }
+    
     // 进度条
     float stu_Progress_W = _studentView.frame.size.width-stu_head_space_right*3-stu_head_H;
     [_stuTimeProgressLabel setFrame:CGRectMake(10, stu_head_Y+stu_head_H/2, stu_Progress_W, 2)];
+    
     
     // 分数按钮
     

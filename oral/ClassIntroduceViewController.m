@@ -61,7 +61,7 @@
             _classCountsLabel.text = [NSString stringWithFormat:@"%d/%d",[[_infoDict objectForKey:@"nowNumber"] intValue],[[_infoDict objectForKey:@"maxnumber"] intValue]];
             _classCreateTimeLabel.text = [NSString stringWithFormat:@"创建时间：%@",[_infoDict objectForKey:@"createtime"]];
             _teacherNameLabel.text = [_infoDict objectForKey:@"teachername"];
-            [_teaHeadImageButton setImageWithURL:[NSURL URLWithString:[_infoDict objectForKey:@"teacheriocn"]]];
+            [_teaHeadImageButton setImageWithURL:[NSURL URLWithString:[_infoDict objectForKey:@"teacheriocn"]] placeholderImage:[UIImage imageNamed:@"personDefault"]];
             _teacherId = [_infoDict objectForKey:@"teacherid"];
             
             [self getClassDesRectWithText:[_infoDict objectForKey:@"memo"]];

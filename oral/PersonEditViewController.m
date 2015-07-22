@@ -154,7 +154,18 @@
     
     UIButton *_personImageButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_personImageButton setFrame:CGRectMake(0, 0, 60, 60)];
-    [_personImageButton setBackgroundImage:[UIImage imageNamed:@"person_head_image"] forState:UIControlStateNormal];
+    
+    if ([OralDBFuncs getCurrentUserIconUrl])
+    {
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+        [_personImageButton setBackgroundImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
+    }
+    else
+    {
+        // 显示默认图片
+        [_personImageButton setBackgroundImage:[UIImage imageNamed:@"personDefault"] forState:UIControlStateNormal];
+    }
+    
     _personImageButton.layer.masksToBounds = YES;
     _personImageButton.layer.cornerRadius = _personImageButton.frame.size.height/2;
     _personImageButton.center = _table_Header_View.center;

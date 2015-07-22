@@ -8,7 +8,7 @@
 
 #import "ApplyClassViewController.h"
 #import "NSURLConnectionRequest.h"
-
+#import "OralDBFuncs.h"
 
 @interface ApplyClassViewController ()<UITextFieldDelegate,UIAlertViewDelegate>
 {
@@ -36,7 +36,7 @@
     _commitSucess = NO;
     self.view.backgroundColor = _backgroundViewColor;
     
-    _userId = [[NSUserDefaults standardUserDefaults]objectForKey:@"UserID"];
+    _userId = [OralDBFuncs getCurrentUserID];
     NSInteger height = (kScreentWidth-20)*40/71;
     _upRect = CGRectMake(10, 90, kScreentWidth-20, height);
     

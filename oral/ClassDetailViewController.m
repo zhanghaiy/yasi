@@ -125,7 +125,7 @@
         
         _teaInfoDict = [[dic objectForKey:@"teacherlist"] lastObject];
         
-        [_teaHeadImageBtn setImageWithURL:[NSURL URLWithString:[_teaInfoDict objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"class_teacher_head"]];
+        [_teaHeadImageBtn setImageWithURL:[NSURL URLWithString:[_teaInfoDict objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"personDefault"]];
         _teaDesLabel.text = [[[_teaInfoDict objectForKey:@"teacherinfo"] lastObject] objectForKey:@"content"];
         _classNameLabel.text = [_teaInfoDict objectForKey:@"teachername"];
     }
@@ -227,13 +227,13 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     NSDictionary *dict = [_stu_Progress_Array objectAtIndex:indexPath.row];
-    [cell.stuHeadImageView setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"person_head_image"]];
+    // 学生头像
+    [cell.stuHeadImageView setImageWithURL:[NSURL URLWithString:[dict objectForKey:@"icon"]] placeholderImage:[UIImage imageNamed:@"personDefault"]];
     cell.stuNameLabel.text = [dict objectForKey:@"studentname"];
     cell.stuPassCountLabel.text = [NSString stringWithFormat:@"%d/%d",[[dict objectForKey:@"countpassclasstype"] intValue],[[dict objectForKey:@"countclasstype"] intValue]];
     float progress = [[dict objectForKey:@"countpassclasstype"] floatValue]/[[dict objectForKey:@"countclasstype"] floatValue];
     cell.stuPassProgressView.progress = progress;
     cell.stuPassProgressView.color = kPart_Button_Color;
-
     
     return cell;
 }

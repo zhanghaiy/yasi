@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
     </dependencies>
     <objects>
@@ -29,8 +30,12 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ULp-lh-jfy">
                     <rect key="frame" x="0.0" y="66" width="375" height="135"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person_top_Back" translatesAutoresizingMaskIntoConstraints="NO" id="jMo-sx-cZW">
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="person_top_Back" translatesAutoresizingMaskIntoConstraints="NO" id="jMo-sx-cZW">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="135"/>
+                        </imageView>
+                        <imageView hidden="YES" userInteractionEnabled="NO" alpha="0.10000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yQj-PF-2it">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="135"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="生日：未填写" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9D-Ca-ojn">
                             <rect key="frame" x="115" y="70" width="237" height="20"/>
@@ -56,7 +61,7 @@
                                 <constraint firstAttribute="height" constant="65" id="iK4-ne-eLW"/>
                                 <constraint firstAttribute="width" constant="65" id="u7i-zQ-9t5"/>
                             </constraints>
-                            <state key="normal" backgroundImage="person_head_image">
+                            <state key="normal" backgroundImage="personDefault">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                         </button>
@@ -121,6 +126,7 @@
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="e9W-V6-LQX" secondAttribute="trailing" constant="25" id="0qk-95-JF9"/>
                         <constraint firstItem="jMo-sx-cZW" firstAttribute="top" secondItem="ULp-lh-jfy" secondAttribute="top" id="4ah-Wu-JDr"/>
+                        <constraint firstItem="yQj-PF-2it" firstAttribute="height" secondItem="jMo-sx-cZW" secondAttribute="height" id="4uk-ah-G75"/>
                         <constraint firstItem="gtc-E7-Cy0" firstAttribute="top" secondItem="ULp-lh-jfy" secondAttribute="top" constant="25" id="5WR-uI-zQV"/>
                         <constraint firstAttribute="trailing" secondItem="oRP-g4-fKV" secondAttribute="trailing" constant="23" id="Dla-X6-QYn"/>
                         <constraint firstItem="t93-FP-amo" firstAttribute="top" secondItem="m9D-Ca-ojn" secondAttribute="bottom" constant="1" id="G9I-Bo-9eM"/>
@@ -129,6 +135,7 @@
                         <constraint firstItem="Ngk-Fe-AVN" firstAttribute="leading" secondItem="obR-gy-qyt" secondAttribute="trailing" constant="7" id="OEc-zV-KD2"/>
                         <constraint firstItem="oRP-g4-fKV" firstAttribute="top" secondItem="obR-gy-qyt" secondAttribute="bottom" constant="3" id="P5p-sM-Les"/>
                         <constraint firstItem="obR-gy-qyt" firstAttribute="top" secondItem="ULp-lh-jfy" secondAttribute="top" constant="25" id="QUp-11-PfD"/>
+                        <constraint firstItem="yQj-PF-2it" firstAttribute="centerY" secondItem="jMo-sx-cZW" secondAttribute="centerY" id="Qsf-eE-WoE"/>
                         <constraint firstItem="m9D-Ca-ojn" firstAttribute="leading" secondItem="Uok-56-rXJ" secondAttribute="trailing" constant="25" id="Tm2-U6-uyS"/>
                         <constraint firstAttribute="trailing" secondItem="gtc-E7-Cy0" secondAttribute="trailing" constant="25" id="U4a-tE-64M"/>
                         <constraint firstItem="oRP-g4-fKV" firstAttribute="leading" secondItem="Uok-56-rXJ" secondAttribute="trailing" constant="25" id="ZMK-9T-yYv"/>
@@ -141,8 +148,10 @@
                         <constraint firstAttribute="trailing" secondItem="m9D-Ca-ojn" secondAttribute="trailing" constant="23" id="i1x-lh-lId"/>
                         <constraint firstItem="jMo-sx-cZW" firstAttribute="leading" secondItem="ULp-lh-jfy" secondAttribute="leading" id="j9C-K7-GlD"/>
                         <constraint firstItem="gtc-E7-Cy0" firstAttribute="leading" secondItem="Ngk-Fe-AVN" secondAttribute="trailing" constant="8" id="jU1-ef-Ivb"/>
+                        <constraint firstItem="yQj-PF-2it" firstAttribute="width" secondItem="jMo-sx-cZW" secondAttribute="width" id="kPW-he-MAY"/>
                         <constraint firstAttribute="centerY" secondItem="Uok-56-rXJ" secondAttribute="centerY" id="mMd-Z5-joJ"/>
                         <constraint firstAttribute="trailing" secondItem="jMo-sx-cZW" secondAttribute="trailing" id="th9-3K-xEB"/>
+                        <constraint firstItem="yQj-PF-2it" firstAttribute="centerX" secondItem="jMo-sx-cZW" secondAttribute="centerX" id="txF-KA-Hm4"/>
                         <constraint firstAttribute="height" constant="135" id="wew-Xk-X7g"/>
                     </constraints>
                 </view>
@@ -198,9 +207,9 @@
         </view>
     </objects>
     <resources>
+        <image name="personDefault" width="45" height="45"/>
         <image name="person_center_cellBack" width="375" height="43"/>
         <image name="person_edit" width="18" height="18"/>
-        <image name="person_head_image" width="68" height="68"/>
         <image name="person_top_Back" width="375" height="135"/>
     </resources>
 </document>

@@ -301,7 +301,8 @@
                             _watingDict_test = watingListDic;
                             
                             UIButton *commitButton_test = (UIButton *)[self.view viewWithTag:kTestCommitButtonTag];
-                            [commitButton_test setTitle:@"查看老师反馈" forState:UIControlStateNormal];
+                            [commitButton_test setTitle:@"已反馈" forState:UIControlStateNormal];
+                            commitButton_test.enabled = YES;
                         }
                     }
                 }
@@ -322,13 +323,12 @@
 - (void)commitTest:(UIButton *)commitButton
 {
     // 1：未提交给老师 提交老师  2：已经提交 但是未反馈 3：老师已反馈
-    if (![OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentUserID] andUserName:[OralDBFuncs getCurrentUserName]])
+    if ((![OralDBFuncs getTestCommitTopic:[OralDBFuncs getCurrentUserID] andUserName:[OralDBFuncs getCurrentUserName]])&&_wating_test==NO)
     {
         // 提交给老师 先判断是否可以提交
         [self jugeCouldCommit];
     }
     
-
     if (_wating_test)
     {
         // 如果老师已反馈 在此判断反馈的是否是最新的
@@ -596,6 +596,9 @@
     int _enterCurrentPart = (int)(btn.tag-kPartButtonTag+1);
     [OralDBFuncs setCurrentPart:_enterCurrentPart];
 
+    _loading_View.hidden = NO;
+    [self.view bringSubviewToFront:_loading_View];
+    
     NSDictionary *currentWatingDIc;
     BOOL have_currentPart_review = NO;
     for (NSDictionary *watingDic in _watingInfoArray)
@@ -608,7 +611,6 @@
             break;
         }
     }
-    
     SCOPartMenuViewController *scoreVC = [[SCOPartMenuViewController alloc]initWithNibName:@"SCOPartMenuViewController" bundle:nil];
     // 首先判断最新一次的闯关是否提交 若果未提交 则肯定没反馈（就算有也是之前的）
     BOOL _commit = [OralDBFuncs getPartLevel3CommitwithTopic:[OralDBFuncs getCurrentTopic] andUserName:[OralDBFuncs getCurrentUserName] PartNum:[OralDBFuncs getCurrentPart]];
@@ -627,6 +629,7 @@
             scoreVC.review_point_3 = NO;
         }
     }
+    _loading_View.hidden = YES;
     [self.navigationController pushViewController:scoreVC animated:YES];
 }
 

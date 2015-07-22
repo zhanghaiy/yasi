@@ -21,12 +21,22 @@
     NSMutableArray *_scoreMenuArray;
     NSMutableArray *_answer_Cintent_Array;
     NSMutableDictionary *_answer_DB_Dictionary;
+    
+    NSString *_sharePath;
+    NSString *_shareText;
+    BOOL _sucess_share;
 }
 
 @end
 
 @implementation CheckSuccessViewController
 #define kCellHeght 70
+#define kShareCateButtonTag 89
+#define kShareViewHeight (220.0/667*kScreenHeight)
+#define kShareBtnHeight (50.0/667*kScreenHeight)
+#define kSpace_Y (kShareViewHeight-kShareBtnHeight*2)/3
+#define kSpace_X (kScreentWidth-kShareBtnHeight*3)/4
+#define kShareBackViewTag 4789
 
 - (void)uiConfig
 {
@@ -40,15 +50,15 @@
     float score_Y = topView_H-5-space_share_toBottom-shareBtn_H-tipLabel_H-score_H;
     [_topBackView setFrame:CGRectMake(0, 0, kScreentWidth, topView_H)];
     [_topScoreLabel setFrame:CGRectMake(0, score_Y, kScreentWidth, score_H)];
-    
     [_topShareButton setFrame:CGRectMake((kScreentWidth-shareBtn_W)/2, topView_H-space_share_toBottom-shareBtn_H, shareBtn_W, shareBtn_H)];
     
     [_topDesLabel setFrame:CGRectMake(0, topView_H-space_share_toBottom-shareBtn_H-tipLabel_H-5, kScreentWidth, tipLabel_H)];
     // 底部按钮
     float bottom_btn_W = 110.0/375*kScreentWidth;
     float bottom_btn_H = 50.0/667*kScreenHeight;
-    [_backButton setFrame:CGRectMake((kScreentWidth/2-bottom_btn_W)/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
-    [_continueButton setFrame:CGRectMake(kScreentWidth*3/4-bottom_btn_W/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
+    NSInteger space_bottom = (kScreentWidth-bottom_btn_W*2)/3;
+    [_backButton setFrame:CGRectMake(kScreentWidth/2-bottom_btn_W-space_bottom/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
+    [_continueButton setFrame:CGRectMake(kScreentWidth/2+space_bottom/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
 
 
     // 中间文字
@@ -171,6 +181,7 @@
     else
     {
         _topDesLabel.text = @"闯关失败~再接再厉！";
+        _shareText = @"闯关失败~再接再厉！";
     }
     
 //    if (!index)
@@ -207,6 +218,7 @@
         {
             // 成功
             NSString *text = [NSString stringWithFormat:@"成绩不错，超过了%@的小伙伴~~",[dict objectForKey:@"newSize"]];
+            _shareText = text;// 标记分享的文字 （标记百分比）
             _topDesLabel.text = text;
         }
         else
@@ -216,7 +228,7 @@
     }
     else
     {
-        NSString *text = [NSString stringWithFormat:@"成绩不错，超过了(网络出错 查询不到百分比)的小伙伴"];
+        NSString *text = [NSString stringWithFormat:@"网络出错了，查询不到你超过的小伙伴"];
         _topDesLabel.text = text;
     }
 }
@@ -237,7 +249,7 @@
     // 合成成绩单数据源
     _scoreMenuArray = [[NSMutableArray alloc]init];
     [self makeUpScoreMenu];
-
+    [self createShareView];
 }
 
 #pragma mark - 组成成绩单
@@ -336,9 +348,7 @@
     int scoreCun = record.lastScore>=80?0:(record.lastScore>=60?1:2);
     [cell.scoreButton setBackgroundColor:[colorArr objectAtIndex:scoreCun]];
     [cell.scoreButton setTitle:[NSString stringWithFormat:@"%d",record.lastScore] forState:UIControlStateNormal];
-    
     NSLog(@"cell-- webview:%f",cell.htmlWebView.frame.size.height);
-    
     return cell;
 }
 
@@ -381,11 +391,136 @@
     [self.navigationController pushViewController:keyVC animated:YES];
 }
 
-#pragma mark - 分享按钮点击事件
+#pragma mark - 分享
+#pragma mark -- 创建分享底部弹出View
+- (void)createShareView
+{
+    UIView *shareBackV = [[UIView alloc]initWithFrame:CGRectMake(0, kScreenHeight, kScreentWidth, kShareViewHeight+30)];
+    shareBackV.tag = kShareBackViewTag;
+    shareBackV.backgroundColor = _backgroundViewColor;
+    shareBackV.layer.masksToBounds = YES;
+    shareBackV.layer.cornerRadius = 5;
+    [self.view addSubview:shareBackV];
+    
+    NSArray *shareTitleArray = @[@"QQ",@"微信",@"微博",@"人人"];
+    NSArray *shareImageArray = @[[UIImage imageNamed:@"QQ"],[UIImage imageNamed:@"微信"],[UIImage imageNamed:@"新浪"],[UIImage imageNamed:@"人人"]];
+    NSInteger hang = (shareTitleArray.count%3)?(shareTitleArray.count/3+1):shareTitleArray.count/3;
+    for (int i = 0; i < hang; i ++)
+    {
+        for (int j = 0; j < 3; j ++)
+        {
+            if ((i*3+j)<shareTitleArray.count)
+            {
+                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [btn setFrame:CGRectMake(kSpace_X+j*(kShareBtnHeight+kSpace_X), kSpace_Y+i*(kShareBtnHeight+kSpace_Y), kShareBtnHeight, kShareBtnHeight)];
+                [btn addTarget:self action:@selector(shareCategory:) forControlEvents:UIControlEventTouchUpInside];
+                btn.tag = kShareCateButtonTag+(i*3)+j;
+                [btn setBackgroundImage:[shareImageArray objectAtIndex:(i*3)+j] forState:UIControlStateNormal];
+                [shareBackV addSubview:btn];
+            }
+        }
+    }
+    
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cancelBtn setFrame:CGRectMake((kScreentWidth-80)/2, kShareViewHeight-20, 80, 40)];
+    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    cancelBtn.backgroundColor = kPart_Button_Color;
+    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:kFontSize_16];
+    [cancelBtn addTarget:self action:@selector(moveToHidden) forControlEvents:UIControlEventTouchUpInside];
+    cancelBtn.layer.masksToBounds = YES;
+    cancelBtn.layer.cornerRadius = cancelBtn.frame.size.height/2;
+    [shareBackV addSubview:cancelBtn];
+}
 
+#pragma mark -- 分享按钮点击事件
 - (IBAction)shareButtonClicked:(id)sender
 {
-    
+    NSLog(@"shareButtonClicked");
+    UIView *shareV = [self.view viewWithTag:kShareBackViewTag];
+    [UIView animateWithDuration:1 animations:^{
+        [shareV setFrame:CGRectMake(0, kScreenHeight-kShareViewHeight-30, kScreentWidth, kShareViewHeight+30)];
+    }];
+}
+
+#pragma mark -- 截图
+- (void)getImage
+{
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(kScreentWidth, kScreenHeight), NO, 1.0);  //NO，YES 控制是否透明
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    _sharePath = [NSHomeDirectory() stringByAppendingString:@"/Documents/imag.png"];
+    NSData *imaDa = UIImageJPEGRepresentation(img, 1);
+    [imaDa writeToFile:_sharePath atomically:YES];
+}
+
+
+#pragma mark -- 移走底部弹出分享控件
+- (void)moveToHidden
+{
+    UIView *shareV = [self.view viewWithTag:kShareBackViewTag];
+    [UIView animateWithDuration:1 animations:^{
+        [shareV setFrame:CGRectMake(0, kScreenHeight, kScreentWidth, kShareViewHeight+30)];
+    }];
+}
+
+#pragma mark -- 选择分享的平台
+- (void)shareCategory:(UIButton *)btn
+{
+    switch (btn.tag-kShareCateButtonTag)
+    {
+        case 0:
+        {
+            // QQ
+            [self shareWithType:ShareTypeQQ];
+        }
+            break;
+        case 1:
+        {
+            // 微信 朋友圈
+            [self shareWithType:ShareTypeWeixiTimeline];
+        }
+            break;
+        case 2:
+        {
+            // 微博
+            [self shareWithType:ShareTypeSinaWeibo];
+        }
+            break;
+        case 3:
+        {
+            // 人人
+            [self shareWithType:ShareTypeRenren];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark -- 开始分享
+- (void)shareWithType:(ShareType)type
+{
+    //构造分享内容
+    NSArray *detailTextArr = @[@"我在玩【开口说】雅思口语，大家一起来挑战吧！",@"我在玩【开口说】雅思口语，求安慰，大家一起来帮我吧！"];
+    NSString *detail = [detailTextArr objectAtIndex:_sucess_share?0:1];
+    id<ISSContent> publishContent = [ShareSDK content:_shareText defaultContent:@"默认分享内容，没内容时显示" image:[ShareSDK imageWithPath:_sharePath] title:@"ShareSDK" url:@"http://www.apple.com/cn/itunes/charts/" description:detail mediaType:SSPublishContentMediaTypeNews];
+    [ShareSDK clientShareContent:publishContent //内容对象
+                            type:type//ShareTypeWeixiSession //平台类型
+                   statusBarTips:YES
+                          result:^(ShareType type, SSResponseState state, id<ISSPlatformShareInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {//返回事件
+                              
+                              if (state == SSPublishContentStateSuccess)
+                              {
+                                  NSLog(NSLocalizedString(@"TEXT_SHARE_SUC", @"分享成功!"));
+                              }
+                              else if (state == SSPublishContentStateFail)
+                              {
+                                  NSLog(NSLocalizedString(@"TEXT_SHARE_FAI", @"分享失败!"), [error errorCode], [error errorDescription]);
+                              }
+                          }];
+
 }
 
 @end

@@ -19,6 +19,9 @@
 #define KEY_CONTEXT_RECORDID    @"df_oral_recordid"
 #define KEY_CONTEXT_CUR_LEVELID @"df_oral_levelid"
 
+#define KEY_CONTENT_CUR_DSFLOGIN @"df_oral_dsfLog"
+#define KEY_CONTENT_TYPE_DSFLOGIN @"df_oral_dsfLog_type"
+
 NSString *const DATABASE_FILE_NAME = @"df_oral.db";
 NSString *const DATABASE_RESOURCE_NAME = @"df_oral";
 NSString *const DATABASE_RESOURCE_TYPE = @"db";
@@ -803,7 +806,7 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 {
     [[NSUserDefaults standardUserDefaults] setObject:userName forKey:KEY_CONTEXT_USERNAME];
     [[NSUserDefaults standardUserDefaults] setObject:userid forKey:KEY_CONTEXT_USERID];
-    [[NSUserDefaults standardUserDefaults] setObject:userName forKey:KEY_CONTEXT_USERICON];
+    [[NSUserDefaults standardUserDefaults] setObject:iconUrl forKey:KEY_CONTEXT_USERICON];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -829,6 +832,23 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 {
     NSString *userID = [[NSUserDefaults standardUserDefaults] objectForKey:KEY_CONTEXT_USERID];
     return userID;
+}
+
++ (void)setCuurentIsDSFLogin:(BOOL)login andDSFType:(NSInteger)type
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:login] forKey:KEY_CONTENT_CUR_DSFLOGIN];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:type] forKey:KEY_CONTENT_TYPE_DSFLOGIN];
+}
+
+
++ (BOOL)getCuurentIsDSFLogin
+{
+   return [[[NSUserDefaults standardUserDefaults] objectForKey:KEY_CONTENT_CUR_DSFLOGIN] boolValue];
+}
+
++ (NSInteger)getCuurentDSFLoginType
+{
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:KEY_CONTENT_TYPE_DSFLOGIN] integerValue];
 }
 
 +(void)setCurrentTopic:(NSString *)topicName

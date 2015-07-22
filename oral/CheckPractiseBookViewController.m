@@ -148,7 +148,7 @@
      */
     PracticeBookRecord *record = [_practiceArray objectAtIndex:indexPath.row];
     NSString *text = [_answerTextDict objectForKey:record.answerId];//@"测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题"@"测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题";
-    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-90 Height:99999 FontSize:kFontSize_15];
+    CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-90 Height:99999 FontSize:kFontSize_17];
     if (rect.size.height>70)
     {
         return (int)(kCellHeight+rect.size.height-70);
@@ -172,14 +172,17 @@
     PracticeBookRecord *record = [_practiceArray objectAtIndex:indexPath.row];
     
     [cell.textWebView loadHTMLString:record.lastText baseURL:nil];
-//    [cell.textWebView loadHTMLString:@"测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题，测试webView 文字显示不全问题" baseURL:nil];
-
     [cell.scoreButton setTitle:[NSString stringWithFormat:@"%d",record.lastScore] forState:UIControlStateNormal];
     int colorIndex = record.lastScore>=80?0:(record.lastScore>=60?1:2);
     NSArray *colorArr = @[_perfColor,_goodColor,_badColor];
     [cell.scoreButton setBackgroundColor:[colorArr objectAtIndex:colorIndex]];
-    
     [cell.followButton settingProgress:0.0 andColor:_badColor andWidth:1 andCircleLocationWidth:3];
+    
+    if ([OralDBFuncs getCurrentUserIconUrl])
+    {
+        NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
+        [cell.play_self_Button setBackgroundImage:[UIImage imageWithData:imgData] forState:UIControlStateNormal];
+    }
     
     return cell;
 }

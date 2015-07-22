@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+#import <ShareSDK/ShareSDK.h>
+#import "WXApi.h"
+
 @interface LogInViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIImageView *backV;
 @property (strong, nonatomic) IBOutlet UIImageView *logoImgV;

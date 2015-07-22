@@ -7,6 +7,9 @@
 //
 
 #import "TopicParentsViewController.h"
+
+#import <ShareSDK/ShareSDK.h>
+#import "WXApi.h"
 /*
     闯关成功 or 失败 过渡页
  */
@@ -14,9 +17,6 @@
 @property (weak, nonatomic) IBOutlet UIView *topBackView;
 @property (weak, nonatomic) IBOutlet UIButton *topShareButton;
 - (IBAction)shareButtonClicked:(id)sender;
-
-
-
 
 @property (weak, nonatomic) IBOutlet UILabel *topDesLabel;
 @property (weak, nonatomic) IBOutlet UILabel *topScoreLabel;
