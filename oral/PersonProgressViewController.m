@@ -221,7 +221,6 @@
 - (void)requestTopicProgress
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kPersonInfoUrl,_userId];
-    NSLog(@"%@",urlStr);
     [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestCallBack:) andRefresh:YES];
 }
 

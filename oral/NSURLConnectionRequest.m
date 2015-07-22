@@ -203,9 +203,7 @@
 //网络不好，或者请求失败时
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"~~~~~~~%@",error.localizedDescription);
-    NSLog(@"!!!!!!!!!!%@~~~~~~~~~~~~~~~",error.localizedFailureReason);
-    NSLog(@"网络不好，或者请求失败时：error!!");
+
 }
 
 

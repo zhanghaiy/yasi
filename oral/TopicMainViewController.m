@@ -21,7 +21,7 @@
 {
     UITableView *_topicTableView;
     UITableView *_rightTableView;
-    NSArray *_topicArray;
+    NSMutableArray *_topicArray;
     float _topicContentY;
     BOOL _selectFromRight;
 }
@@ -57,7 +57,6 @@
     if ([[OralDBFuncs getCurrentUserIconUrl] length]>1)
     {
         NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
-        NSLog(@"%@",[OralDBFuncs getCurrentUserIconUrl]);
         [personBtn setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
     }
     else
@@ -100,7 +99,6 @@
     if ([[OralDBFuncs getCurrentUserIconUrl] length]>1)
     {
         NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[OralDBFuncs getCurrentUserIconUrl]]];
-        NSLog(@"%@",[OralDBFuncs getCurrentUserIconUrl]);
         [personBtn setImage:[UIImage imageWithData:imageData] forState:UIControlStateNormal];
     }
     else
@@ -118,7 +116,15 @@
         NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
         if ([[dic objectForKey:@"respCode"] intValue] == 1000)
         {
-            _topicArray = [dic objectForKey:@"etctlist"];
+            _topicArray = [[NSMutableArray alloc]initWithArray:[dic objectForKey:@"etctlist"]];
+            for (NSDictionary *subDic in _topicArray)
+            {
+                if ([[subDic objectForKey:@"classtype"] isEqualToString:@"Travel"])
+                {
+                    [_topicArray removeObject:subDic];
+                    [_topicArray insertObject:subDic atIndex:0];
+                }
+            }
             // 单例存储topic信息
             [self saveTopicInfo];
             [_topicTableView reloadData];
@@ -190,13 +196,9 @@
             cell = [[[NSBundle mainBundle]loadNibNamed:@"TopicCell" owner:self options:0] lastObject];
         }
         NSDictionary *dic = [_topicArray objectAtIndex:indexPath.row];
-//            [cell.topicButton setBackgroundImage:[UIImage imageNamed:@"topic_new_test"] forState:UIControlStateNormal];
-       
-        [cell.topicButton setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"bgimgurl"]]];
-        cell.topicTitle.text = [dic objectForKey:@"classtype"];
+        
         cell.progressColor = kPart_Button_Color;
 
-        // 暂时写死  此处是根据本地数据（自己存储的）来算出用户的进度
         TopicRecord *currentRecord = [OralDBFuncs getTopicRecordFor:[OralDBFuncs getCurrentUserName] withTopic:[dic objectForKey:@"classtype"]];
         float progress = currentRecord.completion/9.0;
         
@@ -204,6 +206,18 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.topicButton.tag = indexPath.row+kTopicButtonTag;
         [cell.topicButton addTarget:self action:@selector(startPass:) forControlEvents:UIControlEventTouchUpInside];
+        if ([[dic objectForKey:@"classtype"] isEqualToString:@"开发中"]||[[dic objectForKey:@"classtype"] isEqualToString:@"test"])
+        {
+            cell.topicTitle.text = @"开发中";
+            cell.topicButton.enabled = NO;
+            
+        }
+        else
+        {
+            cell.topicButton.enabled = YES;
+            cell.topicTitle.text = [dic objectForKey:@"classtype"];
+        }
+        [cell.topicButton setImageWithURL:[NSURL URLWithString:[dic objectForKey:@"bgimgurl"]]];
         return cell;
     }
     else if (tableView.tag == kRightTableVIewTag)

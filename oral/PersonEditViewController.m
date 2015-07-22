@@ -272,7 +272,6 @@
         if ([[dic objectForKey:@"respCode"] intValue] == 1000)
         {
             // 成功
-            NSLog(@"%@",[dic objectForKey:@"remark"]);
             [OralDBFuncs setCurrentUser:[OralDBFuncs getCurrentUserName] UserId:[OralDBFuncs getCurrentUserID] UserIconUrl:[dic objectForKey:@"icon"]];
             [self  finishBack];
         }
@@ -610,8 +609,6 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    NSLog(@"%@",textField.text);
-    NSLog(@"%ld",textField.tag);
     _mark_Alter_info = YES;
     switch (textField.tag)
     {

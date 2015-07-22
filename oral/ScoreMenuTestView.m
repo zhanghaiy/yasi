@@ -29,7 +29,6 @@
     CGRect rect = _timeLabel.frame;
     rect.size.width = sumTimeWid*progress;
     [_timeLabel setFrame:CGRectMake(50, 18, 100, 4)];// frame = rect;
-    NSLog(@"X:%f Y:%f W:%f H:%f",_timeLabel.frame.origin.x,_timeLabel.frame.origin.y,_timeLabel.frame.size.width,_timeLabel.frame.size.height);
     [self bringSubviewToFront:_timeLabel];
 }
 

@@ -85,7 +85,7 @@
                                 <constraint firstAttribute="width" constant="60" id="SdR-8M-egW"/>
                                 <constraint firstAttribute="height" constant="60" id="V8I-8r-HDB"/>
                             </constraints>
-                            <state key="normal" backgroundImage="personDefault">
+                            <state key="normal">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
@@ -193,6 +193,5 @@
         <image name="class_add" width="59" height="29"/>
         <image name="class_introduce_back" width="375" height="183"/>
         <image name="class_introduce_classImage" width="88" height="88"/>
-        <image name="personDefault" width="45" height="45"/>
     </resources>
 </document>

@@ -60,7 +60,6 @@
     [_backButton setFrame:CGRectMake(kScreentWidth/2-bottom_btn_W-space_bottom/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
     [_continueButton setFrame:CGRectMake(kScreentWidth/2+space_bottom/2, kScreenHeight-5-bottom_btn_H, bottom_btn_W, bottom_btn_H)];
 
-
     // 中间文字
     float menu_label_H = 40.0/667*kScreenHeight;
     float menu_label_Y = topView_H;
@@ -184,12 +183,12 @@
         _shareText = @"闯关失败~再接再厉！";
     }
     
-//    if (!index)
-//    {
-//        // 不及格 不可以继续闯关
-//        _continueButton.enabled = NO;
-//        _continueButton.backgroundColor = kUnEnabledColor;
-//    }
+    if (!index)
+    {
+        // 不及格 不可以继续闯关
+        _continueButton.enabled = NO;
+        _continueButton.backgroundColor = kUnEnabledColor;
+    }
 }
 
 #pragma mark - 网络请求 百分比
@@ -317,7 +316,6 @@
     NSString *text = [self filterHTML:[[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"answer"]];
     NSLog(@"%@",text);
     CGRect rect = [NSString CalculateSizeOfString:text Width:kScreentWidth-90 Height:99999 FontSize:kFontSize_17];
-    NSLog(@"文字：%f",rect.size.height);
     return (int)rect.size.height+30;
 }
 
@@ -341,7 +339,6 @@
     NSString *answerId = [[_answer_Cintent_Array objectAtIndex:indexPath.row] objectForKey:@"id"];
     PracticeBookRecord *record = [_answer_DB_Dictionary objectForKey:answerId];
     cell.htmlWebView.delegate = self;
-    NSLog(@"~~~%@~~~~~",record.lastText);
     [cell.htmlWebView loadHTMLString:record.lastText baseURL:nil];
     
     NSArray *colorArr = @[_perfColor,_goodColor,_badColor];

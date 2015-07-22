@@ -122,11 +122,9 @@
 
 - (void)requestFinished:(NSURLConnectionRequest *)request
 {
-    NSLog(@"请求结束");
     if (request.downloadData)
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        NSLog(@"%@",dict);
         if ([[dict objectForKey:@"respCode"] integerValue] == 1000)
         {
             NSString *userid = [[[dict objectForKey:@"studentInfos"] lastObject] objectForKey:@"id"];

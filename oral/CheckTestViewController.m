@@ -359,7 +359,6 @@
     // 播放
     [_audioManager playerPlayWithFilePath:audioPath];
     _markTime_PartAlone += _audioManager.audioDuration;
-    NSLog(@"_markTime_PartAlone: %f",_markTime_PartAlone);
 }
 
 #pragma mark -- 播放问题结束 回调
@@ -927,7 +926,6 @@
          {
              _loading_View.hidden = YES;
              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
-             NSLog(@"%@",dic);
 
              if ([[dic objectForKey:@"respCode"] intValue] == 1000)
              {

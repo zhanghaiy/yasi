@@ -37,7 +37,6 @@
 - (void)requestWating
 {
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?waitingid=%@",kBaseIPUrl,kReviewWatingEvent,[_watingDict objectForKey:@"waitingid"]];
-    NSLog(@"%@",urlStr);
     [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestWatingInfo:) andRefresh:YES];
 }
 
@@ -66,7 +65,6 @@
         if (unzip)
         {
             // 解压成功 刷新界面
-            NSLog(@"解压成功 刷新界面");
             [self makeUPReviewArray];
             [_reviewTableV reloadData];
         }
@@ -82,7 +80,6 @@
 {
     // 存储zip包路径
     NSString *zipSavePath = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),[OralDBFuncs getCurrentTopic]];
-    NSLog(@"存储zip包路径:%@",zipSavePath);
     if (![[NSFileManager defaultManager]fileExistsAtPath:zipSavePath])
     {
         [[NSFileManager defaultManager] createDirectoryAtPath:zipSavePath withIntermediateDirectories:YES attributes:nil error:nil];
@@ -93,7 +90,6 @@
     {
         // 保存zip包成功 解压zip路径
         NSString *zipToPath = [NSString stringWithFormat:@"%@/Documents/%@/testReview",NSHomeDirectory(),[OralDBFuncs getCurrentTopic]];
-        NSLog(@"~~~~~%@~~~~~~~",zipToPath);
        [ZipManager unzipFileFromPath:[NSString stringWithFormat:@"%@/testReview.zip",zipSavePath] ToPath:zipToPath];
         return YES;
     }
@@ -141,7 +137,6 @@
 - (NSString *)selectQuestionTextWithQuestionID:(NSString *)questionID
 {
     NSString *jsonPath = [NSString stringWithFormat:@"%@/temp/mockinfo.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:NO]];
-    NSLog(@"%@",jsonPath);
     
     NSFileManager *manager = [NSFileManager defaultManager];
     if ([manager fileExistsAtPath:jsonPath])

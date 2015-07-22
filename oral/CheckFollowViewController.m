@@ -163,6 +163,9 @@
     [_addPracticeButton setFrame:CGRectMake(kScreentWidth/2-add_practice_button_W-btn_space_btn/2, kScreenHeight-follow_space_bottom-add_practice_button_H, add_practice_button_W, add_practice_button_H)];
     [_nextButton setFrame:CGRectMake(kScreentWidth/2+btn_space_btn/2, kScreenHeight-follow_space_bottom-add_practice_button_H, add_practice_button_W, add_practice_button_H)];
     
+    _nextButton.titleLabel.font = [UIFont  systemFontOfSize:kFontSize_14];
+    _addPracticeButton.titleLabel.font = [UIFont systemFontOfSize:kFontSize_14];
+    
     // title颜色
     [_nextButton setTitleColor:_pointColor forState:UIControlStateNormal];
     [_addPracticeButton setTitleColor:_pointColor forState:UIControlStateNormal];

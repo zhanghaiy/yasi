@@ -63,14 +63,12 @@
 - (void)requestTeacherClass
 {
     NSString *str = [NSString stringWithFormat:@"%@%@?teacherId=%@",kBaseIPUrl,kTeacherClassUrl,_teacherId];
-    NSLog(@"%@",str);
     [NSURLConnectionRequest requestWithUrlString:str target:self aciton:@selector(requestFinished:) andRefresh:YES];
 }
 
 - (void)requestMyClass
 {
     NSString *str = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kUserAddClassUrl,_userId];
-    NSLog(@"%@",str);
     [NSURLConnectionRequest requestWithUrlString:str target:self aciton:@selector(requestFinished:) andRefresh:YES];
 }
 
@@ -80,7 +78,6 @@
     if ([request.downloadData length]>0)
     {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:request.downloadData options:0 error:nil];
-        NSLog(@"%@",dict);
         _classListArray = [dict objectForKey:@"classlist"];
         [_myClassTableV reloadData];
     }

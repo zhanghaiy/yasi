@@ -215,7 +215,6 @@
         {
             _type_DSF = ShareTypeQQSpace;
             [ShareSDK getUserInfoWithType:ShareTypeQQSpace authOptions:nil result:^(BOOL result,id<ISSPlatformUser> userInfo,id<ICMErrorInfo> error) {
-                NSLog(@"=====%@",userInfo.uid);
                 if (result) {
                     NSLog(@"登录成功");
                     //打印输出用户uid：
@@ -224,7 +223,6 @@
                     NSLog(@"name = %@",[userInfo nickname]);
                     //打印输出用户头像地址：
                     NSLog(@"icon = %@",[userInfo profileImage]);
-                    NSLog(@"%@",userInfo);
                     [self commitToOralSeverWithName:[userInfo nickname] UID:[userInfo uid]];
                 }
                 else{
@@ -239,9 +237,6 @@
         {
             _type_DSF = ShareTypeWeixiSession;
             [ShareSDK getUserInfoWithType:ShareTypeWeixiSession authOptions:nil result:^(BOOL result,id<ISSPlatformUser> userInfo,id<ICMErrorInfo> error) {
-                NSLog(@"=====%@",userInfo.uid);
-                NSLog(@"%@",userInfo);
-
                 if (result) {
 
                     NSLog(@"登录成功");
@@ -262,7 +257,6 @@
             _type_DSF = ShareTypeSinaWeibo;
             [ShareSDK getUserInfoWithType:ShareTypeSinaWeibo authOptions:nil result:^(BOOL result, id<ISSPlatformUser> userInfo, id<ICMErrorInfo> error)
              {
-                 NSLog(@"%@",userInfo);
                  if (result)
                  {
                      [userInfo uid];
@@ -282,11 +276,8 @@
         {
             _type_DSF = ShareTypeRenren;
             [ShareSDK getUserInfoWithType:ShareTypeRenren authOptions:nil result:^(BOOL result,id<ISSPlatformUser> userInfo,id<ICMErrorInfo> error) {
-                NSLog(@"=====%@",userInfo.uid);
-                NSLog(@"%@",userInfo);
                 if (result)
                 {
-                    NSLog(@"登录成功");
                     [self commitToOralSeverWithName:[userInfo nickname] UID:[userInfo uid]];
                 }
                 else

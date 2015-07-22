@@ -150,7 +150,6 @@
         NSString *questionText = [point_3_dic objectForKey:@"question"];
         NSString *questionID = [point_3_dic objectForKey:@"id"];
         NSString *answerAudioPath = [NSString stringWithFormat:@"%@/part%d-3-%d.wav",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES],[OralDBFuncs getCurrentPart],i+1];
-        NSLog(@"%@",answerAudioPath);
         // 此处获取时长
         float duration = [self getAudioDurationWithPath:answerAudioPath];
         NSDictionary *makeDic = @{@"question":questionText,@"questionid":questionID,@"answerPath":answerAudioPath,@"duration":[NSNumber numberWithFloat:duration]};
@@ -162,13 +161,11 @@
 #pragma mark -- 获取本地音频时长
 - (float)getAudioDurationWithPath:(NSString *)audioPath
 {
-    NSLog(@"%@",audioPath);
     NSURL *audioFileURL = [NSURL fileURLWithPath:audioPath];
     AVURLAsset *audioAsset =[AVURLAsset URLAssetWithURL:audioFileURL options:nil];
     CMTime audioDuration = audioAsset.duration;
     
     float audioDurationSeconds =CMTimeGetSeconds(audioDuration);
-    NSLog(@"获取本地音频时长:%f",audioDurationSeconds);
     return audioDurationSeconds;
 }
 
@@ -503,19 +500,16 @@ static UIView *openView;
     // 播放评价音频 -- 待完善
     NSString *reviewUrl = [_review_sum_dict objectForKey:@"teacherurl"];
     NSString *reviewPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPoint3UnZipPath],reviewUrl];
-    NSLog(@"老师评价的音频路径：%@。。。。。\n",reviewPath);
     [_audioPlayerManager playerPlayWithFilePath:reviewPath];
 }
 
 #pragma mark -- 播放自己回答录音
 - (void)playerSelfAnswer:(UIButton*)btn
 {
-    NSLog(@"播放自己回答录音");
     NSInteger index = btn.tag - kPlaySelfButtonTag;
     // 播放
     NSDictionary *dic = [_text_array_point_3 objectAtIndex:index];
     NSString *audioPath = [dic objectForKey:@"answerPath"];
-    NSLog(@"%@",audioPath);
     [_audioPlayerManager playerPlayWithFilePath:audioPath];
 }
 #pragma mark -- 播放老师评价
@@ -526,13 +520,11 @@ static UIView *openView;
     NSDictionary *selecDic = [self retrievalReviewDictWithQuestionID:questionId];
     NSString *reviewUrl = [selecDic objectForKey:@"teacherurl"];
     NSString *reviewPath = [NSString stringWithFormat:@"%@/temp/%@",[self getPoint3UnZipPath],reviewUrl];
-    NSLog(@"老师评价的音频路径：%@。。。。。\n",reviewPath);
 }
 
 #pragma mark -- 播放完成回调
 - (void)playerCallBack:(AudioPlayer *)audioPlayer
 {
-    NSLog(@"playfinished");
 }
 
 
@@ -605,7 +597,6 @@ static UIView *openView;
     else
     {
         // 本地文件不存在 没有成绩单
-        NSLog(@"本地文件不存在 没有成绩单");
         [self setPoint_3_table_head_view_notPracticed];
     }
 }
@@ -661,7 +652,6 @@ static UIView *openView;
              
              _loading_View.hidden = YES;
              NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:operation.responseData options:0 error:nil];
-             NSLog(@"%@",dic);
              if ([[dic objectForKey:@"respCode"] intValue] == 1000)
              {
                  // 标记 关卡3已经提交
@@ -671,15 +661,12 @@ static UIView *openView;
              }
              else
              {
-                 NSLog(@"提交失败");
-                 NSLog(@"%@",[dic objectForKey:@"remark"]);
                  [self commitFail_point_3];
              }
          } failure:^(AFHTTPRequestOperation *operation, NSError *error)
          {
              _loading_View.hidden = YES;
              [self commitFail_point_3];
-             NSLog(@"失败乃");
          }];
     }
     else
@@ -729,7 +716,6 @@ static UIView *openView;
     NSArray *partInfoArray = [OralDBFuncs getTopicAnswerJsonArrayWithTopic:[OralDBFuncs getCurrentTopic] UserName:[OralDBFuncs getCurrentUserName] ISPart:YES];
     
     NSDictionary *finalDict = @{@"partInfo":partInfoArray,@"checkPoint":checkPoint,@"teacherid":_defaulTeacherID};
-    NSLog(@"%@",finalDict);
     
     NSError *parseError = nil;
     NSData *jsonData_makeUped = [NSJSONSerialization dataWithJSONObject:finalDict options:NSJSONWritingPrettyPrinted error:&parseError];
@@ -756,7 +742,6 @@ static UIView *openView;
         NSString *jsonPath = [NSString stringWithFormat:@"%@/part.json",[self getPathWithTopic:[OralDBFuncs getCurrentTopic] IsPart:YES]];
         [zip addFileToZip:jsonPath newname:@"part.json"];
     }
-    NSLog(@"%@",zipPath);
     return zipPath;
 }
 
@@ -899,7 +884,6 @@ static UIView *openView;
 #pragma mark -- 警告框 delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"%ld",buttonIndex);
     if (buttonIndex == 1)
     {
         [self starCommitToTeacher_point_3];
@@ -918,7 +902,6 @@ static UIView *openView;
 - (void)requestLevel_3_watingInfo
 {
     NSString *urlSTr = [NSString stringWithFormat:@"%@%@?waitingid=%@",kBaseIPUrl,kReviewWatingEvent,[_review_dict_point_3 objectForKey:@"waitingid"]];
-    NSLog(@"%@",urlSTr);
     [NSURLConnectionRequest requestWithUrlString:urlSTr target:self aciton:@selector(request_point_3_CallBack:) andRefresh:YES];
 }
 
@@ -947,7 +930,6 @@ static UIView *openView;
         if (unzip)
         {
             // 解压成功 刷新界面
-            NSLog(@"解压成功 刷新界面");
             _requestReviewSuccess = YES;
             [self analysizePartJson];
             UITableView *tabV = (UITableView *)[self.view viewWithTag:kTableViewBaseTag+2];
@@ -956,7 +938,6 @@ static UIView *openView;
         }
         else
         {
-            NSLog(@"失败");
         }
     }
 }
@@ -966,7 +947,6 @@ static UIView *openView;
 {
     // 存储zip包路径
     NSString *zipSavePath = [NSString stringWithFormat:@"%@/Documents/%@",NSHomeDirectory(),[OralDBFuncs getCurrentTopic]];
-    NSLog(@"存储zip包路径:%@",zipSavePath);
     if (![[NSFileManager defaultManager]fileExistsAtPath:zipSavePath])
     {
         [[NSFileManager defaultManager] createDirectoryAtPath:zipSavePath withIntermediateDirectories:YES attributes:nil error:nil];
@@ -981,7 +961,6 @@ static UIView *openView;
         {
             [[NSFileManager defaultManager] createDirectoryAtPath:zipToPath withIntermediateDirectories:YES attributes:nil error:nil];
         }
-        NSLog(@"~~~~~%@~~~~~~~",zipToPath);
         [ZipManager unzipFileFromPath:[NSString stringWithFormat:@"%@/PartReview.zip",zipSavePath] ToPath:zipToPath];
         return YES;
     }
@@ -1003,7 +982,6 @@ static UIView *openView;
     {
         if (![[subdic objectForKey:@"questionid"] length])
         {
-            NSLog(@"%@",[subdic objectForKey:@"questionid"]);
             _review_sum_dict = subdic;
         }
     }

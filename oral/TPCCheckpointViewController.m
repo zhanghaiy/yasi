@@ -94,6 +94,10 @@
     [self configPartBtnWithCompletion:complete];
     
     // 改变滚动视图的偏移量
+    if (complete > 2)
+    {
+        complete = 2;
+    }
     [UIView animateWithDuration:1 animations:^{
         _partScrollView.contentOffset = CGPointMake(_partScrollView.frame.size.width*complete, 0);
     }];
@@ -396,7 +400,6 @@
     else
     {
         // zip请求失败
-        NSLog(@"zip请求失败");
         [self showFailAlert];
     }
 }
@@ -409,7 +412,6 @@
     [self.view bringSubviewToFront:_loading_View];
     
     NSString *testZipUrl = [NSString stringWithFormat:@"%@%@?topid=%@",kBaseIPUrl,kTestUrl,[_topicDict objectForKey:@"id"]];
-    NSLog(@"%@",testZipUrl);
     [NSURLConnectionRequest requestWithUrlString:testZipUrl target:self aciton:@selector(requestTestZipFinished:) andRefresh:YES];
 }
 
@@ -430,7 +432,6 @@
         else
         {
             // 失败
-            NSLog(@"失败");
             [self showFailAlert];
         }
     }
@@ -470,7 +471,6 @@
     {
         // 保存成功 解压
         NSString *toPath = [NSString stringWithFormat:@"%@/%@",[self getLocalSavePath],folderName];
-        NSLog(@"~~~~~%@~~~~~~~",[self getLocalSavePath]);
         [ZipManager unzipFileFromPath:path ToPath:toPath];
         return YES;
     }
@@ -488,7 +488,6 @@
 #pragma mark -- 警告框 delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"%ld",buttonIndex);
     if (buttonIndex == 1)
     {
         [self requestZipResourceOFPart:_request_part];

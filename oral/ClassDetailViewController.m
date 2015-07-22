@@ -40,8 +40,8 @@
     
     _teaHeadImageBtn.layer.masksToBounds = YES;
     _teaHeadImageBtn.layer.cornerRadius = _teaHeadImageBtn.frame.size.height/2;
-    _teaHeadImageBtn.layer.borderColor = [UIColor colorWithWhite:235/255.0 alpha:1].CGColor;
-    _teaHeadImageBtn.layer.borderWidth = 1;
+//    _teaHeadImageBtn.layer.borderColor = [UIColor colorWithWhite:235/255.0 alpha:1].CGColor;
+//    _teaHeadImageBtn.layer.borderWidth = 1;
     
 }
 
@@ -168,7 +168,6 @@
         else
         {
             NSString *remark = [dict objectForKey:@"remark"];
-            NSLog(@"%@",remark);
         }
     }
 }

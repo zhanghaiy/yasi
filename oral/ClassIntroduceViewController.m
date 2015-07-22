@@ -61,7 +61,9 @@
             _classCountsLabel.text = [NSString stringWithFormat:@"%d/%d",[[_infoDict objectForKey:@"nowNumber"] intValue],[[_infoDict objectForKey:@"maxnumber"] intValue]];
             _classCreateTimeLabel.text = [NSString stringWithFormat:@"创建时间：%@",[_infoDict objectForKey:@"createtime"]];
             _teacherNameLabel.text = [_infoDict objectForKey:@"teachername"];
+            
             [_teaHeadImageButton setImageWithURL:[NSURL URLWithString:[_infoDict objectForKey:@"teacheriocn"]] placeholderImage:[UIImage imageNamed:@"personDefault"]];
+            
             _teacherId = [_infoDict objectForKey:@"teacherid"];
             
             [self getClassDesRectWithText:[_infoDict objectForKey:@"memo"]];
@@ -86,8 +88,8 @@
     
     _teaHeadImageButton.layer.masksToBounds = YES;
     _teaHeadImageButton.layer.cornerRadius = _teaHeadImageButton.bounds.size.height/2;
-    _teaHeadImageButton.layer.borderWidth = 1;
-    _teaHeadImageButton.layer.borderColor = [UIColor colorWithRed:225/255.0 green:235/255.0 blue:235/255.0 alpha:1].CGColor;
+//    _teaHeadImageButton.layer.borderWidth = 1;
+//    _teaHeadImageButton.layer.borderColor = [UIColor colorWithRed:225/255.0 green:235/255.0 blue:235/255.0 alpha:1].CGColor;
     
     // 文字颜色
     _classTitleLabel.textColor = _textColor;

@@ -86,7 +86,6 @@
     [self.view bringSubviewToFront:_loading_View];
     _userId = [OralDBFuncs getCurrentUserID];
     NSString *urlStr = [NSString stringWithFormat:@"%@%@?userId=%@",kBaseIPUrl,kUserInfoUrl,_userId];
-    NSLog(@"%@",urlStr);
     [NSURLConnectionRequest requestWithUrlString:urlStr target:self aciton:@selector(requestEnd:) andRefresh:kCurrentNetStatus];
 }
 
@@ -132,7 +131,6 @@
 
 - (void)blankPersonInfo
 {
-    NSLog(@"%@",_personInfoDic);
     // 头像
     if ([[_personInfoDic objectForKey:@"icon"] length]>0)
     {

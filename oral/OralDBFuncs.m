@@ -44,7 +44,6 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 
 + (BOOL) initializeDb
 {
-    NSLog (@"initializeDB");
     // 如果是第一次运行，则将初始数据库文件拷贝到可读写位置。
     NSArray *searchPaths =
     NSSearchPathForDirectoriesInDomains
@@ -984,7 +983,6 @@ NSString *const DATABASE_RESOURCE_TYPE = @"db";
 + (NSArray *)getAddPracticeTopic:(NSString *)topicName UserName:(NSString *)userName
 {
     NSString *key = [NSString stringWithFormat:@"ADD-PRACTICE-%@-%@",topicName,userName];
-    NSLog(@"%@",key);
     return [[NSUserDefaults standardUserDefaults]objectForKey:key];
 }
 

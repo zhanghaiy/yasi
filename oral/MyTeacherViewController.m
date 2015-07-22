@@ -284,7 +284,6 @@
     {
         if (scrollView.contentOffset.y<-kDownRefreshViewHeght)
         {
-            NSLog(@"下拉列表");
             _reloading = YES;
         }
     }
@@ -294,7 +293,6 @@
 {
     if (_reloading)
     {
-        NSLog(@"开始刷新");
         [self configRefreshUI];
         [self startRequest];
     }
